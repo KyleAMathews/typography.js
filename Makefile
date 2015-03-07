@@ -10,7 +10,9 @@ release-major:
 	@$(call release,major)
 
 build:
-	@$(BIN)/cjsx -cb -o dist src/index.cjsx
+	@$(BIN)/cjsx -cb -o dist/ src/*
+	@$(BIN)/cjsx -cb -o dist/utils src/utils/*
+	@$(BIN)/cjsx -cb -o dist/components src/components/*
 	@$(BIN)/webpack
 
 watch:

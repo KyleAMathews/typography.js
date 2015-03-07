@@ -4,7 +4,7 @@ var webpack = require('webpack');
 
 module.exports = {
   entry: [
-    './examples/index'
+    './examples/entry'
   ],
   output: {
     path: path.join(__dirname, 'examples'),
