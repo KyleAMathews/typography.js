@@ -20,7 +20,9 @@ watch:
 
 publish:
 	git push --tags origin HEAD:master
-	@$(BIN)/cjsx -cb -o dist src/index.cjsx
+	@$(BIN)/cjsx -cb -o dist/ src/*
+	@$(BIN)/cjsx -cb -o dist/utils src/utils/*
+	@$(BIN)/cjsx -cb -o dist/components src/components/*
 	npm publish
 
 publish-gh-pages:
