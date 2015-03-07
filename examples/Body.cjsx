@@ -24,7 +24,7 @@ module.exports = React.createClass
         position: "fixed"
         width: 280
       }}>
-        <Controls onChange={@handleControlsChange}/>
+        <Controls typography={@state.typography} onChange={@handleControlsChange}/>
       </div>
       <Container style={{
         maxWidth: 768

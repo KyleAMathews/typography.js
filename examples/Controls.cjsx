@@ -147,7 +147,7 @@ module.exports = React.createClass
       >{if @state.showConfiguration then "Show styleguide" else "Show configuration"}</button>
 
       <GridOverlay
-        rhythm={rhythm}
+        rhythm={@props.typography.rhythm}
         showGrid={@state.showVerticalRhythmGrid}
       />
     </div>
