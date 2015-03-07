@@ -35,8 +35,7 @@ module.exports = React.createClass
                     <meta charSet="utf-8"/>
                     <meta content="IE=edge"/>
                     <meta name="viewport" content="user-scalable=no width=device-width, initial-scale=1.0 maximum-scale=1.0"/>
-                    <title>React Typography</title>
-                    <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400" rel="stylesheet" type="text/css"/>
+                    <title>Your site title</title>
                     <GoogleFont/>
                     <TypographyStyle/>
                   </head>

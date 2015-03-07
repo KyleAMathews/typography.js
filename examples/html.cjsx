@@ -31,11 +31,9 @@ module.exports = React.createClass
             font-family: Inconsolata, monospace, serif;
             font-size: 16px;
             line-height: 20px;
-            max-width: 100%;
-            overflow: initial;
+            overflow: hidden;
             padding: 36px;
             white-space: inherit;
-            width: 100%;
             word-wrap: normal;
           }
         """}
