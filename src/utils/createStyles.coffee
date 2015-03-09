@@ -24,7 +24,6 @@ module.exports = (vr, options) ->
   body {
     color: #{gray(options.bodyGray)};
     font-family: #{options.bodyFontFamily};
-    padding: 0 #{vr.rhythm(1)};
     word-wrap: break-word;
   }
 

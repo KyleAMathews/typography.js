@@ -16,6 +16,10 @@ module.exports = React.createClass
         <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400|Inconsolata:400" rel="stylesheet" type="text/css"/>
         <style>
         {"""
+          body {
+            padding: 0 #{rhythm(1)};
+          }
+
           .usage-instructions pre {
             font-family: $alt-font-family;
             margin: 0;
