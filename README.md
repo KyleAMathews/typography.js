@@ -15,6 +15,17 @@ React Typography is a declarative way of defining what you'd like your
 typography to be. Changing your base font size or line height or fonts
 doesn't have to be hard. With React Typography it isn't.
 
+## Verticaly Rhythm
+Grids make spatial world orderly
+
+960 or Susy or Bootstrap
+
+vertical rhythm is grids for vertical
+
+CSS doesn't make this easy
+
+articles
+
 It provides sensible defaults for:
 
 * Vertical rhythm
@@ -24,4 +35,5 @@ It provides sensible defaults for:
 ## To document
 
 * rhythm function
+* adjustFontSizeTo
 * lots of other things
