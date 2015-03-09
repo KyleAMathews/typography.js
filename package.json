@@ -1,7 +1,7 @@
 {
   "name": "react-typography",
   "description": "Opinionated tools for creating beautiful typography for React sites",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/KyleAMathews/react-typography/issues"
