@@ -43,6 +43,8 @@ module.exports = React.createClass
       headerFontFamily: "#{configState.headerFont}, sans-serif"
       bodyFontFamily: "#{configState.bodyFont}, sans-serif"
       headerWeight: configState.headerWeight
+      headerGray: configState.headerGray
+      bodyGray: configState.bodyGray
     })
 
     document.getElementById("react-typography").innerHTML = typography.styles

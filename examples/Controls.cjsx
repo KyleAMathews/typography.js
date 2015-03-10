@@ -3,6 +3,7 @@ _ = require 'underscore'
 $ = require 'jquery'
 gray = require 'gray-percentage'
 deepEqual = require 'deep-equal'
+NumberEditor = require 'react-number-editor'
 
 controls = require('../src')()
 
@@ -79,6 +80,8 @@ module.exports = React.createClass
     modularScales: 'diminished fourth'
     headerWeight: 400
     showConfiguration: false
+    headerGray: 20
+    bodyGray: 40
 
   shouldComponentUpdate: (nextProps, nextState) ->
     return not deepEqual(nextState, @state)
@@ -126,10 +129,44 @@ module.exports = React.createClass
       <select style={{marginBottom: 8}} valueLink={@linkState('modularScales')}>{modularScalesOptions}</select>
 
       <label style={{display: "block", width: "100%"}}>Base font size</label>
-      <input style={{marginBottom: 8}} type="number" valueLink={@linkState('baseFontSize')} />
+      <NumberEditor
+        min=8
+        max=100
+        step={0.1}
+        initialValue={@state.baseFontSize}
+        onValueChange={@handleBaseFontSizeChange}
+        style={{marginBottom: 8}}
+      />
 
       <label style={{display: "block", width: "100%"}}>Base line height</label>
-      <input style={{marginBottom: 48}}  type="number" valueLink={@linkState('baseLineHeight')} />
+      <NumberEditor
+        min=8
+        max=120
+        step={0.1}
+        initialValue={@state.baseLineHeight}
+        onValueChange={@handleBaseLineHeightChange}
+        style={{marginBottom: 8}}
+      />
+
+      <label style={{display: "block", width: "100%"}}>Header gray % (0=black 100=white)</label>
+      <NumberEditor
+        min=0
+        max=100
+        step={0.5}
+        initialValue={@state.headerGray}
+        onValueChange={@handleHeaderGrayChange}
+        style={{marginBottom: 8}}
+      />
+
+      <label style={{display: "block", width: "100%"}}>Body gray % (0=black 100=white)</label>
+      <NumberEditor
+        min=0
+        max=100
+        step={0.5}
+        initialValue={@state.bodyGray}
+        onValueChange={@handleBodyGrayChange}
+        style={{marginBottom: 48}}
+      />
 
       <button
         onClick={@handleConfigToggle}
@@ -157,6 +194,18 @@ module.exports = React.createClass
       @setState showConfiguration: false
     else
       @setState showConfiguration: true
+
+  handleBaseFontSizeChange: (size) ->
+    @setState baseFontSize: size
+
+  handleBaseLineHeightChange: (size) ->
+    @setState baseLineHeight: size
+
+  handleHeaderGrayChange: (percentage) ->
+    @setState headerGray: percentage
+
+  handleBodyGrayChange: (percentage) ->
+    @setState bodyGray: percentage
 
   onHeaderFontChange: (e) ->
     font = e.target.value
