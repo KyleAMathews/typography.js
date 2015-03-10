@@ -27,6 +27,8 @@ module.exports = (options) ->
     headerGray: 20
     bodyGray: 40
     headerWeight: 400
+    bodyWeight: 400
+    boldWeight: 700
 
   options = objectAssign defaults, options
 
