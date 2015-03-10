@@ -18,11 +18,11 @@ module.exports = React.createClass
     grids = [0..200].map (i) ->
       <div>
         <div style={{
-          borderBottom: '1px solid #ccc'
+          borderTop: '1px solid #ccc'
           height: "calc(#{props.rhythm(1)} / 2 - 1px)"
         }}/>
         <div style={{
-          borderBottom: '1px dashed #ccc'
+          borderTop: '1px dashed #ccc'
           height: "calc(#{props.rhythm(1)} / 2 - 1px)"
         }}/>
       </div>
