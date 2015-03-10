@@ -58,6 +58,8 @@
   "dependencies": {
     "compass-vertical-rhythm": "^1.2.0",
     "gray-percentage": "^1.0.2",
+    "is-array": "^1.0.1",
+    "is-string": "^1.0.4",
     "modularscale": "^1.0.1",
     "normalize.css": "^3.0.2"
   }

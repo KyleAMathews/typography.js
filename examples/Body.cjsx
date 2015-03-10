@@ -39,7 +39,7 @@ module.exports = React.createClass
     typography = Typography({
       baseFontSize: configState.baseFontSize + "px"
       baseLineHeight: configState.baseLineHeight + "px"
-      modularScale: [configState.modularScale]
+      modularScales: [configState.modularScales]
       headerFontFamily: "#{configState.headerFont}, sans-serif"
       bodyFontFamily: "#{configState.bodyFont}, sans-serif"
       headerWeight: configState.headerWeight

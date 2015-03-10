@@ -1,16 +1,68 @@
 ms = require 'modularscale'
 normalize = require '../normalize'
 gray = require 'gray-percentage'
+isString = require 'is-string'
 
-module.exports = (vr, options) ->
+generateHeaderStyles = (vr, options) ->
+  styles = ""
   baseFontSize = options.baseFontSize.slice(0, -2)
 
-  h1 = vr.adjustFontSizeTo(ms(3, options.modularScale[0]) * baseFontSize + "px")
-  h2 = vr.adjustFontSizeTo(ms(2, options.modularScale[0]) * baseFontSize + "px")
-  h3 = vr.adjustFontSizeTo(ms(1, options.modularScale[0]) * baseFontSize + "px")
-  h4 = vr.adjustFontSizeTo(ms(2/3, options.modularScale[0]) * baseFontSize + "px")
-  h5 = vr.adjustFontSizeTo(ms(1/3, options.modularScale[0]) * baseFontSize + "px")
-  h6 = vr.adjustFontSizeTo(ms(0, options.modularScale[0]) * baseFontSize + "px")
+  for modularScale in options.modularScales
+    if isString modularScale
+      maxWidth = false
+      scale = modularScale
+    else
+      maxWidth = "@media only screen and (max-width: #{modularScale[0]}) {"
+      scale = modularScale[1]
+
+    h1 = vr.adjustFontSizeTo(ms(3, scale) * baseFontSize + "px")
+    h2 = vr.adjustFontSizeTo(ms(2, scale) * baseFontSize + "px")
+    h3 = vr.adjustFontSizeTo(ms(1, scale) * baseFontSize + "px")
+    h4 = vr.adjustFontSizeTo(ms(2/3, scale) * baseFontSize + "px")
+    h5 = vr.adjustFontSizeTo(ms(1/3, scale) * baseFontSize + "px")
+    h6 = vr.adjustFontSizeTo(ms(0, scale) * baseFontSize + "px")
+
+    if maxWidth
+      styles += maxWidth
+
+    styles += """
+    h1 {
+      font-size: #{h1.fontSize};
+      line-height: #{h1.lineHeight};
+    }
+
+    h2 {
+      font-size: #{h2.fontSize};
+      line-height: #{h2.lineHeight};
+    }
+
+    h3 {
+      font-size: #{h3.fontSize};
+      line-height: #{h3.lineHeight};
+    }
+
+    h4 {
+      font-size: #{h4.fontSize};
+      line-height: #{h4.lineHeight};
+    }
+
+    h5 {
+      font-size: #{h5.fontSize};
+      line-height: #{h5.lineHeight};
+    }
+
+    h6 {
+      font-size: #{h6.fontSize};
+      line-height: #{h6.lineHeight};
+    }
+    """
+
+    if maxWidth
+      styles += "}"
+
+  return styles
+
+module.exports = (vr, options) ->
 
   styles = """
   #{normalize}
@@ -105,34 +157,6 @@ module.exports = (vr, options) ->
     font-weight: #{options.headerWeight};
   }
 
-  h1 {
-    font-size: #{h1.fontSize};
-    line-height: #{h1.lineHeight};
-  }
-
-  h2 {
-    font-size: #{h2.fontSize};
-    line-height: #{h2.lineHeight};
-  }
-
-  h3 {
-    font-size: #{h3.fontSize};
-    line-height: #{h3.lineHeight};
-  }
-
-  h4 {
-    font-size: #{h4.fontSize};
-    line-height: #{h4.lineHeight};
-  }
-
-  h5 {
-    font-size: #{h5.fontSize};
-    line-height: #{h5.lineHeight};
-  }
-
-  h6 {
-    font-size: #{h6.fontSize};
-    line-height: #{h6.lineHeight};
-  }
+  #{generateHeaderStyles(vr, options)}
   """
   return styles

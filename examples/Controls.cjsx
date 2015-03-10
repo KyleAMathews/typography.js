@@ -76,7 +76,7 @@ module.exports = React.createClass
     bodyFont: "Lato"
     baseFontSize: 16
     baseLineHeight: 24
-    modularScale: 'diminished fourth'
+    modularScales: 'diminished fourth'
     headerWeight: 400
     showConfiguration: false
 
@@ -123,7 +123,7 @@ module.exports = React.createClass
       <select style={{marginBottom: 8}} onChange={@onBodyFontChange} value={@state.bodyFont}>{bodyFontOptions}</select>
 
       <label style={{display: "block", width: "100%"}}>Modular scale</label>
-      <select style={{marginBottom: 8}} valueLink={@linkState('modularScale')}>{modularScalesOptions}</select>
+      <select style={{marginBottom: 8}} valueLink={@linkState('modularScales')}>{modularScalesOptions}</select>
 
       <label style={{display: "block", width: "100%"}}>Base font size</label>
       <input style={{marginBottom: 8}} type="number" valueLink={@linkState('baseFontSize')} />

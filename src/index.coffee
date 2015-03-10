@@ -2,14 +2,15 @@ React = require 'react'
 objectAssign = require('react/lib/Object.assign')
 VerticalRhythm = require 'compass-vertical-rhythm'
 ms = require 'modularscale'
+isArray = require 'is-array'
 
 module.exports = (options) ->
   defaults =
     baseFontSize: '16px'
     baseLineHeight: '24px'
-    modularScale: [
+    modularScales: [
       'diminished fourth'
-      { 768: 'minor third'}
+      ["768px", 'minor third']
     ]
     googleFonts: [
       {
@@ -31,6 +32,9 @@ module.exports = (options) ->
     boldWeight: 700
 
   options = objectAssign defaults, options
+
+  unless isArray options.modularScale
+    options.modularScale = [options.modularScale]
 
   vr = VerticalRhythm(options)
 
