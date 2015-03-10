@@ -128,6 +128,11 @@ module.exports = (vr, options) ->
     list-style-position: inside;
   }
 
+  ul li,
+  ol li {
+    margin-bottom: #{vr.rhythm(0.25)};
+  }
+
   code,
   kbd,
   pre,
