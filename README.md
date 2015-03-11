@@ -1,39 +1,40 @@
-# React Typography
-Opinionated tools for creating beautiful typography for React sites
+# Typography.js
+An opinionated toolkit for building beautiful typography.
 
 ## Install
-`npm install react-typography`
+`npm install typography`
 
-## Demo
-http://kyleamathews.github.io/react-typography
+## Demo/playground
+http://kyleamathews.github.io/typography.js
+
+## Sharable typography configurations
+You can use the Typography.js playground to design your perfect
+typography setup. If you come up with a really good one, share it with
+the community! We're collecting configurations [in this
+issue](https://github.com/KyleAMathews/typography.js/issues/10).
 
 ## Why
 Typography is a dash of design sense and a cup full of math. Math that's
 tedious and hard to do right in CSS.
 
-React Typography is a declarative way of defining what you'd like your
-typography to be. Changing your base font size or line height or fonts
-doesn't have to be hard. With React Typography it isn't.
+Typography.js provies a declarative way to define your typography.
+Changing your your fonts or base font size shouldn't be hard. With Typography.js it isn't.
 
-## Verticaly Rhythm
+## Vertical Rhythm
 Grids make spatial world orderly
 
-960 or Susy or Bootstrap
+Most web designers and developers are familiar with __horizontal__ grids
+such as 960 or Susy or Bootstrap.
 
-vertical rhythm is grids for vertical
+The tools in this package helps you setup and maintain your vertical grid.
 
-CSS doesn't make this easy
+CSS doesn't make this easy.
 
-articles
-
-It provides sensible defaults for:
-
-* Vertical rhythm
-* Header size hierarchy (using [modular scales](http://www.modularscale.com/))
+TODO: add articles
 
 
 ## To document
 
 * rhythm function
 * adjustFontSizeTo
-* lots of other things
+* modular scale
