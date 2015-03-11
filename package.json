@@ -28,7 +28,7 @@
     "react-headroom": "^1.4.0",
     "react-hot-loader": "^1.1.7",
     "react-html-elements-styleguide": "0.0.11",
-    "react-number-editor": "git://github.com/kyleamathews/react-number-editor#bleeding",
+    "react-number-editor": "^2.1.0",
     "react-responsive-grid": "^0.0.4",
     "react-router": "^0.12.4",
     "react-tangle": "^2.2.0",
