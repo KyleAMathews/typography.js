@@ -10,7 +10,6 @@ module.exports = (options) ->
     baseLineHeight: '24px'
     modularScales: [
       'diminished fourth'
-      ["768px", 'minor third']
     ]
     googleFonts: [
       {
@@ -33,8 +32,8 @@ module.exports = (options) ->
 
   options = objectAssign defaults, options
 
-  unless isArray options.modularScale
-    options.modularScale = [options.modularScale]
+  unless isArray options.modularScales
+    options.modularScales = [options.modularScales]
 
   vr = VerticalRhythm(options)
 
