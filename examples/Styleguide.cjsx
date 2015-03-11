@@ -15,7 +15,7 @@ module.exports = React.createClass
       <div />
     else
       <div>
-        <h1 style={{marginBottom: @state.typography.rhythm(0.25)}}>React.js Typography</h1>
+        <h1 style={{marginBottom: 0}}>Typography.js</h1>
 
         <h3 style={{color: gray(60)}}>An opinionated toolkit for building beautiful typography.</h3>
 
