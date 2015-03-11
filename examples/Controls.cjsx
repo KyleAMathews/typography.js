@@ -35,6 +35,7 @@ ratios =
 fonts = [
   "Abril"
   "Fatface"
+  "Lora"
   "Open Sans"
   "Open Sans Condensed"
   "Crimson Text"
