@@ -1,6 +1,6 @@
 {
-  "name": "react-typography",
-  "description": "Opinionated tools for creating beautiful typography for React sites",
+  "name": "typography",
+  "description": "Opinionated toolkit for building beautiful typography",
   "version": "0.0.7",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
