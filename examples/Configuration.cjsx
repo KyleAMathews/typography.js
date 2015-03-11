@@ -14,7 +14,7 @@ module.exports = React.createClass
     <div className="usage-instructions">
       <h1 style={{marginBottom: @state.typography.rhythm(0.25)}}>React.js Typography</h1>
 
-      <h3 style={{color: gray(60)}}>An opinionated toolkit for building beautiful typography.</h3>
+      <h3 style={{color: gray(60)}}>An opinionated toolkit for building websites with beautiful typography.</h3>
 
       <a style={{color: '#2196F3'}} href="https://github.com/KyleAMathews/react-typography">Code on Github</a>
       <br />

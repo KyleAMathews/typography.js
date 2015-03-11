@@ -1,6 +1,6 @@
 {
   "name": "typography",
-  "description": "Opinionated toolkit for building beautiful typography",
+  "description": "Opinionated toolkit for building websites with beautiful typography",
   "version": "0.0.8",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
