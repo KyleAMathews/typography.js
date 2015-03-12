@@ -6,6 +6,13 @@
   "bugs": {
     "url": "https://github.com/KyleAMathews/react-typography/issues"
   },
+  "dependencies": {
+    "compass-vertical-rhythm": "^1.2.0",
+    "gray-percentage": "^1.0.2",
+    "is-array": "^1.0.1",
+    "is-string": "^1.0.4",
+    "modularscale": "^1.0.1"
+  },
   "devDependencies": {
     "chai": "^2.1.1",
     "cjsx-loader": "^1.3.0",
@@ -60,13 +67,5 @@
     "test": "node_modules/.bin/coffeelint test/* & NODE_ENV=test node_modules/.bin/mocha --recursive --compilers coffee:coffee-script/register -R mocha-unfunk-reporter",
     "test-watch": "NODE_ENV=test node_modules/.bin/mocha -w --recursive --compilers coffee:coffee-script/register -R mocha-unfunk-reporter",
     "watch": "./node_modules/.bin/webpack-dev-server --hot"
-  },
-  "dependencies": {
-    "compass-vertical-rhythm": "^1.2.0",
-    "gray-percentage": "^1.0.2",
-    "is-array": "^1.0.1",
-    "is-string": "^1.0.4",
-    "modularscale": "^1.0.1",
-    "normalize.css": "^3.0.2"
   }
 }
