@@ -46,6 +46,6 @@ module.exports = (options) ->
     fontSizeToPx: vr.adjustFontSizeTo
     fontSizeToMS: (scaler) ->
       baseFont = options.baseFontSize.slice(0, -2)
-      newFontSize = ms(scaler, options.modularScale[0]) * baseFont + "px"
+      newFontSize = ms(scaler, options.modularScales[0]) * baseFont + "px"
       vr.adjustFontSizeTo(newFontSize)
   }
