@@ -66,6 +66,7 @@ fonts = [
   "Neuton"
   "Fanwood Text"
   "Petrona"
+  "Raleway"
 ]
 
 fonts = fonts.sort()
