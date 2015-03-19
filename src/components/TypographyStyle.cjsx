@@ -12,4 +12,7 @@ module.exports = (vr, options) ->
     render: ->
       styles = createStyles(vr, options)
 
-      <style id="react-typography">{styles}</style>
+      <style
+        id="react-typography">
+        dangerouslySetInnerHTML={{__html: styles}}
+      />
