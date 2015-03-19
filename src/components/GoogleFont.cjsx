@@ -17,8 +17,11 @@ module.exports = (options) ->
 
       fontsStr = fonts.join('|')
 
-      <link
-        href="//fonts.googleapis.com/css?family=#{fontsStr}"
-        rel="stylesheet"
-        type="text/css"
-      />
+      if fontsStr
+        <link
+          href="//fonts.googleapis.com/css?family=#{fontsStr}"
+          rel="stylesheet"
+          type="text/css"
+        />
+      else
+        null
