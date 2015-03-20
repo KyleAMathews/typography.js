@@ -37,15 +37,21 @@ module.exports = (options) ->
 
   vr = VerticalRhythm(options)
 
+  styles = require('./utils/createStyles')(vr, options)
+
   return {
     options: options
     GoogleFont: require('./components/GoogleFont')(options)
     TypographyStyle: require('./components/TypographyStyle')(vr, options)
     rhythm: vr.rhythm
-    styles: require('./utils/createStyles')(vr, options)
+    styles: styles
     fontSizeToPx: vr.adjustFontSizeTo
     fontSizeToMS: (scaler) ->
       baseFont = options.baseFontSize.slice(0, -2)
       newFontSize = ms(scaler, options.modularScales[0]) * baseFont + "px"
       vr.adjustFontSizeTo(newFontSize)
+    injectStyles: ->
+      node = document.createElement('style')
+      node.innerHTML = styles
+      document.head.appendChild(node)
   }
