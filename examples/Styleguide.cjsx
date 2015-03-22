@@ -19,7 +19,7 @@ module.exports = React.createClass
 
         <h3 style={{color: gray(60)}}>An opinionated toolkit for building websites with beautiful typography.</h3>
 
-        <a style={{color: '#2196F3'}} href="https://github.com/KyleAMathews/react-typography">Code on Github</a>
+        <a style={{color: '#2196F3'}} href="https://github.com/KyleAMathews/typography.js">Code on Github</a>
         <br />
         <br />
 
