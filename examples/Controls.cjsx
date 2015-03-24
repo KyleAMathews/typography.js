@@ -72,6 +72,7 @@ fonts = [
   "Noto Sans"
   "Anonymous Pro"
   "Fira Sans"
+  "Jura"
 ]
 
 fonts = fonts.sort()
