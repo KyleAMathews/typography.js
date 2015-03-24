@@ -12,7 +12,7 @@ module.exports = React.createClass
 
   render: ->
     <div className="usage-instructions">
-      <h1 style={{marginBottom: @state.typography.rhythm(0.25)}}>Typography.js</h1>
+      <h1 style={{marginBottom: 0}}>Typography.js</h1>
 
       <h3 style={{color: gray(60)}}>An opinionated toolkit for building beautiful typography.</h3>
 
