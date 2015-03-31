@@ -25,7 +25,9 @@ module.exports = (options) ->
     headerFontFamily: "Lato, sans-serif"
     bodyFontFamily: "Lato, sans-serif"
     headerGray: 20
+    headerGrayHue: 0
     bodyGray: 40
+    bodyGrayHue: 0
     headerWeight: 400
     bodyWeight: 400
     boldWeight: 700

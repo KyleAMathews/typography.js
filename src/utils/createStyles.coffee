@@ -74,7 +74,7 @@ module.exports = (vr, options) ->
   }
 
   body {
-    color: #{gray(options.bodyGray)};
+    color: #{gray(options.bodyGray, options.bodyGrayHue)};
     font-family: #{options.bodyFontFamily};
     font-weight: #{options.bodyWeight};
     word-wrap: break-word;
@@ -117,7 +117,7 @@ module.exports = (vr, options) ->
   }
 
   hr {
-    background: #{gray(80)};
+    background: #{gray(80, options.bodyGrayHue)};
     border: none;
     height: 1px;
     margin-bottom: calc(#{vr.rhythm(1)} - 1px);
@@ -157,7 +157,7 @@ module.exports = (vr, options) ->
   h4,
   h5,
   h6 {
-    color: #{gray(options.headerGray)};
+    color: #{gray(options.headerGray, options.headerGrayHue)};
     font-family: #{options.headerFontFamily};
     font-weight: #{options.headerWeight};
   }
