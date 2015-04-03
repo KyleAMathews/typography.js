@@ -68,9 +68,14 @@ module.exports = (vr, options) ->
   #{normalize}
 
   html {
+    box-sizing: border-box;
     font-size: #{vr.establishBaseline().fontSize};
     line-height: #{vr.establishBaseline().lineHeight};
     overflow-y: scroll;
+  }
+
+  *, *:before, *:after {
+    box-sizing: inherit;
   }
 
   body {
