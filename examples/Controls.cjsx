@@ -77,6 +77,8 @@ fonts = [
   "EB Garamond"
   "Cabin"
   "Rufina"
+  "Droid Serif"
+  "Droid Sans"
 ]
 
 fonts = fonts.sort()
