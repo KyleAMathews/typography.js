@@ -36,9 +36,9 @@ App = React.createClass
           <Controls typography={@state.typography}/>
         </div>
         <Container style={{
-          maxWidth: 768
+          maxWidth: 1600
           padding: rhythm(1)
-          paddingLeft: "calc(280px + 24px*2 + #{rhythm(1.5)})"
+          paddingLeft: "calc(280px + #{rhythm(1.5)})"
         }}>
           <RouteHandler/>
         </Container>
