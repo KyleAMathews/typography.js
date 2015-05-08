@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "compass-vertical-rhythm": "^1.2.0",
+    "decamelize": "^1.0.0",
     "gray-percentage": "^1.1.2",
     "is-array": "^1.0.1",
     "is-string": "^1.0.4",
