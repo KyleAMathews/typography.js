@@ -51,6 +51,6 @@ routes = (
   </Route>
 )
 
-Router.run(routes, (Handler) ->
-  React.render(<Handler/>, document.getElementById("mount-point"))
+Router.run(routes, Router.HashLocation, (Root) ->
+  React.render(<Root/>, document.getElementById("mount-point"))
 )

@@ -318,8 +318,8 @@ module.exports = React.createClass
         }
       ]
     })
-
-    $('head').append(React.renderToStaticMarkup(result.GoogleFont()))
+    {GoogleFont} = result
+    $('head').append(React.renderToStaticMarkup(<GoogleFont/>))
 
     setTimeout((=>
       @setState headerFont: font
@@ -347,7 +347,8 @@ module.exports = React.createClass
       ]
     })
 
-    $('head').append(React.renderToStaticMarkup(result.GoogleFont()))
+    {GoogleFont} = result
+    $('head').append(React.renderToStaticMarkup(<GoogleFont/>))
 
     setTimeout((=>
       @setState bodyFont: font

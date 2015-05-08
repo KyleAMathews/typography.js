@@ -29,7 +29,8 @@ if overrides.googleHeaderFont?
     ]
   })
 
-  $('head').append(React.renderToStaticMarkup(result.GoogleFont()))
+  {GoogleFont} = result
+  $('head').append(React.renderToStaticMarkup(React.createFactory(GoogleFont)()))
 
 if overrides.googleBodyFont? and
     overrides.googleBodyFont isnt overrides.googleHeaderFont
@@ -48,7 +49,8 @@ if overrides.googleBodyFont? and
     ]
   })
 
-  $('head').append(React.renderToStaticMarkup(result.GoogleFont()))
+  {GoogleFont} = result
+  $('head').append(React.renderToStaticMarkup(React.createFactory(GoogleFont)()))
 
 config = Immutable.Map(overrides)
 typography = Typography(config.toJS())
