@@ -2,6 +2,7 @@ ms = require 'modularscale'
 normalize = require '../normalize'
 gray = require 'gray-percentage'
 isString = require 'is-string'
+decamelize = require 'decamelize'
 
 generateHeaderStyles = (vr, options) ->
   styles = ""
@@ -59,6 +60,32 @@ generateHeaderStyles = (vr, options) ->
 
     if maxWidth
       styles += "}"
+
+  return styles
+
+generateFontFaceRules = (vr, options) ->
+  styles = ""
+  properties = ""
+
+  # Pop out if there's no font-faces defined.
+  unless options.fontFaces.length > 0
+    return styles
+
+  for fontFace in options.fontFaces
+
+    srcs = for s in fontFace.src
+      "src: #{s};"
+
+    for k,v of fontFace
+      unless k is "src"
+        properties += "#{decamelize(k, '-')}: #{v};\n"
+
+    styles += """
+      @font-face {
+        #{properties}
+        #{srcs.join("\n")}
+      }
+      """
 
   return styles
 
@@ -168,5 +195,6 @@ module.exports = (vr, options) ->
   }
 
   #{generateHeaderStyles(vr, options)}
+  #{generateFontFaceRules(vr, options)}
   """
   return styles

@@ -31,6 +31,7 @@ module.exports = (options) ->
     headerWeight: 400
     bodyWeight: 400
     boldWeight: 700
+    fontFaces: []
 
   options = objectAssign defaults, options
 
