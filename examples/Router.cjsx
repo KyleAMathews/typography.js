@@ -5,9 +5,6 @@ Reflux = require 'reflux'
 {Route, Navigation, DefaultRoute, RouteHandler, Link} = Router
 
 TypographyStore = require './TypographyStore'
-Typography = require '../src/'
-typography = Typography()
-{GoogleFont, TypographyStyle, HTMLStyle, rhythm} = typography
 Styleguide = require './Styleguide'
 Configuration = require './Configuration'
 Controls = require './Controls'

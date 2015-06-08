@@ -9,6 +9,21 @@ $ = require 'jquery'
 
 Typography = require '../src/'
 
+exampleDefaults =
+  googleFonts: [
+    {
+      name: "Lato"
+      styles: [
+        "100"
+        "400"
+        "700"
+        "900"
+      ]
+    }
+  ]
+  headerFontFamily: "Lato, sans-serif"
+  bodyFontFamily: "Lato, sans-serif"
+
 # Parse query string to get any overrides to default typography
 overrides = qs.parse(location.hash.slice(3))
 
@@ -52,7 +67,7 @@ if overrides.googleBodyFont? and
   {GoogleFont} = result
   $('head').append(React.renderToStaticMarkup(React.createFactory(GoogleFont)()))
 
-config = Immutable.Map(overrides)
+config = Immutable.Map(_.extend(exampleDefaults, overrides))
 typography = Typography(config.toJS())
 document.getElementById("react-typography").innerHTML = typography.styles
 

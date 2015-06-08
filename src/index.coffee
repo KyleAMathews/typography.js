@@ -11,22 +11,12 @@ module.exports = (options) ->
     modularScales: [
       'diminished fourth'
     ]
-    googleFonts: [
-      {
-        name: "Lato"
-        styles: [
-          "100"
-          "400"
-          "700"
-          "900"
-        ]
-      },
-    ]
-    headerFontFamily: "Lato, sans-serif"
-    bodyFontFamily: "Lato, sans-serif"
+    googleFonts: []
+    headerFontFamily: '"Helvetica Neue", "Segoe UI", Helvetica, Arial, sans-serif'
+    bodyFontFamily: '"Helvetica Neue", "Segoe UI", Helvetica, Arial, sans-serif'
     headerGray: 20
     headerGrayHue: 0
-    bodyGray: 40
+    bodyGray: 20
     bodyGrayHue: 0
     headerWeight: 400
     bodyWeight: 400
