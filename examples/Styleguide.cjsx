@@ -59,6 +59,11 @@ module.exports = React.createClass
           <li>List Item 1</li>
           <li>List Item 2</li>
           <li>List Item 3</li>
+          <ol>
+            <li>List Item 1</li>
+            <li>List Item 2</li>
+            <li>List Item 3</li>
+          </ol>
         </ol>
 
         <h3>Unordered List</h3>
@@ -66,6 +71,11 @@ module.exports = React.createClass
           <li>List Item 1</li>
           <li>List Item 2</li>
           <li>List Item 3</li>
+          <ul>
+            <li>List Item 1</li>
+            <li>List Item 2</li>
+            <li>List Item 3</li>
+          </ul>
         </ul>
 
         <hr />

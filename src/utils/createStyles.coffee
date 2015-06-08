@@ -112,10 +112,12 @@ module.exports = (vr, options) ->
     word-wrap: break-word;
   }
 
+  /* Make image responsive by default */
   img {
     max-width: 100%;
   }
 
+  /* All block elements get one rhythm of bottom margin. */
   h1,
   h2,
   h3,
@@ -157,12 +159,14 @@ module.exports = (vr, options) ->
 
   ol,
   ul {
-    list-style-position: inside;
+    list-style-position: outside;
+    margin-left: #{vr.rhythm(1.25)};
   }
 
   ul li,
   ol li {
-    margin-bottom: #{vr.rhythm(0.25)};
+    padding-left: #{vr.rhythm(1/4)};
+    text-indent: -#{vr.rhythm(1/4)};
   }
 
   code,
@@ -198,3 +202,4 @@ module.exports = (vr, options) ->
   #{generateFontFaceRules(vr, options)}
   """
   return styles
+
