@@ -12,8 +12,8 @@ module.exports = (options) ->
       'diminished fourth'
     ]
     googleFonts: []
-    headerFontFamily: '"Helvetica Neue", "Segoe UI", Helvetica, Arial, sans-serif'
-    bodyFontFamily: '"Helvetica Neue", "Segoe UI", Helvetica, Arial, sans-serif'
+    headerFontFamily: '"Avenir Next", "Helvetica Neue", "Segoe UI", Helvetica, Arial, sans-serif'
+    bodyFontFamily: '"Avenir Next", "Helvetica Neue", "Segoe UI", Helvetica, Arial, sans-serif'
     headerGray: 20
     headerGrayHue: 0
     bodyGray: 20
