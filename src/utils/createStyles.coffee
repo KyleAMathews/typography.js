@@ -134,6 +134,10 @@ module.exports = (vr, options) ->
   pre,
   table,
   fieldset,
+  blockquote,
+  form,
+  noscript,
+  iframe,
   img,
   hr {
     margin: 0;
