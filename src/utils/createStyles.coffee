@@ -169,8 +169,7 @@ module.exports = (vr, options) ->
 
   ul li,
   ol li {
-    padding-left: #{vr.rhythm(1/4)};
-    text-indent: -#{vr.rhythm(1/4)};
+    padding-left: 0;
   }
 
   code,
