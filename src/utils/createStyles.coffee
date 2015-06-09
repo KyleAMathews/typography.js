@@ -164,7 +164,7 @@ module.exports = (vr, options) ->
   ol,
   ul {
     list-style-position: outside;
-    margin-left: #{vr.rhythm(1.25)};
+    margin-left: #{vr.rhythm(1)};
   }
 
   ul li,
@@ -206,4 +206,5 @@ module.exports = (vr, options) ->
   #{generateFontFaceRules(vr, options)}
   """
   return styles
+
 
