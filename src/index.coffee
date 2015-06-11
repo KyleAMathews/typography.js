@@ -6,14 +6,14 @@ isArray = require 'is-array'
 
 module.exports = (options) ->
   defaults =
-    baseFontSize: '16px'
-    baseLineHeight: '24px'
+    baseFontSize: '18px'
+    baseLineHeight: '28.5px'
     modularScales: [
       'diminished fourth'
     ]
     googleFonts: []
     headerFontFamily: '"Avenir Next", "Helvetica Neue", "Segoe UI", Helvetica, Arial, sans-serif'
-    bodyFontFamily: '"Avenir Next", "Helvetica Neue", "Segoe UI", Helvetica, Arial, sans-serif'
+    bodyFontFamily: 'georgia, serif'
     headerGray: 20
     headerGrayHue: 0
     bodyGray: 20
