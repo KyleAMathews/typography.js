@@ -18,7 +18,7 @@ module.exports = (options) ->
     headerGrayHue: 0
     bodyGray: 20
     bodyGrayHue: 0
-    headerWeight: 400
+    headerWeight: 700
     bodyWeight: 400
     boldWeight: 700
     fontFaces: []
