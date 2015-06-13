@@ -10,6 +10,7 @@ module.exports = (options) ->
     baseLineHeight: '28.5px'
     modularScales: [
       'diminished fourth'
+      ['768px', 'minor third']
     ]
     googleFonts: []
     headerFontFamily: '"Avenir Next", "Helvetica Neue", "Segoe UI", Helvetica, Arial, sans-serif'
