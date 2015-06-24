@@ -10,7 +10,8 @@ module.exports = (styles) ->
     displayName: "TypographyStyle"
 
     render: ->
-      <style
-        id="typography.js"
-        dangerouslySetInnerHTML={{__html: styles}}
-      />
+      React.DOM.style({
+        id: "typography.js"
+        dangerouslySetInnerHTML:
+          __html: styles
+      })

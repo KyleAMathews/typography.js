@@ -1,10 +1,14 @@
 React = require 'react'
-objectAssign = require('react/lib/Object.assign')
+objectAssign = require('object-assign')
 VerticalRhythm = require 'compass-vertical-rhythm'
 ms = require 'modularscale'
 isArray = require 'is-array'
+isObject = require 'isobject'
+copy = require 'shallow-copy'
 
-module.exports = (options) ->
+createStyles = require('./utils/createStyles')
+
+module.exports = test = (options) ->
   defaults =
     baseFontSize: '18px'
     baseLineHeight: '28.5px'
@@ -24,14 +28,23 @@ module.exports = (options) ->
     boldWeight: 700
     fontFaces: []
 
-  options = objectAssign defaults, options
+  options = objectAssign(defaults, options)
+
+  if options.subThemes? and isObject(options.subThemes)
+    for name, theme of options.subThemes
+      options.subThemes[name] = objectAssign(copy(options), theme, rhythmUnit: 'px')
 
   unless isArray options.modularScales
     options.modularScales = [options.modularScales]
 
+  # Create styles for base theme + each subtheme.
   vr = VerticalRhythm(options)
+  styles = createStyles(vr, options)
 
-  styles = require('./utils/createStyles')(vr, options)
+  if options.subThemes? and isObject(options.subThemes)
+    for name, theme of options.subThemes
+      vr = VerticalRhythm(theme)
+      styles += createStyles(vr, theme, name, options)
 
   return {
     options: options
@@ -49,3 +62,11 @@ module.exports = (options) ->
       node.innerHTML = styles
       document.head.appendChild(node)
   }
+
+#console.log test({
+  #baseFontSize: '16px'
+  #subThemes:
+    #blog:
+      #baseFontSize: '18px'
+      #bodyFontFamily: 'Open Sans'
+#}).styles

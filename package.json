@@ -12,7 +12,12 @@
     "gray-percentage": "^1.1.2",
     "is-array": "^1.0.1",
     "is-string": "^1.0.4",
-    "modularscale": "^1.0.2"
+    "isobject": "^1.0.0",
+    "lodash": "^3.9.3",
+    "modularscale": "^1.0.2",
+    "object-assign": "^3.0.0",
+    "shallow-copy": "0.0.1",
+    "shelljs": "^0.5.3"
   },
   "devDependencies": {
     "chai": "^3.0.0",
@@ -30,7 +35,6 @@
     "node-libs-browser": "^0.5.2",
     "object-assign": "^3.0.0",
     "parse-unit": "^1.0.1",
-    "pre-commit": "^1.0.7",
     "qs": "^3.1.0",
     "react": "^0.13.3",
     "react-headroom": "^1.6.1",
@@ -47,8 +51,7 @@
     "webpack-dev-server": "^1.9.0"
   },
   "directories": {
-    "example": "examples",
-    "test": "test"
+    "example": "examples"
   },
   "homepage": "https://github.com/KyleAMathews/react-typography",
   "keywords": [
@@ -65,8 +68,6 @@
     "url": "https://github.com/KyleAMathews/react-typography.git"
   },
   "scripts": {
-    "test": "node_modules/.bin/coffeelint test/* & NODE_ENV=test node_modules/.bin/mocha --recursive --compilers coffee:coffee-script/register -R mocha-unfunk-reporter",
-    "test-watch": "NODE_ENV=test node_modules/.bin/mocha -w --recursive --compilers coffee:coffee-script/register -R mocha-unfunk-reporter",
     "watch": "./node_modules/.bin/webpack-dev-server --hot"
   }
 }

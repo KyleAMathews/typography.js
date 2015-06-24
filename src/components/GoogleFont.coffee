@@ -18,10 +18,10 @@ module.exports = (options) ->
       fontsStr = fonts.join('|')
 
       if fontsStr
-        <link
-          href="//fonts.googleapis.com/css?family=#{fontsStr}"
-          rel="stylesheet"
-          type="text/css"
-        />
+        React.DOM.link({
+          href: "//fonts.googleapis.com/css?family=#{fontsStr}"
+          rel: "stylesheet"
+          type: "text/css"
+        })
       else
         null
