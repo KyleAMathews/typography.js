@@ -5,14 +5,12 @@ createStyles = require '../utils/createStyles'
 # TODO
 # adding or not adding normalize should be an prop
 
-module.exports = (vr, options) ->
+module.exports = (styles) ->
   React.createClass
     displayName: "TypographyStyle"
 
     render: ->
-      styles = createStyles(vr, options)
-
       <style
-        id="react-typography"
+        id="typography.js"
         dangerouslySetInnerHTML={{__html: styles}}
       />

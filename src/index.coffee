@@ -36,7 +36,7 @@ module.exports = (options) ->
   return {
     options: options
     GoogleFont: require('./components/GoogleFont')(options)
-    TypographyStyle: require('./components/TypographyStyle')(vr, options)
+    TypographyStyle: require('./components/TypographyStyle')(styles)
     rhythm: vr.rhythm
     styles: styles
     fontSizeToPx: vr.adjustFontSizeTo
