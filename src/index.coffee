@@ -13,8 +13,13 @@ module.exports = test = (options) ->
     baseFontSize: '18px'
     baseLineHeight: '28.5px'
     modularScales: [
-      'diminished fourth'
-      ['768px', 'minor third']
+      {
+        scale: 'diminished fourth'
+      },
+      {
+        maxWidth: '768px'
+        scale: 'minor third'
+      }
     ]
     googleFonts: []
     headerFontFamily: '"Avenir Next", "Helvetica Neue", "Segoe UI", Helvetica, Arial, sans-serif'
