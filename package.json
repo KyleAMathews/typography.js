@@ -10,14 +10,12 @@
     "compass-vertical-rhythm": "^1.2.0",
     "decamelize": "^1.0.0",
     "gray-percentage": "^1.1.2",
-    "is-array": "^1.0.1",
     "is-string": "^1.0.4",
     "isobject": "^1.0.0",
     "lodash": "^3.9.3",
     "modularscale": "^1.0.2",
     "object-assign": "^3.0.0",
-    "shallow-copy": "0.0.1",
-    "shelljs": "^0.5.3"
+    "shallow-copy": "0.0.1"
   },
   "devDependencies": {
     "chai": "^3.0.0",
