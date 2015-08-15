@@ -13,5 +13,5 @@ module.exports = (styles) ->
       React.DOM.style({
         id: "typography.js"
         dangerouslySetInnerHTML:
-          __html: styles
+          __html: styles()
       })
