@@ -12,7 +12,7 @@ generateFontFaceRules = (vr, options) ->
   properties = ""
 
   # Return if there's no font-faces defined.
-  unless options.fontFaces.length > 0
+  unless options.fontFaces? and options.fontFaces.length > 0
     return styles
 
   for fontFace in options.fontFaces
