@@ -54,8 +54,8 @@ module.exports = test = (options) ->
 
   return {
     options: options
-    GoogleFont: -> require('./components/GoogleFont')(options)
-    TypographyStyle: -> require('./components/TypographyStyle')(-> createStylesString(options))
+    GoogleFont: require('./components/GoogleFont')(options)
+    TypographyStyle: require('./components/TypographyStyle')(-> createStylesString(options))
     rhythm: vr.rhythm
     createStyles: -> createStylesString(options)
     fontSizeToPx: vr.adjustFontSizeTo
