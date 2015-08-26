@@ -64,15 +64,16 @@ module.exports = test = (options) ->
       newFontSize = ms(scaler, options.modularScales[0]) * baseFont + "px"
       vr.adjustFontSizeTo(newFontSize)
     injectStyles: ->
-      # Replace existing
-      if document.getElementByID('typography.js')?
-        styleNode = document.getElementById('typography.js')
-        styleNode.innerHTML = createStylesString(options)
-      else
-        node = document.createElement('style')
-        node.id = "typography.js"
-        node.innerHTML = createStylesString()
-        document.head.appendChild(node)
+      if document?
+        # Replace existing
+        if document.getElementById('typography.js')?
+          styleNode = document.getElementById('typography.js')
+          styleNode.innerHTML = createStylesString(options)
+        else
+          node = document?.createElement('style')
+          node.id = "typography.js"
+          node.innerHTML = createStylesString()
+          document.head.appendChild(node)
   }
 
 #console.log test({
