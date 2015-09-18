@@ -72,7 +72,7 @@ module.exports = test = (options) ->
         else
           node = document?.createElement('style')
           node.id = "typography.js"
-          node.innerHTML = createStylesString()
+          node.innerHTML = createStylesString(options)
           document.head.appendChild(node)
   }
 
