@@ -17,8 +17,8 @@ issue](https://github.com/KyleAMathews/typography.js/issues/10).
 Typography is a dash of design sense and a cup full of math. Math that's
 tedious and hard to do right in CSS.
 
-Typography.js provies a declarative way to define your typography.
-Changing your your fonts or base font size shouldn't be hard. With Typography.js it isn't.
+Typography.js provides a declarative way to define your typography.
+Changing your fonts or base font size shouldn't be hard. With Typography.js it isn't.
 
 ## Vertical Rhythm
 Grids make spatial world orderly
