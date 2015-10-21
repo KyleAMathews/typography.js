@@ -29,7 +29,7 @@
     "immutable": "^3.7.3",
     "jquery": "^2.1.4",
     "mkdirp": "^0.5.1",
-    "mocha": "^2.2.5",
+    "mocha": "^2.3.3",
     "mocha-unfunk-reporter": "^0.4.0",
     "node-cjsx": "^1.0.0",
     "node-libs-browser": "^0.5.2",
