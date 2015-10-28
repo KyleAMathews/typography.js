@@ -35,7 +35,7 @@
     "node-libs-browser": "^0.5.2",
     "parse-unit": "^1.0.1",
     "qs": "^3.1.0",
-    "react": "^0.13.3",
+    "react": "^0.14.1",
     "react-headroom": "^1.6.1",
     "react-hot-loader": "^1.2.7",
     "react-html-elements-styleguide": "0.0.11",
