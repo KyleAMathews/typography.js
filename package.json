@@ -14,7 +14,7 @@
     "isobject": "^1.0.0",
     "lodash": "^3.9.3",
     "modularscale": "^1.0.2",
-    "object-assign": "^3.0.0",
+    "object-assign": "^4.0.1",
     "shallow-copy": "0.0.1"
   },
   "devDependencies": {
