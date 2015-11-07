@@ -18,7 +18,7 @@
     "shallow-copy": "0.0.1"
   },
   "devDependencies": {
-    "chai": "^3.0.0",
+    "chai": "^3.4.1",
     "cjsx-loader": "^2.0.1",
     "coffee-loader": "^0.7.2",
     "coffee-react": "^3.2.0",
