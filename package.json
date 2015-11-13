@@ -39,7 +39,7 @@
     "react-headroom": "^1.6.1",
     "react-hot-loader": "^1.2.7",
     "react-html-elements-styleguide": "0.0.11",
-    "react-number-editor": "=2.1.0",
+    "react-number-editor": "4.0.0",
     "react-responsive-grid": "^0.2.0",
     "react-router": "^0.13.3",
     "react-tangle": "^2.2.0",
