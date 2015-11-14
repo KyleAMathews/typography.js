@@ -24,7 +24,7 @@
     "coffee-react": "^3.2.0",
     "coffee-react-transform": "^3.2.0",
     "coffee-script": "^1.9.3",
-    "css-loader": "^0.21.0",
+    "css-loader": "^0.23.0",
     "deep-equal": "^1.0.0",
     "immutable": "^3.7.3",
     "jquery": "^2.1.4",
