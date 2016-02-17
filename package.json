@@ -12,7 +12,7 @@
     "gray-percentage": "^1.1.2",
     "is-string": "^1.0.4",
     "isobject": "^1.0.0",
-    "lodash": "^3.9.3",
+    "lodash": "^4.5.0",
     "modularscale": "^1.0.2",
     "object-assign": "^3.0.0",
     "shallow-copy": "0.0.1"

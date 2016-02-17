@@ -3,7 +3,7 @@ normalize = require '../normalize'
 gray = require 'gray-percentage'
 isString = require 'is-string'
 decamelize = require 'decamelize'
-map = require 'lodash/collection/map'
+map = require 'lodash/map'
 
 stn = null
 
