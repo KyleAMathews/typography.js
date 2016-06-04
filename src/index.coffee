@@ -33,7 +33,10 @@ module.exports = test = (options) ->
       }
     ]
     googleFonts: []
-    headerFontFamily: '"Avenir Next", "Helvetica Neue", "Segoe UI", Helvetica, Arial, sans-serif'
+    headerFontFamily: '-apple-system, BlinkMacSystemFont,
+                      "Segoe UI", "Roboto", "Oxygen",
+                      "Ubuntu", "Cantarell", "Fira Sans",
+                      "Droid Sans", "Helvetica Neue", sans-serif;'
     bodyFontFamily: 'georgia, serif'
     headerGray: 20
     headerGrayHue: 0
