@@ -18,11 +18,11 @@ generateFontFaceRules = (vr, options) ->
   for fontFace in options.fontFaces
 
     srcs = for s in fontFace.src
-      "src: #{s};"
+      "src:#{s};"
 
     for k,v of fontFace
       unless k is "src"
-        properties += "#{decamelize(k, '-')}: #{v};\n"
+        properties += "#{decamelize(k, '-')}:#{v};\n"
 
     styles += """
       @font-face {
@@ -41,7 +41,7 @@ createStyle = (elements, rules) ->
 
   elementsStr = elements.join(',')
 
-  return "#{elementsStr} {\n#{rules}\n}\n\n"
+  return "#{elementsStr}{#{rules}}"
 
 generateHeaderStyles = (vr, options) ->
   styles = ""
@@ -59,50 +59,50 @@ generateHeaderStyles = (vr, options) ->
     h6 = vr.adjustFontSizeTo(ms(0, scale) * baseFontSize + "px")
 
     if maxWidth
-      styles += "@media only screen and (max-width: #{maxWidth}) {\n"
+      styles += "@media only screen and (max-width:#{maxWidth}) {\n"
 
 
     styles += createStyle([
       'h1'
     ], """
-      font-size: #{h1.fontSize};
-      line-height: #{h1.lineHeight};
+      font-size:#{h1.fontSize};
+      line-height:#{h1.lineHeight};
     """)
 
     styles += createStyle([
       'h2'
     ], """
-      font-size: #{h2.fontSize};
-      line-height: #{h2.lineHeight};
+      font-size:#{h2.fontSize};
+      line-height:#{h2.lineHeight};
     """)
 
     styles += createStyle([
       'h3'
     ], """
-      font-size: #{h3.fontSize};
-      line-height: #{h3.lineHeight};
+      font-size:#{h3.fontSize};
+      line-height:#{h3.lineHeight};
     """)
 
     styles += createStyle([
       'h4'
     ], """
-      font-size: #{h4.fontSize};
-      line-height: #{h4.lineHeight};
+      font-size:#{h4.fontSize};
+      line-height:#{h4.lineHeight};
     """)
 
     styles += createStyle([
       'h5'
     ], """
-      font-size: #{h5.fontSize};
-      line-height: #{h6.lineHeight};
+      font-size:#{h5.fontSize};
+      line-height:#{h6.lineHeight};
     """)
 
 
     styles += createStyle([
       'h6'
     ], """
-      font-size: #{h6.fontSize};
-      line-height: #{h6.lineHeight};
+      font-size:#{h6.fontSize};
+      line-height:#{h6.lineHeight};
     """)
 
     if maxWidth
@@ -126,26 +126,26 @@ module.exports = (vr, options, subThemeName, globalOptions) ->
     #{normalize}
 
     html {
-      box-sizing: border-box;
-      font-size: #{vr.establishBaseline().fontSize};
-      line-height: #{vr.establishBaseline().lineHeight};
-      overflow-y: scroll;
+      box-sizing:border-box;
+      font-size:#{vr.establishBaseline().fontSize};
+      line-height:#{vr.establishBaseline().lineHeight};
+      overflow-y:scroll;
     }
 
     *, *:before, *:after {
-      box-sizing: inherit;
+      box-sizing:inherit;
     }
 
     body {
-      color: #{gray(options.bodyGray, options.bodyGrayHue)};
-      font-family: #{options.bodyFontFamily};
-      font-weight: #{options.bodyWeight};
-      word-wrap: break-word;
+      color:#{gray(options.bodyGray, options.bodyGrayHue)};
+      font-family:#{options.bodyFontFamily};
+      font-weight:#{options.bodyWeight};
+      word-wrap:break-word;
     }
 
     /* Make image responsive by default */
     img {
-      max-width: 100%;
+      max-width:100%;
     }
 
 
@@ -154,12 +154,12 @@ module.exports = (vr, options, subThemeName, globalOptions) ->
   # Create class for sub-theme with rules that override base theme.
   if subThemeName
     styles += """
-      .typography-theme-#{subThemeName} {
-        color: #{gray(options.bodyGray, options.bodyGrayHue)};
-        font-family: #{options.bodyFontFamily};
-        font-weight: #{options.bodyWeight};
-        font-size: #{vr.adjustFontSizeTo(options.baseFontSize, 'auto', globalOptions.baseFontSize).fontSize};
-        line-height: #{vr.adjustFontSizeTo(options.baseFontSize, 'auto', globalOptions.baseFontSize).lineHeight};
+      .typography-theme-#{subThemeName}{
+        color:#{gray(options.bodyGray, options.bodyGrayHue)};
+        font-family:#{options.bodyFontFamily};
+        font-weight:#{options.bodyWeight};
+        font-size:#{vr.adjustFontSizeTo(options.baseFontSize, 'auto', globalOptions.baseFontSize).fontSize};
+        line-height:#{vr.adjustFontSizeTo(options.baseFontSize, 'auto', globalOptions.baseFontSize).lineHeight};
       }
     """
   # All block elements get one rhythm of bottom margin.
@@ -187,46 +187,46 @@ module.exports = (vr, options, subThemeName, globalOptions) ->
     'img'
     'hr'
   ], """
-    margin: 0;
-    margin-bottom: #{vr.rhythm(1)};
-    padding: 0;
+    margin:0;
+    margin-bottom:#{vr.rhythm(1)};
+    padding:0;
   """)
 
   styles += createStyle([
     'blockquote'
   ], """
-    margin: #{vr.rhythm(1)} #{vr.rhythm(2.5)};
+    margin:#{vr.rhythm(1)} #{vr.rhythm(2.5)};
   """)
 
   styles += createStyle([
     'b'
     'strong'
   ], """
-    font-weight: #{options.boldWeight}
+    font-weight:#{options.boldWeight}
   """)
 
   styles += createStyle([
     'hr'
   ], """
-    background: #{gray(80, options.bodyGrayHue)};
-    border: none;
-    height: 1px;
-    margin-bottom: calc(#{vr.rhythm(1)} - 1px);
+    background:#{gray(80, options.bodyGrayHue)};
+    border:none;
+    height:1px;
+    margin-bottom:calc(#{vr.rhythm(1)} - 1px);
   """)
 
   styles += createStyle([
     'ol'
     'ul'
   ], """
-    list-style-position: outside;
-    margin-left: #{vr.rhythm(1)};
+    list-style-position:outside;
+    margin-left:#{vr.rhythm(1)};
   """)
 
   styles += createStyle([
     'ul li'
     'ol li'
   ], """
-    padding-left: 0;
+    padding-left:0;
   """)
 
   styles += createStyle([
@@ -235,22 +235,22 @@ module.exports = (vr, options, subThemeName, globalOptions) ->
     'pre'
     'samp'
   ], """
-    font-size: #{vr.adjustFontSizeTo('85%').fontSize};
-    line-height: #{vr.adjustFontSizeTo('85%').lineHeight};
+    font-size:#{vr.adjustFontSizeTo('85%').fontSize};
+    line-height:#{vr.adjustFontSizeTo('85%').lineHeight};
   """)
 
   styles += createStyle([
     "table"
   ], """
-    font-size: #{vr.adjustFontSizeTo(options.baseFontSize).fontSize};
-    line-height: #{vr.adjustFontSizeTo(options.baseLineHeight).lineHeight};
-    width: 100%;
+    font-size:#{vr.adjustFontSizeTo(options.baseFontSize).fontSize};
+    line-height:#{vr.adjustFontSizeTo(options.baseLineHeight).lineHeight};
+    width:100%;
   """)
 
   styles += createStyle([
     "thead"
   ], """
-    text-align: left;
+    text-align:left;
   """)
 
   styles += createStyle([
@@ -261,9 +261,9 @@ module.exports = (vr, options, subThemeName, globalOptions) ->
     'h5'
     'h6'
   ], """
-    color: #{gray(options.headerGray, options.headerGrayHue)};
-    font-family: #{options.headerFontFamily};
-    font-weight: #{options.headerWeight};
+    color:#{gray(options.headerGray, options.headerGrayHue)};
+    font-family:#{options.headerFontFamily};
+    font-weight:#{options.headerWeight};
   """)
 
   styles += """
@@ -271,4 +271,4 @@ module.exports = (vr, options, subThemeName, globalOptions) ->
   #{generateFontFaceRules(vr, options)}
   """
 
-  return styles
+  return styles.replace(/(\r\n|\n|\r)/gm,"")
