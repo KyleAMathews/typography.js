@@ -3,7 +3,7 @@ import React from 'react'
 // TODO
 // adding or not adding normalize should be an prop
 
-export default styles =>
+module.exports = styles =>
   React.createClass({
     displayName: 'TypographyStyle',
 

@@ -80,7 +80,7 @@ const Typography = function (opts) {
       return vr.adjustFontSizeTo(newFontSize)
     },
     injectStyles () {
-      if (document) {
+      if (typeof document !== 'undefined') {
         // Replace existing
         if (document.getElementById('typography.js')) {
           const styleNode = document.getElementById('typography.js')
@@ -96,7 +96,7 @@ const Typography = function (opts) {
   })
 }
 
-export default Typography
+module.exports = Typography
 
 /*
 console.log(Typography({

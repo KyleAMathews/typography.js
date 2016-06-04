@@ -104,7 +104,7 @@ const generateHeaderStyles = function (vr, options) {
 }
 
 // options is either the global or sub-theme options
-export default function (vr, options, subThemeName, globalOptions) {
+module.exports = (vr, options, subThemeName, globalOptions) => {
   stn = subThemeName
 
   // Create function createStyle(elements=string/array, rules=string, subThemeName="")

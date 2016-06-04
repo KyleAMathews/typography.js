@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default options =>
+module.exports = options =>
   React.createClass({
     displayName: 'GoogleFont',
 
