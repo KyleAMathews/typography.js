@@ -52,12 +52,12 @@ const generateHeaderStyles = function (vr, options) {
     const { maxWidth } = modularScale
     const { scale } = modularScale
 
-    const h1 = vr.adjustFontSizeTo(`${ms(5/5, scale) * baseFontSize}px`)
-    const h2 = vr.adjustFontSizeTo(`${ms(4/5, scale) * baseFontSize}px`)
-    const h3 = vr.adjustFontSizeTo(`${ms(3/5, scale) * baseFontSize}px`)
-    const h4 = vr.adjustFontSizeTo(`${ms(2/5, scale) * baseFontSize}px`)
-    const h5 = vr.adjustFontSizeTo(`${ms(1/5, scale) * baseFontSize}px`)
-    const h6 = vr.adjustFontSizeTo(`${ms(0/5, scale) * baseFontSize}px`)
+    const h1 = vr.adjustFontSizeTo(`${ms(4/4, scale) * baseFontSize}px`)
+    const h2 = vr.adjustFontSizeTo(`${ms(3/4, scale) * baseFontSize}px`)
+    const h3 = vr.adjustFontSizeTo(`${ms(2/4, scale) * baseFontSize}px`)
+    const h4 = vr.adjustFontSizeTo(`${ms(1/4, scale) * baseFontSize}px`)
+    const h5 = vr.adjustFontSizeTo(`${ms(0/4, scale) * baseFontSize}px`)
+    const h6 = vr.adjustFontSizeTo(`${ms(-1/4, scale) * baseFontSize}px`)
 
     if (maxWidth) {
       styles += `@media only screen and (max-width:${maxWidth}) {\n`
