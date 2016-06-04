@@ -60,8 +60,13 @@ module.exports = test = (options) ->
     createStyles: -> createStylesString(options)
     fontSizeToPx: vr.adjustFontSizeTo
     fontSizeToMS: (scaler) ->
+      # TODO detect which modular scale to use based on current screen width.
+      # or better, this should just generate styles and insert them in head
+      # with media queries? Perhaps do something similar to CSS Modules
+      # where this just returns a custom class name that you add to your
+      # component.
       baseFont = options.baseFontSize.slice(0, -2)
-      newFontSize = ms(scaler, options.modularScales[0]) * baseFont + "px"
+      newFontSize = ms(scaler, options.modularScales[0].scale) * baseFont + "px"
       vr.adjustFontSizeTo(newFontSize)
     injectStyles: ->
       if document?
