@@ -25,11 +25,11 @@ module.exports = test = (options) ->
     baseLineHeight: '28.5px'
     modularScales: [
       {
-        scale: 'diminished fourth'
+        scale: 'octave'
       },
       {
+        scale: 'golden'
         maxWidth: '768px'
-        scale: 'minor third'
       }
     ]
     googleFonts: []

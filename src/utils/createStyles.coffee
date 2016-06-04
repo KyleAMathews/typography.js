@@ -51,12 +51,12 @@ generateHeaderStyles = (vr, options) ->
     maxWidth = modularScale.maxWidth
     scale = modularScale.scale
 
-    h1 = vr.adjustFontSizeTo(ms(3, scale) * baseFontSize + "px")
-    h2 = vr.adjustFontSizeTo(ms(2, scale) * baseFontSize + "px")
-    h3 = vr.adjustFontSizeTo(ms(1, scale) * baseFontSize + "px")
-    h4 = vr.adjustFontSizeTo(ms(2/3, scale) * baseFontSize + "px")
-    h5 = vr.adjustFontSizeTo(ms(1/3, scale) * baseFontSize + "px")
-    h6 = vr.adjustFontSizeTo(ms(0, scale) * baseFontSize + "px")
+    h1 = vr.adjustFontSizeTo(ms(5/5, scale) * baseFontSize + "px")
+    h2 = vr.adjustFontSizeTo(ms(4/5, scale) * baseFontSize + "px")
+    h3 = vr.adjustFontSizeTo(ms(3/5, scale) * baseFontSize + "px")
+    h4 = vr.adjustFontSizeTo(ms(2/5, scale) * baseFontSize + "px")
+    h5 = vr.adjustFontSizeTo(ms(1/5, scale) * baseFontSize + "px")
+    h6 = vr.adjustFontSizeTo(ms(0/5, scale) * baseFontSize + "px")
 
     if maxWidth
       styles += "@media only screen and (max-width:#{maxWidth}) {\n"
