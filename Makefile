@@ -10,9 +10,7 @@ release-major:
 	@$(call release,major)
 
 build:
-	@$(BIN)/cjsx -cb -o dist/ src/*
-	@$(BIN)/cjsx -cb -o dist/utils src/utils/*
-	@$(BIN)/cjsx -cb -o dist/components src/components/*
+	npm run build
 	@$(BIN)/webpack
 
 watch:
@@ -20,9 +18,7 @@ watch:
 
 publish:
 	git push --tags origin HEAD:master
-	@$(BIN)/cjsx -cb -o dist/ src/*
-	@$(BIN)/cjsx -cb -o dist/utils src/utils/*
-	@$(BIN)/cjsx -cb -o dist/components src/components/*
+	npm run build
 	npm publish
 
 publish-gh-pages:
