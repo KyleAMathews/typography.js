@@ -1,8 +1,7 @@
 import objectAssign from 'object-assign'
 import verticalRhythm from 'compass-vertical-rhythm'
 import ms from 'modularscale'
-import isObject from 'isobject'
-import copy from 'shallow-copy'
+import isObject from 'lodash/isObject'
 
 import createStyles from './utils/createStyles'
 
@@ -57,7 +56,7 @@ const Typography = function (opts) {
   if ((options.subThemes != null) && isObject(options.subThemes)) {
     options.subThemes.forEach((name) => {
       const theme = options.subThemes[name]
-      options.subThemes[name] = objectAssign(copy(options), theme, { rhythmUnit: 'px' })
+      options.subThemes[name] = objectAssign({}, options, theme, { rhythmUnit: 'px' })
     })
   }
 
