@@ -189,7 +189,7 @@ padding:0;`)
 
   styles += createStyle([
     'blockquote',
-  ], `margin:${vr.rhythm(1)} ${vr.rhythm(2.5)};`)
+  ], `margin:${vr.rhythm(1)} ${vr.rhythm(1)};`)
 
   styles += createStyle([
     'b',
