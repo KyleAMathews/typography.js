@@ -66,34 +66,40 @@ const generateHeaderStyles = function (vr, options) {
 
     styles += createStyle([
       'h1',
-    ], `font-size:${h1.fontSize};
-        line-height:${h1.lineHeight};`)
+    ],
+`font-size:${h1.fontSize};
+line-height:${h1.lineHeight};`)
 
     styles += createStyle([
       'h2',
-    ], `font-size:${h2.fontSize};
-        line-height:${h2.lineHeight};`)
+    ],
+`font-size:${h2.fontSize};
+line-height:${h2.lineHeight};`)
 
     styles += createStyle([
       'h3',
-    ], `font-size:${h3.fontSize};
-        line-height:${h3.lineHeight};`)
+    ],
+`font-size:${h3.fontSize};
+line-height:${h3.lineHeight};`)
 
     styles += createStyle([
       'h4',
-    ], `font-size:${h4.fontSize};
-        line-height:${h4.lineHeight};`)
+    ],
+`font-size:${h4.fontSize};
+line-height:${h4.lineHeight};`)
 
     styles += createStyle([
       'h5',
-    ], `font-size:${h5.fontSize};
-        line-height:${h6.lineHeight};`)
+    ],
+`font-size:${h5.fontSize};
+line-height:${h6.lineHeight};`)
 
 
     styles += createStyle([
       'h6',
-    ], `font-size:${h6.fontSize};
-        line-height:${h6.lineHeight};`)
+    ],
+`font-size:${h6.fontSize};
+line-height:${h6.lineHeight};`)
 
     if (maxWidth) {
       styles += '}'
@@ -116,43 +122,41 @@ module.exports = (vr, options, subThemeName, globalOptions) => {
   // Only the global theme gets these styles.
   if (subThemeName == null) {
     styles = `
-      ${normalize}
-      html {
-        box-sizing:border-box;
-        font-size:${vr.establishBaseline().fontSize};
-        line-height:${vr.establishBaseline().lineHeight};
-        overflow-y:scroll;
-      }
+${normalize}
+html {
+box-sizing:border-box;
+font-size:${vr.establishBaseline().fontSize};
+line-height:${vr.establishBaseline().lineHeight};
+overflow-y:scroll;
+}
 
-      *, *:before, *:after {
-        box-sizing:inherit;
-      }
+*, *:before, *:after {
+box-sizing:inherit;
+}
 
-      body {
-        color:${gray(options.bodyGray, options.bodyGrayHue)};
-        font-family:${options.bodyFontFamily};
-        font-weight:${options.bodyWeight};
-        word-wrap:break-word;
-      }
+body {
+color:${gray(options.bodyGray, options.bodyGrayHue)};
+font-family:${options.bodyFontFamily};
+font-weight:${options.bodyWeight};
+word-wrap:break-word;
+}
 
-      /* Make image responsive by default */
-      img {
-        max-width:100%;
-      }
+img {
+max-width:100%;
+}
     `
   }
 
   // Create class for sub-theme with rules that override base theme.
   if (subThemeName) {
-    styles += `
-      .typography-theme-${subThemeName}{
-        color:${gray(options.bodyGray, options.bodyGrayHue)};
-        font-family:${options.bodyFontFamily};
-        font-weight:${options.bodyWeight};
-        font-size:${vr.adjustFontSizeTo(options.baseFontSize, 'auto', globalOptions.baseFontSize).fontSize};
-        line-height:${vr.adjustFontSizeTo(options.baseFontSize, 'auto', globalOptions.baseFontSize).lineHeight};
-      }
-    `
+    styles +=
+`.typography-theme-${subThemeName}{
+color:${gray(options.bodyGray, options.bodyGrayHue)};
+font-family:${options.bodyFontFamily};
+font-weight:${options.bodyWeight};
+font-size:${vr.adjustFontSizeTo(options.baseFontSize, 'auto', globalOptions.baseFontSize).fontSize};
+line-height:${vr.adjustFontSizeTo(options.baseFontSize, 'auto', globalOptions.baseFontSize).lineHeight};
+}`
   }
   // All block elements get one rhythm of bottom margin.
   styles += createStyle([
@@ -178,9 +182,10 @@ module.exports = (vr, options, subThemeName, globalOptions) => {
     'iframe',
     'img',
     'hr',
-  ], `margin:0;
-      margin-bottom:${vr.rhythm(1)};
-      padding:0;`)
+  ],
+`margin:0;
+margin-bottom:${vr.rhythm(1)};
+padding:0;`)
 
   styles += createStyle([
     'blockquote',
@@ -193,16 +198,18 @@ module.exports = (vr, options, subThemeName, globalOptions) => {
 
   styles += createStyle([
     'hr',
-  ], `background:${gray(80, options.bodyGrayHue)};
-      border:none;
-      height:1px;
-      margin-bottom:calc(${vr.rhythm(1)} - 1px);`)
+  ],
+`background:${gray(80, options.bodyGrayHue)};
+border:none;
+height:1px;
+margin-bottom:calc(${vr.rhythm(1)} - 1px);`)
 
   styles += createStyle([
     'ol',
     'ul',
-  ], `list-style-position:outside;
-      margin-left:${vr.rhythm(1)};`)
+  ],
+`list-style-position:outside;
+margin-left:${vr.rhythm(1)};`)
 
   styles += createStyle([
     'ul li',
@@ -214,14 +221,17 @@ module.exports = (vr, options, subThemeName, globalOptions) => {
     'kbd',
     'pre',
     'samp',
-  ], `font-size:${vr.adjustFontSizeTo('85%').fontSize};
-      line-height:${vr.adjustFontSizeTo('85%').lineHeight};`)
+  ],
+`font-size:${vr.adjustFontSizeTo('85%').fontSize};
+line-height:${vr.adjustFontSizeTo('85%').lineHeight};`)
 
   styles += createStyle([
     'table',
-  ], `font-size:${vr.adjustFontSizeTo(options.baseFontSize).fontSize};
-      line-height:${vr.adjustFontSizeTo(options.baseLineHeight).lineHeight};
-      width:100%;`)
+  ],
+`font-size:${vr.adjustFontSizeTo(options.baseFontSize).fontSize};
+line-height:${vr.adjustFontSizeTo(options.baseLineHeight).lineHeight};
+width:100%;`
+                       )
 
   styles += createStyle([
     'thead',
@@ -234,12 +244,14 @@ module.exports = (vr, options, subThemeName, globalOptions) => {
     'h4',
     'h5',
     'h6',
-  ], `color:${gray(options.headerGray, options.headerGrayHue)};
-      font-family:${options.headerFontFamily};
-      font-weight:${options.headerWeight};`)
+  ],
+`color:${gray(options.headerGray, options.headerGrayHue)};
+font-family:${options.headerFontFamily};
+font-weight:${options.headerWeight};`)
 
-  styles += `${generateHeaderStyles(vr, options)}
-             ${generateFontFaceRules(vr, options)}`
+  styles +=
+`${generateHeaderStyles(vr, options)}
+${generateFontFaceRules(vr, options)}`
 
   return styles.replace(/(\r\n|\n|\r)/gm, '')
 }
