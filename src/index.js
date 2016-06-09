@@ -2,6 +2,7 @@ import objectAssign from 'object-assign'
 import verticalRhythm from 'compass-vertical-rhythm'
 import ms from 'modularscale'
 import isObject from 'lodash/isObject'
+import keys from 'lodash/keys'
 
 import createStyles from './utils/createStyles'
 
@@ -11,7 +12,7 @@ const createStylesString = function (options) {
   let styles = createStyles(vr, options)
 
   if ((options.subThemes != null) && isObject(options.subThemes)) {
-    options.subThemes.forEach((name) => {
+    keys(options.subThemes).forEach((name) => {
       const theme = options.subThemes[name]
       vr = verticalRhythm(theme)
       styles += createStyles(vr, theme, name, options)
@@ -54,7 +55,7 @@ const Typography = function (opts) {
   const options = objectAssign(defaults, opts)
 
   if ((options.subThemes != null) && isObject(options.subThemes)) {
-    options.subThemes.forEach((name) => {
+    keys(options.subThemes).forEach((name) => {
       const theme = options.subThemes[name]
       options.subThemes[name] = objectAssign({}, options, theme, { rhythmUnit: 'px' })
     })
