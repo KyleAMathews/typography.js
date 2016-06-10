@@ -135,15 +135,20 @@ module.exports = React.createClass
         fontFamily: "Source Sans Pro"
       }}>
         <input
+          id="vRythmToggle"
           onChange={@handleShowGridOverlayChange}
           style={{marginBottom: 8}}
           checked={@state.showVerticalRhythmGrid}
           type="checkbox"
         />
-        {' '}<label>Show vertical rhythm grid</label>
+        {' '}<label htmlFor="vRythmToggle">Show vertical rhythm grid</label>
 
-        <label style={{display: "block", width: "100%"}}>Header font</label>
+        <label
+          htmlFor="headerFontSelect"
+          style={{display: "block", width: "100%"}}
+        >Header font</label>
         <select
+          id="headerFontSelect"
           style={{marginBottom: 8}}
           onChange={@onHeaderFontChange}
           value={@state.headerFont}
@@ -152,11 +157,13 @@ module.exports = React.createClass
         </select>
 
         <label
+          htmlFor="headerWeightSelect"
           style={{display: "block", width: "100%"}}
         >
           Header weight (not all fonts have all weights)
         </label>
         <select
+          id="headerWeightSelect"
           style={{marginBottom: 8}}
           value={@state.headerWeight}
           onChange={@handleHeaderWeightChange}
@@ -167,8 +174,12 @@ module.exports = React.createClass
           <option key=900 value=900>900</option>
         </select>
 
-        <label style={{display: "block", width: "100%"}}>Body font</label>
+        <label
+          htmlFor="bodyFontSelect"
+          style={{display: "block", width: "100%"}}
+        >Body font</label>
         <select
+          id="bodyFontSelect"
           style={{marginBottom: 8}}
           value={@state.bodyFont}
           onChange={@onBodyFontChange}
@@ -176,8 +187,12 @@ module.exports = React.createClass
           {bodyFontOptions}
         </select>
 
-        <label style={{display: "block", width: "100%"}}>Modular scale</label>
+        <label
+          htmlFor="modularScaleSelect"
+          style={{display: "block", width: "100%"}}
+        >Modular scale</label>
         <select
+          id="modularScaleSelect"
           style={{marginBottom: 8}}
           value={@state.modularScales[0]}
           onChange={@handleModularScaleChange}
