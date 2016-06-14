@@ -1,8 +1,10 @@
+// @flow
 import ms from 'modularscale'
 import normalize from '../normalize'
 import gray from 'gray-percentage'
 import decamelize from 'decamelize'
 import map from 'lodash/map'
+import each from 'lodash/forEach'
 
 let stn = null
 
@@ -17,12 +19,11 @@ const generateFontFaceRules = function (vr, options) {
   for (let i = 0; i < options.fontFaces.length; i++) {
     const fontFace = options.fontFaces[i]
     const srcs = fontFace.src.map(s => `src:${s};`)
-    for (let k in fontFace) {
-      const v = fontFace[k]
+    each(fontFace, (v, k) => { // eslint-disable-line
       if (k !== 'src') {
         properties += `${decamelize(k, '-')}:${v};\n`
       }
-    }
+    })
     styles += `@font-face {
   ${properties}
   ${srcs.join('\n')}
@@ -32,10 +33,12 @@ const generateFontFaceRules = function (vr, options) {
   return styles
 }
 
-const createStyle = function (elements, rules) {
+const createStyle = function (els, rules) {
+  let elements
   if (stn != null) {
-    elements = map(elements, element => `.typography-theme-${stn} ${element}`
-    )
+    elements = map(els, element => `.typography-theme-${stn} ${element}`)
+  } else {
+    elements = els
   }
 
   const elementsStr = elements.join(',')
@@ -149,13 +152,14 @@ max-width:100%;
 
   // Create class for sub-theme with rules that override base theme.
   if (subThemeName) {
+    const fontObj = vr.adjustFontSizeTo(options.baseFontSize, 'auto', globalOptions.baseFontSize)
     styles +=
 `.typography-theme-${subThemeName}{
 color:${gray(options.bodyGray, options.bodyGrayHue)};
 font-family:${options.bodyFontFamily};
 font-weight:${options.bodyWeight};
-font-size:${vr.adjustFontSizeTo(options.baseFontSize, 'auto', globalOptions.baseFontSize).fontSize};
-line-height:${vr.adjustFontSizeTo(options.baseFontSize, 'auto', globalOptions.baseFontSize).lineHeight};
+font-size:${fontObj.fontSize};
+line-height:${fontObj.lineHeight};
 }`
   }
   // All block elements get one rhythm of bottom margin.
