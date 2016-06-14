@@ -3,6 +3,9 @@
   "extends": [
     "eslint-config-airbnb",
   ],
+  "plugins": [
+    "flow-vars"
+  ],
   "rules": {
     "indent": [2, 2, {"SwitchCase": 1}],
     "no-console": [0],

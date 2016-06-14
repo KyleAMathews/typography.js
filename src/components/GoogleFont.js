@@ -1,6 +1,7 @@
+// @flow
 import React from 'react'
 
-module.exports = options =>
+module.exports = (options: any) =>
   React.createClass({
     displayName: 'GoogleFont',
 

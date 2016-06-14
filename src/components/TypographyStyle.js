@@ -1,9 +1,10 @@
+// @flow
 import React from 'react'
 
 // TODO
 // adding or not adding normalize should be an prop
 
-module.exports = styles =>
+module.exports = (styles: any) =>
   React.createClass({
     displayName: 'TypographyStyle',
 

@@ -110,7 +110,7 @@ line-height:${h6.lineHeight};`)
 }
 
 // options is either the global or sub-theme options
-module.exports = (vr, options, subThemeName, globalOptions) => {
+module.exports = (vr: any, options: any, subThemeName: ?string, globalOptions: any = options) => {
   stn = subThemeName
 
   // Create function createStyle(elements=string/array, rules=string, subThemeName="")

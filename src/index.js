@@ -1,3 +1,4 @@
+// @flow
 import objectAssign from 'object-assign'
 import verticalRhythm from 'compass-vertical-rhythm'
 import ms from 'modularscale'
@@ -9,7 +10,7 @@ import createStyles from './utils/createStyles'
 const createStylesString = function (options) {
   // Create styles for base theme + each subtheme.
   let vr = verticalRhythm(options)
-  let styles = createStyles(vr, options)
+  let styles = createStyles(vr, options, undefined, options)
 
   if ((options.subThemes != null) && isObject(options.subThemes)) {
     keys(options.subThemes).forEach((name) => {
@@ -22,7 +23,29 @@ const createStylesString = function (options) {
   return styles
 }
 
-const Typography = function (opts) {
+type ModularScaleType = {scale: string; maxWidth: ?string}
+type GoogleFontsType = {name: string; styles: string[]}
+type FontFaceType = {fontFamily: string; fontWeight: number; src: string[]}
+type OptionsType = {
+  baseFontSize?: string,
+  baseLineHeight?: string,
+  modularScales?: ModularScaleType[],
+  googleFonts?: GoogleFontsType[],
+  headerFontFamily?: string,
+  bodyFontFamily?: string,
+  headerGray?: number,
+  headerGrayHue?: number,
+  bodyGray?: number,
+  bodyGrayHue?: number,
+  headerWeight?: number,
+  bodyWeight?: number,
+  boldWeight?: number,
+  fontFaces?: FontFaceType[],
+  subThemes: any,
+}
+
+
+const Typography = function (opts: OptionsType) {
   const defaults = {
     baseFontSize: '18px',
     baseLineHeight: '28.5px',
@@ -70,7 +93,7 @@ const Typography = function (opts) {
     rhythm: vr.rhythm,
     createStyles () { return createStylesString(options) },
     fontSizeToPx: vr.adjustFontSizeTo,
-    fontSizeToMS (scaler) {
+    fontSizeToMS (scaler: number) {
       // TODO detect which modular scale to use based on current screen width.
       // or better, this should just generate styles and insert them in head
       // with media queries? Perhaps do something similar to CSS Modules
