@@ -1,6 +1,6 @@
 // @flow
 import ms from 'modularscale'
-import normalize from '../normalize'
+import normalize from './normalize'
 import gray from 'gray-percentage'
 import decamelize from 'decamelize'
 import map from 'lodash/map'
