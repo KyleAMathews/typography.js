@@ -78,6 +78,7 @@
   "scripts": {
     "build": "babel src --out-dir dist/",
     "lint": "eslint --ext .js,.jsx --ignore-path .gitignore .",
-    "watch": "babel -w src --out-dir dist/"
+    "watch": "babel -w src --out-dir dist/",
+    "flow": "flow"
   }
 }
