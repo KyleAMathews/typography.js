@@ -8,17 +8,8 @@ import keys from 'lodash/keys'
 import createStyles from './utils/createStyles'
 
 const createStylesString = function (options) {
-  // Create styles for base theme + each subtheme.
   let vr = verticalRhythm(options)
-  let styles = createStyles(vr, options, undefined, options)
-
-  if ((options.subThemes != null) && isObject(options.subThemes)) {
-    keys(options.subThemes).forEach((name) => {
-      const theme = options.subThemes[name]
-      vr = verticalRhythm(theme)
-      styles += createStyles(vr, theme, name, options)
-    })
-  }
+  let styles = createStyles(vr, options)
 
   return styles
 }
@@ -41,7 +32,6 @@ type OptionsType = {
   bodyWeight?: number | string,
   boldWeight?: number | string,
   fontFaces?: FontFaceType[],
-  subThemes: any,
 }
 
 
@@ -76,13 +66,6 @@ const Typography = function (opts: OptionsType) {
   }
 
   const options = objectAssign(defaults, opts)
-
-  if ((options.subThemes != null) && isObject(options.subThemes)) {
-    keys(options.subThemes).forEach((name) => {
-      const theme = options.subThemes[name]
-      options.subThemes[name] = objectAssign({}, options, theme, { rhythmUnit: 'px' })
-    })
-  }
 
   const vr = verticalRhythm(options)
 
@@ -125,11 +108,5 @@ module.exports = Typography
 /*
 console.log(Typography({
   baseFontSize: '16px',
-  subThemes: {
-    blog: {
-      baseFontSize: '18px',
-      bodyFontFamily: 'Open Sans',
-    },
-  },
 }).createStyles())
 */

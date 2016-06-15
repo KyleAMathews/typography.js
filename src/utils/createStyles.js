@@ -6,8 +6,6 @@ import decamelize from 'decamelize'
 import map from 'lodash/map'
 import each from 'lodash/forEach'
 
-let stn = null
-
 const generateFontFaceRules = function (vr, options) {
   let styles = ''
   let properties = ''
@@ -33,14 +31,7 @@ const generateFontFaceRules = function (vr, options) {
   return styles
 }
 
-const createStyle = function (els, rules) {
-  let elements
-  if (stn != null) {
-    elements = map(els, element => `.typography-theme-${stn} ${element}`)
-  } else {
-    elements = els
-  }
-
+const createStyle = function (elements, rules) {
   const elementsStr = elements.join(',')
 
   return `${elementsStr}{${rules}}`
@@ -112,19 +103,11 @@ line-height:${h6.lineHeight};`)
   return styles
 }
 
-// options is either the global or sub-theme options
-module.exports = (vr: any, options: any, subThemeName: ?string, globalOptions: any = options) => {
-  stn = subThemeName
-
+module.exports = (vr: any, options: any) => {
   // Create function createStyle(elements=string/array, rules=string, subThemeName="")
-  // if there's a themeName, each rule is prefixed with that.
-  // Don't create global rules for sub-themes.
-  //
   let styles = ''
 
-  // Only the global theme gets these styles.
-  if (subThemeName == null) {
-    styles = `
+  styles = `
 ${normalize}
 html {
 box-sizing:border-box;
@@ -148,20 +131,6 @@ img {
 max-width:100%;
 }
     `
-  }
-
-  // Create class for sub-theme with rules that override base theme.
-  if (subThemeName) {
-    const fontObj = vr.adjustFontSizeTo(options.baseFontSize, 'auto', globalOptions.baseFontSize)
-    styles +=
-`.typography-theme-${subThemeName}{
-color:${gray(options.bodyGray, options.bodyGrayHue)};
-font-family:${options.bodyFontFamily};
-font-weight:${options.bodyWeight};
-font-size:${fontObj.fontSize};
-line-height:${fontObj.lineHeight};
-}`
-  }
   // All block elements get one rhythm of bottom margin.
   styles += createStyle([
     'h1',
