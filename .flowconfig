@@ -1,5 +1,5 @@
 [ignore]
-
+.*/website/.*
 [include]
 
 [libs]
