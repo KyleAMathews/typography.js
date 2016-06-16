@@ -3,8 +3,11 @@ import ms from 'modularscale'
 import normalize from './normalize'
 import gray from 'gray-percentage'
 import decamelize from 'decamelize'
-import map from 'lodash/map'
+import set from 'lodash/set'
 import each from 'lodash/forEach'
+import reduce from 'lodash/reduce'
+import isArray from 'lodash/isArray'
+import isObject from 'lodash/isObject'
 
 const generateFontFaceRules = function (vr, options) {
   let styles = ''
@@ -31,108 +34,63 @@ const generateFontFaceRules = function (vr, options) {
   return styles
 }
 
-const createStyle = function (elements, rules) {
-  const elementsStr = elements.join(',')
-
-  return `${elementsStr}{${rules}}`
-}
-
-const generateHeaderStyles = function (vr, options) {
-  let styles = ''
-  const baseFontSize = options.baseFontSize.slice(0, -2)
-
-  for (let i = 0; i < options.modularScales.length; i++) {
-    const modularScale = options.modularScales[i]
-    const { maxWidth } = modularScale
-    const { scale } = modularScale
-
-    const h1 = vr.adjustFontSizeTo(`${ms(4/4, scale) * baseFontSize}px`)
-    const h2 = vr.adjustFontSizeTo(`${ms(3/4, scale) * baseFontSize}px`)
-    const h3 = vr.adjustFontSizeTo(`${ms(2/4, scale) * baseFontSize}px`)
-    const h4 = vr.adjustFontSizeTo(`${ms(1/4, scale) * baseFontSize}px`)
-    const h5 = vr.adjustFontSizeTo(`${ms(0/4, scale) * baseFontSize}px`)
-    const h6 = vr.adjustFontSizeTo(`${ms(-1/4, scale) * baseFontSize}px`)
-
-    if (maxWidth) {
-      styles += `@media only screen and (max-width:${maxWidth}) {\n`
-    }
-
-
-    styles += createStyle([
-      'h1',
-    ],
-`font-size:${h1.fontSize};
-line-height:${h1.lineHeight};`)
-
-    styles += createStyle([
-      'h2',
-    ],
-`font-size:${h2.fontSize};
-line-height:${h2.lineHeight};`)
-
-    styles += createStyle([
-      'h3',
-    ],
-`font-size:${h3.fontSize};
-line-height:${h3.lineHeight};`)
-
-    styles += createStyle([
-      'h4',
-    ],
-`font-size:${h4.fontSize};
-line-height:${h4.lineHeight};`)
-
-    styles += createStyle([
-      'h5',
-    ],
-`font-size:${h5.fontSize};
-line-height:${h6.lineHeight};`)
-
-
-    styles += createStyle([
-      'h6',
-    ],
-`font-size:${h6.fontSize};
-line-height:${h6.lineHeight};`)
-
-    if (maxWidth) {
-      styles += '}'
-    }
+const setStyle = (styles={}, els, rules) => {
+  let elements
+  if (!isArray(els)) {
+    elements = [els]
+  } else {
+    elements = els
   }
-
+  each(elements, (element) => {
+    each(rules, (value, prop) => {
+      set(styles, `${element}.${prop}`, value)
+    })
+  })
   return styles
 }
 
+const compileStyles = (styles) =>
+  reduce(styles, ((stylesStr, ruleSet, selector) => {
+    stylesStr += `${selector}{` // eslint-disable-line
+    each(ruleSet, ((value, property) => {
+      if (isObject(value)) {
+        const newObject = {}
+        newObject[property] = value
+        stylesStr += compileStyles(newObject) // eslint-disable-line
+      } else {
+        stylesStr += `${decamelize(property, '-')}:${value};` // eslint-disable-line
+      }
+    }))
+    stylesStr += '}' // eslint-disable-line
+    return stylesStr
+  }), '')
+
 module.exports = (vr: any, options: any) => {
-  // Create function createStyle(elements=string/array, rules=string, subThemeName="")
-  let styles = ''
-
-  styles = `
-${normalize}
-html {
-box-sizing:border-box;
-font-size:${vr.establishBaseline().fontSize};
-line-height:${vr.establishBaseline().lineHeight};
-overflow-y:scroll;
-}
-
-*, *:before, *:after {
-box-sizing:inherit;
-}
-
-body {
-color:${gray(options.bodyGray, options.bodyGrayHue)};
-font-family:${options.bodyFontFamily};
-font-weight:${options.bodyWeight};
-word-wrap:break-word;
-}
-
-img {
-max-width:100%;
-}
-    `
+  let styles = {}
+  // Base HTML styles.
+  styles = setStyle(styles, 'html', {
+    boxSizing: 'border-box',
+    fontSize: vr.establishBaseline().fontSize,
+    lineHeight: vr.establishBaseline().lineHeight,
+    overflowY: 'scroll',
+  })
+  // box-sizing reset.
+  styles = setStyle(styles, ['*', '*:before', '*:after'], {
+    boxSizing: 'inherit',
+  })
+  // Base body styles.
+  styles = setStyle(styles, 'body', {
+    color: gray(options.bodyGray, options.bodyGrayHue),
+    fontFamily: options.bodyFontFamily,
+    fontWeight: options.bodyWeight,
+    wordWrap: 'break-word',
+  })
+  // Make images responsive.
+  styles = setStyle(styles, 'img', {
+    maxWidth: '100%',
+  })
   // All block elements get one rhythm of bottom margin.
-  styles += createStyle([
+  styles = setStyle(styles, [
     'h1',
     'h2',
     'h3',
@@ -155,76 +113,89 @@ max-width:100%;
     'iframe',
     'img',
     'hr',
-  ],
-`margin:0;
-margin-bottom:${vr.rhythm(1)};
-padding:0;`)
+  ], {
+    // Reset margin/padding to 0.
+    margin: 0,
+    padding: 0,
+    marginBottom: vr.rhythm(1),
+  })
+  // Basic blockquote styles.
+  styles = setStyle(styles, 'blockquote', {
+    marginTop: vr.rhythm(1),
+    marginRight: vr.rhythm(1),
+    marginBottom: vr.rhythm(1),
+    marginLeft: vr.rhythm(1),
+  })
+  // b, strong.
+  styles = setStyle(styles, ['b', 'strong'], {
+    fontWeight: options.boldWeight,
+  })
+  // hr
+  styles = setStyle(styles, 'hr', {
+    background: gray(80, options.bodyGrayHue),
+    border: 'none',
+    height: '1px',
+    marginBottom: `calc(${vr.rhythm(1)} - 1px)`,
+  })
+  // ol, ul
+  styles = setStyle(styles, ['ol', 'ul'], {
+    listStylePosition: 'outside',
+    marginLeft: vr.rhythm(1),
+  })
+  // Remove default padding on list items (we'll set that later).
+  styles = setStyle(styles, ['ol li', 'ul li'], {
+    paddingLeft: 0,
+  })
+  // table
+  styles = setStyle(styles, ['table'], {
+    ...vr.adjustFontSizeTo(options.baseFontSize),
+    width: '100%',
+  })
+  // thead
+  styles = setStyle(styles, ['thead'], {
+    textAlign: 'left',
+  })
+  // Make generally smaller elements, smaller.
+  styles = setStyle(styles, ['code', 'kbd', 'pre', 'samp'], {
+    ...vr.adjustFontSizeTo('85%'),
+  })
+  // Create styles for headers.
+  const baseFontSize = options.baseFontSize.slice(0, -2)
+  styles = setStyle(styles, ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'], {
+    color: gray(options.headerGray, options.headerGrayHue),
+    fontFamily: options.headerFontFamily,
+    fontWeight: options.headerWeight,
+  })
+  // Loop through each modular scale and add media query as necessary.
+  each(options.modularScales, (modularScale) => {
+    const { maxWidth } = modularScale
+    const { scale } = modularScale
 
-  styles += createStyle([
-    'blockquote',
-  ], `margin:${vr.rhythm(1)} ${vr.rhythm(1)};`)
+    const h1 = vr.adjustFontSizeTo(`${ms(4/4, scale) * baseFontSize}px`)
+    const h2 = vr.adjustFontSizeTo(`${ms(3/4, scale) * baseFontSize}px`)
+    const h3 = vr.adjustFontSizeTo(`${ms(2/4, scale) * baseFontSize}px`)
+    const h4 = vr.adjustFontSizeTo(`${ms(1/4, scale) * baseFontSize}px`)
+    const h5 = vr.adjustFontSizeTo(`${ms(0/4, scale) * baseFontSize}px`)
+    const h6 = vr.adjustFontSizeTo(`${ms(-1/4, scale) * baseFontSize}px`)
 
-  styles += createStyle([
-    'b',
-    'strong',
-  ], `font-weight:${options.boldWeight}`)
+    let media
+    if (maxWidth) {
+      media = `@media only screen and (max-width:${maxWidth})`
+    }
+    each([h1, h2, h3, h4, h5, h6], (header, i) => {
+      if (media) {
+        styles = set(styles, `${media}.h${i + 1}.fontSize`, header.fontSize)
+        styles = set(styles, `${media}.h${i + 1}.lineHeight`, header.lineHeight)
+      } else {
+        styles = set(styles, `h${i + 1}.fontSize`, header.fontSize)
+        styles = set(styles, `h${i + 1}.lineHeight`, header.lineHeight)
+      }
+    })
+  })
+  // Compile styles to string.
+  let stylesStr = compileStyles(styles)
+  stylesStr += `${generateFontFaceRules(vr, options)}`
 
-  styles += createStyle([
-    'hr',
-  ],
-`background:${gray(80, options.bodyGrayHue)};
-border:none;
-height:1px;
-margin-bottom:calc(${vr.rhythm(1)} - 1px);`)
-
-  styles += createStyle([
-    'ol',
-    'ul',
-  ],
-`list-style-position:outside;
-margin-left:${vr.rhythm(1)};`)
-
-  styles += createStyle([
-    'ul li',
-    'ol li',
-  ], 'padding-left:0;')
-
-  styles += createStyle([
-    'code',
-    'kbd',
-    'pre',
-    'samp',
-  ],
-`font-size:${vr.adjustFontSizeTo('85%').fontSize};
-line-height:${vr.adjustFontSizeTo('85%').lineHeight};`)
-
-  styles += createStyle([
-    'table',
-  ],
-`font-size:${vr.adjustFontSizeTo(options.baseFontSize).fontSize};
-line-height:${vr.adjustFontSizeTo(options.baseLineHeight).lineHeight};
-width:100%;`
-                       )
-
-  styles += createStyle([
-    'thead',
-  ], 'text-align:left;')
-
-  styles += createStyle([
-    'h1',
-    'h2',
-    'h3',
-    'h4',
-    'h5',
-    'h6',
-  ],
-`color:${gray(options.headerGray, options.headerGrayHue)};
-font-family:${options.headerFontFamily};
-font-weight:${options.headerWeight};`)
-
-  styles +=
-`${generateHeaderStyles(vr, options)}
-${generateFontFaceRules(vr, options)}`
-
-  return styles.replace(/(\r\n|\n|\r)/gm, '')
+  stylesStr = `${normalize}${stylesStr}`
+  return stylesStr
 }
