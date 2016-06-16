@@ -34,7 +34,7 @@ const generateFontFaceRules = function (vr, options) {
   return styles
 }
 
-const setStyle = (styles={}, els, rules) => {
+const setStyles = (styles: Object = {}, els: string | string[], rules: Object) => {
   let elements
   if (!isArray(els)) {
     elements = [els]
@@ -68,29 +68,29 @@ const compileStyles = (styles) =>
 module.exports = (vr: any, options: any) => {
   let styles = {}
   // Base HTML styles.
-  styles = setStyle(styles, 'html', {
+  styles = setStyles(styles, 'html', {
     boxSizing: 'border-box',
     fontSize: vr.establishBaseline().fontSize,
     lineHeight: vr.establishBaseline().lineHeight,
     overflowY: 'scroll',
   })
   // box-sizing reset.
-  styles = setStyle(styles, ['*', '*:before', '*:after'], {
+  styles = setStyles(styles, ['*', '*:before', '*:after'], {
     boxSizing: 'inherit',
   })
   // Base body styles.
-  styles = setStyle(styles, 'body', {
+  styles = setStyles(styles, 'body', {
     color: gray(options.bodyGray, options.bodyGrayHue),
     fontFamily: options.bodyFontFamily,
     fontWeight: options.bodyWeight,
     wordWrap: 'break-word',
   })
   // Make images responsive.
-  styles = setStyle(styles, 'img', {
+  styles = setStyles(styles, 'img', {
     maxWidth: '100%',
   })
   // All block elements get one rhythm of bottom margin.
-  styles = setStyle(styles, [
+  styles = setStyles(styles, [
     'h1',
     'h2',
     'h3',
@@ -120,48 +120,48 @@ module.exports = (vr: any, options: any) => {
     marginBottom: vr.rhythm(1),
   })
   // Basic blockquote styles.
-  styles = setStyle(styles, 'blockquote', {
+  styles = setStyles(styles, 'blockquote', {
     marginTop: vr.rhythm(1),
     marginRight: vr.rhythm(1),
     marginBottom: vr.rhythm(1),
     marginLeft: vr.rhythm(1),
   })
   // b, strong.
-  styles = setStyle(styles, ['b', 'strong'], {
+  styles = setStyles(styles, ['b', 'strong'], {
     fontWeight: options.boldWeight,
   })
   // hr
-  styles = setStyle(styles, 'hr', {
+  styles = setStyles(styles, 'hr', {
     background: gray(80, options.bodyGrayHue),
     border: 'none',
     height: '1px',
     marginBottom: `calc(${vr.rhythm(1)} - 1px)`,
   })
   // ol, ul
-  styles = setStyle(styles, ['ol', 'ul'], {
+  styles = setStyles(styles, ['ol', 'ul'], {
     listStylePosition: 'outside',
     marginLeft: vr.rhythm(1),
   })
   // Remove default padding on list items (we'll set that later).
-  styles = setStyle(styles, ['ol li', 'ul li'], {
+  styles = setStyles(styles, ['ol li', 'ul li'], {
     paddingLeft: 0,
   })
   // table
-  styles = setStyle(styles, ['table'], {
+  styles = setStyles(styles, ['table'], {
     ...vr.adjustFontSizeTo(options.baseFontSize),
     width: '100%',
   })
   // thead
-  styles = setStyle(styles, ['thead'], {
+  styles = setStyles(styles, ['thead'], {
     textAlign: 'left',
   })
   // Make generally smaller elements, smaller.
-  styles = setStyle(styles, ['code', 'kbd', 'pre', 'samp'], {
+  styles = setStyles(styles, ['code', 'kbd', 'pre', 'samp'], {
     ...vr.adjustFontSizeTo('85%'),
   })
   // Create styles for headers.
   const baseFontSize = options.baseFontSize.slice(0, -2)
-  styles = setStyle(styles, ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'], {
+  styles = setStyles(styles, ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'], {
     color: gray(options.headerGray, options.headerGrayHue),
     fontFamily: options.headerFontFamily,
     fontWeight: options.headerWeight,
