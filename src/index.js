@@ -2,38 +2,16 @@
 import objectAssign from 'object-assign'
 import verticalRhythm from 'compass-vertical-rhythm'
 import ms from 'modularscale'
-import isObject from 'lodash/isObject'
-import keys from 'lodash/keys'
 
 import createStyles from './utils/createStyles'
+import type { OptionsType } from './Types.js'
 
 const createStylesString = function (options) {
-  let vr = verticalRhythm(options)
-  let styles = createStyles(vr, options)
+  const vr = verticalRhythm(options)
+  const styles = createStyles(vr, options)
 
   return styles
 }
-
-type ModularScaleType = {scale: string; maxWidth: ?string}
-type GoogleFontsType = {name: string; styles: string[]}
-type FontFaceType = {fontFamily: string; fontWeight: number; src: string[]}
-type OptionsType = {
-  baseFontSize?: string,
-  baseLineHeight?: string,
-  modularScales?: ModularScaleType[],
-  googleFonts?: GoogleFontsType[],
-  headerFontFamily?: string,
-  bodyFontFamily?: string,
-  headerGray?: number,
-  headerGrayHue?: number | string,
-  bodyGray?: number,
-  bodyGrayHue?: number | string,
-  headerWeight?: number | string,
-  bodyWeight?: number | string,
-  boldWeight?: number | string,
-  fontFaces?: FontFaceType[],
-}
-
 
 const Typography = function (opts: OptionsType) {
   const defaults = {
