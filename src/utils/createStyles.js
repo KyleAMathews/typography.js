@@ -8,8 +8,11 @@ import each from 'lodash/forEach'
 import reduce from 'lodash/reduce'
 import isArray from 'lodash/isArray'
 import isObject from 'lodash/isObject'
+import isFunction from 'lodash/isFunction'
 
-const generateFontFaceRules = function (vr, options) {
+import type { OptionsType } from '../Types.js'
+
+const generateFontFaceRules = function (vr, options: OptionsType) {
   let styles = ''
   let properties = ''
 
@@ -192,6 +195,11 @@ module.exports = (vr: any, options: any) => {
       }
     })
   })
+  // Call imperative function on options (if set).
+  if (isFunction(options.imperative)) {
+    styles = options.imperative(styles, setStyles, vr.rhythm)
+  }
+
   // Compile styles to string.
   let stylesStr = compileStyles(styles)
   stylesStr += `${generateFontFaceRules(vr, options)}`

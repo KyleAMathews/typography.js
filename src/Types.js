@@ -18,4 +18,5 @@ export type OptionsType = {
   bodyWeight?: number | string,
   boldWeight?: number | string,
   fontFaces?: FontFaceType[],
+  imperative?: (styles: Object, setStyles: Function, rhythm: Function) => Object,
 }
