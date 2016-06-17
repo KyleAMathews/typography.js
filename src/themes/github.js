@@ -63,6 +63,10 @@ const theme: OptionsType = {
     newStyles = setStyles(styles, ['ol', 'ul'], {
       marginLeft: rhythm(1.25),
     })
+    // children ol, ul
+    newStyles = setStyles(newStyles, ['li > ol', 'li > ul'], {
+      marginLeft: rhythm(1.25),
+    })
     newStyles = setStyles(styles, ['a'], {
       color: '#4078c0',
       textDecoration: 'none',

@@ -72,9 +72,8 @@ module.exports = (vr: any, options: any) => {
   let styles = {}
   // Base HTML styles.
   styles = setStyles(styles, 'html', {
+    ...vr.establishBaseline(),
     boxSizing: 'border-box',
-    fontSize: vr.establishBaseline().fontSize,
-    lineHeight: vr.establishBaseline().lineHeight,
     overflowY: 'scroll',
   })
   // box-sizing reset.
@@ -116,6 +115,7 @@ module.exports = (vr: any, options: any) => {
     'iframe',
     'img',
     'hr',
+    'address',
   ], {
     // Reset margin/padding to 0.
     margin: 0,
@@ -124,13 +124,12 @@ module.exports = (vr: any, options: any) => {
   })
   // Basic blockquote styles.
   styles = setStyles(styles, 'blockquote', {
-    marginTop: vr.rhythm(1),
     marginRight: vr.rhythm(1),
     marginBottom: vr.rhythm(1),
     marginLeft: vr.rhythm(1),
   })
   // b, strong.
-  styles = setStyles(styles, ['b', 'strong'], {
+  styles = setStyles(styles, ['b', 'strong', 'dt', 'th'], {
     fontWeight: options.boldWeight,
   })
   // hr
@@ -143,11 +142,18 @@ module.exports = (vr: any, options: any) => {
   // ol, ul
   styles = setStyles(styles, ['ol', 'ul'], {
     listStylePosition: 'outside',
+    listStyleType: 'disc',
+    listStyleImage: 'none',
     marginLeft: vr.rhythm(1),
   })
   // Remove default padding on list items (we'll set that later).
   styles = setStyles(styles, ['ol li', 'ul li'], {
     paddingLeft: 0,
+  })
+  // children ol, ul
+  styles = setStyles(styles, ['li > ol', 'li > ul'], {
+    marginLeft: vr.rhythm(1),
+    marginBottom: 0,
   })
   // table
   styles = setStyles(styles, ['table'], {
@@ -162,12 +168,23 @@ module.exports = (vr: any, options: any) => {
   styles = setStyles(styles, ['code', 'kbd', 'pre', 'samp'], {
     ...vr.adjustFontSizeTo('85%'),
   })
+  // Abbr, Acronym
+  styles = setStyles(styles, ['abbr', 'acronym'], {
+    borderBottom: `1px dotted ${gray(50)}`,
+    cursor: 'help',
+  })
+  styles['abbr[title]'] = {
+    borderBottom: `1px dotted ${gray(50)}`,
+    cursor: 'help',
+    textDecoration: 'none',
+  }
   // Create styles for headers.
   const baseFontSize = options.baseFontSize.slice(0, -2)
   styles = setStyles(styles, ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'], {
     color: gray(options.headerGray, options.headerGrayHue),
     fontFamily: options.headerFontFamily,
     fontWeight: options.headerWeight,
+    textRendering: 'optimizeLegibility',
   })
   // Loop through each modular scale and add media query as necessary.
   each(options.modularScales, (modularScale) => {
@@ -195,9 +212,9 @@ module.exports = (vr: any, options: any) => {
       }
     })
   })
-  // Call imperative function on options (if set).
-  if (isFunction(options.imperative)) {
-    styles = options.imperative(styles, setStyles, vr.rhythm)
+  // Call escapeHatch function on options (if set).
+  if (isFunction(options.escapeHatch)) {
+    styles = options.escapeHatch(styles, setStyles, vr, options)
   }
 
   // Compile styles to string.
