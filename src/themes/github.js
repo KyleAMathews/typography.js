@@ -21,7 +21,7 @@ const theme: OptionsType = {
   headerWeight: 'bold',
   bodyWeight: 'normal',
   boldWeight: 'bold',
-  imperative: (styles, setStyles, rhythm) => {
+  escapeHatch: (styles, setStyles, { rhythm }) => {
     let newStyles = setStyles(styles, 'h1', {
       borderBottom: `1px solid ${gray(93)}`,
       paddingBottom: `calc(${rhythm(1/4)} - 1px)`,
