@@ -83,7 +83,7 @@ module.exports = (vr: any, options: any) => {
   // Base body styles.
   styles = setStyles(styles, 'body', {
     color: gray(options.bodyGray, options.bodyGrayHue),
-    fontFamily: options.bodyFontFamily,
+    fontFamily: options.bodyFontFamily.join(','),
     fontWeight: options.bodyWeight,
     wordWrap: 'break-word',
   })
@@ -182,7 +182,7 @@ module.exports = (vr: any, options: any) => {
   const baseFontSize = options.baseFontSize.slice(0, -2)
   styles = setStyles(styles, ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'], {
     color: gray(options.headerGray, options.headerGrayHue),
-    fontFamily: options.headerFontFamily,
+    fontFamily: options.headerFontFamily.join(','),
     fontWeight: options.headerWeight,
     textRendering: 'optimizeLegibility',
   })

@@ -33,8 +33,8 @@ const theme: OptionsType = {
       ],
     },
   ],
-  headerFontFamily: '"Merriweather", "Georgia", serif',
-  bodyFontFamily: '"Merriweather", "Georgia", serif',
+  headerFontFamily: ['Merriweather', 'Georgia', 'serif'],
+  bodyFontFamily: ['Merriweather', 'Georgia', 'serif'],
   headerGray: 10,
   bodyGray: 10,
   headerWeight: 900,
@@ -42,7 +42,7 @@ const theme: OptionsType = {
   boldWeight: 700,
   escapeHatch: (styles, setStyles, { adjustFontSizeTo, rhythm }, options) => {
     let newStyles = setStyles(styles, 'h1', {
-      fontFamily: '"Montserrat",sans-serif',
+      fontFamily: ['Montserrat','sans-serif'],
     })
     newStyles = setStyles(styles, 'blockquote', {
       ...adjustFontSizeTo('19px'),
