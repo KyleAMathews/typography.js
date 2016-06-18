@@ -61,8 +61,8 @@ const theme: OptionsType = {
       marginBottom: "1em",
     })
 
-    newStyles = setStyles(styles, 'p', {
-      marginBottom: "1em",
+    newStyles = setStyles(styles, 'p, h1, h2, h3, h4, h5, h6', {
+      marginBottom: "1rem",
     })
 
     newStyles = setStyles(styles, 'a', {
