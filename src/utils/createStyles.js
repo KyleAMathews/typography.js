@@ -212,9 +212,9 @@ module.exports = (vr: any, options: any) => {
       }
     })
   })
-  // Call escapeHatch function on options (if set).
-  if (isFunction(options.escapeHatch)) {
-    styles = options.escapeHatch(styles, setStyles, vr, options)
+  // Call overrideStyles function on options (if set).
+  if (isFunction(options.overrideStyles)) {
+    styles = options.overrideStyles(styles, setStyles, vr, options)
   }
 
   // Compile styles to string.

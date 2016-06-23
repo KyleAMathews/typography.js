@@ -21,7 +21,7 @@ const theme: OptionsType = {
   headerWeight: '700',
   bodyWeight: 400,
   boldWeight: 700,
-  escapeHatch: (styles, setStyles, { adjustFontSizeTo, rhythm }, options) => {
+  overrideStyles: (styles, setStyles, { adjustFontSizeTo, rhythm }, options) => {
     let newStyles
     newStyles = setStyles(styles, ['h5', 'h6'], {
       letterSpacing: '0.1em',

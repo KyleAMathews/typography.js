@@ -40,9 +40,9 @@ const theme: OptionsType = {
   headerWeight: 900,
   bodyWeight: 400,
   boldWeight: 700,
-  escapeHatch: (styles, setStyles, { adjustFontSizeTo, rhythm }, options) => {
+  overrideStyles: (styles, setStyles, { adjustFontSizeTo, rhythm }, options) => {
     let newStyles = setStyles(styles, 'h1', {
-      fontFamily: ['Montserrat','sans-serif'],
+      fontFamily: ['Montserrat','sans-serif'].join(','),
     })
     newStyles = setStyles(styles, 'blockquote', {
       ...adjustFontSizeTo('19px'),

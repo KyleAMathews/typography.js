@@ -50,7 +50,7 @@ const theme: OptionsType = {
   headerWeight: 800,
   bodyWeight: 400,
   boldWeight: 700,
-  escapeHatch: (styles, setStyles, { adjustFontSizeTo, rhythm }, options) => {
+  overrideStyles: (styles, setStyles, { adjustFontSizeTo, rhythm }, options) => {
     let newStyles = setStyles(styles, 'blockquote', {
       color: gray(26.6),
       borderLeft: "4px solid #999",

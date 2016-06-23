@@ -24,7 +24,7 @@ const theme: OptionsType = {
   headerWeight: '600',
   bodyWeight: 400,
   boldWeight: 600,
-  escapeHatch: (styles, setStyles, { adjustFontSizeTo, rhythm }, options) => {
+  overrideStyles: (styles, setStyles, { adjustFontSizeTo, rhythm }, options) => {
     let newStyles
     newStyles = setStyles(styles, ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'], {
       marginTop: rhythm(1.5),

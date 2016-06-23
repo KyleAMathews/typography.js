@@ -18,7 +18,7 @@ export type OptionsType = {
   bodyWeight?: number | string,
   boldWeight?: number | string,
   fontFaces?: FontFaceType[],
-  escapeHatch?: (
+  overrideStyles?: (
     styles: Object,
     setStyles: Function,
     rhythm: Function,
