@@ -179,6 +179,25 @@ module.exports = (vr: any, options: any) => {
     cursor: 'help',
     textDecoration: 'none',
   }
+  // Table styles.
+  styles = setStyles(styles, ['table'], {
+    borderCollapse: 'collapse',
+    width: '100%',
+  })
+  styles = setStyles(styles, ['td,th'], {
+    textAlign: 'left',
+    borderBottom: `1px solid ${gray(88)}`,
+    paddingLeft: vr.rhythm(2/3),
+    paddingRight: vr.rhythm(2/3),
+    paddingTop: vr.rhythm(1/2),
+    paddingBottom: `calc(${vr.rhythm(1/2)} - 1px)`,
+  })
+  styles = setStyles(styles, 'th:first-child,td:first-child', {
+    paddingLeft: 0,
+  })
+  styles = setStyles(styles, 'th:last-child,td:last-child', {
+    paddingRight: 0,
+  })
   // Create styles for headers.
   const baseFontSize = options.baseFontSize.slice(0, -2)
   styles = setStyles(styles, ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'], {
