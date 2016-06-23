@@ -58,7 +58,7 @@ const theme: OptionsType = {
     newStyles = setStyles(styles, 'blockquote cite', {
       ...adjustFontSizeTo(options.baseFontSize),
       color: gray(options.bodyGray),
-      fontStyle: 'normal',
+      fontStyle: options.bodyWeight,
     })
     newStyles = setStyles(styles, 'blockquote cite:before', {
       content: '"— "',
