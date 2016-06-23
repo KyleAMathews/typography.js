@@ -43,7 +43,7 @@ const Typography = function (opts: OptionsType) {
     fontFaces: [],
   }
 
-  const options = objectAssign(defaults, opts)
+  const options = objectAssign({}, defaults, opts)
 
   const vr = verticalRhythm(options)
 

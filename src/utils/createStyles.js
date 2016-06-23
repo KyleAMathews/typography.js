@@ -52,8 +52,8 @@ const setStyles = (styles: Object = {}, els: string | string[], rules: Object) =
   return styles
 }
 
-const compileStyles = (styles) =>
-  reduce(styles, ((stylesStr, ruleSet, selector) => {
+const compileStyles = (styles) => {
+  return reduce(styles, ((stylesStr, ruleSet, selector) => {
     stylesStr += `${selector}{` // eslint-disable-line
     each(ruleSet, ((value, property) => {
       if (isObject(value)) {
@@ -67,6 +67,7 @@ const compileStyles = (styles) =>
     stylesStr += '}' // eslint-disable-line
     return stylesStr
   }), '')
+}
 
 module.exports = (vr: any, options: any) => {
   let styles = {}
