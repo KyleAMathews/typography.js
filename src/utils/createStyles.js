@@ -7,6 +7,8 @@ import set from 'lodash/set'
 import each from 'lodash/forEach'
 import reduce from 'lodash/reduce'
 import isArray from 'lodash/isArray'
+import isNumber from 'lodash/isNumber'
+import isString from 'lodash/isString'
 import isObject from 'lodash/isObject'
 import isFunction from 'lodash/isFunction'
 import merge from 'lodash/merge'
@@ -93,7 +95,16 @@ module.exports = (vr: any, options: any) => {
   styles = setStyles(styles, 'img', {
     maxWidth: '100%',
   })
-  // All block elements get one rhythm of bottom margin.
+  // All block elements get one rhythm of bottom margin by default
+  // or whatever is passed in as option.
+  let blockMarginBottom
+  if (isNumber(options.blockMarginBottom)) {
+    blockMarginBottom = vr.rhythm(options.blockMarginBottom)
+  } else if (isString(options.blockMarginBottom)) {
+    blockMarginBottom = options.blockMarginBottom
+  } else {
+    blockMarginBottom = vr.rhythm(1)
+  }
   styles = setStyles(styles, [
     'h1',
     'h2',
@@ -122,7 +133,7 @@ module.exports = (vr: any, options: any) => {
     // Reset margin/padding to 0.
     margin: 0,
     padding: 0,
-    marginBottom: vr.rhythm(1),
+    marginBottom: blockMarginBottom,
   })
   // Basic blockquote styles.
   styles = setStyles(styles, 'blockquote', {

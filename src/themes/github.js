@@ -21,6 +21,8 @@ const theme: OptionsType = {
   headerWeight: 'bold',
   bodyWeight: 'normal',
   boldWeight: 'bold',
+  // Github has all block elements use 1/2 rhythm not a full rhythm for
+  blockMarginBottom: 1/2,
   overrideStyles: ({ rhythm }) => ({
     h1: {
       borderBottom: `1px solid ${gray(93)}`,
@@ -38,27 +40,6 @@ const theme: OptionsType = {
       marginBottom: rhythm(1/2),
       marginTop: rhythm(1),
     },
-    // Github has all block elements use 1/2 rhythm not a full rhythm for
-    // margin-bottom
-      // 'hgroup',
-      // 'ul',
-      // 'ol',
-      // 'dl',
-      // 'dd',
-      // 'p',
-      // 'figure',
-      // 'pre',
-      // 'table',
-      // 'fieldset',
-      // 'blockquote',
-      // 'form',
-      // 'noscript',
-      // 'iframe',
-      // 'img',
-      // 'hr',
-    // ], {
-      // marginBottom: rhythm(1/2),
-    // })
     'ol,ul': {
       marginLeft: rhythm(1.25),
     },
