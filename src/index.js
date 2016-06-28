@@ -73,6 +73,9 @@ const Typography = function (opts: OptionsType) {
       const newFontSize = `${ms(scaler, options.modularScales[0].scale) * baseFont}px`
       return vr.adjustFontSizeTo(newFontSize)
     },
+    toString () {
+      return this.createStyles()
+    },
     injectStyles () {
       if (typeof document !== 'undefined') {
         // Replace existing
