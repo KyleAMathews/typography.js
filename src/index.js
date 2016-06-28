@@ -64,11 +64,9 @@ const Typography = function (opts: OptionsType) {
     createStyles () { return createStylesString(options) },
     fontSizeToPx: vr.adjustFontSizeTo,
     fontSizeToMS (scaler: number) {
-      // TODO detect which modular scale to use based on current screen width.
-      // or better, this should just generate styles and insert them in head
-      // with media queries? Perhaps do something similar to CSS Modules
-      // where this just returns a custom class name that you add to your
-      // component.
+      // This doesn't pick the right scale if a theme has more than one scale.
+      // Perhaps add optional parameter for a width and it'll get the scale
+      // for this width. Tricky part is maxWidth could be set in non-pixels.
       const baseFont = options.baseFontSize.slice(0, -2)
       const newFontSize = `${ms(scaler, options.modularScales[0].scale) * baseFont}px`
       return vr.adjustFontSizeTo(newFontSize)
