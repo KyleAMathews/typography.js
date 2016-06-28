@@ -254,6 +254,9 @@ module.exports = (vr: any, options: any) => {
   let stylesStr = compileStyles(styles)
   stylesStr += `${generateFontFaceRules(vr, options)}`
 
-  stylesStr = `${normalize}${stylesStr}`
+  if (options.includeNormalize) {
+    stylesStr = `${normalize}${stylesStr}`
+  }
+
   return stylesStr
 }

@@ -14,7 +14,7 @@ const createStylesString = function (options) {
 }
 
 const Typography = function (opts: OptionsType) {
-  const defaults = {
+  const defaults: OptionsType = {
     baseFontSize: '18px',
     baseLineHeight: '28.5px',
     modularScales: [
@@ -27,12 +27,20 @@ const Typography = function (opts: OptionsType) {
       },
     ],
     googleFonts: [],
-    headerFontFamily: `
--apple-system, BlinkMacSystemFont,
-"Segoe UI","Roboto","Oxygen",
-"Ubuntu","Cantarell","Fira Sans",
-"Droid Sans","Helvetica Neue",sans-serif;`,
-    bodyFontFamily: 'georgia, serif',
+    headerFontFamily: [
+      '-apple-system',
+      'BlinkMacSystemFont',
+      'Segoe UI',
+      'Roboto',
+      'Oxygen',
+      'Ubuntu',
+      'Cantarell',
+      'Fira Sans',
+      'Droid Sans',
+      'Helvetica Neue',
+      'sans-serif',
+    ],
+    bodyFontFamily: ['georgia', 'serif'],
     headerGray: 20,
     headerGrayHue: 0,
     bodyGray: 20,
@@ -40,6 +48,7 @@ const Typography = function (opts: OptionsType) {
     headerWeight: 900,
     bodyWeight: 'normal',
     boldWeight: 'bold',
+    includeNormalize: true,
     fontFaces: [],
   }
 
@@ -86,5 +95,6 @@ module.exports = Typography
 /*
 console.log(Typography({
   baseFontSize: '16px',
-}).createStyles())
+  includeNormalize: false,
+}).toString())
 */
