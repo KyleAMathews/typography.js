@@ -24,44 +24,41 @@ const theme: OptionsType = {
   headerWeight: '600',
   bodyWeight: 400,
   boldWeight: 600,
-  overrideStyles: (styles, setStyles, { adjustFontSizeTo, rhythm }, options) => {
-    let newStyles
-    newStyles = setStyles(styles, ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'], {
+  overrideStyles: ({ adjustFontSizeTo, rhythm }, options) => ({
+    'h1,h2,h3,h4,h5,h6': {
       marginTop: rhythm(1.5),
       marginBottom: rhythm(0.5),
-    })
-    newStyles = setStyles(styles, ['ul', 'ol'], {
+    },
+    'ul,ol': {
       marginLeft: '20px',
-    })
+    },
     // children ol, ul
-    newStyles = setStyles(newStyles, ['li > ol', 'li > ul'], {
+    'li>ol,li>ul': {
       marginLeft: '20px',
       marginBottom: 0,
-    })
-    // Blockquote.
-    newStyles = setStyles(styles, 'blockquote', {
+    },
+    // Blockquote styles.
+    blockquote: {
       ...adjustFontSizeTo('19px'),
       fontWeight: 300,
       color: gray(46),
       fontStyle: 'italic',
       marginLeft: 0,
       marginRight: 0,
-    })
-    newStyles = setStyles(styles, 'blockquote > :last-child', {
+    },
+    'blockquote > :last-child': {
       marginBottom: 0,
-    })
-    newStyles = setStyles(styles, 'blockquote cite', {
+    },
+    'blockquote cite': {
       ...adjustFontSizeTo(options.baseFontSize),
       color: gray(options.bodyGray),
       fontStyle: 'normal',
       fontWeight: options.bodyWeight,
-    })
-    newStyles = setStyles(styles, 'blockquote cite:before', {
+    },
+    'blockquote cite:before': {
       content: '"— "',
-    })
-
-    return newStyles
-  },
+    },
+  }),
 }
 
 export default theme

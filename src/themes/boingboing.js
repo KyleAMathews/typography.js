@@ -2,6 +2,7 @@
 import gray from 'gray-percentage'
 import type { OptionsType } from '../Types.js'
 import verticalRhythm from 'compass-vertical-rhythm'
+import { MOBILE_MEDIA_QUERY } from '../utils/constants'
 
 const theme: OptionsType = {
   baseFontSize: '16px',
@@ -38,43 +39,41 @@ const theme: OptionsType = {
   headerWeight: 800,
   bodyWeight: 400,
   boldWeight: 700,
-  overrideStyles: (styles, setStyles, { rhythm }) => {
-    let newStyles = setStyles(styles, 'blockquote', {
-      color: gray(26.6),
-      borderLeft: '4px solid #999',
-      paddingLeft: '1em',
-      marginLeft: '1em',
-      marginRight: '1em',
-      marginTop: '1em',
-      marginBottom: '1em',
-    })
-
-    newStyles = setStyles(styles, 'p, h1, h2, h3, h4, h5, h6', {
-      marginBottom: '1rem',
-    })
-
-    newStyles = setStyles(styles, 'a', {
-      fontWeight: 'bold',
-      color: '#00f',
-      textDecoration: 'none',
-    })
-
-    newStyles = setStyles(styles, 'a:hover', {
-      textDecoration: 'underline',
-    })
-
+  overrideStyles: () => {
     const vr = verticalRhythm({
       baseFontSize: '12.8px',
       baseLineHeight: '19.2px',
     })
 
-    newStyles['@media only screen and (max-width:480px)'] = {
-      html: {
-        ...vr.establishBaseline(),
+    const styles = {
+      [MOBILE_MEDIA_QUERY]: {
+        html: {
+          ...vr.establishBaseline(),
+        },
+      },
+      blockquote: {
+        color: gray(26.6),
+        borderLeft: '4px solid #999',
+        paddingLeft: '1em',
+        marginLeft: '1em',
+        marginRight: '1em',
+        marginTop: '1em',
+        marginBottom: '1em',
+      },
+      'p, h1, h2, h3, h4, h5, h6': {
+        marginBottom: '1rem',
+      },
+      a: {
+        fontWeight: 'bold',
+        color: '#00f',
+        textDecoration: 'none',
+      },
+      'a:hover': {
+        textDecoration: 'underline',
       },
     }
 
-    return newStyles
+    return styles
   },
 }
 

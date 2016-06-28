@@ -1,6 +1,7 @@
 // @flow
 import gray from 'gray-percentage'
 import type { OptionsType } from '../Types.js'
+import { MOBILE_MEDIA_QUERY } from '../utils/constants'
 
 const theme: OptionsType = {
   baseFontSize: '16px',
@@ -40,68 +41,66 @@ const theme: OptionsType = {
   headerWeight: 900,
   bodyWeight: 400,
   boldWeight: 700,
-  overrideStyles: (styles, setStyles, { adjustFontSizeTo, rhythm }, options) => {
-    let newStyles = setStyles(styles, 'h1', {
-      fontFamily: ['Montserrat','sans-serif'].join(','),
-    })
-    newStyles = setStyles(styles, 'blockquote', {
+  overrideStyles: ({ adjustFontSizeTo, rhythm }, options) => ({
+    h1: {
+      fontFamily: ['Montserrat', 'sans-serif'].join(','),
+    },
+    blockquote: {
       ...adjustFontSizeTo('19px'),
       color: gray(41),
       fontStyle: 'italic',
       paddingLeft: rhythm(13/16),
       marginLeft: rhythm(-1),
       borderLeft: `${rhythm(3/16)} solid ${gray(10)}`,
-    })
-    newStyles = setStyles(styles, 'blockquote > :last-child', {
+    },
+    'blockquote > :last-child': {
       marginBottom: 0,
-    })
-    newStyles = setStyles(styles, 'blockquote cite', {
+    },
+    'blockquote cite': {
       ...adjustFontSizeTo(options.baseFontSize),
       color: gray(options.bodyGray),
       fontStyle: options.bodyWeight,
-    })
-    newStyles = setStyles(styles, 'blockquote cite:before', {
+    },
+    'blockquote cite:before': {
       content: '"— "',
-    })
-    newStyles = setStyles(styles, ['ul', 'ol'], {
+    },
+    'ul,ol': {
       marginLeft: 0,
-    })
-    newStyles['@media only screen and (max-width:480px)'] = {
-      'ul, ol': {
+    },
+    [MOBILE_MEDIA_QUERY]: {
+      'ul,ol': {
         marginLeft: rhythm(1),
       },
-      'blockquote': {
+      blockquote: {
         marginLeft: rhythm(-1/2),
         marginRight: 0,
       },
-    }
-    newStyles = setStyles(newStyles, ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'], {
+    },
+    'h1,h2,h3,h4,h5,h6': {
       marginTop: rhythm(2),
-    })
-    newStyles = setStyles(newStyles, 'h4', {
+    },
+    h4: {
       letterSpacing: '0.140625em',
       textTransform: 'uppercase',
-    })
-    newStyles = setStyles(newStyles, 'h6', {
+    },
+    h6: {
       fontStyle: 'italic',
-    })
-    newStyles = setStyles(styles, ['a'], {
+    },
+    a: {
       boxShadow: '0 1px 0 0 currentColor',
       color: '#007acc',
       textDecoration: 'none',
-    })
-    newStyles = setStyles(styles, ['a:hover', 'a:active'], {
+    },
+    'a:hover,a:active': {
       boxShadow: 'none',
-    })
-    newStyles = setStyles(styles, ['mark', 'ins'], {
+    },
+    'mark,ins': {
       background: '#007acc',
       color: 'white',
       padding: `${rhythm(1/16)} ${rhythm(1/8)}`,
       textDecoration: 'none',
-    })
-
-    return newStyles
-  },
+    },
+  }),
 }
 
 export default theme

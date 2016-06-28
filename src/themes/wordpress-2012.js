@@ -1,6 +1,5 @@
 // @flow
 import type { OptionsType } from '../Types.js'
-import merge from 'lodash/merge'
 import gray from 'gray-percentage'
 
 const theme: OptionsType = {
@@ -28,52 +27,49 @@ const theme: OptionsType = {
   headerWeight: '700',
   bodyWeight: 400,
   boldWeight: 700,
-  overrideStyles: (styles, setStyles, { adjustFontSizeTo, rhythm }, options) => {
-    const newStyles = {
-      blockquote: {
-        fontStyle: 'italic',
-        paddingLeft: rhythm(1),
-        paddingRight: rhythm(1),
-        paddingTop: rhythm(1),
-        paddingBottom: rhythm(1),
-      },
-      dl: {
-        marginLeft: rhythm(1),
-        marginRight: rhythm(1),
-      },
-      'ol,ul': {
-        marginLeft: 0,
-      },
-      ol: {
-        listStyle: 'decimal outside',
-      },
-      ul: {
-        listStyle: 'disc outside',
-      },
-      li: {
-        marginLeft: rhythm(1.5),
-      },
-      table: {
-        ...adjustFontSizeTo('12px'),
-        color: gray(46),
-      },
-      th: {
-        fontWeight: options.boldWeight,
-        textTransform: 'uppercase',
-        color: gray(39),
-      },
-      a: {
-        color: '#21759b',
-      },
-      'a:hover': {
-        color: '#0f3647',
-      },
-      'a:visited': {
-        color: '#9f9f9f',
-      },
-    }
-    return merge(styles, newStyles)
-  },
+  overrideStyles: ({ adjustFontSizeTo, rhythm }, options) => ({
+    blockquote: {
+      fontStyle: 'italic',
+      paddingLeft: rhythm(1),
+      paddingRight: rhythm(1),
+      paddingTop: rhythm(1),
+      paddingBottom: rhythm(1),
+    },
+    dl: {
+      marginLeft: rhythm(1),
+      marginRight: rhythm(1),
+    },
+    'ol,ul': {
+      marginLeft: 0,
+    },
+    ol: {
+      listStyle: 'decimal outside',
+    },
+    ul: {
+      listStyle: 'disc outside',
+    },
+    li: {
+      marginLeft: rhythm(1.5),
+    },
+    table: {
+      ...adjustFontSizeTo('12px'),
+      color: gray(46),
+    },
+    th: {
+      fontWeight: options.boldWeight,
+      textTransform: 'uppercase',
+      color: gray(39),
+    },
+    a: {
+      color: '#21759b',
+    },
+    'a:hover': {
+      color: '#0f3647',
+    },
+    'a:visited': {
+      color: '#9f9f9f',
+    },
+  }),
 }
 
 export default theme

@@ -19,9 +19,7 @@ export type OptionsType = {
   boldWeight?: number | string,
   fontFaces?: FontFaceType[],
   overrideStyles?: (
-    styles: Object,
-    setStyles: Function,
     rhythm: Function,
-    options: OptionsType
+    options: OptionsType,
   ) => Object,
 }

@@ -9,6 +9,7 @@ import reduce from 'lodash/reduce'
 import isArray from 'lodash/isArray'
 import isObject from 'lodash/isObject'
 import isFunction from 'lodash/isFunction'
+import merge from 'lodash/merge'
 
 import type { OptionsType } from '../Types.js'
 
@@ -234,7 +235,7 @@ module.exports = (vr: any, options: any) => {
   })
   // Call overrideStyles function on options (if set).
   if (isFunction(options.overrideStyles)) {
-    styles = options.overrideStyles(styles, setStyles, vr, options)
+    styles = merge(styles, options.overrideStyles(vr, options))
   }
 
   // Compile styles to string.
