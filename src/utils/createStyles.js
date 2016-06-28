@@ -159,19 +159,19 @@ module.exports = (vr: any, options: any) => {
     listStyleImage: 'none',
     marginLeft: vr.rhythm(1),
   })
-  // Remove default padding on list items (we'll set that later).
+  // li
+  styles = setStyles(styles, 'li', {
+    marginBottom: vr.rhythm(1/2),
+  })
+  // Remove default padding on list items.
   styles = setStyles(styles, ['ol li', 'ul li'], {
     paddingLeft: 0,
   })
   // children ol, ul
   styles = setStyles(styles, ['li > ol', 'li > ul'], {
     marginLeft: vr.rhythm(1),
-    marginBottom: 0,
-  })
-  // table
-  styles = setStyles(styles, ['table'], {
-    ...vr.adjustFontSizeTo(options.baseFontSize),
-    width: '100%',
+    marginBottom: vr.rhythm(1/2),
+    marginTop: vr.rhythm(1/2),
   })
   // thead
   styles = setStyles(styles, ['thead'], {
@@ -193,6 +193,7 @@ module.exports = (vr: any, options: any) => {
   }
   // Table styles.
   styles = setStyles(styles, ['table'], {
+    ...vr.adjustFontSizeTo(options.baseFontSize),
     borderCollapse: 'collapse',
     width: '100%',
   })
