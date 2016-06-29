@@ -1,7 +1,7 @@
 {
   "name": "typography-theme-github",
   "description": "A theme for Typography.js inspired by Github's Markdown typography",
-  "version": "0.9.1",
+  "version": "0.10.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "gray-percentage": "^1.1.2"

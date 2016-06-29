@@ -1,7 +1,7 @@
 {
   "name": "typography-react",
   "description": "Helpful React components for Typography.js",
-  "version": "0.9.1",
+  "version": "0.10.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "keywords": [
     "css",

@@ -1,7 +1,7 @@
 {
   "name": "typography",
   "description": "Opinionated toolkit for building websites with beautiful typography",
-  "version": "0.9.1",
+  "version": "0.10.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "compass-vertical-rhythm": "^1.2.0",
@@ -10,7 +10,7 @@
     "lodash": "^4.13.1",
     "modularscale": "^1.0.2",
     "object-assign": "^4.1.0",
-    "typography-normalize": "0.9.1"
+    "typography-normalize": "^0.10.0"
   },
   "homepage": "https://github.com/KyleAMathews/react-typography",
   "keywords": [
