@@ -74,16 +74,19 @@ const compileStyles = (styles) => {
 
 module.exports = (vr: any, options: any) => {
   let styles = {}
+
   // Base HTML styles.
   styles = setStyles(styles, 'html', {
     ...vr.establishBaseline(),
     boxSizing: 'border-box',
     overflowY: 'scroll',
   })
+
   // box-sizing reset.
   styles = setStyles(styles, ['*', '*:before', '*:after'], {
     boxSizing: 'inherit',
   })
+
   // Base body styles.
   styles = setStyles(styles, 'body', {
     color: gray(options.bodyGray, options.bodyGrayHue),
@@ -91,10 +94,12 @@ module.exports = (vr: any, options: any) => {
     fontWeight: options.bodyWeight,
     wordWrap: 'break-word',
   })
+
   // Make images responsive.
   styles = setStyles(styles, 'img', {
     maxWidth: '100%',
   })
+
   // All block elements get one rhythm of bottom margin by default
   // or whatever is passed in as option.
   let blockMarginBottom
@@ -130,57 +135,63 @@ module.exports = (vr: any, options: any) => {
     'hr',
     'address',
   ], {
+
     // Reset margin/padding to 0.
     margin: 0,
     padding: 0,
     marginBottom: blockMarginBottom,
   })
+
   // Basic blockquote styles.
   styles = setStyles(styles, 'blockquote', {
     marginRight: vr.rhythm(1),
     marginBottom: vr.rhythm(1),
     marginLeft: vr.rhythm(1),
   })
+
   // b, strong.
   styles = setStyles(styles, ['b', 'strong', 'dt', 'th'], {
     fontWeight: options.boldWeight,
   })
-  // hr
+
+  // hr.
   styles = setStyles(styles, 'hr', {
     background: gray(80, options.bodyGrayHue),
     border: 'none',
     height: '1px',
     marginBottom: `calc(${vr.rhythm(1)} - 1px)`,
   })
-  // ol, ul
+
+  // ol, ul.
   styles = setStyles(styles, ['ol', 'ul'], {
     listStylePosition: 'outside',
     listStyleImage: 'none',
     marginLeft: vr.rhythm(1),
   })
-  // li
+
+  // li.
   styles = setStyles(styles, 'li', {
     marginBottom: vr.rhythm(1/2),
   })
+
   // Remove default padding on list items.
   styles = setStyles(styles, ['ol li', 'ul li'], {
     paddingLeft: 0,
   })
-  // children ol, ul
+
+  // children ol, ul.
   styles = setStyles(styles, ['li > ol', 'li > ul'], {
     marginLeft: vr.rhythm(1),
     marginBottom: vr.rhythm(1/2),
     marginTop: vr.rhythm(1/2),
   })
-  // thead
-  styles = setStyles(styles, ['thead'], {
-    textAlign: 'left',
-  })
+
   // Make generally smaller elements, smaller.
   styles = setStyles(styles, ['code', 'kbd', 'pre', 'samp'], {
     ...vr.adjustFontSizeTo('85%'),
   })
-  // Abbr, Acronym
+
+  // Abbr, Acronym.
   styles = setStyles(styles, ['abbr', 'acronym'], {
     borderBottom: `1px dotted ${gray(50)}`,
     cursor: 'help',
@@ -190,11 +201,15 @@ module.exports = (vr: any, options: any) => {
     cursor: 'help',
     textDecoration: 'none',
   }
+
   // Table styles.
   styles = setStyles(styles, ['table'], {
     ...vr.adjustFontSizeTo(options.baseFontSize),
     borderCollapse: 'collapse',
     width: '100%',
+  })
+  styles = setStyles(styles, ['thead'], {
+    textAlign: 'left',
   })
   styles = setStyles(styles, ['td,th'], {
     textAlign: 'left',
@@ -210,6 +225,7 @@ module.exports = (vr: any, options: any) => {
   styles = setStyles(styles, 'th:last-child,td:last-child', {
     paddingRight: 0,
   })
+
   // Create styles for headers.
   const baseFontSize = options.baseFontSize.slice(0, -2)
   styles = setStyles(styles, ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'], {
@@ -218,6 +234,7 @@ module.exports = (vr: any, options: any) => {
     fontWeight: options.headerWeight,
     textRendering: 'optimizeLegibility',
   })
+
   // Loop through each modular scale and add media query as necessary.
   each(options.modularScales, (modularScale) => {
     const { maxWidth } = modularScale
@@ -244,6 +261,7 @@ module.exports = (vr: any, options: any) => {
       }
     })
   })
+
   // Call overrideStyles function on options (if set).
   if (isFunction(options.overrideStyles)) {
     styles = merge(styles, options.overrideStyles(vr, options))
