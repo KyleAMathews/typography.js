@@ -1,7 +1,7 @@
 import GoogleFont from './GoogleFont'
 import TypographyStyle from './TypographyStyle'
 
-export default {
+module.exports = {
   GoogleFont,
   TypographyStyle,
 }
