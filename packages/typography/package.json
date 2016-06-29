@@ -1,0 +1,35 @@
+{
+  "name": "typography",
+  "description": "Opinionated toolkit for building websites with beautiful typography",
+  "version": "0.9.1",
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "dependencies": {
+    "compass-vertical-rhythm": "^1.2.0",
+    "decamelize": "^1.2.0",
+    "gray-percentage": "^1.1.2",
+    "lodash": "^4.13.1",
+    "modularscale": "^1.0.2",
+    "object-assign": "^4.1.0",
+    "typography-normalize": "0.9.1"
+  },
+  "homepage": "https://github.com/KyleAMathews/react-typography",
+  "keywords": [
+    "css",
+    "inline styles",
+    "react",
+    "typography",
+    "vertical-rhythm"
+  ],
+  "license": "MIT",
+  "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/KyleAMathews/typography.git"
+  },
+  "scripts": {
+    "build": "../../node_modules/.bin/babel src --out-dir dist/",
+    "flow": "../../node_modules/.bin/flow",
+    "lint": "../../node_modules/.bin/eslint --ext .js,.jsx --ignore-path .gitignore .",
+    "watch": "../../node_modules/.bin/babel -w src --out-dir dist/"
+  }
+}

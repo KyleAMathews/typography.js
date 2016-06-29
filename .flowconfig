@@ -5,3 +5,4 @@
 [libs]
 
 [options]
+module.name_mapper='Types' -> '<PROJECT_ROOT>/Types.js'

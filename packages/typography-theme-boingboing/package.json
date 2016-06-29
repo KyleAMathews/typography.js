@@ -1,0 +1,24 @@
+{
+  "name": "typography-theme-boingboing",
+  "description": "A theme for Typography.js inspired by Boingboing.com's typography",
+  "version": "0.9.1",
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "dependencies": {
+    "compass-vertical-rhythm": "^1.2.1",
+    "gray-percentage": "^1.1.2",
+    "typography-breakpoint-constants": "0.9.1"
+  },
+  "keywords": [
+    "css",
+    "typography",
+    "typography-theme"
+  ],
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "../../node_modules/.bin/babel src --out-dir dist/",
+    "flow": "../../node_modules/.bin/flow",
+    "lint": "../../node_modules/.bin/eslint --ext .js,.jsx --ignore-path .gitignore .",
+    "watch": "../../node_modules/.bin/babel -w src --out-dir dist/"
+  }
+}

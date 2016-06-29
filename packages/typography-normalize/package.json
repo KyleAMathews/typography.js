@@ -1,0 +1,22 @@
+{
+  "name": "typography-normalize",
+  "description": "Provides normalize.css as a commonjs module.",
+  "version": "0.9.1",
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "keywords": [
+    "css",
+    "inline",
+    "react",
+    "styles",
+    "typography",
+    "vertical-rhythm"
+  ],
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "../../node_modules/.bin/babel src --out-dir dist/",
+    "flow": "../../node_modules/.bin/flow",
+    "lint": "../../node_modules/.bin/eslint --ext .js,.jsx --ignore-path .gitignore .",
+    "watch": "../../node_modules/.bin/babel -w src --out-dir dist/"
+  }
+}

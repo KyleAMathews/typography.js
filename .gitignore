@@ -27,5 +27,6 @@ node_modules
 # Users Environment Variables
 .lock-wscript
 dist
+npm-debug*
 examples/bundle.js
 .gatsby-context.js
