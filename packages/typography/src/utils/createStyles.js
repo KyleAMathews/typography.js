@@ -85,7 +85,6 @@ module.exports = (vr: any, options: any) => {
     boxSizing: 'inherit',
   })
   // Base body styles.
-  console.log(options)
   styles = setStyles(styles, 'body', {
     color: gray(options.bodyGray, options.bodyGrayHue),
     fontFamily: options.bodyFontFamily.join(','),
