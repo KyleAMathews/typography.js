@@ -4,7 +4,7 @@ import gray from 'gray-percentage'
 
 const theme: OptionsType = {
   baseFontSize: '18px',
-  baseLineHeight: '27px',
+  baseLineHeight: '28px',
   googleFonts: [
     {
       name: 'Source Sans Pro',
@@ -25,7 +25,7 @@ const theme: OptionsType = {
   bodyWeight: 300,
   boldWeight: 400,
   overrideStyles: ({ adjustFontSizeTo, rhythm }, options) => ({
-    'h1 a, h2 a, h3 a, h4 a, h5 a, h6 a': {
+    'h1 a,h2 a,h3 a,h4 a,h5 a,h6 a': {
       fontWeight: options.headerWeight,
     },
     a: {
