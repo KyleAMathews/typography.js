@@ -21,7 +21,7 @@ const typography = new Typography()
 ```
 
 ## Typography.js Themes
-We maintain 13 (and counting) themes that are ready to use on your next
+We maintain 14 (and counting) themes that are ready to use on your next
 project. These are each published as seperate NPM packages. To use, for
 example, the Funston theme:
 
@@ -39,6 +39,7 @@ const typography = new Typography(Funston)
 ### Published Typography.js Themes
 * [typography-theme-funston](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-funston/src/index.js)
 * [typography-theme-irving](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-irving/src/index.js)
+* [typography-theme-moraga](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-moraga/src/index.js)
 * [typography-theme-wordpress-kubrick](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-wordpress-kubrick/src/index.js)
 * [typography-theme-wordpress-2010](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-wordpress-2010/src/index.js)
 * [typography-theme-wordpress-2011](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-wordpress-2011/src/index.js)
