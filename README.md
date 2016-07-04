@@ -142,7 +142,7 @@ fontFaces: [
 ```
 * **blockMarginBottom**: Specify the default margin-bottom for block elements. Defaults to one "rhythm unit" or the base line height.
 * **includeNormalize**: Include in generated css normalize.css. Normalize.css is an excellent project which works to normalize the base css across browsers and serves as an excellent foundation for Typography.js. We include normalize.css by default but if you're already including it elsewhere in your project, you can disable including it here by passing `false`.
-* **styleOverrides**: Function where you can add to or override
+* **overrideStyles**: Function where you can add to or override
   auto-generated css.
 
 ```javascript
