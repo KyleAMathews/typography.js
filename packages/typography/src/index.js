@@ -58,7 +58,7 @@ const typography = function (opts: OptionsType) {
 
   return ({
     options,
-    rhythm: vr.rhythm,
+    ...vr,
     createStyles () { return createStylesString(options) },
     fontSizeToPx: vr.adjustFontSizeTo,
     fontSizeToMS (scaler: number) {
