@@ -247,14 +247,14 @@ module.exports = (vr: any, options: any) => {
     const h5 = vr.adjustFontSizeTo(`${ms(1/5, scale) * baseFontSize}px`)
     const h6 = vr.adjustFontSizeTo(`${ms(0/5, scale) * baseFontSize}px`)
 
-    let media
+    let mediaQuery
     if (maxWidth) {
-      media = `@media only screen and (max-width:${maxWidth})`
+      mediaQuery = `@media only screen and (max-width:${maxWidth})`
     }
     each([h1, h2, h3, h4, h5, h6], (header, i) => {
-      if (media) {
-        styles = set(styles, `${media}.h${i + 1}.fontSize`, header.fontSize)
-        styles = set(styles, `${media}.h${i + 1}.lineHeight`, header.lineHeight)
+      if (mediaQuery) {
+        styles = set(styles, `${mediaQuery}.h${i + 1}.fontSize`, header.fontSize)
+        styles = set(styles, `${mediaQuery}.h${i + 1}.lineHeight`, header.lineHeight)
       } else {
         styles = set(styles, `h${i + 1}.fontSize`, header.fontSize)
         styles = set(styles, `h${i + 1}.lineHeight`, header.lineHeight)
