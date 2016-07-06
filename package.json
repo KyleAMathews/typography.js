@@ -13,7 +13,7 @@
     "eslint-plugin-jsx-a11y": "^1.5.3",
     "eslint-plugin-react": "^5.2.2",
     "flow-bin": "^0.28.0",
-    "lerna": "2.0.0-beta.13"
+    "lerna": "2.0.0-beta.23"
   },
   "private": true,
   "scripts": {
