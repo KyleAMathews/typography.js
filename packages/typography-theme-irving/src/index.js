@@ -5,19 +5,19 @@ import verticalRhythm from 'compass-vertical-rhythm'
 import { TABLET_MEDIA_QUERY } from 'typography-breakpoint-constants'
 
 const theme: OptionsType = {
-  baseFontSize: '22px',
-  baseLineHeight: '31px',
+  baseFontSize: '24px',
+  baseLineHeight: '33.8px',
   googleFonts: [
     {
       name: 'Lato',
       styles: [
-        '900',
+        '700',
       ],
     },
     {
       name: 'Yrsa',
       styles: [
-        '400',
+        '300',
         '700',
       ],
     },
@@ -26,8 +26,8 @@ const theme: OptionsType = {
   bodyFontFamily: ['Yrsa', 'georgia', 'sans-serif'],
   headerGray: 13,
   bodyGray: 20,
-  headerWeight: 900,
-  bodyWeight: 400,
+  headerWeight: 700,
+  bodyWeight: 300,
   boldWeight: 700,
   overrideStyles: ({ adjustFontSizeTo, rhythm }, options) => {
     const vr = verticalRhythm({
@@ -43,13 +43,16 @@ const theme: OptionsType = {
         color: '#3498DB',
       },
       blockquote: {
-        color: gray(40),
+        color: gray(30),
         paddingLeft: rhythm(3/4),
         marginLeft: rhythm(-1),
         borderLeft: `${rhythm(1/4)} solid ${gray(13)}`,
       },
-      'blockquote strong, blockquote a': {
-        color: gray(25),
+      'h3,h4,h5,h6': {
+        marginBottom: rhythm(1/2),
+      },
+      table: {
+        ...adjustFontSizeTo('20px'),
       },
       // Mobile styles.
       [TABLET_MEDIA_QUERY]: {
@@ -65,12 +68,6 @@ const theme: OptionsType = {
         table: {
           ...adjustFontSizeTo('18px'),
         },
-      },
-      'h3,h4,h5,h6': {
-        marginBottom: rhythm(1/2),
-      },
-      table: {
-        ...adjustFontSizeTo('20px'),
       },
     }
 
