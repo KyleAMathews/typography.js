@@ -31,8 +31,8 @@ const theme: OptionsType = {
   boldWeight: 700,
   overrideStyles: ({ adjustFontSizeTo, rhythm }, options) => {
     const vr = verticalRhythm({
-      baseFontSize: '19px',
-      baseLineHeight: '26.9px',
+      baseFontSize: '20px',
+      baseLineHeight: '28.4px',
     })
 
     const styles = {
