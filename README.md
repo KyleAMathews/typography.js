@@ -11,7 +11,10 @@ http://kyleamathews.github.io/typography.js
 Typography is a dash of design sense and a cup full of math. Math that's
 tedious and hard to do right in CSS.
 
-Typography.js provides a *declarative* way to define your typography. Now creating custom beautiful typography designs is easy!
+Typography.js provides a *declarative* way to define your typography
+that's vastly simpler than using straight CSS.
+
+You can now easily create designs that are unique, personal, and custom to your project.
 
 ## Usage
 ```javascript
