@@ -34,9 +34,39 @@ example, the Funston theme:
 
 ```javascript
 import Typography from 'typography'
-import Funston from 'typography-theme-funston'
+import funstonTheme from 'typography-theme-funston'
 
-const typography = new Typography(Funston)
+const typography = new Typography(funstonTheme)
+```
+
+### Customizing themes
+Themes are just javascript objects so it's easy to modify them as
+needed. For example, if you're using the Funston theme but want to
+increase the base font size slightly:
+
+```javascript
+import Typography from 'typography'
+import funstonTheme from 'typography-theme-funston'
+funstonTheme.baseFontSize = '22px' // was 20px.
+funstonTheme.baseLineHeight = '31px' // was 28px.
+
+const typography = new Typography(funstonTheme)
+```
+
+Or if you'd like to use the imperative API to directly set/override
+styles on a theme:
+
+```javascript
+import Typography from 'typography'
+import funstonTheme from 'typography-theme-funston'
+funston.overrideThemeStyles = ({ rhythm }, options) => ({
+  'h2,h3': {
+    marginBottom: rhythm(1/2),
+    marginTop: rhythm(2),
+  }
+})
+
+const typography = new Typography(funstonTheme)
 ```
 
 ### Published Typography.js Themes
@@ -146,7 +176,9 @@ fontFaces: [
 * **blockMarginBottom**: Specify the default margin-bottom for block elements. Defaults to one "rhythm unit" or the base line height.
 * **includeNormalize**: Include in generated css normalize.css. Normalize.css is an excellent project which works to normalize the base css across browsers and serves as an excellent foundation for Typography.js. We include normalize.css by default but if you're already including it elsewhere in your project, you can disable including it here by passing `false`.
 * **overrideStyles**: Function where you can add to or override
-  auto-generated css.
+  auto-generated styles. It's called with an instantiated Vertical
+Rhythm object and the options object. Allows you to directly set global
+typography styles.
 
 ```javascript
 overrideStyles: ({ adjustFontSizeTo, rhythm }, options) => ({
@@ -164,26 +196,18 @@ overrideStyles: ({ adjustFontSizeTo, rhythm }, options) => ({
   'blockquote > :last-child': {
     marginBottom: 0,
   },
-  'blockquote cite': {
-    ...adjustFontSizeTo(options.baseFontSize),
-    color: gray(options.bodyGray),
-    fontStyle: options.bodyWeight,
-  },
-  'blockquote cite:before': {
-    content: '"— "',
-  },
-  'ul,ol': {
-    marginLeft: 0,
-  },
-  [MOBILE_MEDIA_QUERY]: {
-    'ul,ol': {
-      marginLeft: rhythm(1),
-    },
-    blockquote: {
-      marginLeft: rhythm(-1/2),
-      marginRight: 0,
-    },
-  },
+})
+* **overrideThemeStyles**: This has the same function signature as
+`overrideStyles` but should be used in place of `overrideStyles` when
+using a 3rd-party theme so as to not delete the theme's own
+`overrideStyles` function.
+
+```javascript
+overrideThemeStyles: ({ rhythm }, options) => ({
+  'h2,h3': {
+    marginBottom: rhythm(1/2),
+    marginTop: rhythm(2),
+  }
 })
 ```
 

@@ -4,14 +4,8 @@ import verticalRhythm from 'compass-vertical-rhythm'
 import ms from 'modularscale'
 
 import createStyles from './utils/createStyles'
+import compileStyles from './utils/compileStyles'
 import type { OptionsType } from 'Types'
-
-const createStylesString = function (options) {
-  const vr = verticalRhythm(options)
-  const styles = createStyles(vr, options)
-
-  return styles
-}
 
 const typography = function (opts: OptionsType) {
   const defaults: OptionsType = {
@@ -59,7 +53,7 @@ const typography = function (opts: OptionsType) {
   return ({
     options,
     ...vr,
-    createStyles () { return createStylesString(options) },
+    createStyles () { return this.toString() }, // TODO Depreiciate in next breaking release.
     fontSizeToPx: vr.adjustFontSizeTo,
     fontSizeToMS (scaler: number) {
       // This doesn't pick the right scale if a theme has more than one scale.
@@ -69,19 +63,22 @@ const typography = function (opts: OptionsType) {
       const newFontSize = `${ms(scaler, options.modularScales[0].scale) * baseFont}px`
       return vr.adjustFontSizeTo(newFontSize)
     },
+    toJSON () {
+      return createStyles(vr, options)
+    },
     toString () {
-      return this.createStyles()
+      return compileStyles(vr, options, this.toJSON())
     },
     injectStyles () {
       if (typeof document !== 'undefined') {
         // Replace existing
         if (document.getElementById('typography.js')) {
           const styleNode = document.getElementById('typography.js')
-          styleNode.innerHTML = createStylesString(options)
+          styleNode.innerHTML = this.toString()
         } else {
           const node = document.createElement('style')
           node.id = 'typography.js'
-          node.innerHTML = createStylesString(options)
+          node.innerHTML = this.toString()
           document.head.appendChild(node)
         }
       }
@@ -92,8 +89,11 @@ const typography = function (opts: OptionsType) {
 module.exports = typography
 
 /*
-console.log(Typography({
+const test = typography({
   baseFontSize: '16px',
   includeNormalize: false,
-}).toString())
+})
+
+console.log(test.toJSON())
+console.log(test.toString())
 */
