@@ -64,6 +64,9 @@ const theme: OptionsType = {
     'blockquote cite:before': {
       content: '"— "',
     },
+    ul: {
+      listStyle: 'disc',
+    },
     'ul,ol': {
       marginLeft: 0,
     },
