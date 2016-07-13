@@ -60,10 +60,9 @@ const theme: OptionsType = {
           ...vr.establishBaseline(),
         },
         blockquote: {
-          marginLeft: rhythm(-1/2),
-          marginRight: rhythm(1/2),
-          paddingLeft: rhythm(3/4),
-          borderLeft: `${rhythm(1/4)} solid ${gray(13)}`,
+          marginLeft: rhythm(-3/4),
+          marginRight: 0,
+          paddingLeft: rhythm(1/2),
         },
         table: {
           ...adjustFontSizeTo('18px'),

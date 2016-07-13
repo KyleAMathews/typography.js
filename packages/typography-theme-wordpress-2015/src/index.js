@@ -42,8 +42,8 @@ const theme: OptionsType = {
       ...adjustFontSizeTo('20px'),
       color: gray(41),
       fontStyle: 'italic',
-      paddingLeft: rhythm(1/2),
-      marginLeft: rhythm(-5/8),
+      paddingLeft: rhythm(5/8),
+      marginLeft: rhythm(-6/8),
       borderLeft: `${rhythm(1/8)} solid rgba(51, 51, 51, 0.7)`,
     },
     'blockquote > :last-child': {

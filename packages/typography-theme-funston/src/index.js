@@ -49,7 +49,8 @@ const theme: OptionsType = {
     },
     '@media only screen and (max-width:480px)': {
       blockquote: {
-        marginLeft: rhythm(-1/2),
+        marginLeft: rhythm(-3/4),
+        paddingLeft: rhythm(9/16),
         marginRight: 0,
       },
     },

@@ -72,8 +72,9 @@ const theme: OptionsType = {
         marginLeft: rhythm(1),
       },
       blockquote: {
-        marginLeft: rhythm(-1/2),
+        marginLeft: rhythm(-3/4),
         marginRight: 0,
+        paddingLeft: rhythm(9/16),
       },
     },
     'h1,h2,h3,h4,h5,h6': {
