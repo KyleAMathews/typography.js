@@ -5,8 +5,30 @@ import type { OptionsType } from 'Types'
 const theme: OptionsType = {
   baseFontSize: '16px',
   baseLineHeight: '26px',
-  headerFontFamily: ['Helvetica Neue', 'Helvetica', 'Segoe UI', 'Arial', 'freesans', 'sans-serif', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'], // eslint-disable-line
-  bodyFontFamily: ['Helvetica Neue', 'Helvetica', 'Segoe UI', 'Arial', 'freesans', 'sans-serif', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'], // eslint-disable-line
+  headerFontFamily: [
+    '-apple-system',
+    'BlinkMacSystemFont',
+    'Segoe UI',
+    'Roboto',
+    'Helvetica',
+    'Arial',
+    'sans-serif',
+    'Apple Color Emoji',
+    'Segoe UI Emoji',
+    'Segoe UI Symbol',
+  ],
+  bodyFontFamily: [
+    '-apple-system',
+    'BlinkMacSystemFont',
+    'Segoe UI',
+    'Roboto',
+    'Helvetica',
+    'Arial',
+    'sans-serif',
+    'Apple Color Emoji',
+    'Segoe UI Emoji',
+    'Segoe UI Symbol',
+  ],
   modularScales: [
     {
       scale: 2.25,
@@ -18,9 +40,9 @@ const theme: OptionsType = {
   ],
   headerGray: 20,
   bodyGray: 20,
-  headerWeight: 'bold',
+  headerWeight: 600,
   bodyWeight: 'normal',
-  boldWeight: 'bold',
+  boldWeight: 600,
   // Github has all block elements use 1/2 rhythm not a full rhythm for
   blockMarginBottom: 1/2,
   overrideStyles: ({ rhythm }) => ({
