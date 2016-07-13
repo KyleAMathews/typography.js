@@ -218,12 +218,12 @@ module.exports = (vr: any, options: OptionsType) => {
 
   // Call overrideStyles function on options (if set).
   if (isFunction(options.overrideStyles)) {
-    styles = merge(styles, options.overrideStyles(vr, options))
+    styles = merge(styles, options.overrideStyles(vr, options, styles))
   }
 
   // Call overrideThemeStyles function on options (if set).
   if (isFunction(options.overrideThemeStyles)) {
-    styles = merge(styles, options.overrideThemeStyles(vr, options))
+    styles = merge(styles, options.overrideThemeStyles(vr, options, styles))
   }
 
   return styles

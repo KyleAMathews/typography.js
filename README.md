@@ -175,13 +175,13 @@ fontFaces: [
 ```
 * **blockMarginBottom**: Specify the default margin-bottom for block elements. Defaults to one "rhythm unit" or the base line height.
 * **includeNormalize**: Include in generated css normalize.css. Normalize.css is an excellent project which works to normalize the base css across browsers and serves as an excellent foundation for Typography.js. We include normalize.css by default but if you're already including it elsewhere in your project, you can disable including it here by passing `false`.
-* **overrideStyles**: Function where you can add to or override
-  auto-generated styles. It's called with an instantiated Vertical
-Rhythm object and the options object. Allows you to directly set global
-typography styles.
+* **overrideStyles**: Imperative API for directly adding to or
+overriding auto-generated styles. It's called with a Vertical
+Rhythm object, the options object, and the algorithmically generated
+styles.
 
 ```javascript
-overrideStyles: ({ adjustFontSizeTo, rhythm }, options) => ({
+overrideStyles: ({ adjustFontSizeTo, rhythm }, options, styles) => ({
   h1: {
     fontFamily: ['Montserrat', 'sans-serif'].join(','),
   },
@@ -203,7 +203,7 @@ using a 3rd-party theme so as to not delete the theme's own
 `overrideStyles` function.
 
 ```javascript
-overrideThemeStyles: ({ rhythm }, options) => ({
+overrideThemeStyles: ({ rhythm }, options, styles) => ({
   'h2,h3': {
     marginBottom: rhythm(1/2),
     marginTop: rhythm(2),
