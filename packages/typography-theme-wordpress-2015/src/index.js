@@ -29,6 +29,9 @@ const theme: OptionsType = {
     'h1,h2,h3,h4,h5,h6': {
       marginTop: rhythm(2),
     },
+    ul: {
+      listStyle: 'disc',
+    },
     'ul,ol': {
       marginLeft: 0,
     },
