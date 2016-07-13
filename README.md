@@ -93,10 +93,10 @@ Typography.js includes two helper components for your React.js projects, `Typogr
 * `GoogleFont` creates the link element to include the Google Fonts &
   weights specified in your theme.
 
-To use, first install the package `npm install --save typography-react` then import them into your `html.js` file.
+To use, first install the package `npm install --save react-typography` then import them into your `html.js` file.
 
 ```javascript
-import { TypographyStyle, GoogleFont } from 'typography-react'
+import { TypographyStyle, GoogleFont } from 'react-typography'
 // Best practice is to have a typography module
 // where you define your theme.
 import typography from 'utils/typography'
