@@ -1,7 +1,7 @@
 {
   "name": "typography-theme-wordpress-2015",
   "description": "A theme for Typography.js inspired by the typography of the Wordpress 2015 default theme",
-  "version": "0.11.0",
+  "version": "0.11.2",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "gray-percentage": "^1.1.2"
