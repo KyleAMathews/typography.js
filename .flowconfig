@@ -1,6 +1,7 @@
 [ignore]
 .*/website/.*
 [include]
+./*
 
 [libs]
 

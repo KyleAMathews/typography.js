@@ -8,6 +8,7 @@ import isString from 'lodash/isString'
 import isFunction from 'lodash/isFunction'
 import isArray from 'lodash/isArray'
 import merge from 'lodash/merge'
+import reduce from 'lodash/reduce'
 
 import type { OptionsType } from 'Types'
 
@@ -215,6 +216,13 @@ module.exports = (vr: any, options: OptionsType) => {
       }
     })
   })
+
+  // Call plugins if any.
+  if (isArray(options.plugins)) {
+    styles = reduce(options.plugins, ((stylesObj, plugin) => (
+      merge(stylesObj, plugin(vr, options, stylesObj))
+    )), styles)
+  }
 
   // Call overrideStyles function on options (if set).
   if (isFunction(options.overrideStyles)) {

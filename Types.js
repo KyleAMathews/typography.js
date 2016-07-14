@@ -21,13 +21,14 @@ export type OptionsType = {
   blockMarginBottom?: number | string,
   includeNormalize?: boolean,
   overrideStyles?: (
-    verticalRhythm: Object, // TODO Create flow type for compass-vertical-rhythm and import here.
+    verticalRhythm: mixed, // TODO Create flow type for compass-vertical-rhythm and import here.
     options: OptionsType,
-    styles: Object,
+    styles: mixed,
   ) => Object,
   overrideThemeStyles?: (
-    verticalRhythm: Object, // TODO Create flow type for compass-vertical-rhythm and import here.
+    verticalRhythm: mixed, // TODO Create flow type for compass-vertical-rhythm and import here.
     options: OptionsType,
-    styles: Object,
+    styles: mixed,
   ) => Object,
+  plugins?: mixed[],
 }
