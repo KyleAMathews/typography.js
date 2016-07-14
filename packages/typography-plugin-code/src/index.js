@@ -18,7 +18,7 @@ const CodePlugin = (): Function =>
     'tt,code': {
       backgroundColor: 'rgba(0,0,0,0.04)',
       borderRadius: '3px',
-      fontFamily: 'Consolas, "Liberation Mono", Menlo, Courier, monospace',
+      fontFamily: '"Inconsolata",Consolas,"Liberation Mono",Menlo,Courier,monospace',
       padding: 0,
       paddingTop: '0.2em',
       paddingBottom: '0.2em',
