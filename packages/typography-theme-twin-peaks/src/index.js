@@ -85,6 +85,15 @@ const theme: OptionsType = {
         html: {
           ...vr.establishBaseline(),
         },
+        blockquote: {
+          ...adjustFontSizeTo('24px'),
+          borderLeft: `${rhythm(3/16)} solid ${linkColor}`,
+          color: gray(41),
+          paddingLeft: rhythm(9/16),
+          fontStyle: 'italic',
+          marginLeft: rhythm(-3/4),
+          marginRight: 0,
+        },
       },
     }
   },
