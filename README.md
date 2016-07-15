@@ -24,7 +24,7 @@ const typography = new Typography()
 ```
 
 ## Typography.js Themes
-We maintain 14 (and counting) themes that are ready to use on your next
+We maintain 19 (and counting) themes that are ready to use on your next
 project. These are each published as seperate NPM packages. To use, for
 example, the Funston theme:
 
@@ -70,9 +70,16 @@ const typography = new Typography(funstonTheme)
 ```
 
 ### Published Typography.js Themes
+* [typography-theme-alton](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-alton/src/index.js)
+* [typography-theme-elk-glen](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-elk-glen/src/index.js)
 * [typography-theme-funston](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-funston/src/index.js)
 * [typography-theme-irving](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-irving/src/index.js)
+* [typography-theme-judah](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-judah/src/index.js)
+* [typography-theme-lawton](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-lawton/src/index.js)
+* [typography-theme-kirkham](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-kirkham/src/index.js)
 * [typography-theme-moraga](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-moraga/src/index.js)
+* [typography-theme-noriega](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-noriega/src/index.js)
+* [typography-theme-sutro](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-sutro/src/index.js)
 * [typography-theme-wordpress-kubrick](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-wordpress-kubrick/src/index.js)
 * [typography-theme-wordpress-2010](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-wordpress-2010/src/index.js)
 * [typography-theme-wordpress-2011](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-wordpress-2011/src/index.js)
@@ -81,7 +88,6 @@ const typography = new Typography(funstonTheme)
 * [typography-theme-wordpress-2014](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-wordpress-2014/src/index.js)
 * [typography-theme-wordpress-2015](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-wordpress-2015/src/index.js)
 * [typography-theme-wordpress-2016](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-wordpress-2016/src/index.js)
-* [typography-theme-wordpress-boingboing](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-boingboing/src/index.js)
 * [typography-theme-wordpress-github](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-github/src/index.js)
 * [typography-theme-wordpress-wikipedia](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-wikipedia/src/index.js)
 * If you publish your own, create a PR to add it here!
