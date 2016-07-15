@@ -4,6 +4,7 @@
   "version": "0.11.3",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
+    "compass-vertical-rhythm": "^1.2.1",
     "gray-percentage": "^1.1.2",
     "typography-breakpoint-constants": "^0.10.0"
   },
