@@ -35,7 +35,7 @@ const theme: OptionsType = {
       color: '#9f392b',
     },
     h1: {
-      ...adjustFontSizeTo('48px'),
+      ...adjustFontSizeTo('45px'),
     },
     blockquote: {
       ...adjustFontSizeTo('21px'),

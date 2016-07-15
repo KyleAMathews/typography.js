@@ -82,7 +82,7 @@ const theme: OptionsType = {
       marginTop: rhythm(2),
     },
     h1: {
-      ...adjustFontSizeTo('48px'),
+      ...adjustFontSizeTo('45px'),
       letterSpacing: '-2px',
     },
     h6: {
