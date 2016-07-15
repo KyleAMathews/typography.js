@@ -53,7 +53,7 @@ funstonTheme.baseLineHeight = '31px' // was 28px.
 const typography = new Typography(funstonTheme)
 ```
 
-Or if you'd like to use the imperative API to directly set/override
+Or if you'd like to use the imperative API `overrideThemeStyles` to directly set/override
 styles on a theme:
 
 ```javascript
