@@ -24,7 +24,7 @@ const typography = new Typography()
 ```
 
 ## Typography.js Themes
-We maintain 19 (and counting) themes that are ready to use on your next
+We maintain 23 (and counting) themes that are ready to use on your next
 project. These are each published as seperate NPM packages. To use, for
 example, the Funston theme:
 
@@ -53,7 +53,7 @@ funstonTheme.baseLineHeight = '31px' // was 28px.
 const typography = new Typography(funstonTheme)
 ```
 
-Or if you'd like to use the imperative API to directly set/override
+Or if you'd like to use the imperative API `overrideThemeStyles` to directly set/override
 styles on a theme:
 
 ```javascript
@@ -73,12 +73,16 @@ const typography = new Typography(funstonTheme)
 * [typography-theme-alton](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-alton/src/index.js)
 * [typography-theme-elk-glen](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-elk-glen/src/index.js)
 * [typography-theme-funston](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-funston/src/index.js)
+* [typography-theme-grand-view](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-grand-view/src/index.js)
 * [typography-theme-irving](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-irving/src/index.js)
 * [typography-theme-judah](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-judah/src/index.js)
 * [typography-theme-lawton](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-lawton/src/index.js)
 * [typography-theme-kirkham](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-kirkham/src/index.js)
 * [typography-theme-moraga](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-moraga/src/index.js)
 * [typography-theme-noriega](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-noriega/src/index.js)
+* [typography-theme-parnassus](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-parnassus/src/index.js)
+* [typography-theme-st-annes](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-st-annes/src/index.js)
+* [typography-theme-stow-lake](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-stow-lake/src/index.js)
 * [typography-theme-sutro](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-sutro/src/index.js)
 * [typography-theme-wordpress-kubrick](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-wordpress-kubrick/src/index.js)
 * [typography-theme-wordpress-2010](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-wordpress-2010/src/index.js)
