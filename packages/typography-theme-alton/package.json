@@ -1,7 +1,7 @@
 {
   "name": "typography-theme-alton",
   "description": "A theme for Typography.js",
-  "version": "0.11.3",
+  "version": "0.11.5",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "compass-vertical-rhythm": "^1.2.1",
