@@ -1,6 +1,6 @@
 {
   "name": "typography-theme-lawton",
-  "description": "A theme for Typography.js inspired by Boingboing.com's typography",
+  "description": "A theme for Typography.js",
   "version": "0.11.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {

@@ -13,7 +13,12 @@
     "eslint-plugin-jsx-a11y": "^2.0.1",
     "eslint-plugin-react": "^5.2.2",
     "flow-bin": "^0.28.0",
-    "lerna": "^2.0.0-beta.24"
+    "glob": "^7.0.5",
+    "json2md": "^1.5.2",
+    "lerna": "^2.0.0-beta.24",
+    "lodash": "^4.13.1",
+    "phantom": "^2.1.12",
+    "phantomjs-prebuilt": "^2.1.7"
   },
   "private": true,
   "scripts": {

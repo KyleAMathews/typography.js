@@ -16,5 +16,3 @@ const typography = new Typography(oceanBeachTheme)
 ## More on theme
 
 Ocean Beach uses "<a href='https://fonts.google.com/specimen/Roboto+Slab'>Roboto Slab</a>" for headers and "<a href='https://fonts.google.com/specimen/Roboto'>Roboto</a>" for body text
-
-![screenshot](./screenshot.png)

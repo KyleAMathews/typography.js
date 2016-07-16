@@ -4,7 +4,8 @@
   "version": "0.10.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "gray-percentage": "^1.1.2"
+    "gray-percentage": "^1.1.2",
+    "typography-breakpoint-constants": "^0.10.0"
   },
   "keywords": [
     "css",

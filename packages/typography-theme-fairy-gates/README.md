@@ -15,6 +15,4 @@ const typography = new Typography(fairyGatesTheme)
 ```
 ## More on theme
 
-Fairy Gates uses "Work Sans" for headers and "Quattrocento Sans" for body text
-
-![screenshot](./screenshot.png)
+Fairy Gates uses "<a href='https://fonts.google.com/specimen/Work+Sans'>Work Sans</a>" for headers and "<a href='https://fonts.google.com/specimen/Quattrocento+Sans'>Quattrocento Sans</a>" for body text

@@ -43,9 +43,11 @@ const theme: OptionsType = {
         color: '#3498DB',
       },
       blockquote: {
+        ...adjustFontSizeTo('27px'),
         color: gray(30),
         paddingLeft: rhythm(3/4),
-        marginLeft: rhythm(-1),
+        marginLeft: 0,
+        marginRight: 0,
         borderLeft: `${rhythm(1/4)} solid ${gray(13)}`,
       },
       'h3,h4,h5,h6': {
