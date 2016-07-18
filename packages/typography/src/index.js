@@ -53,7 +53,7 @@ const typography = function (opts: OptionsType) {
   return ({
     options,
     ...vr,
-    createStyles () { return this.toString() }, // TODO Depreiciate in next breaking release.
+    createStyles () { return this.toString() }, // TODO remove in next breaking release.
     fontSizeToPx: vr.adjustFontSizeTo,
     fontSizeToMS (scaler: number) {
       // This doesn't pick the right scale if a theme has more than one scale.

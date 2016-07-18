@@ -8,19 +8,42 @@ An opinionated toolkit for building websites with beautiful typography.
 http://kyleamathews.github.io/typography.js
 
 ## Why
-Typography is a dash of design sense and a cup full of math. Math that's
-tedious and hard to do right in CSS.
+Typography is a complex *system* of interrelated styles. 100s of
+declarations on dozens of elements have be in harmonious order. Creating
+new Typography themes with CSS feels hard. Trying one design change can
+mean making dozens of tedious recalculations and css value changes.
 
-Typography.js provides a *declarative* way to define your typography
-that's vastly simpler than using straight CSS.
+Typography.js is an effort to provide a vastly simpler way to define and
+explore typography designs.
 
-You can now easily create designs that are unique, personal, and custom to your project.
+You provide configuration to the Typography.js JS api and it uses its
+Typography engine to generate global styles for block and inline
+elements.
 
-## Usage
+Typography.js makes it easy to create designs that are unique, personal, and
+custom to your project.
+
+## Themes & Plugins
+- **themes**: Typography.js themes are simple Javascript objects. As
+  such they're easy to put in modules and share across projects or even
+  [open source and share via
+NPM](https://www.npmjs.com/browse/keyword/typography-theme).
+- **plugins**: Plugins are simple functions that extend the core
+  Typography engine to add specialized styles e.g. for code or tables.
+
+## Javascript usage
 ```javascript
 import Typography from 'typography'
 
-const typography = new Typography()
+const typography = new Typography({
+  baseFontSize: '18px',
+  baseLineHeight: '30px',
+  bodyFontFamily: ['Georgia', 'serif'],
+  // See below for the full list of options.
+})
+
+// Insert styles into the <head>
+typography.injectStyles()
 ```
 
 ## Typography.js Themes
@@ -101,13 +124,17 @@ const typography = new Typography(funstonTheme)
 * If you publish your own, create a PR to add it here!
 
 ## React.js helper components.
-Typography.js includes two helper components for your React.js projects, `TypographyStyle` and `GoogleFont`.
+Typography.js includes two helper components for your React.js projects,
+`TypographyStyle` and `GoogleFont`. These are ideal for
+server-rendering.
 
-* `TypographyStyle` creates a style element and inserts the generated css for your theme.
+* `TypographyStyle` creates a style element and inserts the generated
+  css for your theme.
 * `GoogleFont` creates the link element to include the Google Fonts &
   weights specified in your theme.
 
-To use, first install the package `npm install --save react-typography` then import them into your `html.js` file.
+To use, first install the package `npm install --save react-typography`
+then import them into your `html.js` file.
 
 ```javascript
 import { TypographyStyle, GoogleFont } from 'react-typography'
@@ -128,7 +155,8 @@ import typography from 'utils/typography'
 ```
 
 ## API
-When creating a new instance of Typography, you can pass in an *configuration* object. All configuration keys are optional.
+When creating a new instance of Typography, you can pass in an
+*configuration* object. All configuration keys are optional.
 
 * **baseFontSize**: The base font size in pixels, defaults to "16px"
 * **baseLineHeight**: The base line height in pixels, defaults to "24px".
