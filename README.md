@@ -1,5 +1,5 @@
 # Typography.js
-An opinionated toolkit for building websites with beautiful typography.
+A powerful toolkit for building websites with beautiful typography.
 
 ## Install
 `npm install typography`
@@ -11,13 +11,13 @@ http://kyleamathews.github.io/typography.js
 Typography is a complex *system* of interrelated styles. 100s of
 declarations on dozens of elements must be in harmonious order. Creating
 new Typography themes with CSS feels hard. Trying one design change can
-mean making dozens of tedious recalculations and css value changes.
+mean making dozens of tedious recalculations and CSS value changes.
 
 Typography.js is an effort to provide a vastly simpler way to define and
 explore typography designs.
 
 You provide configuration to the Typography.js JS api and it uses its
-Typography engine to generate global styles for block and inline
+Typography engine to generate CSS for block and inline
 elements.
 
 Typography.js makes it easy to create designs that are unique, personal, and
@@ -43,7 +43,11 @@ const typography = new Typography({
   // See below for the full list of options.
 })
 
-// Insert styles into the <head>
+// Output CSS as string.
+typography.toString()
+
+// Or insert styles directly into the <head> (works well for client-only
+// JS web apps.
 typography.injectStyles()
 ```
 
@@ -154,7 +158,7 @@ Typography.js includes two helper components for your React.js projects,
 server-rendering.
 
 * `TypographyStyle` creates a style element and inserts the generated
-  css for your theme.
+  CSS for your theme.
 * `GoogleFont` creates the link element to include the Google Fonts &
   weights specified in your theme.
 
@@ -241,7 +245,7 @@ fontFaces: [
 ]
 ```
 * **blockMarginBottom**: Specify the default margin-bottom for block elements. Defaults to one "rhythm unit" or the base line height.
-* **includeNormalize**: Include in generated css normalize.css. Normalize.css is an excellent project which works to normalize the base css across browsers and serves as an excellent foundation for Typography.js. We include normalize.css by default but if you're already including it elsewhere in your project, you can disable including it here by passing `false`.
+* **includeNormalize**: Include in generated CSS normalize.css. Normalize.css is an excellent project which works to normalize the base CSS across browsers and serves as an excellent foundation for Typography.js. We include normalize.CSS by default but if you're already including it elsewhere in your project, you can disable including it here by passing `false`.
 * **overrideStyles**: Imperative API for directly adding to or
 overriding auto-generated styles. It's called with a Vertical
 Rhythm object, the options object, and the algorithmically generated
