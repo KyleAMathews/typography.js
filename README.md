@@ -38,6 +38,7 @@ import Typography from 'typography'
 const typography = new Typography({
   baseFontSize: '18px',
   baseLineHeight: '30px',
+  headerFontFamily: ['Avenir Next', 'Helvetica Neue', 'Segoe UI', 'Helvetica', 'Arial', 'sans-serif'],
   bodyFontFamily: ['Georgia', 'serif'],
   // See below for the full list of options.
 })
@@ -239,6 +240,7 @@ overrideStyles: ({ adjustFontSizeTo, rhythm }, options, styles) => ({
     marginBottom: 0,
   },
 })
+```
 * **overrideThemeStyles**: This has the same function signature as
 `overrideStyles` but should be used in place of `overrideStyles` when
 using a 3rd-party theme so as to not delete the theme's own
