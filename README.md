@@ -48,7 +48,7 @@ typography.injectStyles()
 ```
 
 ## Typography.js Themes
-We maintain 27 (and counting) themes that are ready to use on your next
+We maintain 28 (and counting) themes that are ready to use on your next
 project. These are each published as seperate NPM packages. To use, for
 example, the Funston theme:
 
