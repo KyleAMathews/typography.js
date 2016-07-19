@@ -9,7 +9,7 @@ http://kyleamathews.github.io/typography.js
 
 ## Why
 Typography is a complex *system* of interrelated styles. 100s of
-declarations on dozens of elements have be in harmonious order. Creating
+declarations on dozens of elements must be in harmonious order. Creating
 new Typography themes with CSS feels hard. Trying one design change can
 mean making dozens of tedious recalculations and css value changes.
 
