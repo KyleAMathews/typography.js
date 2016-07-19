@@ -28,7 +28,7 @@ custom to your project.
   such they're easy to put in modules and share across projects or even
   [open source and share via
 NPM](https://www.npmjs.com/browse/keyword/typography-theme).
-- **plugins**: Plugins are simple functions that extend the core
+- **plugins**: Plugins are functions that extend the core
   Typography engine to add specialized styles e.g. for code or tables.
 
 ## Javascript usage
@@ -47,7 +47,7 @@ const typography = new Typography({
 typography.injectStyles()
 ```
 
-## Typography.js Themes
+## Themes
 We maintain 28 (and counting) themes that are ready to use on your next
 project. These are each published as seperate NPM packages. To use, for
 example, the Funston theme:
@@ -124,6 +124,29 @@ const typography = new Typography(funstonTheme)
 * [typography-theme-wordpress-github](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-github/)
 * [typography-theme-wordpress-wikipedia](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-wikipedia/)
 * If you publish your own, create a PR to add it here!
+
+## Plugins
+Plugins are functions that extend the core Typography engine to add
+specialized styles e.g. for code or tables. Currently there's one plugin
+available, `typography-plugin-code`.
+
+To use the Code plugin, first install using NPM.
+
+`npm install --save typography-plugin-code`
+
+Then add to your theme before creating a new typography object.
+
+```javascript
+import Typography from 'typography'
+import CodePlugin from 'typography-plugin-code'
+import sternGroveTheme from ''typography-theme-stern-grove'
+
+sternGroveTheme.plugins = [
+  new CodePlugin(),
+]
+
+const typography = new Typography(sternGroveTheme)
+```
 
 ## React.js helper components.
 Typography.js includes two helper components for your React.js projects,
