@@ -9,7 +9,7 @@ const theme: OptionsType = {
   baseLineHeight: '33.8px',
   googleFonts: [
     {
-      name: 'Lato',
+      name: 'Exo',
       styles: [
         '700',
       ],
@@ -17,17 +17,17 @@ const theme: OptionsType = {
     {
       name: 'Yrsa',
       styles: [
-        '300',
+        '400',
         '700',
       ],
     },
   ],
-  headerFontFamily: ['Lato', 'sans-serif'],
+  headerFontFamily: ['Exo', 'sans-serif'],
   bodyFontFamily: ['Yrsa', 'georgia', 'sans-serif'],
   headerGray: 13,
   bodyGray: 20,
   headerWeight: 700,
-  bodyWeight: 300,
+  bodyWeight: 400,
   boldWeight: 700,
   overrideStyles: ({ adjustFontSizeTo, rhythm }, options) => {
     const vr = verticalRhythm({
