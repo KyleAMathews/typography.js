@@ -1,6 +1,7 @@
 // @flow
 import gray from 'gray-percentage'
 import type { OptionsType } from 'Types'
+import { MOBILE_MEDIA_QUERY } from 'typography-breakpoint-constants'
 
 const theme: OptionsType = {
   baseFontSize: '19px',
@@ -59,6 +60,16 @@ const theme: OptionsType = {
     },
     'blockquote cite:before': {
       content: '"— "',
+    },
+    [MOBILE_MEDIA_QUERY]: {
+      'ul,ol': {
+        marginLeft: rhythm(1),
+      },
+      blockquote: {
+        marginLeft: rhythm(-3/4),
+        marginRight: 0,
+        paddingLeft: rhythm(9/16),
+      },
     },
   }),
 }
