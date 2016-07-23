@@ -11,14 +11,14 @@ const theme: OptionsType = {
     {
       name: 'Roboto Slab',
       styles: [
-        '400',
+        '700',
       ],
     },
     {
       name: 'Roboto',
       styles: [
-        '300',
-        '300i',
+        '400',
+        '400i',
         '700',
       ],
     },
@@ -27,8 +27,8 @@ const theme: OptionsType = {
   bodyFontFamily: ['Roboto', 'serif'],
   headerGray: 10,
   bodyGray: 27,
-  headerWeight: '400',
-  bodyWeight: 300,
+  headerWeight: 700,
+  bodyWeight: 400,
   boldWeight: 700,
   overrideStyles: ({ adjustFontSizeTo, rhythm }, options) => {
     const linkColor = '#950451'

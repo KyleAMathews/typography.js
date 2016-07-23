@@ -10,15 +10,15 @@ const theme: OptionsType = {
     {
       name: 'Neuton',
       styles: [
-        '400',
+        '700',
       ],
     },
     {
       name: 'Lato',
       styles: [
-        '300',
-        '300i',
-        '600',
+        '400',
+        '400i',
+        '700',
       ],
     },
   ],
@@ -26,9 +26,9 @@ const theme: OptionsType = {
   bodyFontFamily: ['Lato', 'sans-serif'],
   headerGray: 10,
   bodyGray: 20,
-  headerWeight: 400,
-  bodyWeight: 300,
-  boldWeight: 600,
+  headerWeight: 700,
+  bodyWeight: 400,
+  boldWeight: 700,
   overrideStyles: ({ adjustFontSizeTo, rhythm }, options) => ({
     a: {
       color: '#4665b7',
