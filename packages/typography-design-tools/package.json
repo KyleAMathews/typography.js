@@ -1,0 +1,24 @@
+{
+  "name": "typography-design-tools",
+  "version": "0.0.0",
+  "description": "Design tools for Typography.js",
+  "main": "./dist/index.js",
+  "keywords": [
+    "typography",
+    "devtools",
+    "designtools"
+  ],
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "react": "^15.2.1",
+    "react-dom": "^15.2.1",
+    "typography": "^0.11.7"
+  },
+  "scripts": {
+    "build": "../../node_modules/.bin/babel src --out-dir dist/",
+    "flow": "../../node_modules/.bin/flow",
+    "lint": "../../node_modules/.bin/eslint --ext .js,.jsx --ignore-path .gitignore .",
+    "watch": "../../node_modules/.bin/babel -w src --out-dir dist/"
+  }
+}
