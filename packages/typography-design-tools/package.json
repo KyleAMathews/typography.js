@@ -1,6 +1,6 @@
 {
   "name": "typography-design-tools",
-  "version": "0.0.0",
+  "version": "0.11.8",
   "description": "Design tools for Typography.js",
   "main": "./dist/index.js",
   "keywords": [
@@ -20,5 +20,9 @@
     "flow": "../../node_modules/.bin/flow",
     "lint": "../../node_modules/.bin/eslint --ext .js,.jsx --ignore-path .gitignore .",
     "watch": "../../node_modules/.bin/babel -w src --out-dir dist/"
+  },
+  "devDependencies": {
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-preset-react": "^6.11.1"
   }
 }
