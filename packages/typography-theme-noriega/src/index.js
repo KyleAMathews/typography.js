@@ -6,14 +6,14 @@ const theme: OptionsType = {
   baseLineHeight: '29px',
   headerFontFamily: ['Lato', 'sans-serif'],
   bodyFontFamily: ['Lato', 'sans-serif'],
-  bodyWeight: 300,
+  bodyWeight: 400,
   headerWeight: 700,
   boldWeight: 700,
   googleFonts: [
     {
       name: 'Lato',
       styles: [
-        '300',
+        '400',
         '700',
       ],
     },
