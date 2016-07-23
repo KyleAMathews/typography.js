@@ -8,12 +8,12 @@ A powerful toolkit for building websites with beautiful typography.
 http://kyleamathews.github.io/typography.js
 
 ## Why
-Typography is a complex *system* of interrelated styles. 100s of
-declarations on dozens of elements must be in harmonious order. Creating
-new Typography themes with CSS feels hard. Trying one design change can
-mean making dozens of tedious recalculations and CSS value changes.
+Typography is a complex *system* of interrelated styles. 100s of style
+declarations on dozens of elements must be in harmonious order. Trying
+one design change can mean making dozens of tedious recalculations and
+CSS value changes. Creating new Typography themes with CSS feels hard.
 
-Typography.js is an effort to provide a vastly simpler way to define and
+Typography.js provides a vastly simpler way to define and
 explore typography designs.
 
 You provide configuration to the Typography.js JS api and it uses its
@@ -25,11 +25,12 @@ custom to your project.
 
 ## Themes & Plugins
 - **themes**: Typography.js themes are simple Javascript objects. As
-  such they're easy to put in modules and share across projects or even
+  such they're easy to share across projects or even
   [open source and share via
 NPM](https://www.npmjs.com/browse/keyword/typography-theme).
-- **plugins**: Plugins are functions that extend the core
-  Typography engine to add specialized styles e.g. for code or tables.
+- **plugins**: Plugins are functions that extend or modify the core
+  Typography engine. They can change how headers are styled
+  or add specialized styles e.g. for code or tables.
 
 ## Javascript usage
 ```javascript
@@ -130,9 +131,10 @@ const typography = new Typography(funstonTheme)
 * If you publish your own, create a PR to add it here!
 
 ## Plugins
-Plugins are functions that extend the core Typography engine to add
-specialized styles e.g. for code or tables. Currently there's one plugin
-available, `typography-plugin-code`.
+plugins are functions that extend or modify the core typography engine.
+they can change how headers are styled or add specialized styles e.g.
+for code or tables.  currently there's one plugin available,
+`typography-plugin-code`.
 
 To use the Code plugin, first install using NPM.
 
@@ -143,7 +145,7 @@ Then add to your theme before creating a new typography object.
 ```javascript
 import Typography from 'typography'
 import CodePlugin from 'typography-plugin-code'
-import sternGroveTheme from ''typography-theme-stern-grove'
+import sternGroveTheme from 'typography-theme-stern-grove'
 
 sternGroveTheme.plugins = [
   new CodePlugin(),
