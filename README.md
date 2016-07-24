@@ -53,7 +53,7 @@ typography.injectStyles()
 ```
 
 ## Themes
-We maintain 29 (and counting) themes that are ready to use on your next
+We maintain 30 (and counting) themes that are ready to use on your next
 project. These are each published as seperate NPM packages. Explore
 themes at http://kyleamathews.github.io/typography.js.
 
@@ -104,6 +104,7 @@ const typography = new Typography(funstonTheme)
 
 ### Published Typography.js Themes
 * [typography-theme-alton](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-alton/)
+* [typography-theme-de-young](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-de-young/)
 * [typography-theme-doelger](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-doelger/)
 * [typography-theme-elk-glen](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-elk-glen/)
 * [typography-theme-fairy-gates](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-fairy-gates/)
