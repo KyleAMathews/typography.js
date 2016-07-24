@@ -13,6 +13,7 @@
   "dependencies": {
     "react": "^15.2.1",
     "react-dom": "^15.2.1",
+    "react-typography": "^0.11.0",
     "typography": "^0.11.7"
   },
   "scripts": {

@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/server'
 import Typography from 'typography'
-import { GoogleFont } from '../../react-typography/src/'
+import { GoogleFont } from 'react-typography'
 import _ from 'lodash'
 import themes from '../themes'
 const requireThemes = require.context('../../', true, /^\.\/typography-theme.*\/src\/index.js$/)
