@@ -15,4 +15,4 @@ const typography = new Typography(irvingTheme)
 ```
 ## More on theme
 
-Irving uses "<a href='https://fonts.google.com/specimen/Lato'>Lato</a>" for headers and "<a href='https://fonts.google.com/specimen/Yrsa'>Yrsa</a>" for body text
+Irving uses "<a href='https://fonts.google.com/specimen/Exo'>Exo</a>" for headers and "<a href='https://fonts.google.com/specimen/Yrsa'>Yrsa</a>" for body text
