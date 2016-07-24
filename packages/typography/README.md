@@ -1,5 +1,5 @@
 # Typography.js
-An opinionated toolkit for building websites with beautiful typography.
+A powerful toolkit for building websites with beautiful typography.
 
 ## Install
 `npm install typography`
@@ -8,16 +8,16 @@ An opinionated toolkit for building websites with beautiful typography.
 http://kyleamathews.github.io/typography.js
 
 ## Why
-Typography is a complex *system* of interrelated styles. 100s of
-declarations on dozens of elements have be in harmonious order. Creating
-new Typography themes with CSS feels hard. Trying one design change can
-mean making dozens of tedious recalculations and css value changes.
+Typography is a complex *system* of interrelated styles. 100s of style
+declarations on dozens of elements must be in harmonious order. Trying
+one design change can mean making dozens of tedious recalculations and
+CSS value changes. Creating new Typography themes with CSS feels hard.
 
-Typography.js is an effort to provide a vastly simpler way to define and
+Typography.js provides a vastly simpler way to define and
 explore typography designs.
 
 You provide configuration to the Typography.js JS api and it uses its
-Typography engine to generate global styles for block and inline
+Typography engine to generate CSS for block and inline
 elements.
 
 Typography.js makes it easy to create designs that are unique, personal, and
@@ -25,11 +25,12 @@ custom to your project.
 
 ## Themes & Plugins
 - **themes**: Typography.js themes are simple Javascript objects. As
-  such they're easy to put in modules and share across projects or even
+  such they're easy to share across projects or even
   [open source and share via
 NPM](https://www.npmjs.com/browse/keyword/typography-theme).
-- **plugins**: Plugins are simple functions that extend the core
-  Typography engine to add specialized styles e.g. for code or tables.
+- **plugins**: Plugins are functions that extend or modify the core
+  Typography engine. They can change how headers are styled
+  or add specialized styles e.g. for code or tables.
 
 ## Javascript usage
 ```javascript
@@ -43,14 +44,22 @@ const typography = new Typography({
   // See below for the full list of options.
 })
 
-// Insert styles into the <head>
+// Output CSS as string.
+typography.toString()
+
+// Or insert styles directly into the <head> (works well for client-only
+// JS web apps.
 typography.injectStyles()
 ```
 
-## Typography.js Themes
-We maintain 27 (and counting) themes that are ready to use on your next
-project. These are each published as seperate NPM packages. To use, for
-example, the Funston theme:
+## Themes
+We maintain 29 (and counting) themes that are ready to use on your next
+project. These are each published as seperate NPM packages. Explore
+themes at http://kyleamathews.github.io/typography.js.
+
+### Using themes
+
+Here's an example of how to use the Funston theme.
 
 1. First save the package to your project `npm install --save
    typography-theme-funston`
@@ -95,6 +104,7 @@ const typography = new Typography(funstonTheme)
 
 ### Published Typography.js Themes
 * [typography-theme-alton](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-alton/)
+* [typography-theme-doelger](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-doelger/)
 * [typography-theme-elk-glen](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-elk-glen/)
 * [typography-theme-fairy-gates](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-fairy-gates/)
 * [typography-theme-funston](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-funston/)
@@ -125,13 +135,37 @@ const typography = new Typography(funstonTheme)
 * [typography-theme-wordpress-wikipedia](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-wikipedia/)
 * If you publish your own, create a PR to add it here!
 
+## Plugins
+plugins are functions that extend or modify the core typography engine.
+they can change how headers are styled or add specialized styles e.g.
+for code or tables.  currently there's one plugin available,
+`typography-plugin-code`.
+
+To use the Code plugin, first install using NPM.
+
+`npm install --save typography-plugin-code`
+
+Then add to your theme before creating a new typography object.
+
+```javascript
+import Typography from 'typography'
+import CodePlugin from 'typography-plugin-code'
+import sternGroveTheme from 'typography-theme-stern-grove'
+
+sternGroveTheme.plugins = [
+  new CodePlugin(),
+]
+
+const typography = new Typography(sternGroveTheme)
+```
+
 ## React.js helper components.
 Typography.js includes two helper components for your React.js projects,
 `TypographyStyle` and `GoogleFont`. These are ideal for
 server-rendering.
 
 * `TypographyStyle` creates a style element and inserts the generated
-  css for your theme.
+  CSS for your theme.
 * `GoogleFont` creates the link element to include the Google Fonts &
   weights specified in your theme.
 
@@ -218,7 +252,7 @@ fontFaces: [
 ]
 ```
 * **blockMarginBottom**: Specify the default margin-bottom for block elements. Defaults to one "rhythm unit" or the base line height.
-* **includeNormalize**: Include in generated css normalize.css. Normalize.css is an excellent project which works to normalize the base css across browsers and serves as an excellent foundation for Typography.js. We include normalize.css by default but if you're already including it elsewhere in your project, you can disable including it here by passing `false`.
+* **includeNormalize**: Include in generated CSS normalize.css. Normalize.css is an excellent project which works to normalize the base CSS across browsers and serves as an excellent foundation for Typography.js. We include normalize.CSS by default but if you're already including it elsewhere in your project, you can disable including it here by passing `false`.
 * **overrideStyles**: Imperative API for directly adding to or
 overriding auto-generated styles. It's called with a Vertical
 Rhythm object, the options object, and the algorithmically generated
