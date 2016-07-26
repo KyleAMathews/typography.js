@@ -5,7 +5,7 @@ import { MOBILE_MEDIA_QUERY } from 'typography-breakpoint-constants'
 
 const theme: OptionsType = {
   baseFontSize: '16px',
-  baseLineHeight: '27px',
+  baseLineHeight: '25px',
   googleFonts: [
     {
       name: 'Source Serif Pro',

@@ -100,7 +100,7 @@ module.exports = (vr: any, options: OptionsType) => {
   // Basic blockquote styles.
   styles = setStyles(styles, 'blockquote', {
     marginRight: vr.rhythm(1),
-    marginBottom: vr.rhythm(1),
+    marginBottom: blockMarginBottom,
     marginLeft: vr.rhythm(1),
   })
 
@@ -114,7 +114,7 @@ module.exports = (vr: any, options: OptionsType) => {
     background: gray(80, options.bodyGrayHue),
     border: 'none',
     height: '1px',
-    marginBottom: `calc(${vr.rhythm(1)} - 1px)`,
+    marginBottom: `calc(${blockMarginBottom} - 1px)`,
   })
 
   // ol, ul.
@@ -126,7 +126,7 @@ module.exports = (vr: any, options: OptionsType) => {
 
   // li.
   styles = setStyles(styles, 'li', {
-    marginBottom: vr.rhythm(1/2),
+    marginBottom: `calc(${blockMarginBottom} / 2)`,
   })
 
   // Remove default padding on list items.
@@ -137,8 +137,8 @@ module.exports = (vr: any, options: OptionsType) => {
   // children ol, ul.
   styles = setStyles(styles, ['li > ol', 'li > ul'], {
     marginLeft: vr.rhythm(1),
-    marginBottom: vr.rhythm(1/2),
-    marginTop: vr.rhythm(1/2),
+    marginBottom: `calc(${blockMarginBottom} / 2)`,
+    marginTop: `calc(${blockMarginBottom} / 2)`,
   })
 
   // Make generally smaller elements, smaller.

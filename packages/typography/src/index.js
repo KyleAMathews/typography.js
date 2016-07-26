@@ -43,6 +43,7 @@ const typography = function (opts: OptionsType) {
     bodyWeight: 'normal',
     boldWeight: 'bold',
     includeNormalize: true,
+    blockMarginBottom: 1,
     fontFaces: [],
   }
 

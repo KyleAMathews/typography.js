@@ -1,12 +1,16 @@
 // @flow
 import type { OptionsType } from 'Types'
 import gray from 'gray-percentage'
-import verticalRhythm from 'compass-vertical-rhythm'
 import { TABLET_MEDIA_QUERY } from 'typography-breakpoint-constants'
 
 const theme: OptionsType = {
-  baseFontSize: '24px',
-  baseLineHeight: '33.8px',
+  baseFontSize: '21px',
+  baseLineHeight: '29px',
+  modularScales: [
+    {
+      scale: 1.5,
+    },
+  ],
   googleFonts: [
     {
       name: 'Exo',
@@ -30,11 +34,6 @@ const theme: OptionsType = {
   bodyWeight: 400,
   boldWeight: 700,
   overrideStyles: ({ adjustFontSizeTo, rhythm }, options) => {
-    const vr = verticalRhythm({
-      baseFontSize: '20px',
-      baseLineHeight: '28.4px',
-    })
-
     const styles = {
       a: {
         color: gray(options.bodyGray),
@@ -43,7 +42,7 @@ const theme: OptionsType = {
         color: '#3498DB',
       },
       blockquote: {
-        ...adjustFontSizeTo('27px'),
+        ...adjustFontSizeTo('24px'),
         color: gray(30),
         paddingLeft: rhythm(3/4),
         marginLeft: 0,
@@ -58,9 +57,6 @@ const theme: OptionsType = {
       },
       // Mobile styles.
       [TABLET_MEDIA_QUERY]: {
-        html: {
-          ...vr.establishBaseline(),
-        },
         blockquote: {
           marginLeft: rhythm(-3/4),
           marginRight: 0,

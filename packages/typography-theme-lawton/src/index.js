@@ -39,7 +39,8 @@ const theme: OptionsType = {
   headerWeight: 800,
   bodyWeight: 400,
   boldWeight: 700,
-  overrideStyles: () => {
+  blockMarginBottom: 2/3,
+  overrideStyles: ({ rhythm }, { blockMarginBottom }) => {
     const vr = verticalRhythm({
       baseFontSize: '12.8px',
       baseLineHeight: '19.2px',
@@ -54,14 +55,11 @@ const theme: OptionsType = {
       blockquote: {
         color: gray(26.6),
         borderLeft: '4px solid #999',
-        paddingLeft: '1em',
-        marginLeft: '1em',
-        marginRight: '1em',
-        marginTop: '1em',
-        marginBottom: '1em',
-      },
-      'p, h1, h2, h3, h4, h5, h6': {
-        marginBottom: '1rem',
+        paddingLeft: rhythm(blockMarginBottom),
+        marginLeft:  rhythm(blockMarginBottom),
+        marginRight: rhythm(blockMarginBottom),
+        marginTop: rhythm(blockMarginBottom),
+        marginBottom: rhythm(blockMarginBottom),
       },
       a: {
         fontWeight: 'bold',
