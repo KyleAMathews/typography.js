@@ -139,7 +139,7 @@ const typography = new Typography(funstonTheme)
 ## Plugins
 plugins are functions that extend or modify the core typography engine.
 they can change how headers are styled or add specialized styles e.g.
-for code or tables.  currently there's one plugin available,
+for code or tables. Currently there's one plugin available,
 `typography-plugin-code`.
 
 To use the Code plugin, first install using NPM.
