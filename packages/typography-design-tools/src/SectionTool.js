@@ -12,7 +12,7 @@ class SectionTool extends React.Component {
         <span
           style={{
             fontSize: 10,
-            lineHeight: '18px',
+            lineHeight: '15px',
           }}
         >
           {this.props.title}

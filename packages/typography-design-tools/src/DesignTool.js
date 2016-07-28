@@ -6,6 +6,7 @@ import _ from 'lodash'
 import themes from '../themes'
 import NumberEditor from './NumberEditor'
 import gray from 'gray-percentage'
+import GoogleFonts from './GoogleFonts'
 import Select from './Select'
 import SectionTool from './SectionTool'
 import msToRatio from './msToRatio'
@@ -93,10 +94,10 @@ const modularScales = [
 const Section = ({children}) => (
   <div
     style={{
-      marginBottom: 10,
+      marginBottom: 7.5,
       overflow: 'hidden',
-      paddingLeft: 10,
-      paddingRight: 10,
+      paddingLeft: 7.5,
+      paddingRight: 7.5,
     }}
   >
     {children}
@@ -109,9 +110,10 @@ const SectionHeader = ({children}) => (
       borderBottom: '1px solid',
       borderColor: gray(50),
       fontSize: 12,
-      paddingLeft: 10,
-      marginLeft: -10,
-      marginRight: -10,
+      paddingLeft: 7.5,
+      marginLeft: -7.5,
+      marginRight: -7.5,
+      marginBottom: 3.75,
     }}
   >
     {children}
@@ -160,7 +162,7 @@ class DesignTool extends React.Component {
         style={{
           fontFamily: toolTypography.options.headerFontFamily,
           fontWeight: 300,
-          fontSize: 13,
+          fontSize: 10,
           lineHeight: 1.5,
           letterSpacing: 0,
           background: 'rgba(0,0,0,0.65)',
@@ -176,6 +178,7 @@ class DesignTool extends React.Component {
             style={{
               color: 'rgba(255,255,255,0.95)',
               fontFamily: toolTypography.options.headerFontFamily,
+              fontSize: 15,
               fontWeight: 300,
               marginBottom: 0,
               marginTop: 10,
@@ -186,70 +189,24 @@ class DesignTool extends React.Component {
           <div
             style={{
               fontSize: 10,
-              lineHeight: '18px',
-              marginTop: 9,
+              lineHeight: '15px',
+              marginTop: 7.5,
             }}
           >
           Pick theme
           </div>
-          <select
-            style={{
-              background: gray(20),
-              border: '1px solid',
-              borderColor: gray(50),
-              borderRadius: 3,
-              color: gray(90),
-              fontSize: 12,
-            }}
+          <Select
+            options={themeRegistry.map((theme) => theme.title)}
             value={this.state.selectedTheme}
-            onChange={(e) => {
-              const newTheme = new Typography(themeRegistry[e.target.value].module)
+            style={{
+              width: '100%',
+            }}
+            onChange={(value) => {
+              const newTheme = new Typography(themeRegistry[value].module)
               this.setState({
-                selectedTheme: parseInt(e.target.value, 10),
+                selectedTheme: parseInt(value, 10),
                 options: newTheme.options,
               })
-            }}
-            onKeyDown={(e) => {
-              let change = false
-              let selectedTheme
-              if (e.which === 40 || e.which === 38) {
-                e.preventDefault()
-              }
-              if (e.which === 40) { // arrow down
-                change = true
-                if (this.state.selectedTheme === themeRegistry.length - 1) {
-                  selectedTheme = 0
-                } else {
-                  selectedTheme = this.state.selectedTheme + 1
-                }
-              }
-              if (e.which === 38) { // arrow up
-                change = true
-                if (this.state.selectedTheme === 0) {
-                  selectedTheme = themeRegistry.length - 1
-                } else {
-                  selectedTheme = this.state.selectedTheme - 1
-                }
-              }
-
-              // If keyboard press was up or down then change.
-              if (change) {
-                const newTheme = new Typography(themeRegistry[selectedTheme].module)
-                this.setState({
-                  selectedTheme: selectedTheme,
-                  options: newTheme.options,
-                })
-              }
-
-              return false
-            }}
-          >
-            {options}
-          </select>
-          <hr
-            style={{
-              marginBottom: 10,
-              marginTop: 12,
             }}
           />
         </Section>
@@ -396,6 +353,10 @@ class DesignTool extends React.Component {
               }}
             />
           </SectionTool>
+        </Section>
+        <Section>
+          <SectionHeader>Google Fonts</SectionHeader>
+          <GoogleFonts options={this.state.options} />
         </Section>
         <Section>
           <SectionHeader>Advanced</SectionHeader>

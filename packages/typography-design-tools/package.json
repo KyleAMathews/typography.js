@@ -16,6 +16,7 @@
     "react": "^15.2.1",
     "react-dom": "^15.2.1",
     "react-number-editor": "^4.0.2",
+    "react-select": "^1.0.0-beta14",
     "react-typography": "^0.11.0",
     "typography": "^0.11.11"
   },
@@ -27,6 +28,7 @@
   },
   "devDependencies": {
     "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-preset-react": "^6.11.1"
+    "babel-preset-react": "^6.11.1",
+    "request": "^2.74.0"
   }
 }

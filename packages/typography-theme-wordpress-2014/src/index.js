@@ -21,7 +21,7 @@ const theme: OptionsType = {
   bodyFontFamily: ['Lato', 'serif'],
   headerGray: 17,
   bodyGray: 17,
-  headerWeight: '600',
+  headerWeight: 600,
   bodyWeight: 400,
   boldWeight: 600,
   overrideStyles: ({ adjustFontSizeTo, rhythm }, options) => ({

@@ -6,8 +6,9 @@ import msToRatio from './msToRatio'
 
 class ModularScale extends React.Component {
   render () {
-    // Determine the maxWidth
+    // Setup the maxWidth tool.
     let maxWidthValue
+    let maxWidthSelect
     switch (this.props.modularScale.maxWidth) {
       case '480px':
         maxWidthValue = 0
@@ -21,9 +22,38 @@ class ModularScale extends React.Component {
       case '1280px':
         maxWidthValue = 3
         break
-      default:
-        maxWidthValue = 4
     }
+    if (maxWidthValue) {
+      maxWidthSelect = (
+        <SectionTool
+          title="Max Width"
+        >
+          <Select
+            options={['Mobile', 'Tablet', 'Desktop', 'Very Wide']}
+            value={maxWidthValue}
+            onChange={(value) => {
+              const newScale = { ...this.props.modularScale }
+              console.log(value, newScale)
+              let maxWidth
+              console.log('value', value)
+              if (value === '0') {
+                maxWidth = '480px'
+              } else if (value === '1') {
+                maxWidth = '768px'
+              } else if (value === '2') {
+                maxWidth = '980px'
+              } else if (value === '3') {
+                maxWidth = '1280px'
+              }
+
+              newScale.maxWidth = maxWidth
+              this.props.onChange(newScale)
+            }}
+          />
+        </SectionTool>
+      )
+    }
+
     return (
       <div
         style={{
@@ -41,7 +71,6 @@ class ModularScale extends React.Component {
             step={0.1}
             decimals={2}
             onValueChange={(value) => {
-              console.log(value)
               const valueFloat = parseFloat(value)
               const newScale = { ...this.props.modularScale }
               newScale.scale = valueFloat
@@ -49,33 +78,7 @@ class ModularScale extends React.Component {
             }}
           />
         </SectionTool>
-        <SectionTool
-          title="Max Width"
-        >
-          <Select
-            options={['Mobile', 'Tablet', 'Desktop', 'Very Wide', 'Infinite']}
-            value={maxWidthValue}
-            onChange={(value) => {
-              const newScale = { ...this.props.modularScale }
-              console.log(value, newScale)
-              let maxWidth
-              console.log('value', value)
-              if (value === '0') {
-                maxWidth = '480px'
-              } else if (value === '1') {
-                maxWidth = '768px'
-              } else if (value === '2') {
-                maxWidth = '980px'
-              } else if (value === '3') {
-                maxWidth = '1280px'
-              }
-
-              console.log(maxWidth)
-              newScale.maxWidth = maxWidth
-              this.props.onChange(newScale)
-            }}
-          />
-        </SectionTool>
+        {maxWidthSelect}
       </div>
     )
   }

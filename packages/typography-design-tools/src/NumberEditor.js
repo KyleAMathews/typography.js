@@ -3,8 +3,23 @@ import ReactNumberEditor from 'react-number-editor'
 import gray from 'gray-percentage'
 import { StyleSheet, css } from 'aphrodite'
 
+const styles = StyleSheet.create({
+  editor: {
+    ':active': {
+      borderColor: gray(75),
+    },
+    ':hover': {
+      borderColor: gray(75),
+    },
+    ':focus': {
+      borderColor: gray(75),
+    },
+  },
+})
+
 class NumberEditor extends React.Component {
   render () {
+    // TODO wrap onChange and if value isn't a number, set to minimum value.
     return (
       <div>
         <ReactNumberEditor
@@ -38,17 +53,3 @@ class NumberEditor extends React.Component {
 }
 
 export default NumberEditor
-
-const styles = StyleSheet.create({
-  editor: {
-    ':active': {
-      borderColor: gray(75),
-    },
-    ':hover': {
-      borderColor: gray(75),
-    },
-    ':focus': {
-      borderColor: gray(75),
-    },
-  },
-})
