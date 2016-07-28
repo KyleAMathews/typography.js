@@ -11,6 +11,7 @@ import Select from './Select'
 import SectionTool from './SectionTool'
 import msToRatio from './msToRatio'
 import ModularScaleTool from './ModularScaleTool'
+import parseUnit from 'parse-unit'
 
 const requireThemes = require.context('../../', true, /^\.\/typography-theme.*\/src\/index.js$/)
 const themeRegistry = []
@@ -20,6 +21,13 @@ _.each(themes, (theme) => {
     title: theme.title,
     module: requireThemes(theme.requireStr),
   })
+})
+
+// Add default theme
+themeRegistry.unshift({
+  name: 'system',
+  title: 'System',
+  module: {},
 })
 
 const toolTypography = new Typography({ includeNormalize: false })
@@ -124,9 +132,11 @@ class DesignTool extends React.Component {
   constructor (props) {
     super()
     this.googleFonts = JSON.stringify(props.typography.options.googleFonts)
+    const options = new Typography(props.typography.options).options
     this.state = {
       selectedTheme: 0,
-      options: new Typography(props.typography.options).options,
+      options,
+      lineHeight: parseUnit(options.baseLineHeight)[0] / parseUnit(options.baseFontSize)[0],
     }
   }
 
@@ -203,8 +213,11 @@ class DesignTool extends React.Component {
             }}
             onChange={(value) => {
               const newTheme = new Typography(themeRegistry[value].module)
+              const newFontSize = parseUnit(newTheme.options.baseFontSize)[0]
+              const newLineHeight = parseUnit(newTheme.options.baseLineHeight)[0]
               this.setState({
                 selectedTheme: parseInt(value, 10),
+                lineHeight: newLineHeight / newFontSize,
                 options: newTheme.options,
               })
             }}
@@ -217,15 +230,16 @@ class DesignTool extends React.Component {
           >
             <NumberEditor
               unit="px"
-              value={this.state.options.baseFontSize.slice(0, -2)}
+              value={parseUnit(this.state.options.baseFontSize)[0]}
               min={9}
               max={100}
-              step={1}
-              decimals={0}
+              step={0.25}
+              decimals={2}
               onValueChange={(value) => {
-                const options = this.state.options
-                options.baseFontSize = value + "px"
-                this.setState({ options: options })
+                const newOptions = { ...this.state.options }
+                newOptions.baseFontSize = `${value}px`
+                newOptions.baseLineHeight = `${value * this.state.lineHeight}px`
+                this.setState({ options: newOptions })
               }}
             />
           </SectionTool>
@@ -233,16 +247,20 @@ class DesignTool extends React.Component {
             title="Line Height"
           >
             <NumberEditor
-              unit="px"
-              value={this.state.options.baseLineHeight.slice(0, -2)}
-              min={9}
-              max={100}
-              step={1}
-              decimals={0}
+              unit="number"
+              value={this.state.lineHeight}
+              min={1}
+              max={2.5}
+              step={0.01}
+              decimals={2}
               onValueChange={(value) => {
-                const options = this.state.options
-                options.baseLineHeight = value + "px"
-                this.setState({ options: options })
+                const newOptions = { ...this.state.options }
+                const fontsize = parseUnit(this.state.options.baseFontSize)[0]
+                newOptions.baseLineHeight = `${fontsize * value}px`
+                this.setState({
+                  options: newOptions,
+                  lineHeight: value,
+                })
               }}
             />
           </SectionTool>
@@ -254,7 +272,6 @@ class DesignTool extends React.Component {
               key={i}
               modularScale={scale}
               onChange={(newScale) => {
-                console.log('newScale', newScale)
                 const newOptions = { ...this.state.options }
                 newOptions.modularScales[i] = newScale
                 this.setState({ options: newOptions })
@@ -368,7 +385,7 @@ class DesignTool extends React.Component {
               value={this.state.options.blockMarginBottom}
               min={0.25}
               max={3}
-              step={0.25}
+              step={0.1}
               decimals={2}
               onValueChange={(value) => {
                 const options = this.state.options
