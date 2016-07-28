@@ -4,8 +4,6 @@ import fontList from '../filteredGoogleFontList.json'
 import Select from 'react-select'
 
 const Font = ({font}) => {
-  console.log(font)
-  //const styles = font.styles.join(', ')
   return (
     <div
       style={{

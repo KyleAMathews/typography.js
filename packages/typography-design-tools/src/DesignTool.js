@@ -12,6 +12,7 @@ import SectionTool from './SectionTool'
 import msToRatio from './msToRatio'
 import ModularScaleTool from './ModularScaleTool'
 import parseUnit from 'parse-unit'
+import FontSelectTool from './FontSelectTool'
 
 const requireThemes = require.context('../../', true, /^\.\/typography-theme.*\/src\/index.js$/)
 const themeRegistry = []
@@ -102,8 +103,8 @@ const modularScales = [
 const Section = ({ children }) => (
   <div
     style={{
-      marginBottom: 3.75,
-      overflow: 'hidden',
+      clear: 'both',
+      paddingBottom: 3.75,
       paddingLeft: 7.5,
       paddingRight: 7.5,
     }}
@@ -298,6 +299,13 @@ class DesignTool extends React.Component {
         </Section>
         <Section>
           <SectionHeader>Headers</SectionHeader>
+          <FontSelectTool
+            options={this.state.options}
+            onChange={(options) => {
+              console.log('new options', options)
+              this.setState({ options })
+            }}
+          />
           <SectionRow>
             <SectionTool
               title="Weight"
