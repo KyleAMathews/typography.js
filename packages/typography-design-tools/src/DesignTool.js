@@ -99,10 +99,10 @@ const modularScales = [
   },
 ]
 
-const Section = ({children}) => (
+const Section = ({ children }) => (
   <div
     style={{
-      marginBottom: 7.5,
+      marginBottom: 3.75,
       overflow: 'hidden',
       paddingLeft: 7.5,
       paddingRight: 7.5,
@@ -111,7 +111,18 @@ const Section = ({children}) => (
     {children}
   </div>
 )
-const SectionHeader = ({children}) => (
+const SectionRow = ({ children }) => (
+  <div
+    style={{
+      marginBottom: 3.75,
+      overflow: 'hidden',
+    }}
+  >
+    {children}
+  </div>
+)
+
+const SectionHeader = ({ children }) => (
   <div
     style={{
       background: gray(17),
@@ -196,180 +207,191 @@ class DesignTool extends React.Component {
           >
             Typography.js
           </div>
-          <div
-            style={{
-              fontSize: 10,
-              lineHeight: '15px',
-              marginTop: 7.5,
-            }}
-          >
-          Pick theme
-          </div>
-          <Select
-            options={themeRegistry.map((theme) => theme.title)}
-            value={this.state.selectedTheme}
-            style={{
-              width: '100%',
-            }}
-            onChange={(value) => {
-              const newTheme = new Typography(themeRegistry[value].module)
-              const newFontSize = parseUnit(newTheme.options.baseFontSize)[0]
-              const newLineHeight = parseUnit(newTheme.options.baseLineHeight)[0]
-              this.setState({
-                selectedTheme: parseInt(value, 10),
-                lineHeight: newLineHeight / newFontSize,
-                options: newTheme.options,
-              })
-            }}
-          />
-        </Section>
-        <Section>
-          <SectionHeader>Base Font Sizes</SectionHeader>
-          <SectionTool
-            title="Font size"
-          >
-            <NumberEditor
-              unit="px"
-              value={parseUnit(this.state.options.baseFontSize)[0]}
-              min={9}
-              max={100}
-              step={0.25}
-              decimals={2}
-              onValueChange={(value) => {
-                const newOptions = { ...this.state.options }
-                newOptions.baseFontSize = `${value}px`
-                newOptions.baseLineHeight = `${value * this.state.lineHeight}px`
-                this.setState({ options: newOptions })
+          <SectionRow>
+            <div
+              style={{
+                fontSize: 10,
+                lineHeight: '15px',
+                marginTop: 7.5,
               }}
-            />
-          </SectionTool>
-          <SectionTool
-            title="Line Height"
-          >
-            <NumberEditor
-              unit="number"
-              value={this.state.lineHeight}
-              min={1}
-              max={2.5}
-              step={0.01}
-              decimals={2}
-              onValueChange={(value) => {
-                const newOptions = { ...this.state.options }
-                const fontsize = parseUnit(this.state.options.baseFontSize)[0]
-                newOptions.baseLineHeight = `${fontsize * value}px`
+            >
+            Pick theme
+            </div>
+            <Select
+              options={themeRegistry.map((theme) => theme.title)}
+              value={this.state.selectedTheme}
+              style={{
+                width: '100%',
+              }}
+              onChange={(value) => {
+                const newTheme = new Typography(themeRegistry[value].module)
+                const newFontSize = parseUnit(newTheme.options.baseFontSize)[0]
+                const newLineHeight = parseUnit(newTheme.options.baseLineHeight)[0]
                 this.setState({
-                  options: newOptions,
-                  lineHeight: value,
+                  selectedTheme: parseInt(value, 10),
+                  lineHeight: newLineHeight / newFontSize,
+                  options: newTheme.options,
                 })
               }}
             />
-          </SectionTool>
+          </SectionRow>
+        </Section>
+        <Section>
+          <SectionHeader>Base Font Sizes</SectionHeader>
+          <SectionRow>
+            <SectionTool
+              title="Font size"
+            >
+              <NumberEditor
+                unit="px"
+                value={parseUnit(this.state.options.baseFontSize)[0]}
+                min={9}
+                max={100}
+                step={0.25}
+                decimals={2}
+                onValueChange={(value) => {
+                  const newOptions = { ...this.state.options }
+                  newOptions.baseFontSize = `${value}px`
+                  newOptions.baseLineHeight = `${value * this.state.lineHeight}px`
+                  this.setState({ options: newOptions })
+                }}
+              />
+            </SectionTool>
+            <SectionTool
+              title="Line Height"
+            >
+              <NumberEditor
+                unit="number"
+                value={this.state.lineHeight}
+                min={1}
+                max={2.5}
+                step={0.01}
+                decimals={2}
+                onValueChange={(value) => {
+                  const newOptions = { ...this.state.options }
+                  const fontsize = parseUnit(this.state.options.baseFontSize)[0]
+                  newOptions.baseLineHeight = `${fontsize * value}px`
+                  this.setState({
+                    options: newOptions,
+                    lineHeight: value,
+                  })
+                }}
+              />
+            </SectionTool>
+          </SectionRow>
         </Section>
         <Section>
           <SectionHeader>Modular Scales</SectionHeader>
           {this.state.options.modularScales.map((scale, i) => (
-            <ModularScaleTool
-              key={i}
-              modularScale={scale}
-              onChange={(newScale) => {
-                const newOptions = { ...this.state.options }
-                newOptions.modularScales[i] = newScale
-                this.setState({ options: newOptions })
-              }}
-            />
+            <SectionRow>
+              <ModularScaleTool
+                key={i}
+                modularScale={scale}
+                onChange={(newScale) => {
+                  const newOptions = { ...this.state.options }
+                  newOptions.modularScales[i] = newScale
+                  this.setState({ options: newOptions })
+                }}
+              />
+            </SectionRow>
           ))}
         </Section>
         <Section>
           <SectionHeader>Headers</SectionHeader>
-          <SectionTool
-            title="Weight"
-          >
-            <NumberEditor
-              unit=""
-              value={this.state.options.headerWeight}
-              min={0}
-              max={900}
-              step={100}
-              decimals={0}
-              onValueChange={(value) => {
-                const options = this.state.options
-                options.headerWeight = value
-                this.setState({ options: options })
-              }}
-            />
-          </SectionTool>
-          <SectionTool
-            title="Gray value"
-          >
-            <NumberEditor
-              unit="%"
-              value={this.state.options.headerGray}
-              min={0}
-              max={100}
-              step={1}
-              decimals={0}
-              onValueChange={(value) => {
-                const options = this.state.options
-                options.headerGray = value
-                this.setState({ options: options })
-              }}
-            />
-          </SectionTool>
+          <SectionRow>
+            <SectionTool
+              title="Weight"
+            >
+              <NumberEditor
+                unit=""
+                value={this.state.options.headerWeight}
+                min={0}
+                max={900}
+                step={100}
+                decimals={0}
+                onValueChange={(value) => {
+                  const options = this.state.options
+                  options.headerWeight = value
+                  this.setState({ options: options })
+                }}
+              />
+            </SectionTool>
+            <SectionTool
+              title="Gray value"
+            >
+              <NumberEditor
+                unit="%"
+                value={this.state.options.headerGray}
+                min={0}
+                max={100}
+                step={1}
+                decimals={0}
+                onValueChange={(value) => {
+                  const options = this.state.options
+                  options.headerGray = value
+                  this.setState({ options: options })
+                }}
+              />
+            </SectionTool>
+          </SectionRow>
         </Section>
         <Section>
           <SectionHeader>Body</SectionHeader>
-          <SectionTool
-            title="Body Weight"
-          >
-            <NumberEditor
-              unit=""
-              value={this.state.options.bodyWeight}
-              min={0}
-              max={900}
-              step={100}
-              decimals={0}
-              onValueChange={(value) => {
-                const options = this.state.options
-                options.bodyWeight = value
-                this.setState({ options: options })
-              }}
-            />
-          </SectionTool>
-          <SectionTool
-            title="Bold Weight"
-          >
-            <NumberEditor
-              unit=""
-              value={this.state.options.boldWeight}
-              min={0}
-              max={900}
-              step={100}
-              decimals={0}
-              onValueChange={(value) => {
-                const options = this.state.options
-                options.boldWeight = value
-                this.setState({ options: options })
-              }}
-            />
-          </SectionTool>
-          <br />
-          <SectionTool
-            title="Body gray"
-          >
-            <NumberEditor
-              unit="%"
-              value={this.state.options.bodyGray}
-              min={0}
-              max={100}
-              step={1}
-              decimals={0}
-              onValueChange={(value) => {
-                const options = this.state.options
-                options.bodyGray = value
-                this.setState({ options: options })
-              }}
-            />
-          </SectionTool>
+          <SectionRow>
+            <SectionTool
+              title="Body Weight"
+            >
+              <NumberEditor
+                unit=""
+                value={this.state.options.bodyWeight}
+                min={0}
+                max={900}
+                step={100}
+                decimals={0}
+                onValueChange={(value) => {
+                  const options = this.state.options
+                  options.bodyWeight = value
+                  this.setState({ options: options })
+                }}
+              />
+            </SectionTool>
+            <SectionTool
+              title="Bold Weight"
+            >
+              <NumberEditor
+                unit=""
+                value={this.state.options.boldWeight}
+                min={0}
+                max={900}
+                step={100}
+                decimals={0}
+                onValueChange={(value) => {
+                  const options = this.state.options
+                  options.boldWeight = value
+                  this.setState({ options: options })
+                }}
+              />
+            </SectionTool>
+          </SectionRow>
+          <SectionRow>
+            <SectionTool
+              title="Body gray"
+            >
+              <NumberEditor
+                unit="%"
+                value={this.state.options.bodyGray}
+                min={0}
+                max={100}
+                step={1}
+                decimals={0}
+                onValueChange={(value) => {
+                  const options = this.state.options
+                  options.bodyGray = value
+                  this.setState({ options: options })
+                }}
+              />
+            </SectionTool>
+          </SectionRow>
         </Section>
         <Section>
           <SectionHeader>Google Fonts</SectionHeader>
@@ -377,23 +399,25 @@ class DesignTool extends React.Component {
         </Section>
         <Section>
           <SectionHeader>Advanced</SectionHeader>
-          <SectionTool
-            title="Block margin-bottom"
-          >
-            <NumberEditor
-              unit="rhythm"
-              value={this.state.options.blockMarginBottom}
-              min={0.25}
-              max={3}
-              step={0.1}
-              decimals={2}
-              onValueChange={(value) => {
-                const options = this.state.options
-                options.blockMarginBottom = parseFloat(value)
-                this.setState({ options: options })
-              }}
-            />
-          </SectionTool>
+          <SectionRow>
+            <SectionTool
+              title="Block margin-bottom"
+            >
+              <NumberEditor
+                unit="rhythm"
+                value={this.state.options.blockMarginBottom}
+                min={0.25}
+                max={3}
+                step={0.1}
+                decimals={2}
+                onValueChange={(value) => {
+                  const options = this.state.options
+                  options.blockMarginBottom = parseFloat(value)
+                  this.setState({ options: options })
+                }}
+              />
+            </SectionTool>
+          </SectionRow>
         </Section>
       </div>
     )
