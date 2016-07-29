@@ -192,15 +192,14 @@ module.exports = (vr: any, options: OptionsType) => {
 
   // Loop through each modular scale and add media query as necessary.
   each(options.modularScales, (modularScale) => {
-    const { maxWidth } = modularScale
-    const { scale } = modularScale
+    const { maxWidth, scale } = modularScale
 
-    const h1 = vr.adjustFontSizeTo(`${ms(5/5, scale) * baseFontSize}px`)
-    const h2 = vr.adjustFontSizeTo(`${ms(4/5, scale) * baseFontSize}px`)
-    const h3 = vr.adjustFontSizeTo(`${ms(3/5, scale) * baseFontSize}px`)
-    const h4 = vr.adjustFontSizeTo(`${ms(2/5, scale) * baseFontSize}px`)
-    const h5 = vr.adjustFontSizeTo(`${ms(1/5, scale) * baseFontSize}px`)
-    const h6 = vr.adjustFontSizeTo(`${ms(0/5, scale) * baseFontSize}px`)
+    const h1 = vr.adjustFontSizeToMSValue(5/5)
+    const h2 = vr.adjustFontSizeToMSValue(4/5)
+    const h3 = vr.adjustFontSizeToMSValue(3/5)
+    const h4 = vr.adjustFontSizeToMSValue(2/5)
+    const h5 = vr.adjustFontSizeToMSValue(1/5)
+    const h6 = vr.adjustFontSizeToMSValue(0/5)
 
     let mediaQuery
     if (maxWidth) {

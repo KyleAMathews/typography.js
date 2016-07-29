@@ -51,19 +51,22 @@ const typography = function (opts: OptionsType) {
 
   const vr = verticalRhythm(options)
 
+  // Add this function to the vertical rhythm object so it'll be passed around
+  // as well and be available. Not related really but this is the easiest
+  // way to pass around extra utility functions atm... :-\
+  vr.adjustFontSizeToMSValue = (value: number) => {
+    // This doesn't pick the right scale if a theme has more than one scale.
+    // Perhaps add optional parameter for a width and it'll get the scale
+    // for this width. Tricky part is maxWidth could be set in non-pixels.
+    const baseFont = options.baseFontSize.slice(0, -2)
+    const newFontSize = `${ms(value, options.modularScales[0].scale) * baseFont}px`
+    return vr.adjustFontSizeTo(newFontSize)
+  }
+
   return ({
     options,
     ...vr,
     createStyles () { return this.toString() }, // TODO remove in next breaking release.
-    fontSizeToPx: vr.adjustFontSizeTo,
-    fontSizeToMS (scaler: number) {
-      // This doesn't pick the right scale if a theme has more than one scale.
-      // Perhaps add optional parameter for a width and it'll get the scale
-      // for this width. Tricky part is maxWidth could be set in non-pixels.
-      const baseFont = options.baseFontSize.slice(0, -2)
-      const newFontSize = `${ms(scaler, options.modularScales[0].scale) * baseFont}px`
-      return vr.adjustFontSizeTo(newFontSize)
-    },
     toJSON () {
       return createStyles(vr, options)
     },
