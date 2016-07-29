@@ -137,7 +137,7 @@ const typography = new Typography(funstonTheme)
 * If you publish your own, create a PR to add it here!
 
 ## Plugins
-plugins are functions that extend or modify the core typography engine.
+Plugins are functions that extend or modify the core typography engine.
 they can change how headers are styled or add specialized styles e.g.
 for code or tables. Currently there's one plugin available,
 `typography-plugin-code`.
@@ -201,10 +201,10 @@ When creating a new instance of Typography, you can pass in an
 ```javascript
 [
   {
-    scale: 'octave',
+    scale: 'octave', // 2.0
   },
   {
-    scale: 'golden',
+    scale: 'golden', // 1.618
     maxWidth: '768px',
   },
 ]
