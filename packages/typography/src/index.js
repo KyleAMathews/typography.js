@@ -39,7 +39,7 @@ const typography = function (opts: OptionsType) {
     headerGrayHue: 0,
     bodyGray: 20,
     bodyGrayHue: 0,
-    headerWeight: 900,
+    headerWeight: 'bold',
     bodyWeight: 'normal',
     boldWeight: 'bold',
     includeNormalize: true,
