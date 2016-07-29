@@ -28,12 +28,12 @@ const CodePlugin = (): Function =>
       borderRadius: '3px',
       // Most JS syntax highlighters put code inside pre meaning we need to
       // reset the font-size for pre so 'pre code' isn't double-shrunk.
-      fontSize: '1em',
       overflow: 'auto',
       padding: blockMarginBottom,
     },
     'pre code': {
       background: gray(97),
+      lineHeight: 1.42,
     },
     // Add space before and after code/tt elements.
     'code:before,code:after,tt:before,tt:after': {
