@@ -17,12 +17,6 @@ const theme: OptionsType = {
         '700',
       ],
     },
-    {
-      name: 'Inconsolata',
-      styles: [
-        '400',
-      ],
-    },
   ],
   modularScales: [
     {

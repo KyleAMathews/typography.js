@@ -1,19 +1,8 @@
 // @flow
 import type { OptionsType } from 'Types'
-import { MOBILE_WIDTH, TABLET_MEDIA_QUERY } from 'typography-breakpoint-constants'
+import { TABLET_MEDIA_QUERY } from 'typography-breakpoint-constants'
 
 const theme: OptionsType = {
-  sizes: [
-    {
-      baseFontSize: '19px',
-      baseLineHeight: '28px',
-    },
-    {
-      baseFontSize: '16px',
-      baseLineHeight: '24px',
-      maxWidth: MOBILE_WIDTH,
-    },
-  ],
   baseFontSize: '16px',
   baseLineHeight: '24px',
   googleFonts: [
@@ -40,13 +29,13 @@ const theme: OptionsType = {
   headerWeight: '700',
   bodyWeight: 400,
   boldWeight: 700,
-  overrideStyles: ({ adjustFontSizeTo, rhythm }, options) => ({
+  overrideStyles: ({ adjustFontSizeTo, adjustFontSizeToMSValue, rhythm }, options) => ({
     h1: {
-      ...adjustFontSizeTo('48px'),
+      ...adjustFontSizeToMSValue(8/5),
     },
     [TABLET_MEDIA_QUERY]: {
       h1: {
-        ...adjustFontSizeTo('32px'),
+        ...adjustFontSizeToMSValue(5/5),
       },
     },
     a: {
@@ -66,7 +55,7 @@ const theme: OptionsType = {
       paddingLeft: rhythm(1.5),
     },
     blockquote: {
-      ...adjustFontSizeTo('24px'),
+      ...adjustFontSizeToMSValue(1/5),
       fontWeight: 300,
       fontStyle: 'italic',
       marginLeft: rhythm(1.5),
@@ -82,7 +71,7 @@ const theme: OptionsType = {
       marginBottom: rhythm(1.25),
     },
     table: {
-      ...adjustFontSizeTo('14px'),
+      ...adjustFontSizeToMSValue(-1/5),
     },
     th: {
       fontWeight: options.boldWeight,

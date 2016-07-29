@@ -30,15 +30,15 @@ const theme: OptionsType = {
   headerWeight: 700,
   bodyWeight: 400,
   boldWeight: 700,
-  overrideStyles: ({ adjustFontSizeTo, rhythm }, options) => ({
+  overrideStyles: ({ adjustFontSizeTo, adjustFontSizeToMSValue, rhythm }, options) => ({
     a: {
       color: '#9f392b',
     },
     h1: {
-      ...adjustFontSizeTo('45px'),
+      ...adjustFontSizeToMSValue(6/5),
     },
     blockquote: {
-      ...adjustFontSizeTo('21px'),
+      ...adjustFontSizeToMSValue(1/5),
       color: gray(41),
       fontStyle: 'italic',
       paddingLeft: rhythm(13/16),
@@ -65,7 +65,7 @@ const theme: OptionsType = {
     },
     [TABLET_MEDIA_QUERY]: {
       h1: {
-        ...adjustFontSizeTo('36px'),
+        ...adjustFontSizeToMSValue(5/5),
       },
     },
     'h3,h4,h5,h6': {

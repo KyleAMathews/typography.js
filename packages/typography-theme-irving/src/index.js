@@ -33,7 +33,7 @@ const theme: OptionsType = {
   headerWeight: 700,
   bodyWeight: 400,
   boldWeight: 700,
-  overrideStyles: ({ adjustFontSizeTo, rhythm }, options) => {
+  overrideStyles: ({ adjustFontSizeTo, adjustFontSizeToMSValue, rhythm }, options) => {
     const styles = {
       a: {
         color: gray(options.bodyGray),
@@ -42,7 +42,7 @@ const theme: OptionsType = {
         color: '#3498DB',
       },
       blockquote: {
-        ...adjustFontSizeTo('24px'),
+        ...adjustFontSizeToMSValue(1/5),
         color: gray(30),
         paddingLeft: rhythm(3/4),
         marginLeft: 0,
@@ -53,7 +53,7 @@ const theme: OptionsType = {
         marginBottom: rhythm(1/2),
       },
       table: {
-        ...adjustFontSizeTo('20px'),
+        ...adjustFontSizeToMSValue(-1/5),
       },
       // Mobile styles.
       [TABLET_MEDIA_QUERY]: {
@@ -61,9 +61,6 @@ const theme: OptionsType = {
           marginLeft: rhythm(-3/4),
           marginRight: 0,
           paddingLeft: rhythm(1/2),
-        },
-        table: {
-          ...adjustFontSizeTo('18px'),
         },
       },
     }

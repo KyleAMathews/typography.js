@@ -41,12 +41,12 @@ const theme: OptionsType = {
   headerWeight: 900,
   bodyWeight: 400,
   boldWeight: 700,
-  overrideStyles: ({ adjustFontSizeTo, rhythm }, options) => ({
+  overrideStyles: ({ adjustFontSizeTo, adjustFontSizeToMSValue, rhythm }, options) => ({
     h1: {
       fontFamily: ['Montserrat', 'sans-serif'].join(','),
     },
     blockquote: {
-      ...adjustFontSizeTo('19px'),
+      ...adjustFontSizeToMSValue(1/5),
       color: gray(41),
       fontStyle: 'italic',
       paddingLeft: rhythm(13/16),

@@ -24,22 +24,22 @@ const theme: OptionsType = {
   headerWeight: 600,
   bodyWeight: 400,
   boldWeight: 600,
-  overrideStyles: ({ adjustFontSizeTo, rhythm }, options) => ({
+  overrideStyles: ({ adjustFontSizeTo, adjustFontSizeToMSValue, rhythm }, options) => ({
     'h1,h2,h3,h4,h5,h6': {
       marginTop: rhythm(1.5),
       marginBottom: rhythm(0.5),
     },
     'ul,ol': {
-      marginLeft: '20px',
+      marginLeft: rhythm(5/6),
     },
     // children ol, ul
     'li>ol,li>ul': {
-      marginLeft: '20px',
+      marginLeft: rhythm(5/6),
       marginBottom: 0,
     },
     // Blockquote styles.
     blockquote: {
-      ...adjustFontSizeTo('19px'),
+      ...adjustFontSizeToMSValue(1/5),
       fontWeight: 300,
       color: gray(46),
       fontStyle: 'italic',

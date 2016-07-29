@@ -30,7 +30,7 @@ const theme: OptionsType = {
   headerWeight: 400,
   bodyWeight: 400,
   boldWeight: 700,
-  overrideStyles: ({ adjustFontSizeTo, rhythm }, options) => ({
+  overrideStyles: ({ adjustFontSizeTo, adjustFontSizeToMSValue, rhythm }, options) => ({
     a: {
       color: '#e51937',
       textDecoration: 'none',
@@ -40,7 +40,7 @@ const theme: OptionsType = {
       textDecoration: 'none',
     },
     blockquote: {
-      ...adjustFontSizeTo('21px'),
+      ...adjustFontSizeToMSValue(1/5),
       color: gray(0),
       fontStyle: 'italic',
       paddingLeft: rhythm(13/16),

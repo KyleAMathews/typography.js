@@ -18,6 +18,7 @@ const theme: OptionsType = {
       marginTop: rhythm(1),
     },
     'p,ol,ul': {
+      // TODO convert all ems and pxs to use rhythm.
       marginBottom: '0.5em',
       marginTop: '0.5em',
     },

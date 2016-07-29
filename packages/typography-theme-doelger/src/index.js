@@ -29,7 +29,7 @@ const theme: OptionsType = {
   headerWeight: '700',
   bodyWeight: 400,
   boldWeight: 700,
-  overrideStyles: ({ adjustFontSizeTo, rhythm }, options) => {
+  overrideStyles: ({ adjustFontSizeTo, adjustFontSizeToMSValue, rhythm }, options) => {
     const linkColor = '#ff483b'
     return {
       a: {
@@ -48,7 +48,7 @@ const theme: OptionsType = {
       },
       // Blockquote styles.
       blockquote: {
-        ...adjustFontSizeTo('22px'),
+        ...adjustFontSizeToMSValue(1/5),
         borderLeft: `${rhythm(6/16)} solid ${linkColor}`,
         color: gray(35),
         paddingLeft: rhythm(10/16),
@@ -70,7 +70,6 @@ const theme: OptionsType = {
       },
       [MOBILE_MEDIA_QUERY]: {
         blockquote: {
-          ...adjustFontSizeTo('20px'),
           borderLeft: `${rhythm(3/16)} solid ${linkColor}`,
           paddingLeft: rhythm(9/16),
           fontStyle: 'italic',
