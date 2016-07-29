@@ -12,6 +12,6 @@ const mappedList = filteredList.map((item) => ({
   category: item.category,
   family: item.family,
   weights: Object.keys(item.files),
-})
+}))
 
 fs.writeFileSync('./filteredGoogleFontList.json', JSON.stringify(mappedList))

@@ -15,6 +15,8 @@ module.exports = [
   'Ubuntu',
   'Merriweather',
   'Arimo',
+  'Droid Serif',
+  'Droid Sans',
   'PT Sans Narrow',
   'Noto Sans',
   'Titillium Web',
@@ -109,5 +111,6 @@ module.exports = [
   'Gentium Basic',
   'Neuton',
   'Anonymous Pro',
+  'Amaranth',
 ]
 
