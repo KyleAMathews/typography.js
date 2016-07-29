@@ -7,3 +7,12 @@ export const LARGE_DISPLAY_MEDIA_QUERY = '@media only screen and (max-width:1280
 export const DEFAULT_MEDIA_QUERY = '@media only screen and (max-width:980px)'
 export const TABLET_MEDIA_QUERY = '@media only screen and (max-width:768px)'
 export const MOBILE_MEDIA_QUERY = '@media only screen and (max-width:480px)'
+
+// mobile first media queries:
+// define css rules for mobile first
+// add additional css rules inside the min_width media query as the device/display width increases
+// to overwrite the mobile styles (easier to scale this way)
+export const MIN_LARGE_DISPLAY_WIDTH = '@media (min-width:1280px)'
+export const MIN_DEFAULT_WIDTH = '@media (min-width:980px)'
+export const MIN_TABLET_WIDTH = '@media (min-width:768px)'
+export const MIN_MOBILE_WIDTH = '@media (min-width:480px)'

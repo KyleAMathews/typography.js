@@ -37,6 +37,7 @@ const theme: OptionsType = {
     const styles = {
       a: {
         color: gray(options.bodyGray),
+        transition: 'all 250ms',
       },
       'a:hover': {
         color: '#ADE4FF',
@@ -51,11 +52,12 @@ const theme: OptionsType = {
         marginBottom: rhythm(1/2),
         padding: '0.15em 0.5em',
         outline: 0,
-        border: `0.15em solid ${gray(options.headerGray)}`,
+        border: `0.15em solid`,
         background: 'transparent',
         color: gray(options.headerGray),
         fontFamily: ['Exo', 'sans-serif'].join(','),
         textAlign: 'center',
+        transition: 'all 250ms',
       },
       'button:hover': {
         boxShadow: '0 0.1em 0 0 #ADE4FF',
