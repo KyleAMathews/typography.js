@@ -26,8 +26,7 @@ const CodePlugin = (): Function =>
     pre: {
       background: gray(97),
       borderRadius: '3px',
-      // Most JS syntax highlighters put code inside pre meaning we need to
-      // reset the font-size for pre so 'pre code' isn't double-shrunk.
+      lineHeight: 1.42,
       overflow: 'auto',
       padding: blockMarginBottom,
     },
