@@ -1,18 +1,20 @@
-# Irving — a <a href='https://github.com/kyleamathews/typography.js'>Typography.js</a> theme
+# Irvine — a <a href='https://github.com/kyleamathews/typography.js'>Typography.js</a> theme
 
 A theme for typography.js
 
 ## Install
 ```bash
-npm install --save typography typography-theme-irving
+npm install --save typography typography-theme-irvine
 ```
 ## Usage
 ```javascript
 import Typography from 'typography'
-import irvingTheme from 'typography-theme-irving'
+import irvineTheme from 'typography-theme-irvine'
 
-const typography = new Typography(irvingTheme)
+const typography = new Typography(irvineTheme)
 ```
 ## More on theme
 
-Irving uses "<a href='https://fonts.google.com/specimen/Exo'>Exo</a>" for headers and "<a href='https://fonts.google.com/specimen/Yrsa'>Yrsa</a>" for body text
+Irvine uses "<a href='https://fonts.google.com/specimen/Exo'>Exo</a>" for headers and "<a href='https://fonts.google.com/specimen/Yrsa'>Yrsa</a>" for body text
+
+> This is a clone of Irving (because the fonts are cool) but with more css additions.

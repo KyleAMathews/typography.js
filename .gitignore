@@ -30,3 +30,4 @@ dist
 npm-debug*
 examples/bundle.js
 .gatsby-context.js
+.idea/

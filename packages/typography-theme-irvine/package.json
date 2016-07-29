@@ -1,8 +1,8 @@
 {
-  "name": "typography-theme-irving",
+  "name": "typography-theme-irvine",
   "description": "A theme for typography.js",
-  "version": "0.11.12",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "version": "0.0.1",
+  "author": "Damir Vazgird <dvazgird@gmail.com>",
   "dependencies": {
     "gray-percentage": "^1.1.2",
     "typography-breakpoint-constants": "^0.10.0"

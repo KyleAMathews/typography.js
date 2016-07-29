@@ -1,7 +1,7 @@
 // @flow
-import type { OptionsType } from 'Types'
-import gray from 'gray-percentage'
-import { TABLET_MEDIA_QUERY } from 'typography-breakpoint-constants'
+import type { OptionsType } from 'Types';
+import gray from 'gray-percentage';
+import { TABLET_MEDIA_QUERY } from 'typography-breakpoint-constants';
 
 const theme: OptionsType = {
   baseFontSize: '21px',
@@ -28,8 +28,8 @@ const theme: OptionsType = {
   ],
   headerFontFamily: ['Exo', 'sans-serif'],
   bodyFontFamily: ['Yrsa', 'georgia', 'sans-serif'],
-  headerGray: 13,
-  bodyGray: 20,
+  headerGray: 0,
+  bodyGray: 25,
   headerWeight: 700,
   bodyWeight: 400,
   boldWeight: 700,
@@ -39,7 +39,46 @@ const theme: OptionsType = {
         color: gray(options.bodyGray),
       },
       'a:hover': {
-        color: '#3498DB',
+        color: '#ADE4FF',
+      },
+      'a:active': {
+        color: gray(options.headerGray),
+        textDecoration: 'none'
+      },
+      button: {
+        cursor: 'pointer',
+        margin: 0,
+        marginBottom: rhythm(1/2),
+        padding: '0.15em 0.5em',
+        outline: 0,
+        border: `0.15em solid ${gray(options.headerGray)}`,
+        background: 'transparent',
+        color: gray(options.headerGray),
+        fontFamily: ['Exo', 'sans-serif'].join(','),
+        textAlign: 'center',
+      },
+      'button:hover': {
+        boxShadow: '0 0.1em 0 0 #ADE4FF',
+        textShadow: '0 0.1em 0 #ADE4FF',
+      },
+      'button:active': {
+        background: gray(options.headerGray),
+        color: '#fff',
+        boxShadow: '0 0 0 0.05em #fff inset',
+        textShadow: 'none',
+      },
+      'h1,h2': {
+        marginBottom: rhythm(1),
+      },
+      'h3,h4,h5,h6': {
+        marginBottom: rhythm(1/2),
+      },
+      small: {
+        display: 'block',
+        marginTop: 0,
+        color: gray(options.bodyGray),
+        fontSize: rhythm(1/2),
+        lineHeight: rhythm(1/2),
       },
       blockquote: {
         ...adjustFontSizeTo('24px'),
@@ -49,8 +88,10 @@ const theme: OptionsType = {
         marginRight: 0,
         borderLeft: `${rhythm(1/4)} solid ${gray(13)}`,
       },
-      'h3,h4,h5,h6': {
-        marginBottom: rhythm(1/2),
+      hr: {
+        margin: `${rhythm(1)} auto`,
+        height: '0.1em',
+        background: '#ade4ff',
       },
       table: {
         ...adjustFontSizeTo('20px'),
@@ -72,4 +113,4 @@ const theme: OptionsType = {
   },
 }
 
-export default theme
+export default theme;
