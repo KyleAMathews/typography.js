@@ -9,8 +9,8 @@ import type { OptionsType } from 'Types'
 
 const typography = function (opts: OptionsType) {
   const defaults: OptionsType = {
-    baseFontSize: '18px',
-    baseLineHeight: '28.5px',
+    baseFontSize: '16px',
+    baseLineHeight: '24px',
     modularScales: [
       {
         scale: 'octave',
