@@ -21,7 +21,6 @@ class GoogleFontsTool extends React.Component {
     return (
       <div>
         {fonts}
-        <div>+ family</div>
       </div>
     )
   }

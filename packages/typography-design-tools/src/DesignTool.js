@@ -256,7 +256,7 @@ class DesignTool extends React.Component {
           </SectionRow>
         </Section>
         <Section>
-          <SectionHeader>Base Font Sizes</SectionHeader>
+          <SectionHeader>Base Font Size</SectionHeader>
           <SectionRow>
             <SectionTool
               title="Font size"
@@ -300,8 +300,8 @@ class DesignTool extends React.Component {
           </SectionRow>
         </Section>
         <Section>
-          <SectionHeader>Modular Scales</SectionHeader>
-          {this.state.options.modularScales.map((scale, i) => (
+          <SectionHeader>Modular Scale</SectionHeader>
+          {this.state.options.modularScales.slice(0, 1).map((scale, i) => (
             <SectionRow>
               <ModularScaleTool
                 key={i}
