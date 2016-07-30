@@ -1,7 +1,7 @@
 // @flow
 import type { OptionsType } from 'Types';
 import gray from 'gray-percentage';
-import { TABLET_MEDIA_QUERY } from 'typography-breakpoint-constants';
+import { MIN_TABLET_WIDTH } from 'typography-breakpoint-constants';
 
 const theme: OptionsType = {
   baseFontSize: '21px',
@@ -35,6 +35,13 @@ const theme: OptionsType = {
   boldWeight: 700,
   overrideStyles: ({ adjustFontSizeTo, rhythm }, options) => {
     const styles = {
+      '.logo': {
+        position: 'absolute',
+        top: '0.15em',
+        left: '0.15em',
+        width: '2em',
+        height: '2em',
+      },
       a: {
         color: gray(options.bodyGray),
         transition: 'all 250ms',
@@ -96,17 +103,19 @@ const theme: OptionsType = {
         background: '#ade4ff',
       },
       table: {
-        ...adjustFontSizeTo('20px'),
+        ...adjustFontSizeTo('18px'),
       },
       // Mobile styles.
-      [TABLET_MEDIA_QUERY]: {
-        blockquote: {
-          marginLeft: rhythm(-3/4),
-          marginRight: 0,
-          paddingLeft: rhythm(1/2),
+      [MIN_TABLET_WIDTH]: {
+        '.logo': {
+          position: 'relative',
+          top: '-1.75em',
+          left: 0,
+          width: '6em',
+          height: '6em'
         },
         table: {
-          ...adjustFontSizeTo('18px'),
+          ...adjustFontSizeTo('20px'),
         },
       },
     }
