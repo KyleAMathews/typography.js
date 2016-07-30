@@ -11,21 +11,29 @@ const theme: OptionsType = {
     {
       name: 'Source Sans Pro',
       styles: [
-        '300',
-        '300i',
+        '200',
         '400',
         '400i',
-        '600',
+        '700',
       ],
+    },
+  ],
+  modularScales: [
+    {
+      scale: 2.5,
+    },
+    {
+      scale: 2,
+      maxWidth: '768px',
     },
   ],
   headerFontFamily: ['Source Sans Pro', 'sans-serif'],
   bodyFontFamily: ['Source Sans Pro', 'sans-serif'],
   headerGray: 15,
   bodyGray: 30,
-  headerWeight: '600',
-  bodyWeight: 300,
-  boldWeight: 400,
+  headerWeight: '200',
+  bodyWeight: 400,
+  boldWeight: 700,
   overrideStyles: ({ adjustFontSizeToMSValue, rhythm }, options) => {
     const vr = verticalRhythm({
       baseFontSize: '16px',
