@@ -15,6 +15,7 @@
     "gray-percentage": "^1.1.2",
     "parse-unit": "^1.0.1",
     "react": "^15.2.1",
+    "react-autosuggest": "^3.9.0",
     "react-dom": "^15.2.1",
     "react-number-editor": "^4.0.2",
     "react-select": "^1.0.0-beta14",

@@ -299,13 +299,17 @@ class DesignTool extends React.Component {
         </Section>
         <Section>
           <SectionHeader>Headers</SectionHeader>
-          <FontSelectTool
-            options={this.state.options}
-            onChange={(options) => {
-              console.log('new options', options)
-              this.setState({ options })
-            }}
-          />
+          <SectionRow>
+            <div>Font</div>
+            <FontSelectTool
+              type="header"
+              options={this.state.options}
+              onChange={(options) => {
+                console.log('new options', options)
+                this.setState({ options })
+              }}
+            />
+          </SectionRow>
           <SectionRow>
             <SectionTool
               title="Weight"
@@ -345,6 +349,17 @@ class DesignTool extends React.Component {
         </Section>
         <Section>
           <SectionHeader>Body</SectionHeader>
+          <SectionRow>
+            <div>Font</div>
+            <FontSelectTool
+              type="body"
+              options={this.state.options}
+              onChange={(options) => {
+                console.log('new options', options)
+                this.setState({ options })
+              }}
+            />
+          </SectionRow>
           <SectionRow>
             <SectionTool
               title="Body Weight"
