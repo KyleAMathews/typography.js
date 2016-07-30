@@ -65,7 +65,6 @@ const pickBoldStyle = (name) => {
     }
   })
   weights = _.filter(_.sortBy(weights), (weight) => _.isFinite(weight))
-  console.log(weights)
   if (_.includes(weights, 700)) {
     return 700
   } else {
@@ -122,7 +121,6 @@ class FontSelectTool extends React.Component {
     })
     const newOptions = { ...this.props.options }
     const family = _.find(fontList, (font) => font.family === newValue)
-    console.log('family', family)
 
     if (family) {
       // Choose weight for choosen header font.
@@ -175,8 +173,7 @@ class FontSelectTool extends React.Component {
         ))
       }
 
-      console.log(newOptions)
-      this.props.onChange(newOptions)
+      this.props.onChange(newOptions, family)
     }
   }
 

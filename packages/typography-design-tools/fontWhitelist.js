@@ -30,6 +30,7 @@ module.exports = [
   'Dosis',
   'Hind',
   'Cabin',
+  'Cabin Condensed',
   'Lobster',
   'Yanone Kaffeesatz',
   'Noto Serif',
@@ -112,5 +113,7 @@ module.exports = [
   'Neuton',
   'Anonymous Pro',
   'Amaranth',
+  'Yrsa',
+  'Rosario',
 ]
 
