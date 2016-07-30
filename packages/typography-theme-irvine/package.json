@@ -1,0 +1,23 @@
+{
+  "name": "typography-theme-irvine",
+  "description": "A theme for typography.js",
+  "version": "0.0.2",
+  "author": "Damir Vazgird <dvazgird@gmail.com>",
+  "dependencies": {
+    "gray-percentage": "^1.1.2",
+    "typography-breakpoint-constants": "^0.10.0"
+  },
+  "keywords": [
+    "css",
+    "typography",
+    "typography-theme"
+  ],
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "../../node_modules/.bin/babel src --out-dir dist/",
+    "flow": "../../node_modules/.bin/flow",
+    "lint": "../../node_modules/.bin/eslint --ext .js,.jsx --ignore-path .gitignore .",
+    "watch": "../../node_modules/.bin/babel -w src --out-dir dist/"
+  }
+}
