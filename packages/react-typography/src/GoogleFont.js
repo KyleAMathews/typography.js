@@ -28,11 +28,8 @@ module.exports = React.createClass({
           rel: 'stylesheet',
           type: 'text/css',
         })
-      } else {
-        return null
       }
-    } else {
-      return null
     }
+    return null
   },
 })
