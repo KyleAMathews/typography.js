@@ -1,5 +1,4 @@
 // @flow
-import ms from 'modularscale'
 import gray from 'gray-percentage'
 import set from 'lodash/set'
 import each from 'lodash/forEach'
