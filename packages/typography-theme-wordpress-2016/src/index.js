@@ -59,7 +59,7 @@ const theme: OptionsType = {
     'blockquote cite': {
       ...adjustFontSizeTo(options.baseFontSize),
       color: gray(options.bodyGray),
-      fontStyle: options.bodyWeight,
+      fontWeight: options.bodyWeight,
     },
     'blockquote cite:before': {
       content: '"— "',
