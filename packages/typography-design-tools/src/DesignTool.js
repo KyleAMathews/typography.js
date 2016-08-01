@@ -28,8 +28,8 @@ _.each(themes, (theme) => {
 
 // Add default theme
 themeRegistry.unshift({
-  name: 'system',
-  title: 'System',
+  name: 'default',
+  title: 'Default',
   module: {},
 })
 
