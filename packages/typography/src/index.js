@@ -44,7 +44,6 @@ const typography = function (opts: OptionsType) {
     boldWeight: 'bold',
     includeNormalize: true,
     blockMarginBottom: 1,
-    fontFaces: [],
   }
 
   const options = objectAssign({}, defaults, opts)
