@@ -3,6 +3,7 @@ import type { OptionsType } from 'Types'
 import gray from 'gray-percentage'
 
 const theme: OptionsType = {
+  title: 'Bootstrap',
   baseFontSize: '16px',
   baseLineHeight: '24px',
   bodyFontFamily: [

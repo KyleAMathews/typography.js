@@ -5,6 +5,7 @@ import verticalRhythm from 'compass-vertical-rhythm'
 import { MOBILE_MEDIA_QUERY } from 'typography-breakpoint-constants'
 
 const theme: OptionsType = {
+  title: 'Lawton',
   baseFontSize: '16px',
   baseLineHeight: '24px',
   modularScales: [

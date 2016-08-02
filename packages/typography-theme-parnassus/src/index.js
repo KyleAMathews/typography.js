@@ -5,6 +5,7 @@ import { TABLET_MEDIA_QUERY, MOBILE_MEDIA_QUERY } from 'typography-breakpoint-co
 import verticalRhythm from 'compass-vertical-rhythm'
 
 const theme: OptionsType = {
+  title: 'Parnassus',
   baseFontSize: '17px',
   baseLineHeight: '31px',
   modularScales: [

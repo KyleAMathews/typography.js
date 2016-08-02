@@ -2,9 +2,9 @@
 import gray from 'gray-percentage'
 import type { OptionsType } from 'Types'
 import { MOBILE_MEDIA_QUERY } from 'typography-breakpoint-constants'
-import verticalRhythm from 'compass-vertical-rhythm'
 
 const theme: OptionsType = {
+  title: 'Grand View',
   baseFontSize: '16px',
   baseLineHeight: '27px',
   googleFonts: [

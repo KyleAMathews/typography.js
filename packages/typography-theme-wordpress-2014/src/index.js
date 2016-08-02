@@ -3,6 +3,7 @@ import gray from 'gray-percentage'
 import type { OptionsType } from 'Types'
 
 const theme: OptionsType = {
+  title: 'Wordpress Theme 2014',
   baseFontSize: '16px',
   baseLineHeight: '24px',
   googleFonts: [

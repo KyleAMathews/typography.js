@@ -4,6 +4,7 @@ import type { OptionsType } from 'Types'
 import { MOBILE_MEDIA_QUERY } from 'typography-breakpoint-constants'
 
 const theme: OptionsType = {
+  title: 'Stow Lake',
   baseFontSize: '18px',
   baseLineHeight: '31px',
   googleFonts: [

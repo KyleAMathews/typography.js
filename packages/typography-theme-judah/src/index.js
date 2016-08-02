@@ -1,9 +1,10 @@
 // @flow
 import gray from 'gray-percentage'
 import type { OptionsType } from 'Types'
-import { MOBILE_MEDIA_QUERY, TABLET_MEDIA_QUERY } from 'typography-breakpoint-constants'
+import { MOBILE_MEDIA_QUERY } from 'typography-breakpoint-constants'
 
 const theme: OptionsType = {
+  title: 'Judah',
   baseFontSize: '18px',
   baseLineHeight: '30px',
   googleFonts: [

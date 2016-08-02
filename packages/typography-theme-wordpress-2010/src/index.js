@@ -2,6 +2,7 @@
 import type { OptionsType } from 'Types'
 
 const theme: OptionsType = {
+  title: 'Wordpress Theme 2010',
   baseFontSize: '16px',
   baseLineHeight: '24px',
   modularScales: [

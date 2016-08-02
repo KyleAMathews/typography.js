@@ -195,7 +195,8 @@ import typography from 'utils/typography'
 When creating a new instance of Typography, you can pass in an
 *configuration* object. All configuration keys are optional.
 
-* **baseFontSize**: The base font size in pixels, defaults to "16px"
+* **title**: The theme title.
+* **baseFontSize**: The base font size in pixels, defaults to "16px".
 * **baseLineHeight**: The base line height in pixels, defaults to "24px".
 * **modularScales**: An array of modular scales.
 ```javascript

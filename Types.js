@@ -3,6 +3,7 @@ type ModularScaleType = {scale: number | string; maxWidth?: string}
 type GoogleFontsType = {name: string; styles: string[]}
 
 export type OptionsType = {
+  title: string,
   baseFontSize?: string,
   baseLineHeight?: string,
   modularScales?: ModularScaleType[],

@@ -3,6 +3,7 @@ import type { OptionsType } from 'Types'
 import gray from 'gray-percentage'
 
 const theme: OptionsType = {
+  title: 'Wordpress Theme 2012',
   baseFontSize: '14px',
   baseLineHeight: '24px',
   modularScales: [

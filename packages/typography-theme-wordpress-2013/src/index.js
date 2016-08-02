@@ -3,6 +3,7 @@ import type { OptionsType } from 'Types'
 import { TABLET_MEDIA_QUERY } from 'typography-breakpoint-constants'
 
 const theme: OptionsType = {
+  title: 'Wordpress Theme 2013',
   baseFontSize: '16px',
   baseLineHeight: '24px',
   googleFonts: [

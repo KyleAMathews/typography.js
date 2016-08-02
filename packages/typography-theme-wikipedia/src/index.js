@@ -2,6 +2,7 @@
 import type { OptionsType } from 'Types'
 
 const theme: OptionsType = {
+  title: 'Wikipedia',
   baseFontSize: '14px',
   baseLineHeight: '22px',
   headerFontFamily: ['Linux Libertine', 'Georgia', 'serif'],

@@ -4,6 +4,7 @@ import gray from 'gray-percentage'
 import { TABLET_MEDIA_QUERY } from 'typography-breakpoint-constants'
 
 const theme: OptionsType = {
+  title: 'Irving',
   baseFontSize: '21px',
   baseLineHeight: '29px',
   modularScales: [

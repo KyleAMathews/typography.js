@@ -5,6 +5,7 @@ import { TABLET_MEDIA_QUERY } from 'typography-breakpoint-constants'
 import verticalRhythm from 'compass-vertical-rhythm'
 
 const theme: OptionsType = {
+  title: 'Moraga',
   baseFontSize: '18px',
   baseLineHeight: '28px',
   googleFonts: [

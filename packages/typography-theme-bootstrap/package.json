@@ -1,6 +1,6 @@
 {
   "name": "typography-theme-bootstrap",
-  "description": "A theme for Typography.js",
+  "description": "A theme for Typography.js inspired by Bootstrap's default typography",
   "version": "0.11.8",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "main": "./dist/index.js",

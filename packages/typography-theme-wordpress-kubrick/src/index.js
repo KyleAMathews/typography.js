@@ -3,6 +3,7 @@ import type { OptionsType } from 'Types'
 import gray from 'gray-percentage'
 
 const theme: OptionsType = {
+  title: 'Wordpress Kubrick',
   baseFontSize: '12px',
   baseLineHeight: '16.8px',
   headerFontFamily: ['Lucida Grande', 'Verdana', 'Arial', 'Sans-Serif'],

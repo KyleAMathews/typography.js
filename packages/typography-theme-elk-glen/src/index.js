@@ -5,6 +5,7 @@ import { MOBILE_MEDIA_QUERY } from 'typography-breakpoint-constants'
 import verticalRhythm from 'compass-vertical-rhythm'
 
 const theme: OptionsType = {
+  title: 'Elk Glen',
   baseFontSize: '20px',
   baseLineHeight: '33px',
   googleFonts: [
