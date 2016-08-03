@@ -62,6 +62,8 @@ const typography = function (opts: OptionsType) {
     return vr.adjustFontSizeTo(newFontSize)
   }
 
+  vr.fontSizeToMS = vr.adjustFontSizeToMSValue
+
   return ({
     options,
     ...vr,
