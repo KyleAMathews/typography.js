@@ -198,6 +198,8 @@ import typography from 'utils/typography'
 ```
 
 ## API
+
+### Configuration
 When creating a new instance of Typography, you can pass in an
 *configuration* object. All configuration keys are optional.
 
