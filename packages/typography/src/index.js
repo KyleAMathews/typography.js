@@ -62,7 +62,9 @@ const typography = function (opts: OptionsType) {
     return vr.adjustFontSizeTo(newFontSize)
   }
 
+  // Depricated old names.
   vr.fontSizeToMS = vr.adjustFontSizeToMSValue
+  vr.fontSizeToPx = vr.adjustFontSizeToPx
 
   return ({
     options,
