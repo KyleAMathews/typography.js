@@ -4,6 +4,7 @@ import type { OptionsType } from 'Types'
 import { MOBILE_MEDIA_QUERY } from 'typography-breakpoint-constants'
 
 const theme: OptionsType = {
+  title: 'St. Annes',
   baseFontSize: '16px',
   baseLineHeight: '25px',
   googleFonts: [
@@ -29,7 +30,7 @@ const theme: OptionsType = {
   headerWeight: 600,
   bodyWeight: 400,
   boldWeight: 700,
-  overrideStyles: ({ adjustFontSizeTo, rhythm }, options) => ({
+  overrideStyles: ({ adjustFontSizeTo, adjustFontSizeToMSValue, rhythm }, options) => ({
     a: {
       color: '#fb251b',
       textDecoration: 'none',
@@ -41,7 +42,7 @@ const theme: OptionsType = {
       marginTop: rhythm(2),
     },
     blockquote: {
-      ...adjustFontSizeTo('19px'),
+      ...adjustFontSizeToMSValue(1/5),
       color: gray(41),
       paddingLeft: rhythm(18/16),
       marginLeft: 0,
@@ -54,7 +55,7 @@ const theme: OptionsType = {
     'blockquote cite': {
       ...adjustFontSizeTo(options.baseFontSize),
       color: gray(options.bodyGray),
-      fontStyle: options.bodyWeight,
+      fontWeight: options.bodyWeight,
     },
     'blockquote cite:before': {
       content: '"— "',

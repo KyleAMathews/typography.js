@@ -9,9 +9,10 @@ glob('../typography-theme*', (err, files) ->
   for dir in files
     pJson = require("#{dir}/package.json")
     module = require("#{dir}/").default
+    title = module.title
     console.log module
-    title = _.words(pJson.name.slice(17)).map((word) -> _.capitalize(word)).join(' ')
     console.log title
+
     themes.push {
       name: pJson.name
       title: title

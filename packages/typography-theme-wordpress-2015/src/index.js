@@ -4,6 +4,7 @@ import type { OptionsType } from 'Types'
 import { MOBILE_MEDIA_QUERY } from 'typography-breakpoint-constants'
 
 const theme: OptionsType = {
+  title: 'Wordpress Theme 2015',
   baseFontSize: '19px',
   baseLineHeight: '32px',
   googleFonts: [
@@ -22,7 +23,7 @@ const theme: OptionsType = {
   headerWeight: '700',
   bodyWeight: 400,
   boldWeight: 700,
-  overrideStyles: ({ adjustFontSizeTo, rhythm }, options) => ({
+  overrideStyles: ({ adjustFontSizeTo, adjustFontSizeToMSValue, rhythm }, options) => ({
     'h5,h6': {
       letterSpacing: '0.1em',
       textTransform: 'uppercase',
@@ -43,7 +44,7 @@ const theme: OptionsType = {
     },
     // Blockquote.
     blockquote: {
-      ...adjustFontSizeTo('20px'),
+      ...adjustFontSizeToMSValue(1/5),
       color: gray(41),
       fontStyle: 'italic',
       paddingLeft: rhythm(5/8),

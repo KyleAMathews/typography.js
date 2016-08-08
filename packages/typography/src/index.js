@@ -9,8 +9,8 @@ import type { OptionsType } from 'Types'
 
 const typography = function (opts: OptionsType) {
   const defaults: OptionsType = {
-    baseFontSize: '18px',
-    baseLineHeight: '28.5px',
+    baseFontSize: '16px',
+    baseLineHeight: '24px',
     modularScales: [
       {
         scale: 'octave',
@@ -39,31 +39,37 @@ const typography = function (opts: OptionsType) {
     headerGrayHue: 0,
     bodyGray: 20,
     bodyGrayHue: 0,
-    headerWeight: 900,
+    headerWeight: 'bold',
     bodyWeight: 'normal',
     boldWeight: 'bold',
     includeNormalize: true,
     blockMarginBottom: 1,
-    fontFaces: [],
   }
 
   const options = objectAssign({}, defaults, opts)
 
   const vr = verticalRhythm(options)
 
+  // Add this function to the vertical rhythm object so it'll be passed around
+  // as well and be available. Not related really but this is the easiest
+  // way to pass around extra utility functions atm... :-\
+  vr.adjustFontSizeToMSValue = (value: number) => {
+    // This doesn't pick the right scale if a theme has more than one scale.
+    // Perhaps add optional parameter for a width and it'll get the scale
+    // for this width. Tricky part is maxWidth could be set in non-pixels.
+    const baseFont = options.baseFontSize.slice(0, -2)
+    const newFontSize = `${ms(value, options.modularScales[0].scale) * baseFont}px`
+    return vr.adjustFontSizeTo(newFontSize)
+  }
+
+  // Depricated old names.
+  vr.fontSizeToMS = vr.adjustFontSizeToMSValue
+  vr.fontSizeToPx = vr.adjustFontSizeTo
+
   return ({
     options,
     ...vr,
     createStyles () { return this.toString() }, // TODO remove in next breaking release.
-    fontSizeToPx: vr.adjustFontSizeTo,
-    fontSizeToMS (scaler: number) {
-      // This doesn't pick the right scale if a theme has more than one scale.
-      // Perhaps add optional parameter for a width and it'll get the scale
-      // for this width. Tricky part is maxWidth could be set in non-pixels.
-      const baseFont = options.baseFontSize.slice(0, -2)
-      const newFontSize = `${ms(scaler, options.modularScales[0].scale) * baseFont}px`
-      return vr.adjustFontSizeTo(newFontSize)
-    },
     toJSON () {
       return createStyles(vr, options)
     },

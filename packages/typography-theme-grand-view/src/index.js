@@ -2,9 +2,9 @@
 import gray from 'gray-percentage'
 import type { OptionsType } from 'Types'
 import { MOBILE_MEDIA_QUERY } from 'typography-breakpoint-constants'
-import verticalRhythm from 'compass-vertical-rhythm'
 
 const theme: OptionsType = {
+  title: 'Grand View',
   baseFontSize: '16px',
   baseLineHeight: '27px',
   googleFonts: [
@@ -30,7 +30,7 @@ const theme: OptionsType = {
   headerWeight: 700,
   bodyWeight: 400,
   boldWeight: 700,
-  overrideStyles: ({ adjustFontSizeTo, rhythm }, options) => ({
+  overrideStyles: ({ adjustFontSizeTo, adjustFontSizeToMSValue, rhythm }, options) => ({
     a: {
       color: '#d65947',
       textDecoration: 'none',
@@ -42,7 +42,7 @@ const theme: OptionsType = {
       marginTop: rhythm(2),
     },
     blockquote: {
-      ...adjustFontSizeTo('19px'),
+      ...adjustFontSizeToMSValue(1/5),
       color: gray(41),
       paddingLeft: rhythm(13/16),
       marginLeft: 0,
@@ -54,7 +54,7 @@ const theme: OptionsType = {
     'blockquote cite': {
       ...adjustFontSizeTo(options.baseFontSize),
       color: gray(options.bodyGray),
-      fontStyle: options.bodyWeight,
+      fontWeight: options.bodyWeight,
     },
     'blockquote cite:before': {
       content: '"— "',

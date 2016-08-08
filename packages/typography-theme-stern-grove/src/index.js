@@ -4,6 +4,7 @@ import type { OptionsType } from 'Types'
 import { MOBILE_MEDIA_QUERY } from 'typography-breakpoint-constants'
 
 const theme: OptionsType = {
+  title: 'Stern Grove',
   baseFontSize: '18px',
   baseLineHeight: '30px',
   googleFonts: [
@@ -21,7 +22,7 @@ const theme: OptionsType = {
   headerWeight: 400,
   bodyWeight: 400,
   boldWeight: 700,
-  overrideStyles: ({ adjustFontSizeTo, rhythm }, options) => ({
+  overrideStyles: ({ adjustFontSizeTo, adjustFontSizeToMSValue, rhythm }, options) => ({
     a: {
       color: '#07e',
       textDecoration: 'none',
@@ -30,7 +31,7 @@ const theme: OptionsType = {
       color: '#e32',
     },
     blockquote: {
-      ...adjustFontSizeTo('20px'),
+      ...adjustFontSizeToMSValue(1/5),
       background: gray(97),
       color: gray(31),
       paddingLeft: rhythm(14/16),
@@ -47,7 +48,7 @@ const theme: OptionsType = {
     'blockquote cite': {
       ...adjustFontSizeTo(options.baseFontSize),
       color: gray(options.bodyGray),
-      fontStyle: options.bodyWeight,
+      fontWeight: options.bodyWeight,
     },
     'blockquote cite:before': {
       content: '"— "',

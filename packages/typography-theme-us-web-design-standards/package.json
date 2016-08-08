@@ -1,23 +1,22 @@
 {
-  "name": "typography-theme-wordpress-2013",
-  "description": "A theme for Typography.js inspired by the typography of the Wordpress 2013 default theme",
+  "name": "typography-theme-us-web-design-standards",
+  "description": "A theme for Typography.js inspired by the US Web Design Standaards https://standards.usa.gov/typography/",
   "version": "0.12.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
-  "dependencies": {
-    "gray-percentage": "^1.1.2",
-    "typography-breakpoint-constants": "^0.10.0"
-  },
+  "main": "./dist/index.js",
   "keywords": [
     "css",
     "typography",
     "typography-theme"
   ],
   "license": "MIT",
-  "main": "./dist/index.js",
   "scripts": {
     "build": "../../node_modules/.bin/babel src --out-dir dist/",
     "flow": "../../node_modules/.bin/flow",
     "lint": "../../node_modules/.bin/eslint --ext .js,.jsx --ignore-path .gitignore .",
     "watch": "../../node_modules/.bin/babel -w src --out-dir dist/"
+  },
+  "dependencies": {
+    "gray-percentage": "^1.1.2"
   }
 }

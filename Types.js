@@ -1,9 +1,9 @@
 // @flow
 type ModularScaleType = {scale: number | string; maxWidth?: string}
 type GoogleFontsType = {name: string; styles: string[]}
-type FontFaceType = {fontFamily: string; fontWeight: number; src: string[]}
 
 export type OptionsType = {
+  title: string,
   baseFontSize?: string,
   baseLineHeight?: string,
   modularScales?: ModularScaleType[],
@@ -17,7 +17,6 @@ export type OptionsType = {
   headerWeight?: number | string,
   bodyWeight?: number | string,
   boldWeight?: number | string,
-  fontFaces?: FontFaceType[],
   blockMarginBottom?: number | string,
   includeNormalize?: boolean,
   overrideStyles?: (

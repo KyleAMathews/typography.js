@@ -2,6 +2,7 @@
 import type { OptionsType } from 'Types'
 
 const theme: OptionsType = {
+  title: 'Wikipedia',
   baseFontSize: '14px',
   baseLineHeight: '22px',
   headerFontFamily: ['Linux Libertine', 'Georgia', 'serif'],
@@ -18,6 +19,7 @@ const theme: OptionsType = {
       marginTop: rhythm(1),
     },
     'p,ol,ul': {
+      // TODO convert all ems and pxs to use rhythm.
       marginBottom: '0.5em',
       marginTop: '0.5em',
     },

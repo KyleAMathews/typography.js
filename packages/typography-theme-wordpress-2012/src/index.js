@@ -3,6 +3,7 @@ import type { OptionsType } from 'Types'
 import gray from 'gray-percentage'
 
 const theme: OptionsType = {
+  title: 'Wordpress Theme 2012',
   baseFontSize: '14px',
   baseLineHeight: '24px',
   modularScales: [
@@ -27,7 +28,7 @@ const theme: OptionsType = {
   headerWeight: '700',
   bodyWeight: 400,
   boldWeight: 700,
-  overrideStyles: ({ adjustFontSizeTo, rhythm }, options) => ({
+  overrideStyles: ({ adjustFontSizeTo, adjustFontSizeToMSValue, rhythm }, options) => ({
     blockquote: {
       fontStyle: 'italic',
       paddingLeft: rhythm(1),
@@ -52,7 +53,7 @@ const theme: OptionsType = {
       marginLeft: rhythm(1.5),
     },
     table: {
-      ...adjustFontSizeTo('12px'),
+      ...adjustFontSizeToMSValue(-1/5),
       color: gray(46),
     },
     th: {

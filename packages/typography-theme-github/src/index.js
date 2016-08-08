@@ -3,6 +3,7 @@ import gray from 'gray-percentage'
 import type { OptionsType } from 'Types'
 
 const theme: OptionsType = {
+  title: 'Github',
   baseFontSize: '16px',
   baseLineHeight: '26px',
   headerFontFamily: [
@@ -43,7 +44,7 @@ const theme: OptionsType = {
   headerWeight: 600,
   bodyWeight: 'normal',
   boldWeight: 600,
-  // Github has all block elements use 1/2 rhythm not a full rhythm for
+  // Github has all block elements use 1/2 rhythm not a full rhythm.
   blockMarginBottom: 1/2,
   overrideStyles: ({ rhythm }) => ({
     h1: {
