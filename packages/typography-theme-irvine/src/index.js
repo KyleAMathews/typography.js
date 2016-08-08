@@ -109,7 +109,7 @@ const theme: OptionsType = {
       [MIN_TABLET_WIDTH]: {
         '.logo': {
           position: 'relative',
-          top: '-1.75em',
+          top: '-2em',
           left: 0,
           width: '6em',
           height: '6em'
