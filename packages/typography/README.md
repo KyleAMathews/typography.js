@@ -239,18 +239,6 @@ googleFonts: [
 * **headerWeight**: Specify the font weight for headers. Defaults to 900.
 * **bodyWeight**: Specify the font weight for body text. Defaults to 'normal'.
 * **boldWeight**: Specify the font weight for bold (b, strong, dt, th) elements. Defaults to "bold".
-* **fontFaces**: Specify custom font faces.
-```javascript
-fontFaces: [
-  {
-    fontFamily: 'DinNextRounded'
-    fontWeight: 700
-    src: [
-      "url(http://example.com/dinbold.eot?#iefix) format(embedded-opentype),url(http://example.com/dinbold.woff) format(woff),url(http://example.com/dinbold.ttf) format(truetype),url(http://example.com/dinbold.svg) format(svg)"
-    ]
-  }
-]
-```
 * **blockMarginBottom**: Specify the default margin-bottom for block elements. Defaults to one "rhythm unit" or the base line height.
 * **includeNormalize**: Include in generated CSS normalize.css. Normalize.css is an excellent project which works to normalize the base CSS across browsers and serves as an excellent foundation for Typography.js. We include normalize.CSS by default but if you're already including it elsewhere in your project, you can disable including it here by passing `false`.
 * **overrideStyles**: Imperative API for directly adding to or

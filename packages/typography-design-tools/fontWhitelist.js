@@ -15,6 +15,8 @@ module.exports = [
   'Ubuntu',
   'Merriweather',
   'Arimo',
+  'Droid Serif',
+  'Droid Sans',
   'PT Sans Narrow',
   'Noto Sans',
   'Titillium Web',
@@ -28,6 +30,7 @@ module.exports = [
   'Dosis',
   'Hind',
   'Cabin',
+  'Cabin Condensed',
   'Lobster',
   'Yanone Kaffeesatz',
   'Noto Serif',
@@ -109,5 +112,8 @@ module.exports = [
   'Gentium Basic',
   'Neuton',
   'Anonymous Pro',
+  'Amaranth',
+  'Yrsa',
+  'Rosario',
 ]
 

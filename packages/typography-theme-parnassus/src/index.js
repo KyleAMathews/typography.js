@@ -5,6 +5,7 @@ import { TABLET_MEDIA_QUERY, MOBILE_MEDIA_QUERY } from 'typography-breakpoint-co
 import verticalRhythm from 'compass-vertical-rhythm'
 
 const theme: OptionsType = {
+  title: 'Parnassus',
   baseFontSize: '17px',
   baseLineHeight: '31px',
   modularScales: [
@@ -39,7 +40,7 @@ const theme: OptionsType = {
   headerWeight: 800,
   bodyWeight: 400,
   boldWeight: 700,
-  overrideStyles: ({ adjustFontSizeTo, rhythm }, options) => {
+  overrideStyles: ({ adjustFontSizeTo, adjustFontSizeToMSValue, rhythm }, options) => {
     const vr = verticalRhythm({
       baseFontSize: '15px',
       baseLineHeight: '27.35px',
@@ -58,7 +59,7 @@ const theme: OptionsType = {
         marginTop: rhythm(2),
       },
       blockquote: {
-        ...adjustFontSizeTo('19px'),
+        ...adjustFontSizeToMSValue(1/5),
         color: gray(41),
         paddingLeft: rhythm(18/16),
         marginLeft: 0,
@@ -71,7 +72,7 @@ const theme: OptionsType = {
       'blockquote cite': {
         ...adjustFontSizeTo(options.baseFontSize),
         color: gray(options.bodyGray),
-        fontStyle: options.bodyWeight,
+        fontWeight: options.bodyWeight,
       },
       'blockquote cite:before': {
         content: '"— "',

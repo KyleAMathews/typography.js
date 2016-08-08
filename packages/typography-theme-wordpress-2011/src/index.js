@@ -2,6 +2,7 @@
 import type { OptionsType } from 'Types'
 
 const theme: OptionsType = {
+  title: 'Wordpress Theme 2011',
   baseFontSize: '15px',
   baseLineHeight: '24px',
   modularScales: [

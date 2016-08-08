@@ -1,8 +1,10 @@
 // @flow
 import type { OptionsType } from 'Types'
 import gray from 'gray-percentage'
+import { MOBILE_MEDIA_QUERY } from 'typography-breakpoint-constants'
 
 const theme: OptionsType = {
+  title: 'Funston',
   baseFontSize: '20px',
   baseLineHeight: '28px',
   googleFonts: [
@@ -27,7 +29,7 @@ const theme: OptionsType = {
   headerWeight: '400',
   bodyWeight: 400,
   boldWeight: 700,
-  overrideStyles: ({ adjustFontSizeTo, rhythm }, options) => ({
+  overrideStyles: ({ adjustFontSizeTo, adjustFontSizeToMSValue, rhythm }, options) => ({
     html: {
       '-webkit-font-smoothing': 'antialiased',
     },
@@ -41,13 +43,13 @@ const theme: OptionsType = {
       color: '#3498DB',
     },
     blockquote: {
-      ...adjustFontSizeTo('23px'),
+      ...adjustFontSizeToMSValue(1/5),
       color: gray(40),
       paddingLeft: rhythm(13/16),
       marginLeft: rhythm(-1),
       borderLeft: `${rhythm(3/16)} solid ${gray(13)}`,
     },
-    '@media only screen and (max-width:480px)': {
+    [MOBILE_MEDIA_QUERY]: {
       blockquote: {
         marginLeft: rhythm(-3/4),
         paddingLeft: rhythm(9/16),

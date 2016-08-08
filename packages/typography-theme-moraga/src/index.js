@@ -5,28 +5,37 @@ import { TABLET_MEDIA_QUERY } from 'typography-breakpoint-constants'
 import verticalRhythm from 'compass-vertical-rhythm'
 
 const theme: OptionsType = {
+  title: 'Moraga',
   baseFontSize: '18px',
   baseLineHeight: '28px',
   googleFonts: [
     {
       name: 'Source Sans Pro',
       styles: [
-        '300',
-        '300i',
+        '200',
         '400',
         '400i',
-        '600',
+        '700',
       ],
+    },
+  ],
+  modularScales: [
+    {
+      scale: 2.5,
+    },
+    {
+      scale: 2,
+      maxWidth: '768px',
     },
   ],
   headerFontFamily: ['Source Sans Pro', 'sans-serif'],
   bodyFontFamily: ['Source Sans Pro', 'sans-serif'],
   headerGray: 15,
   bodyGray: 30,
-  headerWeight: '600',
-  bodyWeight: 300,
-  boldWeight: 400,
-  overrideStyles: ({ adjustFontSizeTo, rhythm }, options) => {
+  headerWeight: '200',
+  bodyWeight: 400,
+  boldWeight: 700,
+  overrideStyles: ({ adjustFontSizeToMSValue, rhythm }, options) => {
     const vr = verticalRhythm({
       baseFontSize: '16px',
       baseLineHeight: '24.88px',
@@ -46,7 +55,7 @@ const theme: OptionsType = {
         textDecoration: 'underline',
       },
       blockquote: {
-        ...adjustFontSizeTo('20px'),
+        ...adjustFontSizeToMSValue(1/5),
         color: gray(40),
         paddingLeft: rhythm(3/4),
         marginLeft: 0,
@@ -63,7 +72,7 @@ const theme: OptionsType = {
           paddingLeft: rhythm(1/2),
         },
         table: {
-          ...adjustFontSizeTo('16px'),
+          ...adjustFontSizeToMSValue(-1/5),
         },
       },
     }

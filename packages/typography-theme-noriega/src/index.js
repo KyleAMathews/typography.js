@@ -2,6 +2,7 @@
 import type { OptionsType } from 'Types'
 
 const theme: OptionsType = {
+  title: 'Noriega',
   baseFontSize: '18px',
   baseLineHeight: '29px',
   headerFontFamily: ['Lato', 'sans-serif'],
@@ -15,12 +16,6 @@ const theme: OptionsType = {
       styles: [
         '400',
         '700',
-      ],
-    },
-    {
-      name: 'Inconsolata',
-      styles: [
-        '400',
       ],
     },
   ],

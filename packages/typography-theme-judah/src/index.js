@@ -1,9 +1,10 @@
 // @flow
 import gray from 'gray-percentage'
 import type { OptionsType } from 'Types'
-import { MOBILE_MEDIA_QUERY, TABLET_MEDIA_QUERY } from 'typography-breakpoint-constants'
+import { MOBILE_MEDIA_QUERY } from 'typography-breakpoint-constants'
 
 const theme: OptionsType = {
+  title: 'Judah',
   baseFontSize: '18px',
   baseLineHeight: '30px',
   googleFonts: [
@@ -30,7 +31,7 @@ const theme: OptionsType = {
   headerWeight: 400,
   bodyWeight: 400,
   boldWeight: 700,
-  overrideStyles: ({ adjustFontSizeTo, rhythm }, options) => ({
+  overrideStyles: ({ adjustFontSizeTo, adjustFontSizeToMSValue, rhythm }, options) => ({
     a: {
       color: '#e51937',
       textDecoration: 'none',
@@ -40,7 +41,7 @@ const theme: OptionsType = {
       textDecoration: 'none',
     },
     blockquote: {
-      ...adjustFontSizeTo('21px'),
+      ...adjustFontSizeToMSValue(1/5),
       color: gray(0),
       fontStyle: 'italic',
       paddingLeft: rhythm(13/16),
@@ -53,7 +54,7 @@ const theme: OptionsType = {
     'blockquote cite': {
       ...adjustFontSizeTo(options.baseFontSize),
       color: gray(options.bodyGray),
-      fontStyle: options.bodyWeight,
+      fontWeight: options.bodyWeight,
     },
     'blockquote cite:before': {
       content: '"— "',

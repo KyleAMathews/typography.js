@@ -3,6 +3,7 @@ import type { OptionsType } from 'Types'
 import gray from 'gray-percentage'
 
 const theme: OptionsType = {
+  title: 'Wordpress Kubrick',
   baseFontSize: '12px',
   baseLineHeight: '16.8px',
   headerFontFamily: ['Lucida Grande', 'Verdana', 'Arial', 'Sans-Serif'],
@@ -25,17 +26,17 @@ const theme: OptionsType = {
     },
     ol: {
       marginBottom: 0,
-      marginLeft: '35px',
+      marginLeft: rhythm(2.125),
     },
     ul: {
       listStyle: 'none',
       marginLeft: 0,
-      paddingLeft: '10px',
-      textIndent: '-10px',
+      paddingLeft: rhythm(5/8),
+      textIndent: rhythm(-5/8),
     },
     li: {
       display: 'list-item',
-      marginLeft: '10px',
+      marginLeft: rhythm(5/8),
     },
     'ul li:before': {
       content: '"» "',
@@ -53,12 +54,12 @@ const theme: OptionsType = {
     },
     blockquote: {
       color: gray(47),
-      marginTop: '15px',
-      marginRight: '30px',
+      marginTop: rhythm(1),
+      marginRight: rhythm(2),
       marginBottom: 0,
-      marginLeft: '10px',
-      paddingLeft: '20px',
-      borderLeft: `5px solid ${gray(87)}`,
+      marginLeft: rhythm(5/8),
+      paddingLeft: rhythm(1.25),
+      borderLeft: `${rhythm(1/3)} solid ${gray(87)}`,
     },
   }),
 }

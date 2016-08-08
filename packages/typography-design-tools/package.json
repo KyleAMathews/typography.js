@@ -1,6 +1,6 @@
 {
   "name": "typography-design-tools",
-  "version": "0.11.12",
+  "version": "0.12.3",
   "description": "Design tools for Typography.js",
   "main": "./dist/index.js",
   "keywords": [
@@ -15,11 +15,12 @@
     "gray-percentage": "^1.1.2",
     "parse-unit": "^1.0.1",
     "react": "^15.2.1",
+    "react-autosuggest": "^3.9.0",
     "react-dom": "^15.2.1",
     "react-number-editor": "^4.0.2",
     "react-select": "^1.0.0-beta14",
-    "react-typography": "^0.11.0",
-    "typography": "^0.11.11"
+    "react-typography": "^0.12.0",
+    "typography": "^0.12.3"
   },
   "scripts": {
     "build": "../../node_modules/.bin/babel src --out-dir dist/",

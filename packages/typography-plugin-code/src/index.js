@@ -18,7 +18,7 @@ const CodePlugin = (): Function =>
     'tt,code': {
       backgroundColor: 'rgba(0,0,0,0.04)',
       borderRadius: '3px',
-      fontFamily: '"Inconsolata",Consolas,"Liberation Mono",Menlo,Courier,monospace',
+      fontFamily: 'Consolas,"Liberation Mono",Menlo,Courier,monospace',
       padding: 0,
       paddingTop: '0.2em',
       paddingBottom: '0.2em',
@@ -26,14 +26,13 @@ const CodePlugin = (): Function =>
     pre: {
       background: gray(97),
       borderRadius: '3px',
-      // Most JS syntax highlighters put code inside pre meaning we need to
-      // reset the font-size for pre so 'pre code' isn't double-shrunk.
-      fontSize: '1em',
+      lineHeight: 1.42,
       overflow: 'auto',
       padding: blockMarginBottom,
     },
     'pre code': {
       background: gray(97),
+      lineHeight: 1.42,
     },
     // Add space before and after code/tt elements.
     'code:before,code:after,tt:before,tt:after': {
