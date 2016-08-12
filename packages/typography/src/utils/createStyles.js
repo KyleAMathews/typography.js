@@ -91,7 +91,9 @@ module.exports = (vr: any, options: OptionsType) => {
   ], {
 
     // Reset margin/padding to 0.
-    margin: 0,
+    marginLeft: 0,
+    marginRight: 0,
+    marginTop: 0,
     padding: 0,
     marginBottom: blockMarginBottom,
   })
