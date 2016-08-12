@@ -131,7 +131,7 @@ const SectionHeader = ({ children }) => (
       background: gray(17),
       borderBottom: '1px solid',
       borderColor: gray(50),
-      fontSize: 12,
+      fontSize: 13,
       paddingLeft: 7.5,
       marginLeft: -7.5,
       marginRight: -7.5,
@@ -256,7 +256,7 @@ class DesignTool extends React.Component {
           </SectionRow>
         </Section>
         <Section>
-          <SectionHeader>Base Font Size</SectionHeader>
+          <SectionHeader>Base sizes</SectionHeader>
           <SectionRow>
             <SectionTool
               title="Font size"
@@ -298,9 +298,6 @@ class DesignTool extends React.Component {
               />
             </SectionTool>
           </SectionRow>
-        </Section>
-        <Section>
-          <SectionHeader>Modular Scale</SectionHeader>
           {this.state.options.modularScales.slice(0, 1).map((scale, i) => (
             <SectionRow>
               <ModularScaleTool
@@ -312,13 +309,30 @@ class DesignTool extends React.Component {
                   this.setState({ options: newOptions })
                 }}
               />
+              <SectionTool
+                title="Paragraph Spacing"
+              >
+                <NumberEditor
+                  unit="rhythm"
+                  value={this.state.options.blockMarginBottom}
+                  min={0.25}
+                  max={3}
+                  step={0.1}
+                  decimals={2}
+                  onValueChange={(value) => {
+                    const options = this.state.options
+                    options.blockMarginBottom = parseFloat(value)
+                    this.setState({ options: options })
+                  }}
+                />
+              </SectionTool>
             </SectionRow>
           ))}
         </Section>
         <Section>
           <SectionHeader>Headers</SectionHeader>
           <SectionRow>
-            <div>Font</div>
+            <div>Typeface</div>
             <FontSelectTool
               type="header"
               options={this.state.options}
@@ -361,7 +375,7 @@ class DesignTool extends React.Component {
         <Section>
           <SectionHeader>Body</SectionHeader>
           <SectionRow>
-            <div>Font</div>
+            <div>Typeface</div>
             <FontSelectTool
               type="body"
               options={this.state.options}
@@ -408,32 +422,6 @@ class DesignTool extends React.Component {
                 onValueChange={(value) => {
                   const options = this.state.options
                   options.bodyGray = value
-                  this.setState({ options: options })
-                }}
-              />
-            </SectionTool>
-          </SectionRow>
-        </Section>
-        <Section>
-          <SectionHeader>Google Fonts</SectionHeader>
-          <GoogleFonts options={this.state.options} />
-        </Section>
-        <Section>
-          <SectionHeader>Advanced</SectionHeader>
-          <SectionRow>
-            <SectionTool
-              title="Block margin-bottom"
-            >
-              <NumberEditor
-                unit="rhythm"
-                value={this.state.options.blockMarginBottom}
-                min={0.25}
-                max={3}
-                step={0.1}
-                decimals={2}
-                onValueChange={(value) => {
-                  const options = this.state.options
-                  options.blockMarginBottom = parseFloat(value)
                   this.setState({ options: options })
                 }}
               />

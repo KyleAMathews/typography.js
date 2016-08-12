@@ -55,31 +55,24 @@ class ModularScale extends React.Component {
     }
 
     return (
-      <div
-        style={{
-          clear: 'both',
-        }}
+      <SectionTool
+        title="Scale"
       >
-        <SectionTool
-          title="Scale"
-        >
-          <NumberEditor
-            unit="scale"
-            value={msToRatio(this.props.modularScale.scale)}
-            min={1}
-            max={4}
-            step={0.1}
-            decimals={2}
-            onValueChange={(value) => {
-              const valueFloat = parseFloat(value)
-              const newScale = { ...this.props.modularScale }
-              newScale.scale = valueFloat
-              this.props.onChange(newScale)
-            }}
-          />
-        </SectionTool>
-        {maxWidthSelect}
-      </div>
+        <NumberEditor
+          unit="scale"
+          value={msToRatio(this.props.modularScale.scale)}
+          min={1}
+          max={4}
+          step={0.1}
+          decimals={2}
+          onValueChange={(value) => {
+            const valueFloat = parseFloat(value)
+            const newScale = { ...this.props.modularScale }
+            newScale.scale = valueFloat
+            this.props.onChange(newScale)
+          }}
+        />
+      </SectionTool>
     )
   }
 }
