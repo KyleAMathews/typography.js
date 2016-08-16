@@ -1,12 +1,12 @@
 {
   "name": "typography-theme-elk-glen",
   "description": "A theme for Typography.js",
-  "version": "0.12.0",
+  "version": "0.13.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "compass-vertical-rhythm": "^1.2.1",
     "gray-percentage": "^2.0.0",
-    "typography-breakpoint-constants": "^0.10.0"
+    "typography-breakpoint-constants": "^0.13.0"
   },
   "keywords": [
     "css",
