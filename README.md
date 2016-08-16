@@ -1,5 +1,5 @@
 # Typography.js
-A powerful toolkit for building websites with beautiful typography.
+A powerful toolkit for building websites with beautiful design.
 
 ## Install
 `npm install typography`
