@@ -6,7 +6,7 @@ import { MOBILE_MEDIA_QUERY } from 'typography-breakpoint-constants'
 const theme: OptionsType = {
   title: 'Funston',
   baseFontSize: '20px',
-  baseLineHeight: '28px',
+  baseLineHeight: 1.4,
   googleFonts: [
     {
       name: 'Patua One',

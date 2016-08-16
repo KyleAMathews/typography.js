@@ -6,7 +6,7 @@ import { MOBILE_MEDIA_QUERY, TABLET_MEDIA_QUERY } from 'typography-breakpoint-co
 const theme: OptionsType = {
   title: 'Sutro',
   baseFontSize: '18px',
-  baseLineHeight: '32px',
+  baseLineHeight: 1.78,
   googleFonts: [
     {
       name: 'Open Sans',

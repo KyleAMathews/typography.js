@@ -4,7 +4,7 @@ import type { OptionsType } from 'Types'
 const theme: OptionsType = {
   title: 'Noriega',
   baseFontSize: '18px',
-  baseLineHeight: '29px',
+  baseLineHeight: 1.61,
   headerFontFamily: ['Lato', 'sans-serif'],
   bodyFontFamily: ['Lato', 'sans-serif'],
   bodyWeight: 400,

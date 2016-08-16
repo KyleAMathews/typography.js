@@ -7,7 +7,7 @@ import verticalRhythm from 'compass-vertical-rhythm'
 const theme: OptionsType = {
   title: 'Elk Glen',
   baseFontSize: '20px',
-  baseLineHeight: '30px',
+  baseLineHeight: 1.5,
   googleFonts: [
     {
       name: 'Oswald',

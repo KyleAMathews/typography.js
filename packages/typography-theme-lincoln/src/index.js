@@ -7,7 +7,7 @@ import verticalRhythm from 'compass-vertical-rhythm'
 const theme: OptionsType = {
   title: 'Lincoln',
   baseFontSize: '19px',
-  baseLineHeight: '30px',
+  baseLineHeight: 1.58,
   googleFonts: [
     {
       name: 'Varela Round',

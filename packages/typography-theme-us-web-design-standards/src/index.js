@@ -5,7 +5,7 @@ import gray from 'gray-percentage'
 const theme: OptionsType = {
   title: 'US Web Design Standards',
   baseFontSize: '17px',
-  baseLineHeight: '26px',
+  baseLineHeight: 1.53,
   modularScales: [
     {
       scale: 2.35,

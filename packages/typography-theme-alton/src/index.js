@@ -7,7 +7,7 @@ import verticalRhythm from 'compass-vertical-rhythm'
 const theme: OptionsType = {
   title: 'Alton',
   baseFontSize: '18px',
-  baseLineHeight: '32px',
+  baseLineHeight: 1.78,
   googleFonts: [
     {
       name: 'Domine',

@@ -6,7 +6,7 @@ import { MOBILE_MEDIA_QUERY } from 'typography-breakpoint-constants'
 const theme: OptionsType = {
   title: 'St. Annes',
   baseFontSize: '16px',
-  baseLineHeight: '25px',
+  baseLineHeight: 1.5625,
   googleFonts: [
     {
       name: 'Source Serif Pro',

@@ -154,7 +154,6 @@ class DesignTool extends React.Component {
     this.state = {
       selectedTheme: 0,
       options,
-      lineHeight: parseUnit(options.baseLineHeight)[0] / parseUnit(options.baseFontSize)[0],
       bodyFamily,
       headerFamily,
     }
@@ -234,8 +233,6 @@ class DesignTool extends React.Component {
               }}
               onChange={(value) => {
                 const newTheme = new Typography(themeRegistry[value].module)
-                const newFontSize = parseUnit(newTheme.options.baseFontSize)[0]
-                const newLineHeight = parseUnit(newTheme.options.baseLineHeight)[0]
                 let newBodyFamily = _.find(
                   fontList, (font) => font.family === newTheme.options.bodyFontFamily[0]
                 )
@@ -246,7 +243,6 @@ class DesignTool extends React.Component {
                 if (!newHeaderFamily) { newHeaderFamily = {} }
                 this.setState({
                   selectedTheme: parseInt(value, 10),
-                  lineHeight: newLineHeight / newFontSize,
                   options: newTheme.options,
                   bodyFamily: newBodyFamily,
                   headerFamily: newHeaderFamily,
@@ -271,7 +267,6 @@ class DesignTool extends React.Component {
                 onValueChange={(value) => {
                   const newOptions = { ...this.state.options }
                   newOptions.baseFontSize = `${value}px`
-                  newOptions.baseLineHeight = `${value * this.state.lineHeight}px`
                   this.setState({ options: newOptions })
                 }}
               />
@@ -281,7 +276,7 @@ class DesignTool extends React.Component {
             >
               <NumberEditor
                 unit="number"
-                value={this.state.lineHeight}
+                value={this.state.options.baseLineHeight}
                 min={1}
                 max={2.5}
                 step={0.01}
@@ -289,10 +284,9 @@ class DesignTool extends React.Component {
                 onValueChange={(value) => {
                   const newOptions = { ...this.state.options }
                   const fontsize = parseUnit(this.state.options.baseFontSize)[0]
-                  newOptions.baseLineHeight = `${fontsize * value}px`
+                  newOptions.baseLineHeight = value
                   this.setState({
                     options: newOptions,
-                    lineHeight: value,
                   })
                 }}
               />

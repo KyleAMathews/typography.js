@@ -6,7 +6,7 @@ import { MOBILE_MEDIA_QUERY } from 'typography-breakpoint-constants'
 const theme: OptionsType = {
   title: 'Wordpress Theme 2015',
   baseFontSize: '19px',
-  baseLineHeight: '32px',
+  baseLineHeight: 1.68,
   googleFonts: [
     {
       name: 'Noto Serif',

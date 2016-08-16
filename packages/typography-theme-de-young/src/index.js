@@ -7,7 +7,7 @@ import verticalRhythm from 'compass-vertical-rhythm'
 const theme: OptionsType = {
   title: 'de Young',
   baseFontSize: '20px',
-  baseLineHeight: '33px',
+  baseLineHeight: 1.65,
   googleFonts: [
     {
       name: 'Alegreya Sans',

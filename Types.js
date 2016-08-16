@@ -5,7 +5,7 @@ type GoogleFontsType = {name: string; styles: string[]}
 export type OptionsType = {
   title: string,
   baseFontSize?: string,
-  baseLineHeight?: string,
+  baseLineHeight?: number,
   modularScales?: ModularScaleType[],
   googleFonts?: GoogleFontsType[],
   headerFontFamily?: string[],

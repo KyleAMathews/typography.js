@@ -5,7 +5,7 @@ import gray from 'gray-percentage'
 const theme: OptionsType = {
   title: 'Wordpress Theme 2012',
   baseFontSize: '14px',
-  baseLineHeight: '24px',
+  baseLineHeight: 1.714,
   modularScales: [
     {
       scale: 'minor sixth',

@@ -6,7 +6,7 @@ import { MOBILE_MEDIA_QUERY } from 'typography-breakpoint-constants'
 const theme: OptionsType = {
   title: 'Grand View',
   baseFontSize: '16px',
-  baseLineHeight: '27px',
+  baseLineHeight: 1.6875,
   googleFonts: [
     {
       name: 'Montserrat',

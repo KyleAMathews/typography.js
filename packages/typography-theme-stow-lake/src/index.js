@@ -6,7 +6,7 @@ import { MOBILE_MEDIA_QUERY } from 'typography-breakpoint-constants'
 const theme: OptionsType = {
   title: 'Stow Lake',
   baseFontSize: '18px',
-  baseLineHeight: '31px',
+  baseLineHeight: 1.722,
   googleFonts: [
     {
       name: 'Neuton',

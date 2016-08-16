@@ -6,7 +6,7 @@ import { MOBILE_MEDIA_QUERY } from 'typography-breakpoint-constants'
 const theme: OptionsType = {
   title: 'Judah',
   baseFontSize: '18px',
-  baseLineHeight: '30px',
+  baseLineHeight: 5/3,
   googleFonts: [
     {
       name: 'Roboto Condensed',

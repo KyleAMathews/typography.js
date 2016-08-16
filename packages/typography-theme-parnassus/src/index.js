@@ -7,7 +7,7 @@ import verticalRhythm from 'compass-vertical-rhythm'
 const theme: OptionsType = {
   title: 'Parnassus',
   baseFontSize: '17px',
-  baseLineHeight: '31px',
+  baseLineHeight: 1.82,
   modularScales: [
     {
       scale: 2.25,

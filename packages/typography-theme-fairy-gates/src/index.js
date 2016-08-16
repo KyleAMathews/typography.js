@@ -7,7 +7,7 @@ import verticalRhythm from 'compass-vertical-rhythm'
 const theme: OptionsType = {
   title: 'Fairy Gates',
   baseFontSize: '20px',
-  baseLineHeight: '29px',
+  baseLineHeight: 1.45,
   googleFonts: [
     {
       name: 'Work Sans',

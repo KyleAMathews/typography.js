@@ -5,7 +5,7 @@ import gray from 'gray-percentage'
 const theme: OptionsType = {
   title: 'Wordpress Kubrick',
   baseFontSize: '12px',
-  baseLineHeight: '16.8px',
+  baseLineHeight: 1.4,
   headerFontFamily: ['Lucida Grande', 'Verdana', 'Arial', 'Sans-Serif'],
   bodyFontFamily: ['Lucida Grande', 'Verdana', 'Arial', 'Sans-Serif'],
   headerGray: 20,

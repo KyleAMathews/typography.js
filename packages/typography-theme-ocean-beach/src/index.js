@@ -7,7 +7,7 @@ import verticalRhythm from 'compass-vertical-rhythm'
 const theme: OptionsType = {
   title: 'Ocean Beach',
   baseFontSize: '19px',
-  baseLineHeight: '30px',
+  baseLineHeight: 1.58,
   googleFonts: [
     {
       name: 'Roboto Slab',

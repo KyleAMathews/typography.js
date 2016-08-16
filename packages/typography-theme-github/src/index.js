@@ -5,7 +5,7 @@ import type { OptionsType } from 'Types'
 const theme: OptionsType = {
   title: 'Github',
   baseFontSize: '16px',
-  baseLineHeight: '26px',
+  baseLineHeight: 1.625,
   headerFontFamily: [
     '-apple-system',
     'BlinkMacSystemFont',

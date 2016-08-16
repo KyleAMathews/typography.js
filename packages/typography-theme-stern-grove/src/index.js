@@ -6,7 +6,7 @@ import { MOBILE_MEDIA_QUERY } from 'typography-breakpoint-constants'
 const theme: OptionsType = {
   title: 'Stern Grove',
   baseFontSize: '18px',
-  baseLineHeight: '30px',
+  baseLineHeight: 5/3,
   googleFonts: [
     {
       name: 'Montserrat',

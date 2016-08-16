@@ -6,7 +6,7 @@ import { MOBILE_MEDIA_QUERY, TABLET_MEDIA_QUERY } from 'typography-breakpoint-co
 const theme: OptionsType = {
   title: 'Kirkham',
   baseFontSize: '18px',
-  baseLineHeight: '30px',
+  baseLineHeight: 5/3,
   googleFonts: [
     {
       name: 'Playfair Display',

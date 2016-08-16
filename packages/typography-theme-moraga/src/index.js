@@ -7,7 +7,7 @@ import verticalRhythm from 'compass-vertical-rhythm'
 const theme: OptionsType = {
   title: 'Moraga',
   baseFontSize: '18px',
-  baseLineHeight: '28px',
+  baseLineHeight: 1.56,
   googleFonts: [
     {
       name: 'Source Sans Pro',

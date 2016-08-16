@@ -5,7 +5,7 @@ import gray from 'gray-percentage'
 const theme: OptionsType = {
   title: 'Bootstrap',
   baseFontSize: '16px',
-  baseLineHeight: '24px',
+  baseLineHeight: 1.5,
   bodyFontFamily: [
     '-apple-system',
     'BlinkMacSystemFont',

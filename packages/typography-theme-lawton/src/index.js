@@ -7,7 +7,7 @@ import { MOBILE_MEDIA_QUERY } from 'typography-breakpoint-constants'
 const theme: OptionsType = {
   title: 'Lawton',
   baseFontSize: '16px',
-  baseLineHeight: '24px',
+  baseLineHeight: 1.5,
   modularScales: [
     {
       scale: 'major tenth',
