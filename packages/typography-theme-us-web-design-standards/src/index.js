@@ -6,15 +6,7 @@ const theme: OptionsType = {
   title: 'US Web Design Standards',
   baseFontSize: '17px',
   baseLineHeight: 1.53,
-  modularScales: [
-    {
-      scale: 2.35,
-    },
-    {
-      scale: 'minor seventh',
-      maxWidth: '768px',
-    },
-  ],
+  scale: 2.35,
   googleFonts: [
     {
       name: 'Merriweather',

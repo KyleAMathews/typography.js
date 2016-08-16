@@ -8,15 +8,6 @@ const theme: OptionsType = {
   title: 'Lawton',
   baseFontSize: '16px',
   baseLineHeight: 1.5,
-  modularScales: [
-    {
-      scale: 'major tenth',
-    },
-    {
-      scale: 'octave',
-      maxWidth: '768px',
-    },
-  ],
   googleFonts: [
     {
       name: 'Raleway',

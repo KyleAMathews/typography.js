@@ -6,11 +6,7 @@ const theme: OptionsType = {
   title: 'Wordpress Theme 2012',
   baseFontSize: '14px',
   baseLineHeight: 1.714,
-  modularScales: [
-    {
-      scale: 'minor sixth',
-    },
-  ],
+  scale: 8/5,
   googleFonts: [
     {
       name: 'Open Sans',

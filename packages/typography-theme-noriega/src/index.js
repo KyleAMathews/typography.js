@@ -19,11 +19,7 @@ const theme: OptionsType = {
       ],
     },
   ],
-  modularScales: [
-    {
-      scale: 'golden',
-    },
-  ],
+  scale: 1.618,
 }
 
 export default theme

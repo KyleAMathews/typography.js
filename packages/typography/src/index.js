@@ -11,15 +11,7 @@ const typography = function (opts: OptionsType) {
   const defaults: OptionsType = {
     baseFontSize: '16px',
     baseLineHeight: 1.5,
-    modularScales: [
-      {
-        scale: 'octave',
-      },
-      {
-        scale: 'golden',
-        maxWidth: '768px',
-      },
-    ],
+    scale: 2,
     googleFonts: [],
     headerFontFamily: [
       '-apple-system',
@@ -58,7 +50,7 @@ const typography = function (opts: OptionsType) {
     // Perhaps add optional parameter for a width and it'll get the scale
     // for this width. Tricky part is maxWidth could be set in non-pixels.
     const baseFont = options.baseFontSize.slice(0, -2)
-    const newFontSize = `${ms(value, options.modularScales[0].scale) * baseFont}px`
+    const newFontSize = `${ms(value, options.scale) * baseFont}px`
     return vr.adjustFontSizeTo(newFontSize)
   }
 

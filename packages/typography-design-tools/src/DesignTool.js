@@ -35,73 +35,6 @@ themeRegistry.unshift({
 
 const toolTypography = new Typography({ includeNormalize: false })
 
-const modularScales = [
-  {
-    name: 'minor second',
-    title: '16/15 — minor second',
-  },
-  {
-    title: '9/8 — major second',
-    name: 'major second',
-  },
-  {
-    title: '6/5 — minor third',
-    name: 'minor third',
-  },
-  {
-    title: '4/3 — major third',
-    name: 'major third',
-  },
-  {
-    title: 'Math.sqrt(2) — diminished fourth',
-    name: 'diminished fourth',
-  },
-  {
-    title: '3/2 — perfect fifth',
-    name: 'perfect fifth',
-  },
-  {
-    title: '8/5 — minor sixth',
-    name: 'minor sixth',
-  },
-  {
-    title: '1.618 — golden',
-    name: 'golden',
-  },
-  {
-    title: '5/3 — major sixth',
-    name: 'major sixth',
-  },
-  {
-    title: '16/9 — minor seventh',
-    name: 'minor seventh',
-  },
-  {
-    title: '15/8 — major seventh',
-    name: 'major seventh',
-  },
-  {
-    title: '2 — octave',
-    name: 'octave',
-  },
-  {
-    title: '5/2 — major tenth',
-    name: 'major tenth',
-  },
-  {
-    title: '8/3 — major eleventh',
-    name: 'major eleventh',
-  },
-  {
-    title: '3 — major twelfth',
-    name: 'major twelfth',
-  },
-  {
-    title: '4 — double octave',
-    name: 'double octave',
-  },
-]
-
 const Section = ({ children }) => (
   <div
     style={{
@@ -292,36 +225,34 @@ class DesignTool extends React.Component {
               />
             </SectionTool>
           </SectionRow>
-          {this.state.options.modularScales.slice(0, 1).map((scale, i) => (
-            <SectionRow>
-              <ModularScaleTool
-                key={i}
-                modularScale={scale}
-                onChange={(newScale) => {
-                  const newOptions = { ...this.state.options }
-                  newOptions.modularScales[i] = newScale
-                  this.setState({ options: newOptions })
+          <SectionRow>
+            <ModularScaleTool
+              key='scale'
+              scale={this.state.options.scale}
+              onChange={(newScale) => {
+                const newOptions = { ...this.state.options }
+                newOptions.scale = newScale
+                this.setState({ options: newOptions })
+              }}
+            />
+            <SectionTool
+              title="Paragraph Spacing"
+            >
+              <NumberEditor
+                unit="rhythm"
+                value={this.state.options.blockMarginBottom}
+                min={0.25}
+                max={3}
+                step={0.1}
+                decimals={2}
+                onValueChange={(value) => {
+                  const options = this.state.options
+                  options.blockMarginBottom = parseFloat(value)
+                  this.setState({ options: options })
                 }}
               />
-              <SectionTool
-                title="Paragraph Spacing"
-              >
-                <NumberEditor
-                  unit="rhythm"
-                  value={this.state.options.blockMarginBottom}
-                  min={0.25}
-                  max={3}
-                  step={0.1}
-                  decimals={2}
-                  onValueChange={(value) => {
-                    const options = this.state.options
-                    options.blockMarginBottom = parseFloat(value)
-                    this.setState({ options: options })
-                  }}
-                />
-              </SectionTool>
-            </SectionRow>
-          ))}
+            </SectionTool>
+          </SectionRow>
         </Section>
         <Section>
           <SectionHeader>Headers</SectionHeader>

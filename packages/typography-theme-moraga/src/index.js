@@ -19,15 +19,7 @@ const theme: OptionsType = {
       ],
     },
   ],
-  modularScales: [
-    {
-      scale: 2.5,
-    },
-    {
-      scale: 2,
-      maxWidth: '768px',
-    },
-  ],
+  scale: 2.5,
   headerFontFamily: ['Source Sans Pro', 'sans-serif'],
   bodyFontFamily: ['Source Sans Pro', 'sans-serif'],
   headerGray: 15,

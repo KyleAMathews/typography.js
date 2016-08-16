@@ -8,15 +8,7 @@ const theme: OptionsType = {
   title: 'Parnassus',
   baseFontSize: '17px',
   baseLineHeight: 1.82,
-  modularScales: [
-    {
-      scale: 2.25,
-    },
-    {
-      scale: 'octave',
-      maxWidth: '768px',
-    },
-  ],
+  scale: 2.25,
   googleFonts: [
     {
       name: 'Merriweather Sans',

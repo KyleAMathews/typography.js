@@ -5,11 +5,7 @@ const theme: OptionsType = {
   title: 'Wordpress Theme 2010',
   baseFontSize: '16px',
   baseLineHeight: 1.5,
-  modularScales: [
-    {
-      scale: 1.3125,
-    },
-  ],
+  scale: 1.3125,
   headerFontFamily: ['Helvetica Neue', 'Helvetica', 'Segoe UI', 'Arial', 'freesans', 'sans-serif', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'], // eslint-disable-line
   bodyFontFamily: ['georgia', 'serif'],
   headerGray: 0,

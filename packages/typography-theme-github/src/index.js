@@ -30,15 +30,7 @@ const theme: OptionsType = {
     'Segoe UI Emoji',
     'Segoe UI Symbol',
   ],
-  modularScales: [
-    {
-      scale: 2.25,
-    },
-    {
-      scale: 'octave',
-      maxWidth: '768px',
-    },
-  ],
+  scale: 2.25,
   headerGray: 20,
   bodyGray: 20,
   headerWeight: 600,

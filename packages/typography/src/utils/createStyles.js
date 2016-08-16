@@ -194,31 +194,20 @@ module.exports = (vr: any, options: OptionsType) => {
     textRendering: 'optimizeLegibility',
   })
 
-  // Loop through each modular scale and add media query as necessary.
-  each(options.modularScales, (modularScale) => {
-    const { maxWidth, scale } = modularScale
+  // Set header sizes.
+  const h1 = vr.adjustFontSizeToMSValue(5/5)
+  const h2 = vr.adjustFontSizeToMSValue(4/5)
+  const h3 = vr.adjustFontSizeToMSValue(3/5)
+  const h4 = vr.adjustFontSizeToMSValue(2/5)
+  const h5 = vr.adjustFontSizeToMSValue(1/5)
+  const h6 = vr.adjustFontSizeToMSValue(0/5)
 
-    const h1 = vr.adjustFontSizeToMSValue(5/5)
-    const h2 = vr.adjustFontSizeToMSValue(4/5)
-    const h3 = vr.adjustFontSizeToMSValue(3/5)
-    const h4 = vr.adjustFontSizeToMSValue(2/5)
-    const h5 = vr.adjustFontSizeToMSValue(1/5)
-    const h6 = vr.adjustFontSizeToMSValue(0/5)
-
-    let mediaQuery
-    if (maxWidth) {
-      mediaQuery = `@media only screen and (max-width:${maxWidth})`
-    }
-    each([h1, h2, h3, h4, h5, h6], (header, i) => {
-      if (mediaQuery) {
-        styles = set(styles, `${mediaQuery}.h${i + 1}.fontSize`, header.fontSize)
-        styles = set(styles, `${mediaQuery}.h${i + 1}.lineHeight`, header.lineHeight)
-      } else {
-        styles = set(styles, `h${i + 1}.fontSize`, header.fontSize)
-        styles = set(styles, `h${i + 1}.lineHeight`, header.lineHeight)
-      }
-    })
+  each([h1, h2, h3, h4, h5, h6], (header, i) => {
+    styles = set(styles, `h${i + 1}.fontSize`, header.fontSize)
+    styles = set(styles, `h${i + 1}.lineHeight`, header.lineHeight)
   })
+
+  // TODO add support for Breakpoints here.
 
   // Call plugins if any.
   if (isArray(options.plugins)) {
