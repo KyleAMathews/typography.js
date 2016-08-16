@@ -16,7 +16,7 @@ const CodePlugin = (): Function =>
   }
   return {
     'tt,code': {
-      backgroundColor: 'rgba(0,0,0,0.04)',
+      backgroundColor: gray(96),
       borderRadius: '3px',
       fontFamily: 'Consolas,"Liberation Mono",Menlo,Courier,monospace',
       padding: 0,
@@ -24,14 +24,14 @@ const CodePlugin = (): Function =>
       paddingBottom: '0.2em',
     },
     pre: {
-      background: gray(97),
+      background: gray(96),
       borderRadius: '3px',
       lineHeight: 1.42,
       overflow: 'auto',
       padding: blockMarginBottom,
     },
     'pre code': {
-      background: gray(97),
+      background: 'none',
       lineHeight: 1.42,
     },
     // Add space before and after code/tt elements.

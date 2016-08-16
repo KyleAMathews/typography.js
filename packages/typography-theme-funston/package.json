@@ -5,7 +5,7 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "main": "./dist/index.js",
   "dependencies": {
-    "gray-percentage": "^1.1.2",
+    "gray-percentage": "^2.0.0",
     "typography-breakpoint-constants": "^0.10.0"
   },
   "keywords": [

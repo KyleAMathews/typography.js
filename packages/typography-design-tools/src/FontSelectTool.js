@@ -13,9 +13,9 @@ const styles = StyleSheet.create({
     backgroundPosition: '100% 50%',
     backgroundRepeat: 'no-repeat',
     border: '1px solid',
-    borderColor: gray(50),
+    borderColor: gray(50, 0, true),
     borderRadius: 3,
-    color: gray(90),
+    color: gray(90, 0, true),
     fontSize: 12,
     width: '100%',
     padding: '2px 8px',
@@ -24,9 +24,9 @@ const styles = StyleSheet.create({
   suggestionsContainer: {
     background: gray(20),
     border: '1px solid',
-    borderColor: gray(50),
+    borderColor: gray(50, 0, true),
     borderRadius: 3,
-    color: gray(90),
+    color: gray(90, 0, true),
     fontSize: 12,
     padding: 0,
     margin: 0,
@@ -39,13 +39,13 @@ const styles = StyleSheet.create({
     width: '93%',
   },
   suggestion: {
-    color: gray(90),
+    color: gray(90, 0, true),
     padding: '3.75px 7px',
     margin: 0,
   },
   suggestionFocused: {
-    background: gray(35),
-    color: gray(95),
+    background: gray(35, 0, true),
+    color: gray(95, 0, true),
   },
 })
 

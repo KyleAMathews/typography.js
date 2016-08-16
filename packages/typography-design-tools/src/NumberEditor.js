@@ -6,13 +6,13 @@ import { StyleSheet, css } from 'aphrodite'
 const styles = StyleSheet.create({
   editor: {
     ':active': {
-      borderColor: gray(75),
+      borderColor: gray(75, 0, true),
     },
     ':hover': {
-      borderColor: gray(75),
+      borderColor: gray(75, 0, true),
     },
     ':focus': {
-      borderColor: gray(75),
+      borderColor: gray(75, 0, true),
     },
   },
 })
@@ -28,9 +28,9 @@ class NumberEditor extends React.Component {
           style={{
             background: gray(20),
             border: '1px solid',
-            borderColor: gray(50),
+            borderColor: gray(50, 0, true),
             borderRadius: 3,
-            color: gray(90),
+            color: gray(90, 0, true),
             fontSize: 12,
             padding: '2px 8px',
             width: 80,
@@ -38,7 +38,7 @@ class NumberEditor extends React.Component {
         />
         <div
           style={{
-            color: gray(60),
+            color: gray(60, 0, true),
             fontSize: 10,
             position: 'absolute',
             right: 5,

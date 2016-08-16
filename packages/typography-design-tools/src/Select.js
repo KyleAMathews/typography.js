@@ -5,13 +5,13 @@ import { StyleSheet, css } from 'aphrodite'
 const styles = StyleSheet.create({
   editor: {
     ':active': {
-      borderColor: gray(75),
+      borderColor: gray(75, 0, true),
     },
     ':hover': {
-      borderColor: gray(75),
+      borderColor: gray(75, 0, true),
     },
     ':focus': {
-      borderColor: gray(75),
+      borderColor: gray(75, 0, true),
     },
   },
 })
@@ -29,9 +29,9 @@ const Select = ({ options, style={}, value, onChange }) => {
         backgroundPosition: '100% 50%',
         backgroundRepeat: 'no-repeat',
         border: '1px solid',
-        borderColor: gray(50),
+        borderColor: gray(50, 0, true),
         borderRadius: 3,
-        color: gray(90),
+        color: gray(90, 0, true),
         fontSize: 12,
         width: 80,
         padding: '2px 8px',

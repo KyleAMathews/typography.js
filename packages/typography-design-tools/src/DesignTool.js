@@ -130,7 +130,7 @@ const SectionHeader = ({ children }) => (
     style={{
       background: gray(17),
       borderBottom: '1px solid',
-      borderColor: gray(50),
+      borderColor: gray(50, 0, true),
       fontSize: 13,
       paddingLeft: 7.5,
       marginLeft: -7.5,

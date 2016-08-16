@@ -6,7 +6,7 @@
   "dependencies": {
     "compass-vertical-rhythm": "^1.2.0",
     "decamelize": "^1.2.0",
-    "gray-percentage": "^1.1.2",
+    "gray-percentage": "^2.0.0",
     "lodash": "^4.13.1",
     "modularscale": "^1.0.2",
     "object-assign": "^4.1.0",

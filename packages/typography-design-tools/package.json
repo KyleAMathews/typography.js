@@ -12,7 +12,7 @@
   "license": "MIT",
   "dependencies": {
     "aphrodite": "^0.5.0",
-    "gray-percentage": "^1.1.2",
+    "gray-percentage": "^2.0.0",
     "parse-unit": "^1.0.1",
     "react": "^15.2.1",
     "react-autosuggest": "^3.9.0",
