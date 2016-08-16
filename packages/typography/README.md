@@ -1,5 +1,5 @@
 # Typography.js
-A powerful toolkit for building websites with beautiful typography.
+A powerful toolkit for building websites with beautiful design.
 
 ## Install
 `npm install typography`
@@ -32,6 +32,13 @@ NPM](https://www.npmjs.com/browse/keyword/typography-theme).
   Typography engine. They can change how headers are styled
   or add specialized styles e.g. for code or tables.
 
+## Sites that use Typography.js
+* [bricolage.io](https://bricolage.io/?utm_source=github.com) ([source](https://github.com/KyleAMathews/blog/blob/master/blog-typography.coffee))
+* [React Headroom](https://kyleamathews.github.io/react-headroom/) ([source](https://github.com/KyleAMathews/react-headroom/blob/master/www/utils/typography.js))
+* [Gatsby Blog Starter](http://gatsbyjs.github.io/gatsby-starter-blog/) ([source](https://github.com/gatsbyjs/gatsby-starter-blog/blob/master/utils/typography.js))
+* [ollieglass.com](http://ollieglass.com/)
+* [Edit this file to add yours!](https://github.com/KyleAMathews/typography.js/blob/master/README.md)
+
 ## Javascript usage
 ```javascript
 import Typography from 'typography'
@@ -53,7 +60,7 @@ typography.injectStyles()
 ```
 
 ## Themes
-We maintain 29 (and counting) themes that are ready to use on your next
+We maintain 30 (and counting) themes that are ready to use on your next
 project. These are each published as seperate NPM packages. Explore
 themes at http://kyleamathews.github.io/typography.js.
 
@@ -86,7 +93,7 @@ funstonTheme.baseLineHeight = '31px' // was 28px.
 const typography = new Typography(funstonTheme)
 ```
 
-Or if you'd like to use the imperative API `overrideThemeStyles` to directly set/override
+Or you can use the imperative API `overrideThemeStyles` to directly set/override
 styles on a theme:
 
 ```javascript
@@ -104,6 +111,7 @@ const typography = new Typography(funstonTheme)
 
 ### Published Typography.js Themes
 * [typography-theme-alton](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-alton/)
+* [typography-theme-de-young](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-de-young/)
 * [typography-theme-doelger](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-doelger/)
 * [typography-theme-elk-glen](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-elk-glen/)
 * [typography-theme-fairy-gates](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-fairy-gates/)
@@ -136,9 +144,9 @@ const typography = new Typography(funstonTheme)
 * If you publish your own, create a PR to add it here!
 
 ## Plugins
-plugins are functions that extend or modify the core typography engine.
+Plugins are functions that extend or modify the core typography engine.
 they can change how headers are styled or add specialized styles e.g.
-for code or tables.  currently there's one plugin available,
+for code or tables. Currently there's one plugin available,
 `typography-plugin-code`.
 
 To use the Code plugin, first install using NPM.
@@ -191,22 +199,21 @@ import typography from 'utils/typography'
 ```
 
 ## API
+
+### Configuration
 When creating a new instance of Typography, you can pass in an
 *configuration* object. All configuration keys are optional.
 
-* **baseFontSize**: The base font size in pixels, defaults to "16px"
-* **baseLineHeight**: The base line height in pixels, defaults to "24px".
-* **modularScales**: An array of modular scales.
+* **title**: The theme title.
+* **baseFontSize**: The base font size in pixels, defaults to `16px`.
+* **baseLineHeight**: The base line height using the css unitless number, defaults to `1.5`.
+* **scale**: The "scale ratio" for the theme. This scale is the ratio
+  between the `h1` font size and the `baseFontSize`. So if the scale is `2`
+  and the `baseFontSize` is `16px` then the `h1` font size is `32px`.
 ```javascript
-[
-  {
-    scale: 'octave',
-  },
-  {
-    scale: 'golden',
-    maxWidth: '768px',
-  },
-]
+{
+  scale: 2,
+}
 ```
 * **googleFonts**: An array specifying Google Fonts for this project.
 ```javascript
@@ -224,23 +231,37 @@ googleFonts: [
       '400i',
       '700',
       '700i',
-      '900',
-      '900i',
     ],
   },
 ],
 ```
-* **headerFontFamily**: An array of strings specifying the font family stack for headers e.g. `['Helvetica', 'sans-serif']`. Defaults to a system UI font stack.
-* **bodyFontFamily**: An array of strings specifying the font family stack for the body, defaults to `['georgia', 'serif']`.
-* **headerGray**: The "lightness" value for headers (in hsl). Defaults to 20.
-* **headerGrayHue**: The "hue" value for headers (in hsl). Defaults to 0. Also accepts three named hues, "cool", "slate", and "warm".
-* **bodyGray**: The "lightness" value for body text (in hsl). Defaults to 20.
-* **bodyGrayHue**: The "hue" value for body text (in hsl). Defaults to 0. Also accepts three named hues, "cool", "slate", and "warm".
-* **headerWeight**: Specify the font weight for headers. Defaults to 900.
-* **bodyWeight**: Specify the font weight for body text. Defaults to 'normal'.
-* **boldWeight**: Specify the font weight for bold (b, strong, dt, th) elements. Defaults to "bold".
-* **blockMarginBottom**: Specify the default margin-bottom for block elements. Defaults to one "rhythm unit" or the base line height.
-* **includeNormalize**: Include in generated CSS normalize.css. Normalize.css is an excellent project which works to normalize the base CSS across browsers and serves as an excellent foundation for Typography.js. We include normalize.CSS by default but if you're already including it elsewhere in your project, you can disable including it here by passing `false`.
+* **headerFontFamily**: An array of strings specifying the font family
+  stack for headers e.g. `['Helvetica', 'sans-serif']`. Defaults to a
+system UI font stack.
+* **bodyFontFamily**: An array of strings specifying the font family
+  stack for the body, defaults to `['georgia', 'serif']`.
+* **headerGray**: The "lightness" value for headers (set in hsl). Defaults
+  to `20`.
+* **headerGrayHue**: The "hue" value for headers (set in hsl). Defaults to
+`0`. Also accepts three named hues, `cool`, `slate`, and `warm`.
+* **bodyGray**: The "lightness" value for body text (in hsl). Defaults
+to `20`.
+* **bodyGrayHue**: The "hue" value for body text (in hsl). Defaults to
+`0`. Also accepts three named hues, `cool`, `slate`, and `warm`.
+* **headerWeight**: Specify the font weight for headers. Defaults to
+`bold`.
+* **bodyWeight**: Specify the font weight for body text. Defaults to
+  `normal`.
+* **boldWeight**: Specify the font weight for "bold" (b, strong, dt, th)
+  elements. Defaults to `bold`.
+* **blockMarginBottom**: Specify the default margin-bottom for block
+  elements. Defaults to one "rhythm unit" or the base line height.
+* **includeNormalize**: Include normalize.css.
+  Normalize.css is an excellent project which works to normalize the
+base browser CSS across browsers and serves as an excellent foundation
+for Typography.js. We include normalize.CSS by default but if you're
+already including it elsewhere in your project, you can disable
+including it here by passing `false`.
 * **overrideStyles**: Imperative API for directly adding to or
 overriding auto-generated styles. It's called with a Vertical
 Rhythm object, the options object, and the algorithmically generated
@@ -283,4 +304,4 @@ Typography.js is a monorepo facilitated by
 [Lerna](https://github.com/lerna/lerna).
 
 TODO: document constants + compass-vertical-rhythm + using
-typgraphy.js for inline styles.
+typography.js for inline styles.

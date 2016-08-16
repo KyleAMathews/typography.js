@@ -205,19 +205,15 @@ When creating a new instance of Typography, you can pass in an
 *configuration* object. All configuration keys are optional.
 
 * **title**: The theme title.
-* **baseFontSize**: The base font size in pixels, defaults to "16px".
-* **baseLineHeight**: The base line height in pixels, defaults to "24px".
-* **modularScales**: An array of modular scales.
+* **baseFontSize**: The base font size in pixels, defaults to `16px`.
+* **baseLineHeight**: The base line height using the css unitless number, defaults to `1.5`.
+* **scale**: The "scale ratio" for the theme. This scale is the ratio
+  between the `h1` font size and the `baseFontSize`. So if the scale is `2`
+  and the `baseFontSize` is `16px` then the `h1` font size is `32px`.
 ```javascript
-[
-  {
-    scale: 'octave', // 2.0
-  },
-  {
-    scale: 'golden', // 1.618
-    maxWidth: '768px',
-  },
-]
+{
+  scale: 2,
+}
 ```
 * **googleFonts**: An array specifying Google Fonts for this project.
 ```javascript
@@ -235,23 +231,37 @@ googleFonts: [
       '400i',
       '700',
       '700i',
-      '900',
-      '900i',
     ],
   },
 ],
 ```
-* **headerFontFamily**: An array of strings specifying the font family stack for headers e.g. `['Helvetica', 'sans-serif']`. Defaults to a system UI font stack.
-* **bodyFontFamily**: An array of strings specifying the font family stack for the body, defaults to `['georgia', 'serif']`.
-* **headerGray**: The "lightness" value for headers (in hsl). Defaults to 20.
-* **headerGrayHue**: The "hue" value for headers (in hsl). Defaults to 0. Also accepts three named hues, "cool", "slate", and "warm".
-* **bodyGray**: The "lightness" value for body text (in hsl). Defaults to 20.
-* **bodyGrayHue**: The "hue" value for body text (in hsl). Defaults to 0. Also accepts three named hues, "cool", "slate", and "warm".
-* **headerWeight**: Specify the font weight for headers. Defaults to 900.
-* **bodyWeight**: Specify the font weight for body text. Defaults to 'normal'.
-* **boldWeight**: Specify the font weight for bold (b, strong, dt, th) elements. Defaults to "bold".
-* **blockMarginBottom**: Specify the default margin-bottom for block elements. Defaults to one "rhythm unit" or the base line height.
-* **includeNormalize**: Include in generated CSS normalize.css. Normalize.css is an excellent project which works to normalize the base CSS across browsers and serves as an excellent foundation for Typography.js. We include normalize.CSS by default but if you're already including it elsewhere in your project, you can disable including it here by passing `false`.
+* **headerFontFamily**: An array of strings specifying the font family
+  stack for headers e.g. `['Helvetica', 'sans-serif']`. Defaults to a
+system UI font stack.
+* **bodyFontFamily**: An array of strings specifying the font family
+  stack for the body, defaults to `['georgia', 'serif']`.
+* **headerGray**: The "lightness" value for headers (set in hsl). Defaults
+  to `20`.
+* **headerGrayHue**: The "hue" value for headers (set in hsl). Defaults to
+`0`. Also accepts three named hues, `cool`, `slate`, and `warm`.
+* **bodyGray**: The "lightness" value for body text (in hsl). Defaults
+to `20`.
+* **bodyGrayHue**: The "hue" value for body text (in hsl). Defaults to
+`0`. Also accepts three named hues, `cool`, `slate`, and `warm`.
+* **headerWeight**: Specify the font weight for headers. Defaults to
+`bold`.
+* **bodyWeight**: Specify the font weight for body text. Defaults to
+  `normal`.
+* **boldWeight**: Specify the font weight for "bold" (b, strong, dt, th)
+  elements. Defaults to `bold`.
+* **blockMarginBottom**: Specify the default margin-bottom for block
+  elements. Defaults to one "rhythm unit" or the base line height.
+* **includeNormalize**: Include normalize.css.
+  Normalize.css is an excellent project which works to normalize the
+base browser CSS across browsers and serves as an excellent foundation
+for Typography.js. We include normalize.CSS by default but if you're
+already including it elsewhere in your project, you can disable
+including it here by passing `false`.
 * **overrideStyles**: Imperative API for directly adding to or
 overriding auto-generated styles. It's called with a Vertical
 Rhythm object, the options object, and the algorithmically generated
@@ -294,4 +304,4 @@ Typography.js is a monorepo facilitated by
 [Lerna](https://github.com/lerna/lerna).
 
 TODO: document constants + compass-vertical-rhythm + using
-typgraphy.js for inline styles.
+typography.js for inline styles.
