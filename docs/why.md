@@ -111,7 +111,7 @@ design for the web.
 New premitives:
 
  * base font / line height
- * modular scale
+ * scale ratio
  * rhythm unit
  * header/body font stack
  * Google fonts
