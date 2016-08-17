@@ -35,7 +35,7 @@ var styles = StyleSheet.create({
 ```
 
 Using the rhythm function consistently ensures that w/ any design
-changes in the future, your app's typography remains consisten and
+changes in the future, your app's typography remains consistent and
 harmonous.
 * **Vertical Rhythm** vertical rhythm is a similar concept as grids
   whereas grids partition horizontal space, vertical rhythm partitions
