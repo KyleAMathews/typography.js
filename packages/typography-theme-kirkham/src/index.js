@@ -35,9 +35,6 @@ const theme: OptionsType = {
     a: {
       color: '#9f392b',
     },
-    h1: {
-      ...adjustFontSizeToMSValue(6/5),
-    },
     blockquote: {
       ...adjustFontSizeToMSValue(1/5),
       color: gray(41),
@@ -62,11 +59,6 @@ const theme: OptionsType = {
         marginLeft: rhythm(-3/4),
         marginRight: 0,
         paddingLeft: rhythm(9/16),
-      },
-    },
-    [TABLET_MEDIA_QUERY]: {
-      h1: {
-        ...adjustFontSizeToMSValue(5/5),
       },
     },
     'h3,h4,h5,h6': {

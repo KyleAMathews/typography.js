@@ -7,7 +7,7 @@ import verticalRhythm from 'compass-vertical-rhythm'
 const theme: OptionsType = {
   title: 'Twin Peaks',
   baseFontSize: '21px',
-  baseLineHeight: 1.57,
+  baseLineHeight: 1.5,
   googleFonts: [
     {
       name: 'Rosario',
