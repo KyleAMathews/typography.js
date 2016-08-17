@@ -68,7 +68,7 @@ space between lines, block elements, etc. are consistent and
 mathmatically related. To ensure this, Typography.js overrides all
 margins and sets a margin-bottom of one rhythm [on all block
 elements.](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography/src/utils/createStyles.js#L57)
-This is the paragraph spacing value in the design tools.
+This is the "Paragraph Spacing" value in the design tools.
 
 Additionally it tries to maintain the vertical rhythm when choosing
 larger/smaller font sizes and line heights. [This is the
