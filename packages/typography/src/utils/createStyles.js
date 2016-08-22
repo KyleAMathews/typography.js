@@ -186,7 +186,6 @@ module.exports = (vr: any, options: OptionsType) => {
   })
 
   // Create styles for headers.
-  const baseFontSize = options.baseFontSize.slice(0, -2)
   styles = setStyles(styles, ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'], {
     color: gray(options.headerGray, options.headerGrayHue),
     fontFamily: options.headerFontFamily.join(','),
@@ -196,11 +195,11 @@ module.exports = (vr: any, options: OptionsType) => {
 
   // Set header sizes.
   const h1 = vr.adjustFontSizeToMSValue(5/5)
-  const h2 = vr.adjustFontSizeToMSValue(4/5)
-  const h3 = vr.adjustFontSizeToMSValue(3/5)
-  const h4 = vr.adjustFontSizeToMSValue(2/5)
-  const h5 = vr.adjustFontSizeToMSValue(1/5)
-  const h6 = vr.adjustFontSizeToMSValue(0/5)
+  const h2 = vr.adjustFontSizeToMSValue(3/5)
+  const h3 = vr.adjustFontSizeToMSValue(2/5)
+  const h4 = vr.adjustFontSizeToMSValue(0/5)
+  const h5 = vr.adjustFontSizeToMSValue(-1/5)
+  const h6 = vr.adjustFontSizeToMSValue(-1.5/5)
 
   each([h1, h2, h3, h4, h5, h6], (header, i) => {
     styles = set(styles, `h${i + 1}.fontSize`, header.fontSize)
