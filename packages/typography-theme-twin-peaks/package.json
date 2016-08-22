@@ -1,7 +1,7 @@
 {
   "name": "typography-theme-twin-peaks",
   "description": "A theme for Typography.js",
-  "version": "0.13.0",
+  "version": "0.13.1",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "gray-percentage": "^2.0.0",
