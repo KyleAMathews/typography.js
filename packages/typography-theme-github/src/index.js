@@ -30,7 +30,7 @@ const theme: OptionsType = {
     'Segoe UI Emoji',
     'Segoe UI Symbol',
   ],
-  scale: 2.25,
+  scale: 2,
   headerGray: 20,
   bodyGray: 20,
   headerWeight: 600,
@@ -50,6 +50,9 @@ const theme: OptionsType = {
       paddingBottom: `calc(${rhythm(1/4)} - 1px)`,
       marginBottom: rhythm(1/4),
       marginTop: rhythm(1),
+    },
+    h6: {
+      color: gray(47),
     },
     'h3,h4,h5,h6': {
       marginBottom: rhythm(1/2),
