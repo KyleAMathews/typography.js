@@ -47,7 +47,6 @@ const theme: OptionsType = {
         boxShadow: '0 1px 0 0 currentColor',
       },
       blockquote: {
-        ...adjustFontSizeToMSValue(1/5),
         color: gray(35),
         fontStyle: 'italic',
         paddingLeft: rhythm(11/16),
@@ -56,14 +55,6 @@ const theme: OptionsType = {
       },
       'blockquote > :last-child': {
         marginBottom: 0,
-      },
-      'blockquote cite': {
-        ...adjustFontSizeTo(options.baseFontSize),
-        color: gray(options.bodyGray),
-        fontWeight: options.bodyWeight,
-      },
-      'blockquote cite:before': {
-        content: '"— "',
       },
       [MOBILE_MEDIA_QUERY]: {
         html: {
