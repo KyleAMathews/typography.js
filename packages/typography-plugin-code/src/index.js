@@ -39,7 +39,7 @@ const CodePlugin = (): Function =>
       letterSpacing: '-0.2em',
       content: '"\u00A0"',
     },
-    // But don't add spaces if code is inside a pre.
+    // But don't add spaces if the code is inside a pre.
     'pre code:before,pre code:after,pre tt:before,pre tt:after': {
       content: '""',
     },
