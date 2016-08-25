@@ -173,6 +173,7 @@ module.exports = (vr: any, options: OptionsType) => {
   styles = setStyles(styles, ['td,th'], {
     textAlign: 'left',
     borderBottom: `1px solid ${gray(88)}`,
+    fontFeatureSettings: 'tnum',
     paddingLeft: vr.rhythm(2/3),
     paddingRight: vr.rhythm(2/3),
     paddingTop: vr.rhythm(1/2),
