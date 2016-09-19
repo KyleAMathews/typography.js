@@ -299,6 +299,10 @@ overrideThemeStyles: ({ rhythm }, options, styles) => ({
 })
 ```
 
+## Related
+
+- [postcss-typography](https://github.com/BarryThePenguin/postcss-typography)
+
 ## Developing Typography.js
 Typography.js is a monorepo facilitated by
 [Lerna](https://github.com/lerna/lerna).
