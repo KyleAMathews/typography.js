@@ -45,7 +45,7 @@ import Typography from 'typography'
 
 const typography = new Typography({
   baseFontSize: '18px',
-  baseLineHeight: '30px',
+  baseLineHeight: 1.666',
   headerFontFamily: ['Avenir Next', 'Helvetica Neue', 'Segoe UI', 'Helvetica', 'Arial', 'sans-serif'],
   bodyFontFamily: ['Georgia', 'serif'],
   // See below for the full list of options.
@@ -88,7 +88,6 @@ increase the base font size slightly:
 import Typography from 'typography'
 import funstonTheme from 'typography-theme-funston'
 funstonTheme.baseFontSize = '22px' // was 20px.
-funstonTheme.baseLineHeight = '31px' // was 28px.
 
 const typography = new Typography(funstonTheme)
 ```
@@ -255,7 +254,7 @@ to `20`.
 * **boldWeight**: Specify the font weight for "bold" (b, strong, dt, th)
   elements. Defaults to `bold`.
 * **blockMarginBottom**: Specify the default margin-bottom for block
-  elements. Defaults to one "rhythm unit" or the base line height.
+  elements. Defaults to one "rhythm unit" (i.e. the height of the base line height).
 * **includeNormalize**: Include normalize.css.
   Normalize.css is an excellent project which works to normalize the
 base browser CSS across browsers and serves as an excellent foundation
