@@ -10,6 +10,14 @@
   ],
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "license": "MIT",
+  "homepage": "https://github.com/KyleAMathews/typography.js",
+  "bugs": {
+    "url": "https://github.com/KyleAMathews/typography.js/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/KyleAMathews/typography.js.git"
+  },
   "dependencies": {
     "aphrodite": "^0.5.0",
     "gray-percentage": "^2.0.0",
