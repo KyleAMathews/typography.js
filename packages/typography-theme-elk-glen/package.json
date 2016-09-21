@@ -14,6 +14,14 @@
     "typography-theme"
   ],
   "license": "MIT",
+  "homepage": "https://github.com/KyleAMathews/typography.js",
+  "bugs": {
+    "url": "https://github.com/KyleAMathews/typography.js/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/KyleAMathews/typography.js.git"
+  },
   "main": "./dist/index.js",
   "scripts": {
     "build": "../../node_modules/.bin/babel src --out-dir dist/",
