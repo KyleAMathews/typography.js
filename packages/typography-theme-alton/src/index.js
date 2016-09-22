@@ -32,7 +32,7 @@ const theme: OptionsType = {
   headerWeight: 700,
   bodyWeight: 400,
   boldWeight: 700,
-  overrideStyles: ({ adjustFontSizeTo, adjustFontSizeToMSValue, rhythm }, options) => {
+  overrideStyles: ({ adjustFontSizeTo, scale, rhythm }, options) => {
     const vr = verticalRhythm({
       baseFontSize: '16px',
       baseLineHeight: '28.44px',
@@ -47,7 +47,7 @@ const theme: OptionsType = {
         color: gray(options.bodyGray),
       },
       blockquote: {
-        ...adjustFontSizeToMSValue(1/5),
+        ...scale(1/5),
         color: gray(41),
         fontStyle: 'italic',
         paddingLeft: rhythm(13/16),

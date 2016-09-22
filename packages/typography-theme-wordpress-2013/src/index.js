@@ -30,13 +30,13 @@ const theme: OptionsType = {
   headerWeight: '700',
   bodyWeight: 400,
   boldWeight: 700,
-  overrideStyles: ({ adjustFontSizeTo, adjustFontSizeToMSValue, rhythm }, options) => ({
+  overrideStyles: ({ adjustFontSizeTo, scale, rhythm }, options) => ({
     h1: {
-      ...adjustFontSizeToMSValue(8/5),
+      ...scale(8/5),
     },
     [TABLET_MEDIA_QUERY]: {
       h1: {
-        ...adjustFontSizeToMSValue(5/5),
+        ...scale(5/5),
       },
     },
     a: {
@@ -56,7 +56,7 @@ const theme: OptionsType = {
       paddingLeft: rhythm(1.5),
     },
     blockquote: {
-      ...adjustFontSizeToMSValue(1/5),
+      ...scale(1/5),
       fontWeight: 300,
       fontStyle: 'italic',
       marginLeft: rhythm(1.5),
@@ -72,7 +72,7 @@ const theme: OptionsType = {
       marginBottom: rhythm(1.25),
     },
     table: {
-      ...adjustFontSizeToMSValue(-1/5),
+      ...scale(-1/5),
     },
     th: {
       fontWeight: options.boldWeight,

@@ -30,14 +30,14 @@ const theme: OptionsType = {
   headerWeight: 700,
   bodyWeight: 400,
   boldWeight: 700,
-  overrideStyles: ({ adjustFontSizeTo, adjustFontSizeToMSValue, rhythm }, options) => ({
-    h1: adjustFontSizeToMSValue(5/5),
-    h2: adjustFontSizeToMSValue(3/5),
-    h3: adjustFontSizeToMSValue(1/5),
-    h4: adjustFontSizeToMSValue(0/5),
-    h5: adjustFontSizeToMSValue(-1/8),
+  overrideStyles: ({ adjustFontSizeTo, scale, rhythm }, options) => ({
+    h1: scale(5/5),
+    h2: scale(3/5),
+    h3: scale(1/5),
+    h4: scale(0/5),
+    h5: scale(-1/8),
     h6: {
-      ...adjustFontSizeToMSValue(-2/8),
+      ...scale(-2/8),
       fontFamily: options.bodyFontFamily.join(','),
       fontWeight: options.bodyWeight,
       textTransform: 'uppercase',
@@ -49,7 +49,7 @@ const theme: OptionsType = {
       color: '#4c2c92',
     },
     blockquote: {
-      ...adjustFontSizeToMSValue(1/4),
+      ...scale(1/4),
       borderLeft: `${rhythm(1/6)} solid`,
       borderColor: gray(93),
       paddingTop: rhythm(1/3),

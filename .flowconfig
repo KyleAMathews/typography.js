@@ -1,7 +1,14 @@
+[version]
+0.32.0
+
 [ignore]
-.*/website/.*
+.*/test/.*
+.*/www/.*
+.*/node_modules/typography/.*
+.*/node_modules/fbjs/.*
+.*/node_modules/react-side-effect/.*
+
 [include]
-./*
 
 [libs]
 

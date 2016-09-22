@@ -31,16 +31,15 @@ font size will be `32px`.  If you decide to change the scale ratio to
 Typography.js, all sizes should be set using a scale value so all
 non-base-font-size text can be resized together.
 
-You can set custom font sizes using the `adjustFontSizeToMSValue`
-function.
+You can set custom font sizes using the `scale` function.
 
 ```javascript
-import { adjustFontSizeToMSValue } from '../utils/typography'
+import { scale } from '../utils/typography'
 
 <div>
   <h1
     style={{
-      ...adjustFontSizeToMSValue(1.5),
+      ...scale(1.5),
     }}
   >
     Hello world

@@ -228,10 +228,10 @@ class DesignTool extends React.Component {
           <SectionRow>
             <ModularScaleTool
               key='scale'
-              scale={this.state.options.scale}
+              scaleRatio={this.state.options.scaleRatio}
               onChange={(newScale) => {
                 const newOptions = { ...this.state.options }
-                newOptions.scale = newScale
+                newOptions.scaleRatio = newScale
                 this.setState({ options: newOptions })
               }}
             />

@@ -8,11 +8,11 @@ class ModularScale extends React.Component {
   render () {
     return (
       <SectionTool
-        title="Scale"
+        title="Scale Ratio"
       >
         <NumberEditor
-          unit="scale"
-          value={msToRatio(this.props.scale)}
+          unit="ratio"
+          value={msToRatio(this.props.scaleRatio)}
           min={1}
           max={6}
           step={0.1}

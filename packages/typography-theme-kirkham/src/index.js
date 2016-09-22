@@ -31,12 +31,12 @@ const theme: OptionsType = {
   headerWeight: 700,
   bodyWeight: 400,
   boldWeight: 700,
-  overrideStyles: ({ adjustFontSizeTo, adjustFontSizeToMSValue, rhythm }, options) => ({
+  overrideStyles: ({ adjustFontSizeTo, scale, rhythm }, options) => ({
     a: {
       color: '#9f392b',
     },
     blockquote: {
-      ...adjustFontSizeToMSValue(1/5),
+      ...scale(1/5),
       color: gray(41),
       fontStyle: 'italic',
       paddingLeft: rhythm(13/16),

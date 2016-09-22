@@ -31,7 +31,7 @@ const theme: OptionsType = {
   headerWeight: '600',
   bodyWeight: 400,
   boldWeight: 700,
-  overrideStyles: ({ adjustFontSizeTo, adjustFontSizeToMSValue, rhythm }, options) => {
+  overrideStyles: ({ adjustFontSizeTo, scale, rhythm }, options) => {
     const linkColor = '#1ca086'
     const vr = verticalRhythm({
       baseFontSize: '17px',
@@ -54,7 +54,7 @@ const theme: OptionsType = {
       },
       // Blockquote styles.
       blockquote: {
-        ...adjustFontSizeToMSValue(1/5),
+        ...scale(1/5),
         borderLeft: `${rhythm(6/16)} solid ${linkColor}`,
         color: gray(35),
         paddingLeft: rhythm(10/16),

@@ -45,7 +45,7 @@ import Typography from 'typography'
 
 const typography = new Typography({
   baseFontSize: '18px',
-  baseLineHeight: '30px',
+  baseLineHeight: 1.666,
   headerFontFamily: ['Avenir Next', 'Helvetica Neue', 'Segoe UI', 'Helvetica', 'Arial', 'sans-serif'],
   bodyFontFamily: ['Georgia', 'serif'],
   // See below for the full list of options.
@@ -88,7 +88,6 @@ increase the base font size slightly:
 import Typography from 'typography'
 import funstonTheme from 'typography-theme-funston'
 funstonTheme.baseFontSize = '22px' // was 20px.
-funstonTheme.baseLineHeight = '31px' // was 28px.
 
 const typography = new Typography(funstonTheme)
 ```
@@ -207,12 +206,12 @@ When creating a new instance of Typography, you can pass in an
 * **title**: The theme title.
 * **baseFontSize**: The base font size in pixels, defaults to `16px`.
 * **baseLineHeight**: The base line height using the css unitless number, defaults to `1.5`.
-* **scale**: The "scale ratio" for the theme. This scale is the ratio
-  between the `h1` font size and the `baseFontSize`. So if the scale is `2`
+* **scaleRatio**: The "scale ratio" for the theme. This value is the ratio
+  between the `h1` font size and the `baseFontSize`. So if the scale ratio is `2`
   and the `baseFontSize` is `16px` then the `h1` font size is `32px`.
 ```javascript
 {
-  scale: 2,
+  scaleRatio: 2,
 }
 ```
 * **googleFonts**: An array specifying Google Fonts for this project.
@@ -255,7 +254,7 @@ to `20`.
 * **boldWeight**: Specify the font weight for "bold" (b, strong, dt, th)
   elements. Defaults to `bold`.
 * **blockMarginBottom**: Specify the default margin-bottom for block
-  elements. Defaults to one "rhythm unit" or the base line height.
+  elements. Defaults to one "rhythm unit" (i.e. the height of the base line height).
 * **includeNormalize**: Include normalize.css.
   Normalize.css is an excellent project which works to normalize the
 base browser CSS across browsers and serves as an excellent foundation
@@ -298,6 +297,10 @@ overrideThemeStyles: ({ rhythm }, options, styles) => ({
   }
 })
 ```
+
+## Related
+
+- [postcss-typography](https://github.com/BarryThePenguin/postcss-typography)
 
 ## Developing Typography.js
 Typography.js is a monorepo facilitated by

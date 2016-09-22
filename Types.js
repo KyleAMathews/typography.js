@@ -1,11 +1,16 @@
 // @flow
 type GoogleFontsType = {name: string; styles: string[]}
+type VerticalRhythmType = {
+  rhythm: (value: number) => string,
+  scale: (value: number) => Object,
+  adjustFontSizeTo: (value?: number | string) => Object,
+}
 
 export type OptionsType = {
   title: string,
   baseFontSize?: string,
   baseLineHeight?: number,
-  scale?: number,
+  scaleRatio?: number,
   googleFonts?: GoogleFontsType[],
   headerFontFamily?: string[],
   bodyFontFamily?: string[],
@@ -16,15 +21,15 @@ export type OptionsType = {
   headerWeight?: number | string,
   bodyWeight?: number | string,
   boldWeight?: number | string,
-  blockMarginBottom?: number | string,
+  blockMarginBottom?: number,
   includeNormalize?: boolean,
   overrideStyles?: (
-    verticalRhythm: mixed, // TODO Create flow type for compass-vertical-rhythm and import here.
+    verticalRhythm: VerticalRhythmType, // TODO Create flow type for compass-vertical-rhythm and import here.
     options: OptionsType,
     styles: mixed,
   ) => Object,
   overrideThemeStyles?: (
-    verticalRhythm: mixed, // TODO Create flow type for compass-vertical-rhythm and import here.
+    verticalRhythm: VerticalRhythmType, // TODO Create flow type for compass-vertical-rhythm and import here.
     options: OptionsType,
     styles: mixed,
   ) => Object,

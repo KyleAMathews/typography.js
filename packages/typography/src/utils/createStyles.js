@@ -195,12 +195,12 @@ module.exports = (vr: any, options: OptionsType) => {
   })
 
   // Set header sizes.
-  const h1 = vr.adjustFontSizeToMSValue(5/5)
-  const h2 = vr.adjustFontSizeToMSValue(3/5)
-  const h3 = vr.adjustFontSizeToMSValue(2/5)
-  const h4 = vr.adjustFontSizeToMSValue(0/5)
-  const h5 = vr.adjustFontSizeToMSValue(-1/5)
-  const h6 = vr.adjustFontSizeToMSValue(-1.5/5)
+  const h1 = vr.scale(5/5)
+  const h2 = vr.scale(3/5)
+  const h3 = vr.scale(2/5)
+  const h4 = vr.scale(0/5)
+  const h5 = vr.scale(-1/5)
+  const h6 = vr.scale(-1.5/5)
 
   each([h1, h2, h3, h4, h5, h6], (header, i) => {
     styles = set(styles, `h${i + 1}.fontSize`, header.fontSize)

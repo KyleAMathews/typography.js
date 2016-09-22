@@ -11,7 +11,7 @@ const typography = function (opts: OptionsType) {
   const defaults: OptionsType = {
     baseFontSize: '16px',
     baseLineHeight: 1.5,
-    scale: 2,
+    scaleRatio: 2,
     googleFonts: [],
     headerFontFamily: [
       '-apple-system',
@@ -45,18 +45,14 @@ const typography = function (opts: OptionsType) {
   // Add this function to the vertical rhythm object so it'll be passed around
   // as well and be available. Not related really but this is the easiest
   // way to pass around extra utility functions atm... :-\
-  vr.adjustFontSizeToMSValue = (value: number) => {
-    // This doesn't pick the right scale if a theme has more than one scale.
-    // Perhaps add optional parameter for a width and it'll get the scale
+  vr.scale = (value: number) => {
+    // This doesn't pick the right scale ratio if a theme has more than one ratio.
+    // Perhaps add optional parameter for a width and it'll get the ratio
     // for this width. Tricky part is maxWidth could be set in non-pixels.
     const baseFont = options.baseFontSize.slice(0, -2)
-    const newFontSize = `${ms(value, options.scale) * baseFont}px`
+    const newFontSize = `${ms(value, options.scaleRatio) * baseFont}px`
     return vr.adjustFontSizeTo(newFontSize)
   }
-
-  // Depricated old names.
-  vr.fontSizeToMS = vr.adjustFontSizeToMSValue
-  vr.fontSizeToPx = vr.adjustFontSizeTo
 
   return ({
     options,

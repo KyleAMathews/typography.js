@@ -25,7 +25,7 @@ const theme: OptionsType = {
   headerWeight: 600,
   bodyWeight: 400,
   boldWeight: 600,
-  overrideStyles: ({ adjustFontSizeTo, adjustFontSizeToMSValue, rhythm }, options) => ({
+  overrideStyles: ({ adjustFontSizeTo, scale, rhythm }, options) => ({
     'h1,h2,h3,h4,h5,h6': {
       marginTop: rhythm(1.5),
       marginBottom: rhythm(0.5),
@@ -40,7 +40,7 @@ const theme: OptionsType = {
     },
     // Blockquote styles.
     blockquote: {
-      ...adjustFontSizeToMSValue(1/5),
+      ...scale(1/5),
       fontWeight: 300,
       color: gray(46),
       fontStyle: 'italic',

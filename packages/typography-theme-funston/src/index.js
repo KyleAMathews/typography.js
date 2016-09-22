@@ -29,7 +29,7 @@ const theme: OptionsType = {
   headerWeight: '400',
   bodyWeight: 400,
   boldWeight: 700,
-  overrideStyles: ({ adjustFontSizeTo, adjustFontSizeToMSValue, rhythm }, options) => ({
+  overrideStyles: ({ adjustFontSizeTo, scale, rhythm }, options) => ({
     html: {
       '-webkit-font-smoothing': 'antialiased',
     },
@@ -43,7 +43,7 @@ const theme: OptionsType = {
       color: '#3498DB',
     },
     blockquote: {
-      ...adjustFontSizeToMSValue(1/5),
+      ...scale(1/5),
       color: gray(40),
       paddingLeft: rhythm(13/16),
       marginLeft: rhythm(-1),

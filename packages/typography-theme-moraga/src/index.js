@@ -27,7 +27,7 @@ const theme: OptionsType = {
   headerWeight: '200',
   bodyWeight: 400,
   boldWeight: 700,
-  overrideStyles: ({ adjustFontSizeToMSValue, rhythm }, options) => {
+  overrideStyles: ({ scale, rhythm }, options) => {
     const vr = verticalRhythm({
       baseFontSize: '16px',
       baseLineHeight: '24.88px',
@@ -47,7 +47,7 @@ const theme: OptionsType = {
         textDecoration: 'underline',
       },
       blockquote: {
-        ...adjustFontSizeToMSValue(1/5),
+        ...scale(1/5),
         color: gray(40),
         paddingLeft: rhythm(3/4),
         marginLeft: 0,
@@ -64,7 +64,7 @@ const theme: OptionsType = {
           paddingLeft: rhythm(1/2),
         },
         table: {
-          ...adjustFontSizeToMSValue(-1/5),
+          ...scale(-1/5),
         },
       },
     }
