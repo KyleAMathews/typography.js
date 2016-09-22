@@ -1,7 +1,7 @@
 {
   "name": "typography-theme-Wikipedia",
   "description": "A theme for Typography.js inspired by Wikipedia's typography",
-  "version": "0.13.0",
+  "version": "0.14.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "keywords": [
     "css",
