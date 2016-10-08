@@ -28,10 +28,11 @@ const setStyles = (styles: Object = {}, els: string | string[], rules: Object) =
 
 module.exports = (vr: any, options: OptionsType) => {
   let styles = {}
+  const { fontSize, lineHeight } = vr.establishBaseline()
 
   // Base HTML styles.
   styles = setStyles(styles, 'html', {
-    ...vr.establishBaseline(),
+    font: `${fontSize}/${lineHeight} ${options.bodyFontFamily.join(',')}`,
     boxSizing: 'border-box',
     overflowY: 'scroll',
   })
@@ -44,7 +45,6 @@ module.exports = (vr: any, options: OptionsType) => {
   // Base body styles.
   styles = setStyles(styles, 'body', {
     color: gray(options.bodyGray, options.bodyGrayHue),
-    fontFamily: options.bodyFontFamily.join(','),
     fontWeight: options.bodyWeight,
     wordWrap: 'break-word',
   })

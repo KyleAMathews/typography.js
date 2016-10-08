@@ -82,7 +82,6 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,1)",
-    "fontFamily": "Open Sans,sans-serif",
     "fontWeight": 400,
     "wordWrap": "break-word",
   },
@@ -264,8 +263,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "fontSize": "112.5%",
-    "lineHeight": "1.78em",
+    "font": "112.5%/1.78em Open Sans,sans-serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -475,7 +473,6 @@ Object {
   },
   "body": Object {
     "color": "hsla(204,12.449720506%,0%,0.77)",
-    "fontFamily": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif",
     "fontWeight": 400,
     "wordWrap": "break-word",
   },
@@ -657,8 +654,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "fontSize": "100%",
-    "lineHeight": "1.5em",
+    "font": "100%/1.5em -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -880,7 +876,6 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.8)",
-    "fontFamily": "Alegreya,sans-serif",
     "fontWeight": 400,
     "wordWrap": "break-word",
   },
@@ -1062,8 +1057,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "fontSize": "125%",
-    "lineHeight": "1.65em",
+    "font": "125%/1.65em Alegreya,sans-serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -1297,7 +1291,6 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.8)",
-    "fontFamily": "Cabin,serif",
     "fontWeight": 400,
     "wordWrap": "break-word",
   },
@@ -1483,8 +1476,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "fontSize": "106.25%",
-    "lineHeight": "1.53em",
+    "font": "106.25%/1.53em Cabin,serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -1723,7 +1715,6 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.8)",
-    "fontFamily": "PT Sans,sans-serif",
     "fontWeight": 400,
     "wordWrap": "break-word",
   },
@@ -1908,8 +1899,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "fontSize": "125%",
-    "lineHeight": "1.5em",
+    "font": "125%/1.5em PT Sans,sans-serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -2148,7 +2138,6 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.8)",
-    "fontFamily": "Quattrocento Sans,serif",
     "fontWeight": 400,
     "wordWrap": "break-word",
   },
@@ -2334,8 +2323,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "fontSize": "125%",
-    "lineHeight": "1.45em",
+    "font": "125%/1.45em Quattrocento Sans,serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -2549,7 +2537,6 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.87)",
-    "fontFamily": "Cabin Condensed,georgia,sans-serif",
     "fontWeight": 400,
     "letterSpacing": ".03em",
     "wordWrap": "break-word",
@@ -2733,8 +2720,7 @@ Object {
   "html": Object {
     "-webkit-font-smoothing": "antialiased",
     "boxSizing": "border-box",
-    "fontSize": "125%",
-    "lineHeight": "1.4em",
+    "font": "125%/1.4em Cabin Condensed,georgia,sans-serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -2940,7 +2926,6 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.8)",
-    "fontFamily": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol",
     "fontWeight": "normal",
     "wordWrap": "break-word",
   },
@@ -3128,8 +3113,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "fontSize": "100%",
-    "lineHeight": "1.625em",
+    "font": "100%/1.625em -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -3362,7 +3346,6 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.8)",
-    "fontFamily": "Arvo,sans-serif",
     "fontWeight": 400,
     "wordWrap": "break-word",
   },
@@ -3547,8 +3530,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "fontSize": "100%",
-    "lineHeight": "1.6875em",
+    "font": "100%/1.6875em Arvo,sans-serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -3762,7 +3744,6 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.8)",
-    "fontFamily": "Yrsa,georgia,sans-serif",
     "fontWeight": 400,
     "wordWrap": "break-word",
   },
@@ -3947,8 +3928,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "fontSize": "131.25%",
-    "lineHeight": "1.38em",
+    "font": "131.25%/1.38em Yrsa,georgia,sans-serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -4180,7 +4160,6 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.8)",
-    "fontFamily": "Vollkorn,Georgia,serif",
     "fontWeight": 400,
     "wordWrap": "break-word",
   },
@@ -4366,8 +4345,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "fontSize": "112.5%",
-    "lineHeight": "1.66667em",
+    "font": "112.5%/1.66667em Vollkorn,Georgia,serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -4592,7 +4570,6 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.8)",
-    "fontFamily": "Fira Sans,sans-serif",
     "fontWeight": 400,
     "wordWrap": "break-word",
   },
@@ -4777,8 +4754,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "fontSize": "112.5%",
-    "lineHeight": "1.66667em",
+    "font": "112.5%/1.66667em Fira Sans,sans-serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -4991,7 +4967,6 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.8)",
-    "fontFamily": "Libre Baskerville,serif",
     "fontWeight": 400,
     "wordWrap": "break-word",
   },
@@ -5173,8 +5148,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "fontSize": "100%",
-    "lineHeight": "1.5em",
+    "font": "100%/1.5em Libre Baskerville,serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -5413,7 +5387,6 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.73)",
-    "fontFamily": "Lora,serif",
     "fontWeight": 400,
     "wordWrap": "break-word",
   },
@@ -5599,8 +5572,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "fontSize": "118.75%",
-    "lineHeight": "1.58em",
+    "font": "118.75%/1.58em Lora,serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -5829,7 +5801,6 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.7)",
-    "fontFamily": "Source Sans Pro,sans-serif",
     "fontWeight": 400,
     "wordWrap": "break-word",
   },
@@ -6014,8 +5985,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "fontSize": "112.5%",
-    "lineHeight": "1.56em",
+    "font": "112.5%/1.56em Source Sans Pro,sans-serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -6212,7 +6182,6 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.8)",
-    "fontFamily": "Lato,sans-serif",
     "fontWeight": 400,
     "wordWrap": "break-word",
   },
@@ -6394,8 +6363,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "fontSize": "112.5%",
-    "lineHeight": "1.61em",
+    "font": "112.5%/1.61em Lato,sans-serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -6634,7 +6602,6 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.73)",
-    "fontFamily": "Roboto,serif",
     "fontWeight": 400,
     "wordWrap": "break-word",
   },
@@ -6819,8 +6786,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "fontSize": "118.75%",
-    "lineHeight": "1.58em",
+    "font": "118.75%/1.58em Roboto,serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -7061,7 +7027,6 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.8)",
-    "fontFamily": "Merriweather,sans-serif",
     "fontWeight": 400,
     "wordWrap": "break-word",
   },
@@ -7246,8 +7211,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "fontSize": "106.25%",
-    "lineHeight": "1.82em",
+    "font": "106.25%/1.82em Merriweather,sans-serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -7477,7 +7441,6 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.8)",
-    "fontFamily": "Source Sans Pro,sans-serif",
     "fontWeight": 400,
     "wordWrap": "break-word",
   },
@@ -7662,8 +7625,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "fontSize": "100%",
-    "lineHeight": "1.5625em",
+    "font": "100%/1.5625em Source Sans Pro,sans-serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -7895,7 +7857,6 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.87)",
-    "fontFamily": "Georgia,Cambria,serif",
     "fontWeight": 400,
     "wordWrap": "break-word",
   },
@@ -8081,8 +8042,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "fontSize": "112.5%",
-    "lineHeight": "1.66667em",
+    "font": "112.5%/1.66667em Georgia,Cambria,serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -8313,7 +8273,6 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.8)",
-    "fontFamily": "Lato,sans-serif",
     "fontWeight": 400,
     "wordWrap": "break-word",
   },
@@ -8498,8 +8457,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "fontSize": "112.5%",
-    "lineHeight": "1.722em",
+    "font": "112.5%/1.722em Lato,sans-serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -8736,7 +8694,6 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.9)",
-    "fontFamily": "Merriweather,Georgia,serif",
     "fontWeight": 300,
     "wordWrap": "break-word",
   },
@@ -8923,8 +8880,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "fontSize": "112.5%",
-    "lineHeight": "1.78em",
+    "font": "112.5%/1.78em Merriweather,Georgia,serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -9167,7 +9123,6 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.73)",
-    "fontFamily": "Crimson Text,serif",
     "fontWeight": 400,
     "wordWrap": "break-word",
   },
@@ -9353,8 +9308,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "fontSize": "131.25%",
-    "lineHeight": "1.5em",
+    "font": "131.25%/1.5em Crimson Text,serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -9578,7 +9532,6 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.8)",
-    "fontFamily": "Source Sans Pro,sans-serif",
     "fontWeight": 400,
     "wordWrap": "break-word",
   },
@@ -9761,8 +9714,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "fontSize": "106.25%",
-    "lineHeight": "1.53em",
+    "font": "106.25%/1.53em Source Sans Pro,sans-serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -9969,7 +9921,6 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.85)",
-    "fontFamily": "sans-serif",
     "fontWeight": "normal",
     "wordWrap": "break-word",
   },
@@ -10157,8 +10108,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "fontSize": "87.5%",
-    "lineHeight": "1.57em",
+    "font": "87.5%/1.57em sans-serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -10381,7 +10331,6 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.8)",
-    "fontFamily": "georgia,serif",
     "fontWeight": "normal",
     "wordWrap": "break-word",
   },
@@ -10567,8 +10516,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "fontSize": "100%",
-    "lineHeight": "1.5em",
+    "font": "100%/1.5em georgia,serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -10774,7 +10722,6 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.78)",
-    "fontFamily": "Helvetica Neue,Helvetica,Segoe UI,Arial,freesans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol",
     "fontWeight": 300,
     "wordWrap": "break-word",
   },
@@ -10957,8 +10904,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "fontSize": "93.75%",
-    "lineHeight": "1.6em",
+    "font": "93.75%/1.6em Helvetica Neue,Helvetica,Segoe UI,Arial,freesans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -11176,7 +11122,6 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.73)",
-    "fontFamily": "Open Sans,sans-serif",
     "fontWeight": 400,
     "wordWrap": "break-word",
   },
@@ -11358,8 +11303,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "fontSize": "87.5%",
-    "lineHeight": "1.714em",
+    "font": "87.5%/1.714em Open Sans,sans-serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -11589,7 +11533,6 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.93)",
-    "fontFamily": "Source Sans Pro,serif",
     "fontWeight": 400,
     "wordWrap": "break-word",
   },
@@ -11771,8 +11714,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "fontSize": "100%",
-    "lineHeight": "1.5em",
+    "font": "100%/1.5em Source Sans Pro,serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -11996,7 +11938,6 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.83)",
-    "fontFamily": "Lato,serif",
     "fontWeight": 400,
     "wordWrap": "break-word",
   },
@@ -12182,8 +12123,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "fontSize": "100%",
-    "lineHeight": "1.5em",
+    "font": "100%/1.5em Lato,serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -12414,7 +12354,6 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.8)",
-    "fontFamily": "Noto Serif,serif",
     "fontWeight": 400,
     "wordWrap": "break-word",
   },
@@ -12603,8 +12542,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "fontSize": "118.75%",
-    "lineHeight": "1.68em",
+    "font": "118.75%/1.68em Noto Serif,serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -12844,7 +12782,6 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.9)",
-    "fontFamily": "Merriweather,Georgia,serif",
     "fontWeight": 400,
     "wordWrap": "break-word",
   },
@@ -13032,8 +12969,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "fontSize": "100%",
-    "lineHeight": "1.75em",
+    "font": "100%/1.75em Merriweather,Georgia,serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -13253,7 +13189,6 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.8)",
-    "fontFamily": "Lucida Grande,Verdana,Arial,Sans-Serif",
     "fontWeight": "normal",
     "wordWrap": "break-word",
   },
@@ -13435,8 +13370,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "fontSize": "75%",
-    "lineHeight": "1.4em",
+    "font": "75%/1.4em Lucida Grande,Verdana,Arial,Sans-Serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
