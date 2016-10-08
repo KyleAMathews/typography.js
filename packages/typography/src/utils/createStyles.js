@@ -28,6 +28,7 @@ const setStyles = (styles: Object = {}, els: string | string[], rules: Object) =
 
 module.exports = (vr: any, options: OptionsType) => {
   let styles = {}
+  let { fontSize, lineHeight } = vr.rhythm(1)
 
   // Base HTML styles.
   styles = setStyles(styles, 'html', {
@@ -44,7 +45,7 @@ module.exports = (vr: any, options: OptionsType) => {
   // Base body styles.
   styles = setStyles(styles, 'body', {
     color: gray(options.bodyGray, options.bodyGrayHue),
-    fontFamily: options.bodyFontFamily.join(','),
+    font: `${fontSize}px/${lineHeight} ${options.bodyFontFamily.join(',')}`,
     fontWeight: options.bodyWeight,
     wordWrap: 'break-word',
   })
