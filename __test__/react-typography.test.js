@@ -42,7 +42,9 @@ describe('GoogleFont', () => {
 describe('TypographyStyle', () => {
   it('should render with typography object', () => {
     const component = renderer.create(React.createElement(TypographyStyle, {
-      typography: typography()
+      typography: typography({
+        includeNormalize: false
+      })
     }))
 
     const tree = component.toJSON()

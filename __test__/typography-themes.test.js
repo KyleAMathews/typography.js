@@ -1,7 +1,7 @@
 // @flow
 
-import {readdirSync} from 'fs';
-import {join} from 'path';
+import {readdirSync} from 'fs'
+import {join} from 'path'
 import typography from '../packages/typography/src/index'
 
 describe('themes', () => {

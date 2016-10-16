@@ -50,13 +50,17 @@ describe('typography(options?).toJSON()', () => {
 
 describe('typography(options?).toString()', () => {
   it('should return CSS as a string', () => {
-    expect(typography().toString()).toMatchSnapshot()
+    expect(typography({
+      includeNormalize: false
+    }).toString()).toMatchSnapshot()
   })
 })
 
 describe('typography(options?).createStyles()', () => {
   it('should return CSS as a string', () => {
-    expect(typography().createStyles()).toMatchSnapshot()
+    expect(typography({
+      includeNormalize: false
+    }).createStyles()).toMatchSnapshot()
   })
 })
 
