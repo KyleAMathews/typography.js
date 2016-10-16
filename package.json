@@ -39,7 +39,7 @@
     "test-api": "jest",
     "test-ci": "npm run build && npm run test-coverage && codecov",
     "test": "npm run build && npm run lint && npm run test-api",
-    "test-coverage": "npm run test -- --coverage"
+    "test-coverage": "npm run test-api -- --coverage"
   },
   "jest": {
     "testEnvironment": "node",
