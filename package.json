@@ -2,23 +2,31 @@
   "devDependencies": {
     "babel-cli": "^6.14.0",
     "babel-eslint": "^6.1.2",
+    "babel-jest": "^16.0.0",
     "babel-plugin-transform-flow-strip-types": "^6.14.0",
     "babel-plugin-transform-object-rest-spread": "^6.8.0",
     "babel-preset-es2015": "^6.14.0",
     "babel-preset-stage-0": "^6.5.0",
+    "compass-vertical-rhythm": "^1.3.1",
     "eslint": "^3.5.0",
     "eslint-config-airbnb": "^11.1.0",
     "eslint-plugin-flow-vars": "^0.5.0",
     "eslint-plugin-import": "^1.15.0",
     "eslint-plugin-jsx-a11y": "^2.2.2",
     "eslint-plugin-react": "^6.3.0",
-    "flow-bin": "^0.32.0",
+    "flow-bin": "^0.33.0",
     "glob": "^7.1.0",
+    "jest": "^16.0.1",
+    "jest-cli": "^16.0.1",
     "json2md": "^1.5.2",
     "lerna": "^2.0.0-beta.24",
     "lodash": "^4.16.1",
     "phantom": "^2.1.12",
-    "phantomjs-prebuilt": "^2.1.7"
+    "phantomjs-prebuilt": "^2.1.7",
+    "react": "^15.3.2",
+    "react-addons-test-utils": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "react-test-renderer": "^15.3.2"
   },
   "private": true,
   "scripts": {
@@ -26,6 +34,15 @@
     "flow": "flow",
     "lint": "eslint --ext .js,.jsx --ignore-path .gitignore .",
     "watch": "lerna run watch",
-    "publish": "npm run build && lerna publish"
+    "publish": "npm run build && lerna publish",
+    "test-api": "jest",
+    "test": "npm run build && npm run lint && npm run test-api"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "collectCoverage": true,
+    "coveragePathIgnorePatterns": [
+      "dist"
+    ]
   }
 }
