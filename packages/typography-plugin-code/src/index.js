@@ -5,7 +5,7 @@ import isNumber from 'lodash/isNumber'
 import isString from 'lodash/isString'
 
 const CodePlugin = (): Function =>
-({ adjustFontSizeTo, rhythm }, options: OptionsType) => {
+({ rhythm }, options: OptionsType) => {
   let blockMarginBottom
   if (isNumber(options.blockMarginBottom)) {
     blockMarginBottom = rhythm(options.blockMarginBottom)
