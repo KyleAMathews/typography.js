@@ -1,4 +1,4 @@
-# Typography.js
+# Typography.js [![Build Status][build-badge]][build-status] [![Coverage Status][coverage-badge]][coverage-status]
 A powerful toolkit for building websites with beautiful design.
 
 ## Install
@@ -308,3 +308,13 @@ Typography.js is a monorepo facilitated by
 
 TODO: document constants + compass-vertical-rhythm + using
 typography.js for inline styles.
+
+<!-- Definitions -->
+
+[build-badge]: https://img.shields.io/travis/KyleAMathews/typography.js.svg
+
+[build-status]: https://travis-ci.org/KyleAMathews/typography.js
+
+[coverage-badge]: https://img.shields.io/codecov/c/github/KyleAMathews/typography.js.svg
+
+[coverage-status]: https://codecov.io/github/KyleAMathews/typography.js
