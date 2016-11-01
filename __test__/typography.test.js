@@ -31,14 +31,15 @@ describe('typography(options?).scale()', () => {
 
   it('should accept custom scales', () => {
     const actual = typography().scale(1.333)
-    expect(actual.fontSize).toEqual('2.51926rem')
-    expect(actual.lineHeight).toEqual('3rem')
+    expect(actual.fontSize).toEqual('1.3608rem')
+    expect(actual.lineHeight).toEqual('2.25rem')
   })
 
   it('should accept custom scales', () => {
-    const actual = typography().scale(2)
-    expect(actual.fontSize).toEqual('4rem')
-    expect(actual.lineHeight).toEqual('4.5rem')
+    const phi = (1 + Math.sqrt(5)) / 2
+    const actual = typography().scale(phi)
+    expect(actual.fontSize).toEqual('1.45346rem')
+    expect(actual.lineHeight).toEqual('2.25rem')
   })
 })
 

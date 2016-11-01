@@ -11,7 +11,7 @@ const typography = function (opts: OptionsType) {
   const defaults: OptionsType = {
     baseFontSize: '16px',
     baseLineHeight: 1.5,
-    scaleRatio: 2,
+    scaleRatio: 1.26, // Math.atan(Math.PI),
     googleFonts: [],
     headerFontFamily: [
       '-apple-system',
