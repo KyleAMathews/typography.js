@@ -25,7 +25,7 @@ Object {
     "textDecoration": "none",
   },
   "a:hover,a:active": Object {
-    "color": "hsla(0,0%,0%,1)",
+    "color": "black",
   },
   "abbr": Object {
     "borderBottom": "1px dotted hsla(0,0%,0%,0.5)",
@@ -72,7 +72,7 @@ Object {
     "marginBottom": 0,
   },
   "blockquote cite": Object {
-    "color": "hsla(0,0%,0%,1)",
+    "color": "black",
     "fontSize": "1rem",
     "fontWeight": 400,
     "lineHeight": "1.78rem",
@@ -81,7 +81,8 @@ Object {
     "content": "\"— \"",
   },
   "body": Object {
-    "color": "hsla(0,0%,0%,1)",
+    "color": "black",
+    "fontFamily": "Open Sans,sans-serif",
     "fontWeight": 400,
     "wordWrap": "break-word",
   },
@@ -143,7 +144,7 @@ Object {
     "paddingTop": 0,
   },
   "h1": Object {
-    "color": "hsla(0,0%,0%,1)",
+    "color": "inherit",
     "fontFamily": "Domine,sans-serif",
     "fontSize": "2rem",
     "fontWeight": 700,
@@ -159,7 +160,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h2": Object {
-    "color": "hsla(0,0%,0%,1)",
+    "color": "inherit",
     "fontFamily": "Domine,sans-serif",
     "fontSize": "1.51572rem",
     "fontWeight": 700,
@@ -175,7 +176,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h3": Object {
-    "color": "hsla(0,0%,0%,1)",
+    "color": "inherit",
     "fontFamily": "Domine,sans-serif",
     "fontSize": "1.31951rem",
     "fontWeight": 700,
@@ -191,7 +192,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h4": Object {
-    "color": "hsla(0,0%,0%,1)",
+    "color": "inherit",
     "fontFamily": "Domine,sans-serif",
     "fontSize": "1rem",
     "fontWeight": 700,
@@ -207,7 +208,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h5": Object {
-    "color": "hsla(0,0%,0%,1)",
+    "color": "inherit",
     "fontFamily": "Domine,sans-serif",
     "fontSize": "0.87055rem",
     "fontWeight": 700,
@@ -223,7 +224,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h6": Object {
-    "color": "hsla(0,0%,0%,1)",
+    "color": "inherit",
     "fontFamily": "Domine,sans-serif",
     "fontSize": "0.81225rem",
     "fontWeight": 700,
@@ -473,6 +474,7 @@ Object {
   },
   "body": Object {
     "color": "hsla(204,12.449720506%,0%,0.77)",
+    "fontFamily": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif",
     "fontWeight": 400,
     "wordWrap": "break-word",
   },
@@ -534,7 +536,7 @@ Object {
     "paddingTop": 0,
   },
   "h1": Object {
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif",
     "fontSize": "2rem",
     "fontWeight": 500,
@@ -550,7 +552,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h2": Object {
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif",
     "fontSize": "1.68179rem",
     "fontWeight": 500,
@@ -566,7 +568,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h3": Object {
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif",
     "fontSize": "1.41421rem",
     "fontWeight": 500,
@@ -582,7 +584,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h4": Object {
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif",
     "fontSize": "1.12246rem",
     "fontWeight": 500,
@@ -598,7 +600,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h5": Object {
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif",
     "fontSize": "0.8909rem",
     "fontWeight": 500,
@@ -614,7 +616,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h6": Object {
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif",
     "fontSize": "0.7937rem",
     "fontWeight": 500,
@@ -876,6 +878,7 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.8)",
+    "fontFamily": "Alegreya,sans-serif",
     "fontWeight": 400,
     "wordWrap": "break-word",
   },
@@ -1291,6 +1294,7 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.8)",
+    "fontFamily": "Cabin,serif",
     "fontWeight": 400,
     "wordWrap": "break-word",
   },
@@ -1715,6 +1719,7 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.8)",
+    "fontFamily": "PT Sans,sans-serif",
     "fontWeight": 400,
     "wordWrap": "break-word",
   },
@@ -2138,6 +2143,7 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.8)",
+    "fontFamily": "Quattrocento Sans,serif",
     "fontWeight": 400,
     "wordWrap": "break-word",
   },
@@ -2490,7 +2496,7 @@ Object {
     },
   },
   "a": Object {
-    "color": "hsla(0,0%,0%,0.87)",
+    "color": "inherit",
   },
   "a:hover": Object {
     "color": "#3498DB",
@@ -2537,6 +2543,7 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.87)",
+    "fontFamily": "Cabin Condensed,georgia,sans-serif",
     "fontWeight": 400,
     "letterSpacing": ".03em",
     "wordWrap": "break-word",
@@ -2599,7 +2606,7 @@ Object {
     "paddingTop": 0,
   },
   "h1": Object {
-    "color": "hsla(0,0%,0%,0.87)",
+    "color": "inherit",
     "fontFamily": "Patua One,sans-serif",
     "fontSize": "2rem",
     "fontWeight": "400",
@@ -2615,7 +2622,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h2": Object {
-    "color": "hsla(0,0%,0%,0.87)",
+    "color": "inherit",
     "fontFamily": "Patua One,sans-serif",
     "fontSize": "1.51572rem",
     "fontWeight": "400",
@@ -2631,7 +2638,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h3": Object {
-    "color": "hsla(0,0%,0%,0.87)",
+    "color": "inherit",
     "fontFamily": "Patua One,sans-serif",
     "fontSize": "1.31951rem",
     "fontWeight": "400",
@@ -2647,7 +2654,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h4": Object {
-    "color": "hsla(0,0%,0%,0.87)",
+    "color": "inherit",
     "fontFamily": "Patua One,sans-serif",
     "fontSize": "1rem",
     "fontWeight": "400",
@@ -2663,7 +2670,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h5": Object {
-    "color": "hsla(0,0%,0%,0.87)",
+    "color": "inherit",
     "fontFamily": "Patua One,sans-serif",
     "fontSize": "0.87055rem",
     "fontWeight": "400",
@@ -2679,7 +2686,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h6": Object {
-    "color": "hsla(0,0%,0%,0.87)",
+    "color": "inherit",
     "fontFamily": "Patua One,sans-serif",
     "fontSize": "0.81225rem",
     "fontWeight": "400",
@@ -2926,6 +2933,7 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.8)",
+    "fontFamily": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol",
     "fontWeight": "normal",
     "wordWrap": "break-word",
   },
@@ -2988,7 +2996,7 @@ Object {
   },
   "h1": Object {
     "borderBottom": "1px solid hsla(0,0%,0%,0.07)",
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol",
     "fontSize": "2rem",
     "fontWeight": 600,
@@ -3005,7 +3013,7 @@ Object {
   },
   "h2": Object {
     "borderBottom": "1px solid hsla(0,0%,0%,0.07)",
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol",
     "fontSize": "1.51572rem",
     "fontWeight": 600,
@@ -3021,7 +3029,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h3": Object {
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol",
     "fontSize": "1.31951rem",
     "fontWeight": 600,
@@ -3041,7 +3049,7 @@ Object {
     "marginTop": "1.625rem",
   },
   "h4": Object {
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol",
     "fontSize": "1rem",
     "fontWeight": 600,
@@ -3057,7 +3065,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h5": Object {
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol",
     "fontSize": "0.87055rem",
     "fontWeight": 600,
@@ -3346,6 +3354,7 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.8)",
+    "fontFamily": "Arvo,sans-serif",
     "fontWeight": 400,
     "wordWrap": "break-word",
   },
@@ -3744,6 +3753,7 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.8)",
+    "fontFamily": "Yrsa,georgia,sans-serif",
     "fontWeight": 400,
     "wordWrap": "break-word",
   },
@@ -3805,7 +3815,7 @@ Object {
     "paddingTop": 0,
   },
   "h1": Object {
-    "color": "hsla(0,0%,0%,0.87)",
+    "color": "inherit",
     "fontFamily": "Exo,sans-serif",
     "fontSize": "2rem",
     "fontWeight": 700,
@@ -3821,7 +3831,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h2": Object {
-    "color": "hsla(0,0%,0%,0.87)",
+    "color": "inherit",
     "fontFamily": "Exo,sans-serif",
     "fontSize": "1.51572rem",
     "fontWeight": 700,
@@ -3837,7 +3847,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h3": Object {
-    "color": "hsla(0,0%,0%,0.87)",
+    "color": "inherit",
     "fontFamily": "Exo,sans-serif",
     "fontSize": "1.31951rem",
     "fontWeight": 700,
@@ -3856,7 +3866,7 @@ Object {
     "marginBottom": "0.69rem",
   },
   "h4": Object {
-    "color": "hsla(0,0%,0%,0.87)",
+    "color": "inherit",
     "fontFamily": "Exo,sans-serif",
     "fontSize": "1rem",
     "fontWeight": 700,
@@ -3872,7 +3882,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h5": Object {
-    "color": "hsla(0,0%,0%,0.87)",
+    "color": "inherit",
     "fontFamily": "Exo,sans-serif",
     "fontSize": "0.87055rem",
     "fontWeight": 700,
@@ -3888,7 +3898,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h6": Object {
-    "color": "hsla(0,0%,0%,0.87)",
+    "color": "inherit",
     "fontFamily": "Exo,sans-serif",
     "fontSize": "0.81225rem",
     "fontWeight": 700,
@@ -4160,6 +4170,7 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.8)",
+    "fontFamily": "Vollkorn,Georgia,serif",
     "fontWeight": 400,
     "wordWrap": "break-word",
   },
@@ -4570,6 +4581,7 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.8)",
+    "fontFamily": "Fira Sans,sans-serif",
     "fontWeight": 400,
     "wordWrap": "break-word",
   },
@@ -4967,6 +4979,7 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.8)",
+    "fontFamily": "Libre Baskerville,serif",
     "fontWeight": 400,
     "wordWrap": "break-word",
   },
@@ -5387,6 +5400,7 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.73)",
+    "fontFamily": "Lora,serif",
     "fontWeight": 400,
     "wordWrap": "break-word",
   },
@@ -5801,6 +5815,7 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.7)",
+    "fontFamily": "Source Sans Pro,sans-serif",
     "fontWeight": 400,
     "wordWrap": "break-word",
   },
@@ -6182,6 +6197,7 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.8)",
+    "fontFamily": "Lato,sans-serif",
     "fontWeight": 400,
     "wordWrap": "break-word",
   },
@@ -6243,7 +6259,7 @@ Object {
     "paddingTop": 0,
   },
   "h1": Object {
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "Lato,sans-serif",
     "fontSize": "2rem",
     "fontWeight": 700,
@@ -6259,7 +6275,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h2": Object {
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "Lato,sans-serif",
     "fontSize": "1.51572rem",
     "fontWeight": 700,
@@ -6275,7 +6291,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h3": Object {
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "Lato,sans-serif",
     "fontSize": "1.31951rem",
     "fontWeight": 700,
@@ -6291,7 +6307,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h4": Object {
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "Lato,sans-serif",
     "fontSize": "1rem",
     "fontWeight": 700,
@@ -6307,7 +6323,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h5": Object {
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "Lato,sans-serif",
     "fontSize": "0.87055rem",
     "fontWeight": 700,
@@ -6323,7 +6339,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h6": Object {
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "Lato,sans-serif",
     "fontSize": "0.81225rem",
     "fontWeight": 700,
@@ -6602,6 +6618,7 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.73)",
+    "fontFamily": "Roboto,serif",
     "fontWeight": 400,
     "wordWrap": "break-word",
   },
@@ -7027,6 +7044,7 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.8)",
+    "fontFamily": "Merriweather,sans-serif",
     "fontWeight": 400,
     "wordWrap": "break-word",
   },
@@ -7441,6 +7459,7 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.8)",
+    "fontFamily": "Source Sans Pro,sans-serif",
     "fontWeight": 400,
     "wordWrap": "break-word",
   },
@@ -7857,6 +7876,7 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.87)",
+    "fontFamily": "Georgia,Cambria,serif",
     "fontWeight": 400,
     "wordWrap": "break-word",
   },
@@ -8273,6 +8293,7 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.8)",
+    "fontFamily": "Lato,sans-serif",
     "fontWeight": 400,
     "wordWrap": "break-word",
   },
@@ -8694,6 +8715,7 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.9)",
+    "fontFamily": "Merriweather,Georgia,serif",
     "fontWeight": 300,
     "wordWrap": "break-word",
   },
@@ -8755,7 +8777,7 @@ Object {
     "paddingTop": 0,
   },
   "h1": Object {
-    "color": "hsla(0,0%,0%,0.9)",
+    "color": "inherit",
     "fontFamily": "Open Sans,sans-serif",
     "fontSize": "2.2974rem",
     "fontWeight": 700,
@@ -8775,7 +8797,7 @@ Object {
     "marginTop": "3.56rem",
   },
   "h2": Object {
-    "color": "hsla(0,0%,0%,0.9)",
+    "color": "inherit",
     "fontFamily": "Open Sans,sans-serif",
     "fontSize": "1.51572rem",
     "fontWeight": 700,
@@ -8791,7 +8813,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h3": Object {
-    "color": "hsla(0,0%,0%,0.9)",
+    "color": "inherit",
     "fontFamily": "Open Sans,sans-serif",
     "fontSize": "1.31951rem",
     "fontWeight": 700,
@@ -8807,7 +8829,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h4": Object {
-    "color": "hsla(0,0%,0%,0.9)",
+    "color": "inherit",
     "fontFamily": "Open Sans,sans-serif",
     "fontSize": "1rem",
     "fontWeight": 700,
@@ -8823,7 +8845,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h5": Object {
-    "color": "hsla(0,0%,0%,0.9)",
+    "color": "inherit",
     "fontFamily": "Open Sans,sans-serif",
     "fontSize": "0.87055rem",
     "fontWeight": 700,
@@ -8839,7 +8861,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h6": Object {
-    "color": "hsla(0,0%,0%,0.9)",
+    "color": "inherit",
     "fontFamily": "Open Sans,sans-serif",
     "fontSize": "0.81225rem",
     "fontStyle": "italic",
@@ -9123,6 +9145,7 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.73)",
+    "fontFamily": "Crimson Text,serif",
     "fontWeight": 400,
     "wordWrap": "break-word",
   },
@@ -9532,6 +9555,7 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.8)",
+    "fontFamily": "Source Sans Pro,sans-serif",
     "fontWeight": 400,
     "wordWrap": "break-word",
   },
@@ -9593,7 +9617,7 @@ Object {
     "paddingTop": 0,
   },
   "h1": Object {
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "Merriweather,serif",
     "fontSize": "2rem",
     "fontWeight": 700,
@@ -9609,7 +9633,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h2": Object {
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "Merriweather,serif",
     "fontSize": "1.51572rem",
     "fontWeight": 700,
@@ -9625,7 +9649,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h3": Object {
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "Merriweather,serif",
     "fontSize": "1.1487rem",
     "fontWeight": 700,
@@ -9641,7 +9665,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h4": Object {
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "Merriweather,serif",
     "fontSize": "1rem",
     "fontWeight": 700,
@@ -9657,7 +9681,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h5": Object {
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "Merriweather,serif",
     "fontSize": "0.917rem",
     "fontWeight": 700,
@@ -9673,7 +9697,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h6": Object {
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "Source Sans Pro,sans-serif",
     "fontSize": "0.8409rem",
     "fontWeight": 400,
@@ -9921,6 +9945,7 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.85)",
+    "fontFamily": "sans-serif",
     "fontWeight": "normal",
     "wordWrap": "break-word",
   },
@@ -10331,6 +10356,7 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.8)",
+    "fontFamily": "georgia,serif",
     "fontWeight": "normal",
     "wordWrap": "break-word",
   },
@@ -10722,6 +10748,7 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.78)",
+    "fontFamily": "Helvetica Neue,Helvetica,Segoe UI,Arial,freesans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol",
     "fontWeight": 300,
     "wordWrap": "break-word",
   },
@@ -11122,6 +11149,7 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.73)",
+    "fontFamily": "Open Sans,sans-serif",
     "fontWeight": 400,
     "wordWrap": "break-word",
   },
@@ -11183,7 +11211,7 @@ Object {
     "paddingTop": 0,
   },
   "h1": Object {
-    "color": "hsla(0,0%,0%,0.73)",
+    "color": "inherit",
     "fontFamily": "Open Sans,sans-serif",
     "fontSize": "2rem",
     "fontWeight": "700",
@@ -11199,7 +11227,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h2": Object {
-    "color": "hsla(0,0%,0%,0.73)",
+    "color": "inherit",
     "fontFamily": "Open Sans,sans-serif",
     "fontSize": "1.51572rem",
     "fontWeight": "700",
@@ -11215,7 +11243,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h3": Object {
-    "color": "hsla(0,0%,0%,0.73)",
+    "color": "inherit",
     "fontFamily": "Open Sans,sans-serif",
     "fontSize": "1.31951rem",
     "fontWeight": "700",
@@ -11231,7 +11259,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h4": Object {
-    "color": "hsla(0,0%,0%,0.73)",
+    "color": "inherit",
     "fontFamily": "Open Sans,sans-serif",
     "fontSize": "1rem",
     "fontWeight": "700",
@@ -11247,7 +11275,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h5": Object {
-    "color": "hsla(0,0%,0%,0.73)",
+    "color": "inherit",
     "fontFamily": "Open Sans,sans-serif",
     "fontSize": "0.87055rem",
     "fontWeight": "700",
@@ -11263,7 +11291,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h6": Object {
-    "color": "hsla(0,0%,0%,0.73)",
+    "color": "inherit",
     "fontFamily": "Open Sans,sans-serif",
     "fontSize": "0.81225rem",
     "fontWeight": "700",
@@ -11533,6 +11561,7 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.93)",
+    "fontFamily": "Source Sans Pro,serif",
     "fontWeight": 400,
     "wordWrap": "break-word",
   },
@@ -11594,7 +11623,7 @@ Object {
     "paddingTop": 0,
   },
   "h1": Object {
-    "color": "hsla(0,0%,0%,0.93)",
+    "color": "inherit",
     "fontFamily": "Bitter,serif",
     "fontSize": "3.03143rem",
     "fontWeight": "700",
@@ -11610,7 +11639,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h2": Object {
-    "color": "hsla(0,0%,0%,0.93)",
+    "color": "inherit",
     "fontFamily": "Bitter,serif",
     "fontSize": "1.51572rem",
     "fontWeight": "700",
@@ -11626,7 +11655,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h3": Object {
-    "color": "hsla(0,0%,0%,0.93)",
+    "color": "inherit",
     "fontFamily": "Bitter,serif",
     "fontSize": "1.31951rem",
     "fontWeight": "700",
@@ -11642,7 +11671,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h4": Object {
-    "color": "hsla(0,0%,0%,0.93)",
+    "color": "inherit",
     "fontFamily": "Bitter,serif",
     "fontSize": "1rem",
     "fontWeight": "700",
@@ -11658,7 +11687,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h5": Object {
-    "color": "hsla(0,0%,0%,0.93)",
+    "color": "inherit",
     "fontFamily": "Bitter,serif",
     "fontSize": "0.87055rem",
     "fontWeight": "700",
@@ -11674,7 +11703,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h6": Object {
-    "color": "hsla(0,0%,0%,0.93)",
+    "color": "inherit",
     "fontFamily": "Bitter,serif",
     "fontSize": "0.81225rem",
     "fontWeight": "700",
@@ -11938,6 +11967,7 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.83)",
+    "fontFamily": "Lato,serif",
     "fontWeight": 400,
     "wordWrap": "break-word",
   },
@@ -11999,7 +12029,7 @@ Object {
     "paddingTop": 0,
   },
   "h1": Object {
-    "color": "hsla(0,0%,0%,0.83)",
+    "color": "inherit",
     "fontFamily": "Lato,serif",
     "fontSize": "2rem",
     "fontWeight": 600,
@@ -12019,7 +12049,7 @@ Object {
     "marginTop": "2.25rem",
   },
   "h2": Object {
-    "color": "hsla(0,0%,0%,0.83)",
+    "color": "inherit",
     "fontFamily": "Lato,serif",
     "fontSize": "1.51572rem",
     "fontWeight": 600,
@@ -12035,7 +12065,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h3": Object {
-    "color": "hsla(0,0%,0%,0.83)",
+    "color": "inherit",
     "fontFamily": "Lato,serif",
     "fontSize": "1.31951rem",
     "fontWeight": 600,
@@ -12051,7 +12081,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h4": Object {
-    "color": "hsla(0,0%,0%,0.83)",
+    "color": "inherit",
     "fontFamily": "Lato,serif",
     "fontSize": "1rem",
     "fontWeight": 600,
@@ -12067,7 +12097,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h5": Object {
-    "color": "hsla(0,0%,0%,0.83)",
+    "color": "inherit",
     "fontFamily": "Lato,serif",
     "fontSize": "0.87055rem",
     "fontWeight": 600,
@@ -12083,7 +12113,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h6": Object {
-    "color": "hsla(0,0%,0%,0.83)",
+    "color": "inherit",
     "fontFamily": "Lato,serif",
     "fontSize": "0.81225rem",
     "fontWeight": 600,
@@ -12354,6 +12384,7 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.8)",
+    "fontFamily": "Noto Serif,serif",
     "fontWeight": 400,
     "wordWrap": "break-word",
   },
@@ -12415,7 +12446,7 @@ Object {
     "paddingTop": 0,
   },
   "h1": Object {
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "Noto Serif,serif",
     "fontSize": "2rem",
     "fontWeight": "700",
@@ -12434,7 +12465,7 @@ Object {
     "marginTop": "3.36rem",
   },
   "h2": Object {
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "Noto Serif,serif",
     "fontSize": "1.51572rem",
     "fontWeight": "700",
@@ -12450,7 +12481,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h3": Object {
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "Noto Serif,serif",
     "fontSize": "1.31951rem",
     "fontWeight": "700",
@@ -12466,7 +12497,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h4": Object {
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "Noto Serif,serif",
     "fontSize": "1rem",
     "fontWeight": "700",
@@ -12482,7 +12513,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h5": Object {
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "Noto Serif,serif",
     "fontSize": "0.87055rem",
     "fontWeight": "700",
@@ -12502,7 +12533,7 @@ Object {
     "textTransform": "uppercase",
   },
   "h6": Object {
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "Noto Serif,serif",
     "fontSize": "0.81225rem",
     "fontWeight": "700",
@@ -12782,6 +12813,7 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.9)",
+    "fontFamily": "Merriweather,Georgia,serif",
     "fontWeight": 400,
     "wordWrap": "break-word",
   },
@@ -12843,7 +12875,7 @@ Object {
     "paddingTop": 0,
   },
   "h1": Object {
-    "color": "hsla(0,0%,0%,0.9)",
+    "color": "inherit",
     "fontFamily": "Montserrat,sans-serif",
     "fontSize": "2rem",
     "fontWeight": 900,
@@ -12862,7 +12894,7 @@ Object {
     "marginTop": "3.5rem",
   },
   "h2": Object {
-    "color": "hsla(0,0%,0%,0.9)",
+    "color": "inherit",
     "fontFamily": "Merriweather,Georgia,serif",
     "fontSize": "1.51572rem",
     "fontWeight": 900,
@@ -12878,7 +12910,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h3": Object {
-    "color": "hsla(0,0%,0%,0.9)",
+    "color": "inherit",
     "fontFamily": "Merriweather,Georgia,serif",
     "fontSize": "1.31951rem",
     "fontWeight": 900,
@@ -12894,7 +12926,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h4": Object {
-    "color": "hsla(0,0%,0%,0.9)",
+    "color": "inherit",
     "fontFamily": "Merriweather,Georgia,serif",
     "fontSize": "1rem",
     "fontWeight": 900,
@@ -12912,7 +12944,7 @@ Object {
     "textTransform": "uppercase",
   },
   "h5": Object {
-    "color": "hsla(0,0%,0%,0.9)",
+    "color": "inherit",
     "fontFamily": "Merriweather,Georgia,serif",
     "fontSize": "0.87055rem",
     "fontWeight": 900,
@@ -12928,7 +12960,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h6": Object {
-    "color": "hsla(0,0%,0%,0.9)",
+    "color": "inherit",
     "fontFamily": "Merriweather,Georgia,serif",
     "fontSize": "0.81225rem",
     "fontStyle": "italic",
@@ -13189,6 +13221,7 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.8)",
+    "fontFamily": "Lucida Grande,Verdana,Arial,Sans-Serif",
     "fontWeight": "normal",
     "wordWrap": "break-word",
   },
@@ -13250,7 +13283,7 @@ Object {
     "paddingTop": 0,
   },
   "h1": Object {
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "Lucida Grande,Verdana,Arial,Sans-Serif",
     "fontSize": "2rem",
     "fontWeight": "bold",
@@ -13266,7 +13299,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h2": Object {
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "Lucida Grande,Verdana,Arial,Sans-Serif",
     "fontSize": "1.51572rem",
     "fontWeight": "bold",
@@ -13282,7 +13315,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h3": Object {
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "Lucida Grande,Verdana,Arial,Sans-Serif",
     "fontSize": "1.31951rem",
     "fontWeight": "bold",
@@ -13298,7 +13331,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h4": Object {
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "Lucida Grande,Verdana,Arial,Sans-Serif",
     "fontSize": "1rem",
     "fontWeight": "bold",
@@ -13314,7 +13347,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h5": Object {
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "Lucida Grande,Verdana,Arial,Sans-Serif",
     "fontSize": "0.87055rem",
     "fontWeight": "bold",
@@ -13330,7 +13363,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h6": Object {
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "Lucida Grande,Verdana,Arial,Sans-Serif",
     "fontSize": "0.81225rem",
     "fontWeight": "bold",

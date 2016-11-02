@@ -239,14 +239,10 @@ googleFonts: [
 system UI font stack.
 * **bodyFontFamily**: An array of strings specifying the font family
   stack for the body, defaults to `['georgia', 'serif']`.
-* **headerGray**: The "lightness" value for headers (set in hsl). Defaults
-  to `20`.
-* **headerGrayHue**: The "hue" value for headers (set in hsl). Defaults to
-`0`. Also accepts three named hues, `cool`, `slate`, and `warm`.
-* **bodyGray**: The "lightness" value for body text (in hsl). Defaults
-to `20`.
-* **bodyGrayHue**: The "hue" value for body text (in hsl). Defaults to
-`0`. Also accepts three named hues, `cool`, `slate`, and `warm`.
+* **headerColor**: A css color string to be set on headers. Defaults
+  to `inherit`.
+* **bodyColor**: A css color string to be set for body text. Defaults
+to `hsl(0,0%,0%,0.8)`.
 * **headerWeight**: Specify the font weight for headers. Defaults to
 `bold`.
 * **bodyWeight**: Specify the font weight for body text. Defaults to

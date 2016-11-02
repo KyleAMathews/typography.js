@@ -47,6 +47,7 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.8)",
+    "fontFamily": "georgia,serif",
     "fontWeight": "normal",
     "wordWrap": "break-word",
   },
@@ -112,7 +113,7 @@ Object {
     "paddingTop": 0,
   },
   "h1": Object {
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif",
     "fontSize": "2rem",
     "fontWeight": "bold",
@@ -128,7 +129,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h2": Object {
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif",
     "fontSize": "1.51572rem",
     "fontWeight": "bold",
@@ -144,7 +145,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h3": Object {
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif",
     "fontSize": "1.31951rem",
     "fontWeight": "bold",
@@ -160,7 +161,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h4": Object {
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif",
     "fontSize": "1rem",
     "fontWeight": "bold",
@@ -176,7 +177,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h5": Object {
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif",
     "fontSize": "0.87055rem",
     "fontWeight": "bold",
@@ -192,7 +193,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h6": Object {
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif",
     "fontSize": "0.81225rem",
     "fontWeight": "bold",
@@ -448,6 +449,7 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.8)",
+    "fontFamily": "georgia,serif",
     "fontWeight": "normal",
     "wordWrap": "break-word",
   },
@@ -513,7 +515,7 @@ Object {
     "paddingTop": 0,
   },
   "h1": Object {
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif",
     "fontSize": "2rem",
     "fontWeight": "bold",
@@ -529,7 +531,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h2": Object {
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif",
     "fontSize": "1.51572rem",
     "fontWeight": "bold",
@@ -545,7 +547,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h3": Object {
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif",
     "fontSize": "1.31951rem",
     "fontWeight": "bold",
@@ -561,7 +563,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h4": Object {
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif",
     "fontSize": "1rem",
     "fontWeight": "bold",
@@ -577,7 +579,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h5": Object {
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif",
     "fontSize": "0.87055rem",
     "fontWeight": "bold",
@@ -593,7 +595,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h6": Object {
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif",
     "fontSize": "0.81225rem",
     "fontWeight": "bold",
@@ -849,6 +851,7 @@ Object {
   },
   "body": Object {
     "color": "hsla(0,0%,0%,0.8)",
+    "fontFamily": "georgia,serif",
     "fontWeight": "normal",
     "wordWrap": "break-word",
   },
@@ -914,7 +917,7 @@ Object {
     "paddingTop": 0,
   },
   "h1": Object {
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif",
     "fontSize": "2rem",
     "fontWeight": "bold",
@@ -930,7 +933,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h2": Object {
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif",
     "fontSize": "1.51572rem",
     "fontWeight": "bold",
@@ -946,7 +949,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h3": Object {
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif",
     "fontSize": "1.31951rem",
     "fontWeight": "bold",
@@ -962,7 +965,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h4": Object {
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif",
     "fontSize": "1rem",
     "fontWeight": "bold",
@@ -978,7 +981,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h5": Object {
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif",
     "fontSize": "0.87055rem",
     "fontWeight": "bold",
@@ -994,7 +997,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h6": Object {
-    "color": "hsla(0,0%,0%,0.8)",
+    "color": "inherit",
     "fontFamily": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif",
     "fontSize": "0.81225rem",
     "fontWeight": "bold",

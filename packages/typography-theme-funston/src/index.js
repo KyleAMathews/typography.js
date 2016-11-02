@@ -24,12 +24,11 @@ const theme: OptionsType = {
   ],
   headerFontFamily: ['Patua One', 'sans-serif'],
   bodyFontFamily: ['Cabin Condensed', 'georgia', 'sans-serif'],
-  headerGray: 13,
-  bodyGray: 13,
+  bodyColor: 'hsla(0,0%,0%,0.87)',
   headerWeight: '400',
   bodyWeight: 400,
   boldWeight: 700,
-  overrideStyles: ({ adjustFontSizeTo, scale, rhythm }, options) => ({
+  overrideStyles: ({ scale, rhythm }) => ({
     html: {
       '-webkit-font-smoothing': 'antialiased',
     },
@@ -37,7 +36,7 @@ const theme: OptionsType = {
       letterSpacing: '.03em',
     },
     a: {
-      color: gray(options.bodyGray),
+      color: 'inherit',
     },
     'a:hover': {
       color: '#3498DB',

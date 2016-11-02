@@ -20,8 +20,7 @@ const theme: OptionsType = {
   ],
   headerFontFamily: ['Lato', 'serif'],
   bodyFontFamily: ['Lato', 'serif'],
-  headerGray: 17,
-  bodyGray: 17,
+  bodyColor: 'hsla(0,0%,0%,0.83)',
   headerWeight: 600,
   bodyWeight: 400,
   boldWeight: 600,
@@ -52,7 +51,7 @@ const theme: OptionsType = {
     },
     'blockquote cite': {
       ...adjustFontSizeTo(options.baseFontSize),
-      color: gray(options.bodyGray),
+      color: options.bodyColor,
       fontStyle: 'normal',
       fontWeight: options.bodyWeight,
     },

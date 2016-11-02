@@ -27,8 +27,8 @@ const theme: OptionsType = {
   ],
   headerFontFamily: ['Merriweather Sans', 'sans-serif'],
   bodyFontFamily: ['Merriweather', 'sans-serif'],
-  headerGray: 10,
-  bodyGray: 20,
+  headerColor: 'hsla(0,0%,0%,0.9)',
+  bodyColor: 'hsla(0,0%,0%,0.8)',
   headerWeight: 800,
   bodyWeight: 400,
   boldWeight: 700,
@@ -63,7 +63,7 @@ const theme: OptionsType = {
       },
       'blockquote cite': {
         ...adjustFontSizeTo(options.baseFontSize),
-        color: gray(options.bodyGray),
+        color: options.bodyColor,
         fontWeight: options.bodyWeight,
       },
       'blockquote cite:before': {

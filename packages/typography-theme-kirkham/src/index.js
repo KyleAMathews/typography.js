@@ -26,8 +26,8 @@ const theme: OptionsType = {
   ],
   headerFontFamily: ['Playfair Display', 'serif'],
   bodyFontFamily: ['Fira Sans', 'sans-serif'],
-  headerGray: 0,
-  bodyGray: 20,
+  headerColor: 'hsla(0,0%,0%,1)',
+  bodyColor: 'hsla(0,0%,0%,0.8)',
   headerWeight: 700,
   bodyWeight: 400,
   boldWeight: 700,
@@ -48,7 +48,7 @@ const theme: OptionsType = {
     },
     'blockquote cite': {
       ...adjustFontSizeTo(options.baseFontSize),
-      color: gray(options.bodyGray),
+      color: options.bodyColor,
       fontWeight: options.bodyWeight,
     },
     'blockquote cite:before': {

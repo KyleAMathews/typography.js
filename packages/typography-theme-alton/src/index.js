@@ -27,8 +27,7 @@ const theme: OptionsType = {
   ],
   headerFontFamily: ['Domine', 'sans-serif'],
   bodyFontFamily: ['Open Sans', 'sans-serif'],
-  headerGray: 0,
-  bodyGray: 0,
+  bodyColor: 'black',
   headerWeight: 700,
   bodyWeight: 400,
   boldWeight: 700,
@@ -44,7 +43,7 @@ const theme: OptionsType = {
         textDecoration: 'none',
       },
       'a:hover,a:active': {
-        color: gray(options.bodyGray),
+        color: options.bodyColor,
       },
       blockquote: {
         ...scale(1/5),
@@ -59,7 +58,7 @@ const theme: OptionsType = {
       },
       'blockquote cite': {
         ...adjustFontSizeTo(options.baseFontSize),
-        color: gray(options.bodyGray),
+        color: options.bodyColor,
         fontWeight: options.bodyWeight,
       },
       'blockquote cite:before': {

@@ -8,8 +8,8 @@ const theme: OptionsType = {
   scale: 1.3125,
   headerFontFamily: ['Helvetica Neue', 'Helvetica', 'Segoe UI', 'Arial', 'freesans', 'sans-serif', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'], // eslint-disable-line
   bodyFontFamily: ['georgia', 'serif'],
-  headerGray: 0,
-  bodyGray: 20,
+  headerColor: 'hsla(0,0%,0%,1)',
+  bodyColor: 'hsla(0,0%,0%,0.8)',
   headerWeight: 'bold',
   bodyWeight: 'normal',
   boldWeight: 'bold',

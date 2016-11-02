@@ -25,15 +25,14 @@ const theme: OptionsType = {
   ],
   headerFontFamily: ['Exo', 'sans-serif'],
   bodyFontFamily: ['Yrsa', 'georgia', 'sans-serif'],
-  headerGray: 13,
-  bodyGray: 20,
+  bodyColor: 'hsla(0,0%,0%,0.8)',
   headerWeight: 700,
   bodyWeight: 400,
   boldWeight: 700,
   overrideStyles: ({ adjustFontSizeTo, scale, rhythm }, options) => {
     const styles = {
       a: {
-        color: gray(options.bodyGray),
+        color: options.bodyColor,
       },
       'a:hover': {
         color: '#3498DB',

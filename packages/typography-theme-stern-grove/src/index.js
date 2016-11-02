@@ -17,8 +17,8 @@ const theme: OptionsType = {
   ],
   headerFontFamily: ['Montserrat', 'sans-serif'],
   bodyFontFamily: ['Georgia', 'Cambria', 'serif'],
-  headerGray: 50,
-  bodyGray: 13,
+  headerColor: 'hsla(0,0%,0%,0.5)',
+  bodyColor: 'hsla(0,0%,0%,0.87)',
   headerWeight: 400,
   bodyWeight: 400,
   boldWeight: 700,
@@ -47,7 +47,7 @@ const theme: OptionsType = {
     },
     'blockquote cite': {
       ...adjustFontSizeTo(options.baseFontSize),
-      color: gray(options.bodyGray),
+      color: options.bodyColor,
       fontWeight: options.bodyWeight,
     },
     'blockquote cite:before': {
