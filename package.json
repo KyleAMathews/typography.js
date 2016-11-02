@@ -15,12 +15,12 @@
     "eslint-plugin-import": "^1.15.0",
     "eslint-plugin-jsx-a11y": "^2.2.2",
     "eslint-plugin-react": "^6.3.0",
-    "flow-bin": "^0.33.0",
+    "flow-bin": "0.34.0",
     "glob": "^7.1.0",
     "jest": "^16.0.1",
     "jest-cli": "^16.0.1",
     "json2md": "^1.5.2",
-    "lerna": "^2.0.0-beta.24",
+    "lerna": "2.0.0-beta.30",
     "lodash": "^4.16.1",
     "phantom": "^2.1.12",
     "phantomjs-prebuilt": "^2.1.7",
@@ -29,22 +29,22 @@
     "react-dom": "^15.3.2",
     "react-test-renderer": "^15.3.2"
   },
-  "private": true,
-  "scripts": {
-    "build": "lerna run build",
-    "flow": "flow",
-    "lint": "eslint --ext .js,.jsx --ignore-path .gitignore .",
-    "watch": "lerna run watch",
-    "publish": "npm run build && lerna publish",
-    "test-api": "jest",
-    "test-ci": "npm run build && npm run test-coverage && codecov",
-    "test": "npm run build && npm run lint && npm run test-api",
-    "test-coverage": "npm run test-api -- --coverage"
-  },
   "jest": {
     "testEnvironment": "node",
     "coveragePathIgnorePatterns": [
       "dist"
     ]
+  },
+  "private": true,
+  "scripts": {
+    "build": "lerna run build",
+    "flow": "flow",
+    "lint": "eslint --ext .js,.jsx --ignore-path .gitignore .",
+    "publish": "npm run build && lerna publish",
+    "test": "npm run build && npm run lint && npm run test-api",
+    "test-api": "jest",
+    "test-ci": "npm run build && npm run test-coverage && codecov",
+    "test-coverage": "npm run test-api -- --coverage",
+    "watch": "lerna run watch"
   }
 }
