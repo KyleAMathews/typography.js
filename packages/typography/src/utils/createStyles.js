@@ -44,7 +44,8 @@ module.exports = (vr: any, options: OptionsType) => {
 
   // Base body styles.
   styles = setStyles(styles, 'body', {
-    color: gray(options.bodyGray, options.bodyGrayHue),
+    color: options.bodyColor,
+    fontFamily: options.bodyFontFamily.join(','),
     fontWeight: options.bodyWeight,
     wordWrap: 'break-word',
   })
@@ -56,7 +57,7 @@ module.exports = (vr: any, options: OptionsType) => {
 
   // All block elements get one rhythm of bottom margin by default
   // or whatever is passed in as option.
-  let blockMarginBottom
+  let blockMarginBottom = ''
   if (isNumber(options.blockMarginBottom)) {
     blockMarginBottom = vr.rhythm(options.blockMarginBottom)
   } else if (isString(options.blockMarginBottom)) {
@@ -115,7 +116,7 @@ module.exports = (vr: any, options: OptionsType) => {
 
   // hr.
   styles = setStyles(styles, 'hr', {
-    background: gray(80, options.bodyGrayHue),
+    background: gray(80),
     border: 'none',
     height: '1px',
     marginBottom: `calc(${blockMarginBottom} - 1px)`,
@@ -188,7 +189,7 @@ module.exports = (vr: any, options: OptionsType) => {
 
   // Create styles for headers.
   styles = setStyles(styles, ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'], {
-    color: gray(options.headerGray, options.headerGrayHue),
+    color: options.headerColor,
     fontFamily: options.headerFontFamily.join(','),
     fontWeight: options.headerWeight,
     textRendering: 'optimizeLegibility',
@@ -217,12 +218,12 @@ module.exports = (vr: any, options: OptionsType) => {
   }
 
   // Call overrideStyles function on options (if set).
-  if (isFunction(options.overrideStyles)) {
+  if (options.overrideStyles && isFunction(options.overrideStyles)) {
     styles = merge(styles, options.overrideStyles(vr, options, styles))
   }
 
   // Call overrideThemeStyles function on options (if set).
-  if (isFunction(options.overrideThemeStyles)) {
+  if (options.overrideThemeStyles && isFunction(options.overrideThemeStyles)) {
     styles = merge(styles, options.overrideThemeStyles(vr, options, styles))
   }
 

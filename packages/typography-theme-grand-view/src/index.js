@@ -25,8 +25,8 @@ const theme: OptionsType = {
   ],
   headerFontFamily: ['Montserrat', 'sans-serif'],
   bodyFontFamily: ['Arvo', 'sans-serif'],
-  headerGray: 0,
-  bodyGray: 20,
+  headerColor: 'hsla(0,0%,0%,1)',
+  bodyColor: 'hsla(0,0%,0%,0.8)',
   headerWeight: 700,
   bodyWeight: 400,
   boldWeight: 700,
@@ -36,7 +36,7 @@ const theme: OptionsType = {
       textDecoration: 'none',
     },
     'a:hover,a:active': {
-      color: gray(options.bodyGray),
+      color: options.bodyColor,
     },
     'h1,h2,h3,h4,h5,h6': {
       marginTop: rhythm(2),
@@ -53,7 +53,7 @@ const theme: OptionsType = {
     },
     'blockquote cite': {
       ...adjustFontSizeTo(options.baseFontSize),
-      color: gray(options.bodyGray),
+      color: options.bodyColor,
       fontWeight: options.bodyWeight,
     },
     'blockquote cite:before': {
