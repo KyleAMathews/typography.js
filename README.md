@@ -8,6 +8,9 @@ A powerful toolkit for building websites with beautiful design.
 http://kyleamathews.github.io/typography.js
 
 ## Why
+The goal of Typography.js is to provide a high-level elegant API for
+expressing typographic design intent.
+
 Typography is a complex *system* of interrelated styles. 100s of style
 declarations on dozens of elements must be in harmonious order. Trying
 one design change can mean making dozens of tedious recalculations and
