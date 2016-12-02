@@ -7,7 +7,7 @@ const theme: OptionsType = {
   title: 'Irving',
   baseFontSize: '21px',
   baseLineHeight: 1.38,
-  scale: 1.5,
+  scaleRatio: 1.5,
   googleFonts: [
     {
       name: 'Exo',

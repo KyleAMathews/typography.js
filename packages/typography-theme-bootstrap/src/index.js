@@ -19,7 +19,7 @@ const theme: OptionsType = {
     'Helvetica Neue',
     'sans-serif',
   ],
-  scale: 2.25,
+  scaleRatio: 2.25,
   bodyWeight: 400,
   headerWeight: 500,
   boldWeight: 'bold',

@@ -5,7 +5,7 @@ const theme: OptionsType = {
   title: 'Wordpress Theme 2011',
   baseFontSize: '15px',
   baseLineHeight: 1.6,
-  scale: 1.7333,
+  scaleRatio: 1.7333,
   headerFontFamily: ['Helvetica Neue', 'Helvetica', 'Segoe UI', 'Arial', 'freesans', 'sans-serif', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'], // eslint-disable-line
   bodyFontFamily: ['Helvetica Neue', 'Helvetica', 'Segoe UI', 'Arial', 'freesans', 'sans-serif', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'], // eslint-disable-line
   headerColor: 'hsla(0,0%,0%,0.87)',

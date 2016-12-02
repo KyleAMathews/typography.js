@@ -7,7 +7,7 @@ const theme: OptionsType = {
   title: 'Wordpress Theme 2016',
   baseFontSize: '16px',
   baseLineHeight: 1.75,
-  scale: 5/2,
+  scaleRatio: 5/2,
   googleFonts: [
     {
       name: 'Montserrat',

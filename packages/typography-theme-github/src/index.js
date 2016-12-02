@@ -30,7 +30,7 @@ const theme: OptionsType = {
     'Segoe UI Emoji',
     'Segoe UI Symbol',
   ],
-  scale: 2,
+  scaleRatio: 2,
   bodyColor: 'hsla(0,0%,0%,0.8)',
   headerWeight: 600,
   bodyWeight: 'normal',

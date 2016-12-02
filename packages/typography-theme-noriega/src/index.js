@@ -19,7 +19,7 @@ const theme: OptionsType = {
       ],
     },
   ],
-  scale: 1.618,
+  scaleRatio: 1.618,
 }
 
 export default theme

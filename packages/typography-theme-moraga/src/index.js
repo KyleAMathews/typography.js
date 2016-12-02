@@ -19,7 +19,7 @@ const theme: OptionsType = {
       ],
     },
   ],
-  scale: 2.5,
+  scaleRatio: 2.5,
   headerFontFamily: ['Source Sans Pro', 'sans-serif'],
   bodyFontFamily: ['Source Sans Pro', 'sans-serif'],
   headerColor: 'hsla(0,0%,0%,0.85)',
