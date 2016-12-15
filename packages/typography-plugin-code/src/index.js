@@ -28,6 +28,7 @@ const CodePlugin = (): Function =>
       borderRadius: '3px',
       lineHeight: 1.42,
       overflow: 'auto',
+      wordWrap: 'normal', // So code will scroll on Safari.
       padding: blockMarginBottom,
     },
     'pre code': {
