@@ -324,6 +324,7 @@ Object {
     "paddingLeft": 0,
     "paddingRight": 0,
     "paddingTop": 0,
+    "wordWrap": "normal",
   },
   "pre code": Object {
     "background": "none",
@@ -726,6 +727,7 @@ Object {
     "paddingLeft": 0,
     "paddingRight": 0,
     "paddingTop": 0,
+    "wordWrap": "normal",
   },
   "pre code": Object {
     "background": "none",
@@ -1128,6 +1130,7 @@ Object {
     "paddingLeft": 0,
     "paddingRight": 0,
     "paddingTop": 0,
+    "wordWrap": "normal",
   },
   "pre code": Object {
     "background": "none",
