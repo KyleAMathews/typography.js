@@ -16,7 +16,15 @@ const compileStyles = (styles) => (
         newObject[property] = value
         stylesStr += compileStyles(newObject) // eslint-disable-line
       } else {
-        stylesStr += `${decamelize(property, '-')}:${value};` // eslint-disable-line
+        let newStyle = `${decamelize(property, '-')}:${value};` // eslint-disable-line
+        // If the property is prefixed, add an additional dash at the beginning.
+        const prefixes = [ 'Webkit', 'ms', 'Moz', 'O' ]
+        prefixes.forEach((prefix) => {
+          if (property.slice(0, prefix.length) === prefix) {
+            newStyle = `-${newStyle}`
+          }
+        })
+        stylesStr += newStyle
       }
     }))
     stylesStr += '}' // eslint-disable-line

@@ -48,6 +48,11 @@ module.exports = (vr: any, options: OptionsType) => {
     fontFamily: options.bodyFontFamily.join(','),
     fontWeight: options.bodyWeight,
     wordWrap: 'break-word',
+    fontKerning: 'normal',
+    MozFontFeatureSettings: '"kern", "liga", "clig", "calt"',
+    msFontFeatureSettings: '"kern", "liga", "clig", "calt"',
+    WebkitFontFeatureSettings: '"kern", "liga", "clig", "calt"',
+    fontFeatureSettings: '"kern", "liga", "clig", "calt"',
   })
 
   // Make images responsive.

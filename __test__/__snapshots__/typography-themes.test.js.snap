@@ -81,9 +81,14 @@ Object {
     "content": "\"— \"",
   },
   "body": Object {
+    "MozFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "WebkitFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "color": "black",
     "fontFamily": "Open Sans,sans-serif",
+    "fontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "fontKerning": "normal",
     "fontWeight": 400,
+    "msFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "wordWrap": "break-word",
   },
   "code": Object {
@@ -473,9 +478,14 @@ Object {
     "lineHeight": "1.5rem",
   },
   "body": Object {
+    "MozFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "WebkitFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "color": "hsla(204,12.449720506%,0%,0.77)",
     "fontFamily": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif",
+    "fontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "fontKerning": "normal",
     "fontWeight": 400,
+    "msFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "wordWrap": "break-word",
   },
   "code": Object {
@@ -877,9 +887,14 @@ Object {
     "marginBottom": 0,
   },
   "body": Object {
+    "MozFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "WebkitFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "color": "hsla(0,0%,0%,0.8)",
     "fontFamily": "Alegreya,sans-serif",
+    "fontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "fontKerning": "normal",
     "fontWeight": 400,
+    "msFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "wordWrap": "break-word",
   },
   "code": Object {
@@ -1293,9 +1308,14 @@ Object {
     "content": "\"— \"",
   },
   "body": Object {
+    "MozFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "WebkitFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "color": "hsla(0,0%,0%,0.8)",
     "fontFamily": "Cabin,serif",
+    "fontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "fontKerning": "normal",
     "fontWeight": 400,
+    "msFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "wordWrap": "break-word",
   },
   "code": Object {
@@ -1718,9 +1738,14 @@ Object {
     "content": "\"— \"",
   },
   "body": Object {
+    "MozFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "WebkitFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "color": "hsla(0,0%,0%,0.8)",
     "fontFamily": "PT Sans,sans-serif",
+    "fontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "fontKerning": "normal",
     "fontWeight": 400,
+    "msFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "wordWrap": "break-word",
   },
   "code": Object {
@@ -2142,9 +2167,14 @@ Object {
     "content": "\"— \"",
   },
   "body": Object {
+    "MozFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "WebkitFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "color": "hsla(0,0%,0%,0.8)",
     "fontFamily": "Quattrocento Sans,serif",
+    "fontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "fontKerning": "normal",
     "fontWeight": 400,
+    "msFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "wordWrap": "break-word",
   },
   "code": Object {
@@ -2542,10 +2572,15 @@ Object {
     "paddingTop": 0,
   },
   "body": Object {
+    "MozFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "WebkitFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "color": "hsla(0,0%,0%,0.87)",
     "fontFamily": "Cabin Condensed,georgia,sans-serif",
+    "fontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "fontKerning": "normal",
     "fontWeight": 400,
     "letterSpacing": ".03em",
+    "msFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "wordWrap": "break-word",
   },
   "code": Object {
@@ -2932,9 +2967,14 @@ Object {
     "paddingTop": 0,
   },
   "body": Object {
+    "MozFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "WebkitFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "color": "hsla(0,0%,0%,0.8)",
     "fontFamily": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol",
+    "fontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "fontKerning": "normal",
     "fontWeight": "normal",
+    "msFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "wordWrap": "break-word",
   },
   "code": Object {
@@ -3353,9 +3393,14 @@ Object {
     "content": "\"— \"",
   },
   "body": Object {
+    "MozFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "WebkitFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "color": "hsla(0,0%,0%,0.8)",
     "fontFamily": "Arvo,sans-serif",
+    "fontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "fontKerning": "normal",
     "fontWeight": 400,
+    "msFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "wordWrap": "break-word",
   },
   "code": Object {
@@ -3752,9 +3797,14 @@ Object {
     "paddingTop": 0,
   },
   "body": Object {
+    "MozFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "WebkitFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "color": "hsla(0,0%,0%,0.8)",
     "fontFamily": "Yrsa,georgia,sans-serif",
+    "fontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "fontKerning": "normal",
     "fontWeight": 400,
+    "msFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "wordWrap": "break-word",
   },
   "code": Object {
@@ -4169,9 +4219,14 @@ Object {
     "content": "\"— \"",
   },
   "body": Object {
+    "MozFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "WebkitFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "color": "hsla(0,0%,0%,0.8)",
     "fontFamily": "Vollkorn,Georgia,serif",
+    "fontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "fontKerning": "normal",
     "fontWeight": 400,
+    "msFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "wordWrap": "break-word",
   },
   "code": Object {
@@ -4580,9 +4635,14 @@ Object {
     "content": "\"— \"",
   },
   "body": Object {
+    "MozFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "WebkitFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "color": "hsla(0,0%,0%,0.8)",
     "fontFamily": "Fira Sans,sans-serif",
+    "fontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "fontKerning": "normal",
     "fontWeight": 400,
+    "msFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "wordWrap": "break-word",
   },
   "code": Object {
@@ -4978,9 +5038,14 @@ Object {
     "paddingTop": 0,
   },
   "body": Object {
+    "MozFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "WebkitFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "color": "hsla(0,0%,0%,0.8)",
     "fontFamily": "Libre Baskerville,serif",
+    "fontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "fontKerning": "normal",
     "fontWeight": 400,
+    "msFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "wordWrap": "break-word",
   },
   "code": Object {
@@ -5399,9 +5464,14 @@ Object {
     "content": "\"— \"",
   },
   "body": Object {
+    "MozFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "WebkitFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "color": "hsla(0,0%,0%,0.73)",
     "fontFamily": "Lora,serif",
+    "fontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "fontKerning": "normal",
     "fontWeight": 400,
+    "msFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "wordWrap": "break-word",
   },
   "code": Object {
@@ -5814,9 +5884,14 @@ Object {
     "paddingTop": 0,
   },
   "body": Object {
+    "MozFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "WebkitFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "color": "hsla(0,0%,0%,0.7)",
     "fontFamily": "Source Sans Pro,sans-serif",
+    "fontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "fontKerning": "normal",
     "fontWeight": 400,
+    "msFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "wordWrap": "break-word",
   },
   "code": Object {
@@ -6196,9 +6271,14 @@ Object {
     "paddingTop": 0,
   },
   "body": Object {
+    "MozFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "WebkitFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "color": "hsla(0,0%,0%,0.8)",
     "fontFamily": "Lato,sans-serif",
+    "fontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "fontKerning": "normal",
     "fontWeight": 400,
+    "msFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "wordWrap": "break-word",
   },
   "code": Object {
@@ -6617,9 +6697,14 @@ Object {
     "content": "\"— \"",
   },
   "body": Object {
+    "MozFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "WebkitFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "color": "hsla(0,0%,0%,0.73)",
     "fontFamily": "Roboto,serif",
+    "fontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "fontKerning": "normal",
     "fontWeight": 400,
+    "msFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "wordWrap": "break-word",
   },
   "code": Object {
@@ -7043,9 +7128,14 @@ Object {
     "content": "\"— \"",
   },
   "body": Object {
+    "MozFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "WebkitFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "color": "hsla(0,0%,0%,0.8)",
     "fontFamily": "Merriweather,sans-serif",
+    "fontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "fontKerning": "normal",
     "fontWeight": 400,
+    "msFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "wordWrap": "break-word",
   },
   "code": Object {
@@ -7458,9 +7548,14 @@ Object {
     "content": "\"— \"",
   },
   "body": Object {
+    "MozFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "WebkitFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "color": "hsla(0,0%,0%,0.8)",
     "fontFamily": "Source Sans Pro,sans-serif",
+    "fontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "fontKerning": "normal",
     "fontWeight": 400,
+    "msFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "wordWrap": "break-word",
   },
   "code": Object {
@@ -7875,9 +7970,14 @@ Object {
     "content": "\"— \"",
   },
   "body": Object {
+    "MozFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "WebkitFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "color": "hsla(0,0%,0%,0.87)",
     "fontFamily": "Georgia,Cambria,serif",
+    "fontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "fontKerning": "normal",
     "fontWeight": 400,
+    "msFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "wordWrap": "break-word",
   },
   "code": Object {
@@ -8292,9 +8392,14 @@ Object {
     "content": "\"— \"",
   },
   "body": Object {
+    "MozFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "WebkitFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "color": "hsla(0,0%,0%,0.8)",
     "fontFamily": "Lato,sans-serif",
+    "fontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "fontKerning": "normal",
     "fontWeight": 400,
+    "msFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "wordWrap": "break-word",
   },
   "code": Object {
@@ -8714,9 +8819,14 @@ Object {
     "content": "\"— \"",
   },
   "body": Object {
+    "MozFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "WebkitFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "color": "hsla(0,0%,0%,0.9)",
     "fontFamily": "Merriweather,Georgia,serif",
+    "fontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "fontKerning": "normal",
     "fontWeight": 300,
+    "msFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "wordWrap": "break-word",
   },
   "code": Object {
@@ -9144,9 +9254,14 @@ Object {
     "content": "\"— \"",
   },
   "body": Object {
+    "MozFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "WebkitFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "color": "hsla(0,0%,0%,0.73)",
     "fontFamily": "Crimson Text,serif",
+    "fontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "fontKerning": "normal",
     "fontWeight": 400,
+    "msFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "wordWrap": "break-word",
   },
   "code": Object {
@@ -9554,9 +9669,14 @@ Object {
     "lineHeight": "1.53rem",
   },
   "body": Object {
+    "MozFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "WebkitFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "color": "hsla(0,0%,0%,0.8)",
     "fontFamily": "Source Sans Pro,sans-serif",
+    "fontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "fontKerning": "normal",
     "fontWeight": 400,
+    "msFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "wordWrap": "break-word",
   },
   "code": Object {
@@ -9944,9 +10064,14 @@ Object {
     "paddingTop": 0,
   },
   "body": Object {
+    "MozFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "WebkitFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "color": "hsla(0,0%,0%,0.85)",
     "fontFamily": "sans-serif",
+    "fontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "fontKerning": "normal",
     "fontWeight": "normal",
+    "msFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "wordWrap": "break-word",
   },
   "code": Object {
@@ -10355,9 +10480,14 @@ Object {
     "fontStyle": "normal",
   },
   "body": Object {
+    "MozFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "WebkitFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "color": "hsla(0,0%,0%,0.8)",
     "fontFamily": "georgia,serif",
+    "fontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "fontKerning": "normal",
     "fontWeight": "normal",
+    "msFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "wordWrap": "break-word",
   },
   "code": Object {
@@ -10747,9 +10877,14 @@ Object {
     "paddingTop": 0,
   },
   "body": Object {
+    "MozFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "WebkitFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "color": "hsla(0,0%,0%,0.78)",
     "fontFamily": "Helvetica Neue,Helvetica,Segoe UI,Arial,freesans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol",
+    "fontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "fontKerning": "normal",
     "fontWeight": 300,
+    "msFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "wordWrap": "break-word",
   },
   "code": Object {
@@ -11148,9 +11283,14 @@ Object {
     "paddingTop": "1.714rem",
   },
   "body": Object {
+    "MozFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "WebkitFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "color": "hsla(0,0%,0%,0.73)",
     "fontFamily": "Open Sans,sans-serif",
+    "fontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "fontKerning": "normal",
     "fontWeight": 400,
+    "msFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "wordWrap": "break-word",
   },
   "code": Object {
@@ -11560,9 +11700,14 @@ Object {
     "textTransform": "uppercase",
   },
   "body": Object {
+    "MozFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "WebkitFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "color": "hsla(0,0%,0%,0.93)",
     "fontFamily": "Source Sans Pro,serif",
+    "fontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "fontKerning": "normal",
     "fontWeight": 400,
+    "msFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "wordWrap": "break-word",
   },
   "code": Object {
@@ -11966,9 +12111,14 @@ Object {
     "content": "\"— \"",
   },
   "body": Object {
+    "MozFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "WebkitFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "color": "hsla(0,0%,0%,0.83)",
     "fontFamily": "Lato,serif",
+    "fontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "fontKerning": "normal",
     "fontWeight": 400,
+    "msFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "wordWrap": "break-word",
   },
   "code": Object {
@@ -12383,9 +12533,14 @@ Object {
     "content": "\"— \"",
   },
   "body": Object {
+    "MozFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "WebkitFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "color": "hsla(0,0%,0%,0.8)",
     "fontFamily": "Noto Serif,serif",
+    "fontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "fontKerning": "normal",
     "fontWeight": 400,
+    "msFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "wordWrap": "break-word",
   },
   "code": Object {
@@ -12812,9 +12967,14 @@ Object {
     "content": "\"— \"",
   },
   "body": Object {
+    "MozFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "WebkitFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "color": "hsla(0,0%,0%,0.9)",
     "fontFamily": "Merriweather,Georgia,serif",
+    "fontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "fontKerning": "normal",
     "fontWeight": 400,
+    "msFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "wordWrap": "break-word",
   },
   "code": Object {
@@ -13220,9 +13380,14 @@ Object {
     "paddingTop": 0,
   },
   "body": Object {
+    "MozFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "WebkitFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "color": "hsla(0,0%,0%,0.8)",
     "fontFamily": "Lucida Grande,Verdana,Arial,Sans-Serif",
+    "fontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "fontKerning": "normal",
     "fontWeight": "normal",
+    "msFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "wordWrap": "break-word",
   },
   "code": Object {
