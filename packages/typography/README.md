@@ -1,4 +1,6 @@
 # Typography.js
+A powerful toolkit for building websites with beautiful typography.
+# Typography.js [![Build Status][build-badge]][build-status] [![Coverage Status][coverage-badge]][coverage-status]
 A powerful toolkit for building websites with beautiful design.
 
 ## Install
@@ -8,6 +10,9 @@ A powerful toolkit for building websites with beautiful design.
 http://kyleamathews.github.io/typography.js
 
 ## Why
+The goal of Typography.js is to provide a high-level elegant API for
+expressing typographic design intent.
+
 Typography is a complex *system* of interrelated styles. 100s of style
 declarations on dozens of elements must be in harmonious order. Trying
 one design change can mean making dozens of tedious recalculations and
@@ -239,14 +244,10 @@ googleFonts: [
 system UI font stack.
 * **bodyFontFamily**: An array of strings specifying the font family
   stack for the body, defaults to `['georgia', 'serif']`.
-* **headerGray**: The "lightness" value for headers (set in hsl). Defaults
-  to `20`.
-* **headerGrayHue**: The "hue" value for headers (set in hsl). Defaults to
-`0`. Also accepts three named hues, `cool`, `slate`, and `warm`.
-* **bodyGray**: The "lightness" value for body text (in hsl). Defaults
-to `20`.
-* **bodyGrayHue**: The "hue" value for body text (in hsl). Defaults to
-`0`. Also accepts three named hues, `cool`, `slate`, and `warm`.
+* **headerColor**: A css color string to be set on headers. Defaults
+  to `inherit`.
+* **bodyColor**: A css color string to be set for body text. Defaults
+to `hsl(0,0%,0%,0.8)`.
 * **headerWeight**: Specify the font weight for headers. Defaults to
 `bold`.
 * **bodyWeight**: Specify the font weight for body text. Defaults to
@@ -306,5 +307,86 @@ overrideThemeStyles: ({ rhythm }, options, styles) => ({
 Typography.js is a monorepo facilitated by
 [Lerna](https://github.com/lerna/lerna).
 
-TODO: document constants + compass-vertical-rhythm + using
-typography.js for inline styles.
+TODO: document constants + compass-vertical-rhythm + using typgraphy.js
+for inline styles.
+
+<!-- Definitions -->
+
+[build-badge]: https://img.shields.io/travis/KyleAMathews/typography.js.svg
+
+[build-status]: https://travis-ci.org/KyleAMathews/typography.js
+
+[coverage-badge]: https://img.shields.io/codecov/c/github/KyleAMathews/typography.js.svg
+
+[coverage-status]: https://codecov.io/github/KyleAMathews/typography.js
+=======
+
+## Backers
+
+Support us with a monthly donation and help us continue our activities. [[Become a backer](https://opencollective.com/typographyjs#backer)]
+
+<a href="https://opencollective.com/typographyjs/backer/0/website" target="_blank"><img src="https://opencollective.com/typographyjs/backer/0/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/backer/1/website" target="_blank"><img src="https://opencollective.com/typographyjs/backer/1/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/backer/2/website" target="_blank"><img src="https://opencollective.com/typographyjs/backer/2/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/backer/3/website" target="_blank"><img src="https://opencollective.com/typographyjs/backer/3/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/backer/4/website" target="_blank"><img src="https://opencollective.com/typographyjs/backer/4/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/backer/5/website" target="_blank"><img src="https://opencollective.com/typographyjs/backer/5/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/backer/6/website" target="_blank"><img src="https://opencollective.com/typographyjs/backer/6/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/backer/7/website" target="_blank"><img src="https://opencollective.com/typographyjs/backer/7/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/backer/8/website" target="_blank"><img src="https://opencollective.com/typographyjs/backer/8/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/backer/9/website" target="_blank"><img src="https://opencollective.com/typographyjs/backer/9/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/backer/10/website" target="_blank"><img src="https://opencollective.com/typographyjs/backer/10/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/backer/11/website" target="_blank"><img src="https://opencollective.com/typographyjs/backer/11/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/backer/12/website" target="_blank"><img src="https://opencollective.com/typographyjs/backer/12/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/backer/13/website" target="_blank"><img src="https://opencollective.com/typographyjs/backer/13/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/backer/14/website" target="_blank"><img src="https://opencollective.com/typographyjs/backer/14/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/backer/15/website" target="_blank"><img src="https://opencollective.com/typographyjs/backer/15/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/backer/16/website" target="_blank"><img src="https://opencollective.com/typographyjs/backer/16/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/backer/17/website" target="_blank"><img src="https://opencollective.com/typographyjs/backer/17/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/backer/18/website" target="_blank"><img src="https://opencollective.com/typographyjs/backer/18/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/backer/19/website" target="_blank"><img src="https://opencollective.com/typographyjs/backer/19/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/backer/20/website" target="_blank"><img src="https://opencollective.com/typographyjs/backer/20/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/backer/21/website" target="_blank"><img src="https://opencollective.com/typographyjs/backer/21/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/backer/22/website" target="_blank"><img src="https://opencollective.com/typographyjs/backer/22/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/backer/23/website" target="_blank"><img src="https://opencollective.com/typographyjs/backer/23/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/backer/24/website" target="_blank"><img src="https://opencollective.com/typographyjs/backer/24/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/backer/25/website" target="_blank"><img src="https://opencollective.com/typographyjs/backer/25/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/backer/26/website" target="_blank"><img src="https://opencollective.com/typographyjs/backer/26/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/backer/27/website" target="_blank"><img src="https://opencollective.com/typographyjs/backer/27/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/backer/28/website" target="_blank"><img src="https://opencollective.com/typographyjs/backer/28/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/backer/29/website" target="_blank"><img src="https://opencollective.com/typographyjs/backer/29/avatar.svg"></a>
+
+## Sponsors
+
+Become a sponsor and get your logo on our README on Github with a link to your site. [[Become a sponsor](https://opencollective.com/typographyjs#sponsor)]
+
+<a href="https://opencollective.com/typographyjs/sponsor/0/website" target="_blank"><img src="https://opencollective.com/typographyjs/sponsor/0/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/sponsor/1/website" target="_blank"><img src="https://opencollective.com/typographyjs/sponsor/1/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/sponsor/2/website" target="_blank"><img src="https://opencollective.com/typographyjs/sponsor/2/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/sponsor/3/website" target="_blank"><img src="https://opencollective.com/typographyjs/sponsor/3/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/sponsor/4/website" target="_blank"><img src="https://opencollective.com/typographyjs/sponsor/4/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/sponsor/5/website" target="_blank"><img src="https://opencollective.com/typographyjs/sponsor/5/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/sponsor/6/website" target="_blank"><img src="https://opencollective.com/typographyjs/sponsor/6/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/sponsor/7/website" target="_blank"><img src="https://opencollective.com/typographyjs/sponsor/7/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/sponsor/8/website" target="_blank"><img src="https://opencollective.com/typographyjs/sponsor/8/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/sponsor/9/website" target="_blank"><img src="https://opencollective.com/typographyjs/sponsor/9/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/sponsor/10/website" target="_blank"><img src="https://opencollective.com/typographyjs/sponsor/10/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/sponsor/11/website" target="_blank"><img src="https://opencollective.com/typographyjs/sponsor/11/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/sponsor/12/website" target="_blank"><img src="https://opencollective.com/typographyjs/sponsor/12/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/sponsor/13/website" target="_blank"><img src="https://opencollective.com/typographyjs/sponsor/13/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/sponsor/14/website" target="_blank"><img src="https://opencollective.com/typographyjs/sponsor/14/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/sponsor/15/website" target="_blank"><img src="https://opencollective.com/typographyjs/sponsor/15/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/sponsor/16/website" target="_blank"><img src="https://opencollective.com/typographyjs/sponsor/16/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/sponsor/17/website" target="_blank"><img src="https://opencollective.com/typographyjs/sponsor/17/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/sponsor/18/website" target="_blank"><img src="https://opencollective.com/typographyjs/sponsor/18/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/sponsor/19/website" target="_blank"><img src="https://opencollective.com/typographyjs/sponsor/19/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/sponsor/20/website" target="_blank"><img src="https://opencollective.com/typographyjs/sponsor/20/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/sponsor/21/website" target="_blank"><img src="https://opencollective.com/typographyjs/sponsor/21/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/sponsor/22/website" target="_blank"><img src="https://opencollective.com/typographyjs/sponsor/22/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/sponsor/23/website" target="_blank"><img src="https://opencollective.com/typographyjs/sponsor/23/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/sponsor/24/website" target="_blank"><img src="https://opencollective.com/typographyjs/sponsor/24/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/sponsor/25/website" target="_blank"><img src="https://opencollective.com/typographyjs/sponsor/25/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/sponsor/26/website" target="_blank"><img src="https://opencollective.com/typographyjs/sponsor/26/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/sponsor/27/website" target="_blank"><img src="https://opencollective.com/typographyjs/sponsor/27/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/sponsor/28/website" target="_blank"><img src="https://opencollective.com/typographyjs/sponsor/28/avatar.svg"></a>
+<a href="https://opencollective.com/typographyjs/sponsor/29/website" target="_blank"><img src="https://opencollective.com/typographyjs/sponsor/29/avatar.svg"></a>
