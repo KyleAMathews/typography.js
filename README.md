@@ -2,8 +2,6 @@
 A powerful toolkit for building websites with beautiful typography.
 # Typography.js [![Build Status][build-badge]][build-status] [![Coverage Status][coverage-badge]][coverage-status]
 A powerful toolkit for building websites with beautiful design.
-[![OpenCollective](https://opencollective.com/typographyjs/backers/badge.svg)](#backers) 
-[![OpenCollective](https://opencollective.com/typographyjs/sponsors/badge.svg)](#sponsors)
 
 ## Install
 `npm install typography`
