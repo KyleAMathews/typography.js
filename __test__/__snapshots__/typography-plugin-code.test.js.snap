@@ -45,6 +45,9 @@ Object {
     "paddingRight": 0,
     "paddingTop": 0,
   },
+  "blockquote *:last-child": Object {
+    "marginBottom": 0,
+  },
   "body": Object {
     "MozFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "WebkitFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
@@ -269,6 +272,9 @@ Object {
   "li": Object {
     "marginBottom": "calc(1rem / 2)",
   },
+  "li *:last-child": Object {
+    "marginBottom": 0,
+  },
   "li > ol": Object {
     "marginBottom": "calc(1rem / 2)",
     "marginLeft": "1.5rem",
@@ -313,6 +319,9 @@ Object {
     "paddingLeft": 0,
     "paddingRight": 0,
     "paddingTop": 0,
+  },
+  "p *:last-child": Object {
+    "marginBottom": 0,
   },
   "pre": Object {
     "background": "hsla(0,0%,0%,0.04)",
@@ -360,8 +369,11 @@ Object {
     "width": "100%",
   },
   "td,th": Object {
+    "MozFontFeatureSettings": "tnum",
+    "WebkitFontFeatureSettings": "tnum",
     "borderBottom": "1px solid hsla(0,0%,0%,0.12)",
     "fontFeatureSettings": "tnum",
+    "msFontFeatureSettings": "tnum",
     "paddingBottom": "calc(0.75rem - 1px)",
     "paddingLeft": "1rem",
     "paddingRight": "1rem",
@@ -453,6 +465,9 @@ Object {
     "paddingRight": 0,
     "paddingTop": 0,
   },
+  "blockquote *:last-child": Object {
+    "marginBottom": 0,
+  },
   "body": Object {
     "MozFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "WebkitFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
@@ -677,6 +692,9 @@ Object {
   "li": Object {
     "marginBottom": "calc(1.5rem / 2)",
   },
+  "li *:last-child": Object {
+    "marginBottom": 0,
+  },
   "li > ol": Object {
     "marginBottom": "calc(1.5rem / 2)",
     "marginLeft": "1.5rem",
@@ -721,6 +739,9 @@ Object {
     "paddingLeft": 0,
     "paddingRight": 0,
     "paddingTop": 0,
+  },
+  "p *:last-child": Object {
+    "marginBottom": 0,
   },
   "pre": Object {
     "background": "hsla(0,0%,0%,0.04)",
@@ -768,8 +789,11 @@ Object {
     "width": "100%",
   },
   "td,th": Object {
+    "MozFontFeatureSettings": "tnum",
+    "WebkitFontFeatureSettings": "tnum",
     "borderBottom": "1px solid hsla(0,0%,0%,0.12)",
     "fontFeatureSettings": "tnum",
+    "msFontFeatureSettings": "tnum",
     "paddingBottom": "calc(0.75rem - 1px)",
     "paddingLeft": "1rem",
     "paddingRight": "1rem",
@@ -861,6 +885,9 @@ Object {
     "paddingRight": 0,
     "paddingTop": 0,
   },
+  "blockquote *:last-child": Object {
+    "marginBottom": 0,
+  },
   "body": Object {
     "MozFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "WebkitFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
@@ -1085,6 +1112,9 @@ Object {
   "li": Object {
     "marginBottom": "calc(1.5rem / 2)",
   },
+  "li *:last-child": Object {
+    "marginBottom": 0,
+  },
   "li > ol": Object {
     "marginBottom": "calc(1.5rem / 2)",
     "marginLeft": "1.5rem",
@@ -1129,6 +1159,9 @@ Object {
     "paddingLeft": 0,
     "paddingRight": 0,
     "paddingTop": 0,
+  },
+  "p *:last-child": Object {
+    "marginBottom": 0,
   },
   "pre": Object {
     "background": "hsla(0,0%,0%,0.04)",
@@ -1176,8 +1209,11 @@ Object {
     "width": "100%",
   },
   "td,th": Object {
+    "MozFontFeatureSettings": "tnum",
+    "WebkitFontFeatureSettings": "tnum",
     "borderBottom": "1px solid hsla(0,0%,0%,0.12)",
     "fontFeatureSettings": "tnum",
+    "msFontFeatureSettings": "tnum",
     "paddingBottom": "calc(0.75rem - 1px)",
     "paddingLeft": "1rem",
     "paddingRight": "1rem",
