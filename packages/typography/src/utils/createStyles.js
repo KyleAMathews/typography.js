@@ -151,6 +151,17 @@ module.exports = (vr: any, options: OptionsType) => {
     marginTop: `calc(${blockMarginBottom} / 2)`,
   })
 
+  // Remove margin-bottom on the last-child of a few block elements
+  // The worst offender of this seems to be markdown => html compilers
+  // as they put paragraphs within LIs amoung other oddities.
+  styles = setStyles(styles, [
+    'blockquote *:last-child',
+    'li *:last-child',
+    'p *:last-child',
+  ], {
+    marginBottom: 0,
+  })
+
   // Make generally smaller elements, smaller.
   styles = setStyles(styles, ['code', 'kbd', 'pre', 'samp'], {
     ...vr.adjustFontSizeTo('85%'),

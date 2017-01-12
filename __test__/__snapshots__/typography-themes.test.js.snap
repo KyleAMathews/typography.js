@@ -68,6 +68,9 @@ Object {
     "paddingRight": 0,
     "paddingTop": 0,
   },
+  "blockquote *:last-child": Object {
+    "marginBottom": 0,
+  },
   "blockquote > :last-child": Object {
     "marginBottom": 0,
   },
@@ -300,6 +303,9 @@ Object {
   "li": Object {
     "marginBottom": "calc(1.78rem / 2)",
   },
+  "li *:last-child": Object {
+    "marginBottom": 0,
+  },
   "li > ol": Object {
     "marginBottom": "calc(1.78rem / 2)",
     "marginLeft": "1.78rem",
@@ -345,6 +351,9 @@ Object {
     "paddingRight": 0,
     "paddingTop": 0,
   },
+  "p *:last-child": Object {
+    "marginBottom": 0,
+  },
   "pre": Object {
     "fontSize": "0.85rem",
     "lineHeight": "1.78rem",
@@ -379,8 +388,11 @@ Object {
     "width": "100%",
   },
   "td,th": Object {
+    "MozFontFeatureSettings": "tnum",
+    "WebkitFontFeatureSettings": "tnum",
     "borderBottom": "1px solid hsla(0,0%,0%,0.12)",
     "fontFeatureSettings": "tnum",
+    "msFontFeatureSettings": "tnum",
     "paddingBottom": "calc(0.89rem - 1px)",
     "paddingLeft": "1.18667rem",
     "paddingRight": "1.18667rem",
@@ -466,6 +478,9 @@ Object {
     "paddingLeft": "1rem",
     "paddingRight": "1rem",
     "paddingTop": "0.5rem",
+  },
+  "blockquote *:last-child": Object {
+    "marginBottom": 0,
   },
   "blockquote > :last-child": Object {
     "marginBottom": 0,
@@ -697,6 +712,9 @@ Object {
   "li": Object {
     "marginBottom": "calc(1.5rem / 2)",
   },
+  "li *:last-child": Object {
+    "marginBottom": 0,
+  },
   "li > ol": Object {
     "marginBottom": "calc(1.5rem / 2)",
     "marginLeft": "1.5rem",
@@ -742,6 +760,9 @@ Object {
     "paddingRight": 0,
     "paddingTop": 0,
   },
+  "p *:last-child": Object {
+    "marginBottom": 0,
+  },
   "pre": Object {
     "fontSize": "0.85rem",
     "lineHeight": "1.5rem",
@@ -776,8 +797,11 @@ Object {
     "width": "100%",
   },
   "td,th": Object {
+    "MozFontFeatureSettings": "tnum",
+    "WebkitFontFeatureSettings": "tnum",
     "borderBottom": "1px solid hsla(0,0%,0%,0.12)",
     "fontFeatureSettings": "tnum",
+    "msFontFeatureSettings": "tnum",
     "paddingBottom": "calc(0.75rem - 1px)",
     "paddingLeft": "1rem",
     "paddingRight": "1rem",
@@ -882,6 +906,9 @@ Object {
     "paddingLeft": "1.13437rem",
     "paddingRight": 0,
     "paddingTop": 0,
+  },
+  "blockquote *:last-child": Object {
+    "marginBottom": 0,
   },
   "blockquote > :last-child": Object {
     "marginBottom": 0,
@@ -1106,6 +1133,9 @@ Object {
   "li": Object {
     "marginBottom": "calc(1.65rem / 2)",
   },
+  "li *:last-child": Object {
+    "marginBottom": 0,
+  },
   "li > ol": Object {
     "marginBottom": "calc(1.65rem / 2)",
     "marginLeft": "1.65rem",
@@ -1151,6 +1181,9 @@ Object {
     "paddingRight": 0,
     "paddingTop": 0,
   },
+  "p *:last-child": Object {
+    "marginBottom": 0,
+  },
   "pre": Object {
     "fontSize": "0.85rem",
     "lineHeight": "1.65rem",
@@ -1185,8 +1218,11 @@ Object {
     "width": "100%",
   },
   "td,th": Object {
+    "MozFontFeatureSettings": "tnum",
+    "WebkitFontFeatureSettings": "tnum",
     "borderBottom": "1px solid hsla(0,0%,0%,0.12)",
     "fontFeatureSettings": "tnum",
+    "msFontFeatureSettings": "tnum",
     "paddingBottom": "calc(0.825rem - 1px)",
     "paddingLeft": "1.1rem",
     "paddingRight": "1.1rem",
@@ -1293,6 +1329,9 @@ Object {
     "paddingLeft": "0.95625rem",
     "paddingRight": 0,
     "paddingTop": 0,
+  },
+  "blockquote *:last-child": Object {
+    "marginBottom": 0,
   },
   "blockquote > :last-child": Object {
     "marginBottom": 0,
@@ -1531,6 +1570,9 @@ Object {
   "li": Object {
     "marginBottom": "calc(1.53rem / 2)",
   },
+  "li *:last-child": Object {
+    "marginBottom": 0,
+  },
   "li > ol": Object {
     "marginBottom": "calc(1.53rem / 2)",
     "marginLeft": "1.53rem",
@@ -1576,6 +1618,9 @@ Object {
     "paddingRight": 0,
     "paddingTop": 0,
   },
+  "p *:last-child": Object {
+    "marginBottom": 0,
+  },
   "pre": Object {
     "fontSize": "0.85rem",
     "lineHeight": "1.53rem",
@@ -1610,8 +1655,11 @@ Object {
     "width": "100%",
   },
   "td,th": Object {
+    "MozFontFeatureSettings": "tnum",
+    "WebkitFontFeatureSettings": "tnum",
     "borderBottom": "1px solid hsla(0,0%,0%,0.12)",
     "fontFeatureSettings": "tnum",
+    "msFontFeatureSettings": "tnum",
     "paddingBottom": "calc(0.765rem - 1px)",
     "paddingLeft": "1.02rem",
     "paddingRight": "1.02rem",
@@ -1723,6 +1771,9 @@ Object {
     "paddingLeft": "0.9375rem",
     "paddingRight": 0,
     "paddingTop": 0,
+  },
+  "blockquote *:last-child": Object {
+    "marginBottom": 0,
   },
   "blockquote > :last-child": Object {
     "marginBottom": 0,
@@ -1960,6 +2011,9 @@ Object {
   "li": Object {
     "marginBottom": "calc(1.5rem / 2)",
   },
+  "li *:last-child": Object {
+    "marginBottom": 0,
+  },
   "li > ol": Object {
     "marginBottom": "calc(1.5rem / 2)",
     "marginLeft": "1.5rem",
@@ -2005,6 +2059,9 @@ Object {
     "paddingRight": 0,
     "paddingTop": 0,
   },
+  "p *:last-child": Object {
+    "marginBottom": 0,
+  },
   "pre": Object {
     "fontSize": "0.85rem",
     "lineHeight": "1.5rem",
@@ -2039,8 +2096,11 @@ Object {
     "width": "100%",
   },
   "td,th": Object {
+    "MozFontFeatureSettings": "tnum",
+    "WebkitFontFeatureSettings": "tnum",
     "borderBottom": "1px solid hsla(0,0%,0%,0.12)",
     "fontFeatureSettings": "tnum",
+    "msFontFeatureSettings": "tnum",
     "paddingBottom": "calc(0.75rem - 1px)",
     "paddingLeft": "1rem",
     "paddingRight": "1rem",
@@ -2152,6 +2212,9 @@ Object {
     "paddingLeft": "0.90625rem",
     "paddingRight": 0,
     "paddingTop": 0,
+  },
+  "blockquote *:last-child": Object {
+    "marginBottom": 0,
   },
   "blockquote > :last-child": Object {
     "marginBottom": 0,
@@ -2390,6 +2453,9 @@ Object {
   "li": Object {
     "marginBottom": "calc(1.45rem / 2)",
   },
+  "li *:last-child": Object {
+    "marginBottom": 0,
+  },
   "li > ol": Object {
     "marginBottom": "calc(1.45rem / 2)",
     "marginLeft": "1.45rem",
@@ -2435,6 +2501,9 @@ Object {
     "paddingRight": 0,
     "paddingTop": 0,
   },
+  "p *:last-child": Object {
+    "marginBottom": 0,
+  },
   "pre": Object {
     "fontSize": "0.85rem",
     "lineHeight": "1.45rem",
@@ -2469,8 +2538,11 @@ Object {
     "width": "100%",
   },
   "td,th": Object {
+    "MozFontFeatureSettings": "tnum",
+    "WebkitFontFeatureSettings": "tnum",
     "borderBottom": "1px solid hsla(0,0%,0%,0.12)",
     "fontFeatureSettings": "tnum",
+    "msFontFeatureSettings": "tnum",
     "paddingBottom": "calc(0.725rem - 1px)",
     "paddingLeft": "0.96667rem",
     "paddingRight": "0.96667rem",
@@ -2570,6 +2642,9 @@ Object {
     "paddingLeft": "1.1375rem",
     "paddingRight": 0,
     "paddingTop": 0,
+  },
+  "blockquote *:last-child": Object {
+    "marginBottom": 0,
   },
   "body": Object {
     "MozFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
@@ -2793,6 +2868,9 @@ Object {
   "li": Object {
     "marginBottom": "calc(1.4rem / 2)",
   },
+  "li *:last-child": Object {
+    "marginBottom": 0,
+  },
   "li > ol": Object {
     "marginBottom": "calc(1.4rem / 2)",
     "marginLeft": "1.4rem",
@@ -2838,6 +2916,9 @@ Object {
     "paddingRight": 0,
     "paddingTop": 0,
   },
+  "p *:last-child": Object {
+    "marginBottom": 0,
+  },
   "pre": Object {
     "fontSize": "0.85rem",
     "lineHeight": "1.4rem",
@@ -2872,8 +2953,11 @@ Object {
     "width": "100%",
   },
   "td,th": Object {
+    "MozFontFeatureSettings": "tnum",
+    "WebkitFontFeatureSettings": "tnum",
     "borderBottom": "1px solid hsla(0,0%,0%,0.12)",
     "fontFeatureSettings": "tnum",
+    "msFontFeatureSettings": "tnum",
     "paddingBottom": "calc(0.7rem - 1px)",
     "paddingLeft": "0.93333rem",
     "paddingRight": "0.93333rem",
@@ -2965,6 +3049,9 @@ Object {
     "paddingLeft": "calc(0.8125rem - 1px)",
     "paddingRight": 0,
     "paddingTop": 0,
+  },
+  "blockquote *:last-child": Object {
+    "marginBottom": 0,
   },
   "body": Object {
     "MozFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
@@ -3192,6 +3279,9 @@ Object {
   "li": Object {
     "marginBottom": "calc(0.8125rem / 2)",
   },
+  "li *:last-child": Object {
+    "marginBottom": 0,
+  },
   "li > ol": Object {
     "marginBottom": "calc(0.8125rem / 2)",
     "marginLeft": "1.625rem",
@@ -3243,6 +3333,9 @@ Object {
     "paddingRight": 0,
     "paddingTop": 0,
   },
+  "p *:last-child": Object {
+    "marginBottom": 0,
+  },
   "pre": Object {
     "fontSize": "0.85rem",
     "lineHeight": "1.625rem",
@@ -3277,8 +3370,11 @@ Object {
     "width": "100%",
   },
   "td,th": Object {
+    "MozFontFeatureSettings": "tnum",
+    "WebkitFontFeatureSettings": "tnum",
     "borderBottom": "1px solid hsla(0,0%,0%,0.12)",
     "fontFeatureSettings": "tnum",
+    "msFontFeatureSettings": "tnum",
     "paddingBottom": "calc(0.8125rem - 1px)",
     "paddingLeft": "1.08333rem",
     "paddingRight": "1.08333rem",
@@ -3379,6 +3475,9 @@ Object {
     "paddingLeft": "1.37109rem",
     "paddingRight": 0,
     "paddingTop": 0,
+  },
+  "blockquote *:last-child": Object {
+    "marginBottom": 0,
   },
   "blockquote > :last-child": Object {
     "marginBottom": 0,
@@ -3615,6 +3714,9 @@ Object {
   "li": Object {
     "marginBottom": "calc(1.6875rem / 2)",
   },
+  "li *:last-child": Object {
+    "marginBottom": 0,
+  },
   "li > ol": Object {
     "marginBottom": "calc(1.6875rem / 2)",
     "marginLeft": "1.6875rem",
@@ -3660,6 +3762,9 @@ Object {
     "paddingRight": 0,
     "paddingTop": 0,
   },
+  "p *:last-child": Object {
+    "marginBottom": 0,
+  },
   "pre": Object {
     "fontSize": "0.85rem",
     "lineHeight": "1.6875rem",
@@ -3694,8 +3799,11 @@ Object {
     "width": "100%",
   },
   "td,th": Object {
+    "MozFontFeatureSettings": "tnum",
+    "WebkitFontFeatureSettings": "tnum",
     "borderBottom": "1px solid hsla(0,0%,0%,0.12)",
     "fontFeatureSettings": "tnum",
+    "msFontFeatureSettings": "tnum",
     "paddingBottom": "calc(0.84375rem - 1px)",
     "paddingLeft": "1.125rem",
     "paddingRight": "1.125rem",
@@ -3795,6 +3903,9 @@ Object {
     "paddingLeft": "1.035rem",
     "paddingRight": 0,
     "paddingTop": 0,
+  },
+  "blockquote *:last-child": Object {
+    "marginBottom": 0,
   },
   "body": Object {
     "MozFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
@@ -4019,6 +4130,9 @@ Object {
   "li": Object {
     "marginBottom": "calc(1.38rem / 2)",
   },
+  "li *:last-child": Object {
+    "marginBottom": 0,
+  },
   "li > ol": Object {
     "marginBottom": "calc(1.38rem / 2)",
     "marginLeft": "1.38rem",
@@ -4064,6 +4178,9 @@ Object {
     "paddingRight": 0,
     "paddingTop": 0,
   },
+  "p *:last-child": Object {
+    "marginBottom": 0,
+  },
   "pre": Object {
     "fontSize": "0.85rem",
     "lineHeight": "1.38rem",
@@ -4098,8 +4215,11 @@ Object {
     "width": "100%",
   },
   "td,th": Object {
+    "MozFontFeatureSettings": "tnum",
+    "WebkitFontFeatureSettings": "tnum",
     "borderBottom": "1px solid hsla(0,0%,0%,0.12)",
     "fontFeatureSettings": "tnum",
+    "msFontFeatureSettings": "tnum",
     "paddingBottom": "calc(0.69rem - 1px)",
     "paddingLeft": "0.92rem",
     "paddingRight": "0.92rem",
@@ -4205,6 +4325,9 @@ Object {
     "paddingLeft": "1.35417rem",
     "paddingRight": 0,
     "paddingTop": 0,
+  },
+  "blockquote *:last-child": Object {
+    "marginBottom": 0,
   },
   "blockquote > :last-child": Object {
     "marginBottom": 0,
@@ -4442,6 +4565,9 @@ Object {
   "li": Object {
     "marginBottom": "calc(1.66667rem / 2)",
   },
+  "li *:last-child": Object {
+    "marginBottom": 0,
+  },
   "li > ol": Object {
     "marginBottom": "calc(1.66667rem / 2)",
     "marginLeft": "1.66667rem",
@@ -4487,6 +4613,9 @@ Object {
     "paddingRight": 0,
     "paddingTop": 0,
   },
+  "p *:last-child": Object {
+    "marginBottom": 0,
+  },
   "pre": Object {
     "fontSize": "0.85rem",
     "lineHeight": "1.66667rem",
@@ -4521,8 +4650,11 @@ Object {
     "width": "100%",
   },
   "td,th": Object {
+    "MozFontFeatureSettings": "tnum",
+    "WebkitFontFeatureSettings": "tnum",
     "borderBottom": "1px solid hsla(0,0%,0%,0.12)",
     "fontFeatureSettings": "tnum",
+    "msFontFeatureSettings": "tnum",
     "paddingBottom": "calc(0.83333rem - 1px)",
     "paddingLeft": "1.11111rem",
     "paddingRight": "1.11111rem",
@@ -4621,6 +4753,9 @@ Object {
     "paddingLeft": "1.35417rem",
     "paddingRight": 0,
     "paddingTop": 0,
+  },
+  "blockquote *:last-child": Object {
+    "marginBottom": 0,
   },
   "blockquote > :last-child": Object {
     "marginBottom": 0,
@@ -4857,6 +4992,9 @@ Object {
   "li": Object {
     "marginBottom": "calc(1.66667rem / 2)",
   },
+  "li *:last-child": Object {
+    "marginBottom": 0,
+  },
   "li > ol": Object {
     "marginBottom": "calc(1.66667rem / 2)",
     "marginLeft": "1.66667rem",
@@ -4902,6 +5040,9 @@ Object {
     "paddingRight": 0,
     "paddingTop": 0,
   },
+  "p *:last-child": Object {
+    "marginBottom": 0,
+  },
   "pre": Object {
     "fontSize": "0.85rem",
     "lineHeight": "1.66667rem",
@@ -4936,8 +5077,11 @@ Object {
     "width": "100%",
   },
   "td,th": Object {
+    "MozFontFeatureSettings": "tnum",
+    "WebkitFontFeatureSettings": "tnum",
     "borderBottom": "1px solid hsla(0,0%,0%,0.12)",
     "fontFeatureSettings": "tnum",
+    "msFontFeatureSettings": "tnum",
     "paddingBottom": "calc(0.83333rem - 1px)",
     "paddingLeft": "1.11111rem",
     "paddingRight": "1.11111rem",
@@ -5036,6 +5180,9 @@ Object {
     "paddingLeft": "1rem",
     "paddingRight": 0,
     "paddingTop": 0,
+  },
+  "blockquote *:last-child": Object {
+    "marginBottom": 0,
   },
   "body": Object {
     "MozFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
@@ -5257,6 +5404,9 @@ Object {
   "li": Object {
     "marginBottom": "calc(1rem / 2)",
   },
+  "li *:last-child": Object {
+    "marginBottom": 0,
+  },
   "li > ol": Object {
     "marginBottom": "calc(1rem / 2)",
     "marginLeft": "1.5rem",
@@ -5302,6 +5452,9 @@ Object {
     "paddingRight": 0,
     "paddingTop": 0,
   },
+  "p *:last-child": Object {
+    "marginBottom": 0,
+  },
   "pre": Object {
     "fontSize": "0.85rem",
     "lineHeight": "1.5rem",
@@ -5336,8 +5489,11 @@ Object {
     "width": "100%",
   },
   "td,th": Object {
+    "MozFontFeatureSettings": "tnum",
+    "WebkitFontFeatureSettings": "tnum",
     "borderBottom": "1px solid hsla(0,0%,0%,0.12)",
     "fontFeatureSettings": "tnum",
+    "msFontFeatureSettings": "tnum",
     "paddingBottom": "calc(0.75rem - 1px)",
     "paddingLeft": "1rem",
     "paddingRight": "1rem",
@@ -5449,6 +5605,9 @@ Object {
     "paddingLeft": "0.9875rem",
     "paddingRight": 0,
     "paddingTop": 0,
+  },
+  "blockquote *:last-child": Object {
+    "marginBottom": 0,
   },
   "blockquote > :last-child": Object {
     "marginBottom": 0,
@@ -5687,6 +5846,9 @@ Object {
   "li": Object {
     "marginBottom": "calc(1.58rem / 2)",
   },
+  "li *:last-child": Object {
+    "marginBottom": 0,
+  },
   "li > ol": Object {
     "marginBottom": "calc(1.58rem / 2)",
     "marginLeft": "1.58rem",
@@ -5736,6 +5898,9 @@ Object {
     "paddingRight": 0,
     "paddingTop": 0,
   },
+  "p *:last-child": Object {
+    "marginBottom": 0,
+  },
   "pre": Object {
     "fontSize": "0.85rem",
     "lineHeight": "1.58rem",
@@ -5770,8 +5935,11 @@ Object {
     "width": "100%",
   },
   "td,th": Object {
+    "MozFontFeatureSettings": "tnum",
+    "WebkitFontFeatureSettings": "tnum",
     "borderBottom": "1px solid hsla(0,0%,0%,0.12)",
     "fontFeatureSettings": "tnum",
+    "msFontFeatureSettings": "tnum",
     "paddingBottom": "calc(0.79rem - 1px)",
     "paddingLeft": "1.05333rem",
     "paddingRight": "1.05333rem",
@@ -5882,6 +6050,9 @@ Object {
     "paddingLeft": "1.17rem",
     "paddingRight": 0,
     "paddingTop": 0,
+  },
+  "blockquote *:last-child": Object {
+    "marginBottom": 0,
   },
   "body": Object {
     "MozFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
@@ -6106,6 +6277,9 @@ Object {
   "li": Object {
     "marginBottom": "calc(1.56rem / 2)",
   },
+  "li *:last-child": Object {
+    "marginBottom": 0,
+  },
   "li > ol": Object {
     "marginBottom": "calc(1.56rem / 2)",
     "marginLeft": "1.56rem",
@@ -6151,6 +6325,9 @@ Object {
     "paddingRight": 0,
     "paddingTop": 0,
   },
+  "p *:last-child": Object {
+    "marginBottom": 0,
+  },
   "pre": Object {
     "fontSize": "0.85rem",
     "lineHeight": "1.56rem",
@@ -6185,8 +6362,11 @@ Object {
     "width": "100%",
   },
   "td,th": Object {
+    "MozFontFeatureSettings": "tnum",
+    "WebkitFontFeatureSettings": "tnum",
     "borderBottom": "1px solid hsla(0,0%,0%,0.12)",
     "fontFeatureSettings": "tnum",
+    "msFontFeatureSettings": "tnum",
     "paddingBottom": "calc(0.78rem - 1px)",
     "paddingLeft": "1.04rem",
     "paddingRight": "1.04rem",
@@ -6269,6 +6449,9 @@ Object {
     "paddingLeft": 0,
     "paddingRight": 0,
     "paddingTop": 0,
+  },
+  "blockquote *:last-child": Object {
+    "marginBottom": 0,
   },
   "body": Object {
     "MozFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
@@ -6490,6 +6673,9 @@ Object {
   "li": Object {
     "marginBottom": "calc(1.61rem / 2)",
   },
+  "li *:last-child": Object {
+    "marginBottom": 0,
+  },
   "li > ol": Object {
     "marginBottom": "calc(1.61rem / 2)",
     "marginLeft": "1.61rem",
@@ -6535,6 +6721,9 @@ Object {
     "paddingRight": 0,
     "paddingTop": 0,
   },
+  "p *:last-child": Object {
+    "marginBottom": 0,
+  },
   "pre": Object {
     "fontSize": "0.85rem",
     "lineHeight": "1.61rem",
@@ -6569,8 +6758,11 @@ Object {
     "width": "100%",
   },
   "td,th": Object {
+    "MozFontFeatureSettings": "tnum",
+    "WebkitFontFeatureSettings": "tnum",
     "borderBottom": "1px solid hsla(0,0%,0%,0.12)",
     "fontFeatureSettings": "tnum",
+    "msFontFeatureSettings": "tnum",
     "paddingBottom": "calc(0.805rem - 1px)",
     "paddingLeft": "1.07333rem",
     "paddingRight": "1.07333rem",
@@ -6682,6 +6874,9 @@ Object {
     "paddingLeft": "0.9875rem",
     "paddingRight": 0,
     "paddingTop": 0,
+  },
+  "blockquote *:last-child": Object {
+    "marginBottom": 0,
   },
   "blockquote > :last-child": Object {
     "marginBottom": 0,
@@ -6919,6 +7114,9 @@ Object {
   "li": Object {
     "marginBottom": "calc(1.58rem / 2)",
   },
+  "li *:last-child": Object {
+    "marginBottom": 0,
+  },
   "li > ol": Object {
     "marginBottom": "calc(1.58rem / 2)",
     "marginLeft": "1.58rem",
@@ -6968,6 +7166,9 @@ Object {
     "paddingRight": 0,
     "paddingTop": 0,
   },
+  "p *:last-child": Object {
+    "marginBottom": 0,
+  },
   "pre": Object {
     "fontSize": "0.85rem",
     "lineHeight": "1.58rem",
@@ -7002,8 +7203,11 @@ Object {
     "width": "100%",
   },
   "td,th": Object {
+    "MozFontFeatureSettings": "tnum",
+    "WebkitFontFeatureSettings": "tnum",
     "borderBottom": "1px solid hsla(0,0%,0%,0.12)",
     "fontFeatureSettings": "tnum",
+    "msFontFeatureSettings": "tnum",
     "paddingBottom": "calc(0.79rem - 1px)",
     "paddingLeft": "1.05333rem",
     "paddingRight": "1.05333rem",
@@ -7114,6 +7318,9 @@ Object {
     "paddingLeft": "2.0475rem",
     "paddingRight": 0,
     "paddingTop": 0,
+  },
+  "blockquote *:last-child": Object {
+    "marginBottom": 0,
   },
   "blockquote > :last-child": Object {
     "marginBottom": 0,
@@ -7350,6 +7557,9 @@ Object {
   "li": Object {
     "marginBottom": "calc(1.82rem / 2)",
   },
+  "li *:last-child": Object {
+    "marginBottom": 0,
+  },
   "li > ol": Object {
     "marginBottom": "calc(1.82rem / 2)",
     "marginLeft": "1.82rem",
@@ -7395,6 +7605,9 @@ Object {
     "paddingRight": 0,
     "paddingTop": 0,
   },
+  "p *:last-child": Object {
+    "marginBottom": 0,
+  },
   "pre": Object {
     "fontSize": "0.85rem",
     "lineHeight": "1.82rem",
@@ -7429,8 +7642,11 @@ Object {
     "width": "100%",
   },
   "td,th": Object {
+    "MozFontFeatureSettings": "tnum",
+    "WebkitFontFeatureSettings": "tnum",
     "borderBottom": "1px solid hsla(0,0%,0%,0.12)",
     "fontFeatureSettings": "tnum",
+    "msFontFeatureSettings": "tnum",
     "paddingBottom": "calc(0.91rem - 1px)",
     "paddingLeft": "1.21333rem",
     "paddingRight": "1.21333rem",
@@ -7534,6 +7750,9 @@ Object {
     "paddingLeft": "1.75781rem",
     "paddingRight": 0,
     "paddingTop": 0,
+  },
+  "blockquote *:last-child": Object {
+    "marginBottom": 0,
   },
   "blockquote > :last-child": Object {
     "marginBottom": 0,
@@ -7770,6 +7989,9 @@ Object {
   "li": Object {
     "marginBottom": "calc(1.5625rem / 2)",
   },
+  "li *:last-child": Object {
+    "marginBottom": 0,
+  },
   "li > ol": Object {
     "marginBottom": "calc(1.5625rem / 2)",
     "marginLeft": "1.5625rem",
@@ -7815,6 +8037,9 @@ Object {
     "paddingRight": 0,
     "paddingTop": 0,
   },
+  "p *:last-child": Object {
+    "marginBottom": 0,
+  },
   "pre": Object {
     "fontSize": "0.85rem",
     "lineHeight": "1.5625rem",
@@ -7849,8 +8074,11 @@ Object {
     "width": "100%",
   },
   "td,th": Object {
+    "MozFontFeatureSettings": "tnum",
+    "WebkitFontFeatureSettings": "tnum",
     "borderBottom": "1px solid hsla(0,0%,0%,0.12)",
     "fontFeatureSettings": "tnum",
+    "msFontFeatureSettings": "tnum",
     "paddingBottom": "calc(0.78125rem - 1px)",
     "paddingLeft": "1.04167rem",
     "paddingRight": "1.04167rem",
@@ -7956,6 +8184,9 @@ Object {
     "paddingLeft": "1.45833rem",
     "paddingRight": "0.83333rem",
     "paddingTop": "0.83333rem",
+  },
+  "blockquote *:last-child": Object {
+    "marginBottom": 0,
   },
   "blockquote > :last-child": Object {
     "marginBottom": 0,
@@ -8193,6 +8424,9 @@ Object {
   "li": Object {
     "marginBottom": "calc(1.66667rem / 2)",
   },
+  "li *:last-child": Object {
+    "marginBottom": 0,
+  },
   "li > ol": Object {
     "marginBottom": "calc(1.66667rem / 2)",
     "marginLeft": "1.66667rem",
@@ -8238,6 +8472,9 @@ Object {
     "paddingRight": 0,
     "paddingTop": 0,
   },
+  "p *:last-child": Object {
+    "marginBottom": 0,
+  },
   "pre": Object {
     "fontSize": "0.85rem",
     "lineHeight": "1.66667rem",
@@ -8272,8 +8509,11 @@ Object {
     "width": "100%",
   },
   "td,th": Object {
+    "MozFontFeatureSettings": "tnum",
+    "WebkitFontFeatureSettings": "tnum",
     "borderBottom": "1px solid hsla(0,0%,0%,0.12)",
     "fontFeatureSettings": "tnum",
+    "msFontFeatureSettings": "tnum",
     "paddingBottom": "calc(0.83333rem - 1px)",
     "paddingLeft": "1.11111rem",
     "paddingRight": "1.11111rem",
@@ -8378,6 +8618,9 @@ Object {
     "paddingLeft": "1.93725rem",
     "paddingRight": 0,
     "paddingTop": 0,
+  },
+  "blockquote *:last-child": Object {
+    "marginBottom": 0,
   },
   "blockquote > :last-child": Object {
     "marginBottom": 0,
@@ -8614,6 +8857,9 @@ Object {
   "li": Object {
     "marginBottom": "calc(1.722rem / 2)",
   },
+  "li *:last-child": Object {
+    "marginBottom": 0,
+  },
   "li > ol": Object {
     "marginBottom": "calc(1.722rem / 2)",
     "marginLeft": "1.722rem",
@@ -8659,6 +8905,9 @@ Object {
     "paddingRight": 0,
     "paddingTop": 0,
   },
+  "p *:last-child": Object {
+    "marginBottom": 0,
+  },
   "pre": Object {
     "fontSize": "0.85rem",
     "lineHeight": "1.722rem",
@@ -8693,8 +8942,11 @@ Object {
     "width": "100%",
   },
   "td,th": Object {
+    "MozFontFeatureSettings": "tnum",
+    "WebkitFontFeatureSettings": "tnum",
     "borderBottom": "1px solid hsla(0,0%,0%,0.12)",
     "fontFeatureSettings": "tnum",
+    "msFontFeatureSettings": "tnum",
     "paddingBottom": "calc(0.861rem - 1px)",
     "paddingLeft": "1.148rem",
     "paddingRight": "1.148rem",
@@ -8805,6 +9057,9 @@ Object {
     "paddingLeft": "1.44625rem",
     "paddingRight": 0,
     "paddingTop": 0,
+  },
+  "blockquote *:last-child": Object {
+    "marginBottom": 0,
   },
   "blockquote > :last-child": Object {
     "marginBottom": 0,
@@ -9043,6 +9298,9 @@ Object {
   "li": Object {
     "marginBottom": "calc(1.78rem / 2)",
   },
+  "li *:last-child": Object {
+    "marginBottom": 0,
+  },
   "li > ol": Object {
     "marginBottom": "calc(1.78rem / 2)",
     "marginLeft": "1.78rem",
@@ -9088,6 +9346,9 @@ Object {
     "paddingRight": 0,
     "paddingTop": 0,
   },
+  "p *:last-child": Object {
+    "marginBottom": 0,
+  },
   "pre": Object {
     "fontSize": "0.85rem",
     "lineHeight": "1.78rem",
@@ -9122,8 +9383,11 @@ Object {
     "width": "100%",
   },
   "td,th": Object {
+    "MozFontFeatureSettings": "tnum",
+    "WebkitFontFeatureSettings": "tnum",
     "borderBottom": "1px solid hsla(0,0%,0%,0.12)",
     "fontFeatureSettings": "tnum",
+    "msFontFeatureSettings": "tnum",
     "paddingBottom": "calc(0.89rem - 1px)",
     "paddingLeft": "1.18667rem",
     "paddingRight": "1.18667rem",
@@ -9239,6 +9503,9 @@ Object {
     "paddingLeft": "1.21875rem",
     "paddingRight": 0,
     "paddingTop": 0,
+  },
+  "blockquote *:last-child": Object {
+    "marginBottom": 0,
   },
   "blockquote > :last-child": Object {
     "marginBottom": 0,
@@ -9477,6 +9744,9 @@ Object {
   "li": Object {
     "marginBottom": "calc(1.5rem / 2)",
   },
+  "li *:last-child": Object {
+    "marginBottom": 0,
+  },
   "li > ol": Object {
     "marginBottom": "calc(1.5rem / 2)",
     "marginLeft": "1.5rem",
@@ -9526,6 +9796,9 @@ Object {
     "paddingRight": 0,
     "paddingTop": 0,
   },
+  "p *:last-child": Object {
+    "marginBottom": 0,
+  },
   "pre": Object {
     "fontSize": "0.85rem",
     "lineHeight": "1.5rem",
@@ -9560,8 +9833,11 @@ Object {
     "width": "100%",
   },
   "td,th": Object {
+    "MozFontFeatureSettings": "tnum",
+    "WebkitFontFeatureSettings": "tnum",
     "borderBottom": "1px solid hsla(0,0%,0%,0.12)",
     "fontFeatureSettings": "tnum",
+    "msFontFeatureSettings": "tnum",
     "paddingBottom": "calc(0.75rem - 1px)",
     "paddingLeft": "1rem",
     "paddingRight": "1rem",
@@ -9657,6 +9933,9 @@ Object {
     "paddingLeft": "1.02rem",
     "paddingRight": "1.02rem",
     "paddingTop": "0.51rem",
+  },
+  "blockquote *:last-child": Object {
+    "marginBottom": 0,
   },
   "blockquote > :last-child": Object {
     "marginBottom": 0,
@@ -9889,6 +10168,9 @@ Object {
   "li": Object {
     "marginBottom": "calc(1.53rem / 2)",
   },
+  "li *:last-child": Object {
+    "marginBottom": 0,
+  },
   "li > ol": Object {
     "marginBottom": "calc(1.53rem / 2)",
     "marginLeft": "1.53rem",
@@ -9934,6 +10216,9 @@ Object {
     "paddingRight": 0,
     "paddingTop": 0,
   },
+  "p *:last-child": Object {
+    "marginBottom": 0,
+  },
   "pre": Object {
     "fontSize": "0.85rem",
     "lineHeight": "1.53rem",
@@ -9968,8 +10253,11 @@ Object {
     "width": "100%",
   },
   "td,th": Object {
+    "MozFontFeatureSettings": "tnum",
+    "WebkitFontFeatureSettings": "tnum",
     "borderBottom": "1px solid hsla(0,0%,0%,0.12)",
     "fontFeatureSettings": "tnum",
+    "msFontFeatureSettings": "tnum",
     "paddingBottom": "calc(0.765rem - 1px)",
     "paddingLeft": "1.02rem",
     "paddingRight": "1.02rem",
@@ -10062,6 +10350,9 @@ Object {
     "paddingLeft": "40px",
     "paddingRight": "40px",
     "paddingTop": 0,
+  },
+  "blockquote *:last-child": Object {
+    "marginBottom": 0,
   },
   "body": Object {
     "MozFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
@@ -10289,6 +10580,9 @@ Object {
   "li": Object {
     "marginBottom": "calc(1.57rem / 2)",
   },
+  "li *:last-child": Object {
+    "marginBottom": 0,
+  },
   "li > ol": Object {
     "marginBottom": "calc(1.57rem / 2)",
     "marginLeft": "1.57rem",
@@ -10343,6 +10637,9 @@ Object {
     "paddingRight": 0,
     "paddingTop": 0,
   },
+  "p *:last-child": Object {
+    "marginBottom": 0,
+  },
   "p,ol,ul": Object {
     "marginBottom": "0.5em",
     "marginTop": "0.5em",
@@ -10381,8 +10678,11 @@ Object {
     "width": "100%",
   },
   "td,th": Object {
+    "MozFontFeatureSettings": "tnum",
+    "WebkitFontFeatureSettings": "tnum",
     "borderBottom": "1px solid hsla(0,0%,0%,0.12)",
     "fontFeatureSettings": "tnum",
+    "msFontFeatureSettings": "tnum",
     "paddingBottom": "calc(0.785rem - 1px)",
     "paddingLeft": "1.04667rem",
     "paddingRight": "1.04667rem",
@@ -10475,6 +10775,9 @@ Object {
     "paddingLeft": 0,
     "paddingRight": 0,
     "paddingTop": 0,
+  },
+  "blockquote *:last-child": Object {
+    "marginBottom": 0,
   },
   "blockquote cite": Object {
     "fontStyle": "normal",
@@ -10703,6 +11006,9 @@ Object {
   "li": Object {
     "marginBottom": 0,
   },
+  "li *:last-child": Object {
+    "marginBottom": 0,
+  },
   "li > ol": Object {
     "marginBottom": "calc(1.5rem / 2)",
     "marginLeft": "1.5rem",
@@ -10748,6 +11054,9 @@ Object {
     "paddingRight": 0,
     "paddingTop": 0,
   },
+  "p *:last-child": Object {
+    "marginBottom": 0,
+  },
   "pre": Object {
     "fontSize": "0.85rem",
     "lineHeight": "1.5rem",
@@ -10782,8 +11091,11 @@ Object {
     "width": "100%",
   },
   "td,th": Object {
+    "MozFontFeatureSettings": "tnum",
+    "WebkitFontFeatureSettings": "tnum",
     "borderBottom": "1px solid hsla(0,0%,0%,0.12)",
     "fontFeatureSettings": "tnum",
+    "msFontFeatureSettings": "tnum",
     "paddingBottom": "calc(0.75rem - 1px)",
     "paddingLeft": "1rem",
     "paddingRight": "1rem",
@@ -10875,6 +11187,9 @@ Object {
     "paddingLeft": 0,
     "paddingRight": 0,
     "paddingTop": 0,
+  },
+  "blockquote *:last-child": Object {
+    "marginBottom": 0,
   },
   "body": Object {
     "MozFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
@@ -11100,6 +11415,9 @@ Object {
   "li": Object {
     "marginBottom": 0,
   },
+  "li *:last-child": Object {
+    "marginBottom": 0,
+  },
   "li > ol": Object {
     "marginBottom": "calc(1.6rem / 2)",
     "marginLeft": "1.6rem",
@@ -11149,6 +11467,9 @@ Object {
     "paddingRight": 0,
     "paddingTop": 0,
   },
+  "p *:last-child": Object {
+    "marginBottom": 0,
+  },
   "pre": Object {
     "fontSize": "0.85rem",
     "lineHeight": "1.6rem",
@@ -11183,8 +11504,11 @@ Object {
     "width": "100%",
   },
   "td,th": Object {
+    "MozFontFeatureSettings": "tnum",
+    "WebkitFontFeatureSettings": "tnum",
     "borderBottom": "1px solid hsla(0,0%,0%,0.12)",
     "fontFeatureSettings": "tnum",
+    "msFontFeatureSettings": "tnum",
     "paddingBottom": "calc(0.8rem - 1px)",
     "paddingLeft": "1.06667rem",
     "paddingRight": "1.06667rem",
@@ -11281,6 +11605,9 @@ Object {
     "paddingLeft": "1.714rem",
     "paddingRight": "1.714rem",
     "paddingTop": "1.714rem",
+  },
+  "blockquote *:last-child": Object {
+    "marginBottom": 0,
   },
   "body": Object {
     "MozFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
@@ -11503,6 +11830,9 @@ Object {
     "marginBottom": "calc(1.714rem / 2)",
     "marginLeft": "2.571rem",
   },
+  "li *:last-child": Object {
+    "marginBottom": 0,
+  },
   "li > ol": Object {
     "marginBottom": "calc(1.714rem / 2)",
     "marginLeft": "1.714rem",
@@ -11552,6 +11882,9 @@ Object {
     "paddingRight": 0,
     "paddingTop": 0,
   },
+  "p *:last-child": Object {
+    "marginBottom": 0,
+  },
   "pre": Object {
     "fontSize": "0.85rem",
     "lineHeight": "1.714rem",
@@ -11587,8 +11920,11 @@ Object {
     "width": "100%",
   },
   "td,th": Object {
+    "MozFontFeatureSettings": "tnum",
+    "WebkitFontFeatureSettings": "tnum",
     "borderBottom": "1px solid hsla(0,0%,0%,0.12)",
     "fontFeatureSettings": "tnum",
+    "msFontFeatureSettings": "tnum",
     "paddingBottom": "calc(0.857rem - 1px)",
     "paddingLeft": "1.14267rem",
     "paddingRight": "1.14267rem",
@@ -11692,6 +12028,9 @@ Object {
     "paddingLeft": 0,
     "paddingRight": 0,
     "paddingTop": 0,
+  },
+  "blockquote *:last-child": Object {
+    "marginBottom": 0,
   },
   "blockquote cite": Object {
     "fontSize": "1rem",
@@ -11919,6 +12258,9 @@ Object {
   "li": Object {
     "marginBottom": "calc(1.5rem / 2)",
   },
+  "li *:last-child": Object {
+    "marginBottom": 0,
+  },
   "li > ol": Object {
     "marginBottom": "calc(1.5rem / 2)",
     "marginLeft": "1.5rem",
@@ -11972,6 +12314,9 @@ Object {
     "paddingRight": 0,
     "paddingTop": 0,
   },
+  "p *:last-child": Object {
+    "marginBottom": 0,
+  },
   "pre": Object {
     "fontSize": "0.85rem",
     "lineHeight": "1.5rem",
@@ -12006,8 +12351,11 @@ Object {
     "width": "100%",
   },
   "td,th": Object {
+    "MozFontFeatureSettings": "tnum",
+    "WebkitFontFeatureSettings": "tnum",
     "borderBottom": "1px solid hsla(0,0%,0%,0.12)",
     "fontFeatureSettings": "tnum",
+    "msFontFeatureSettings": "tnum",
     "paddingBottom": "calc(0.75rem - 1px)",
     "paddingLeft": "1rem",
     "paddingRight": "1rem",
@@ -12096,6 +12444,9 @@ Object {
     "paddingLeft": 0,
     "paddingRight": 0,
     "paddingTop": 0,
+  },
+  "blockquote *:last-child": Object {
+    "marginBottom": 0,
   },
   "blockquote > :last-child": Object {
     "marginBottom": 0,
@@ -12334,6 +12685,9 @@ Object {
   "li": Object {
     "marginBottom": "calc(1.5rem / 2)",
   },
+  "li *:last-child": Object {
+    "marginBottom": 0,
+  },
   "li > ol": Object {
     "marginBottom": "calc(1.5rem / 2)",
     "marginLeft": "1.5rem",
@@ -12383,6 +12737,9 @@ Object {
     "paddingRight": 0,
     "paddingTop": 0,
   },
+  "p *:last-child": Object {
+    "marginBottom": 0,
+  },
   "pre": Object {
     "fontSize": "0.85rem",
     "lineHeight": "1.5rem",
@@ -12417,8 +12774,11 @@ Object {
     "width": "100%",
   },
   "td,th": Object {
+    "MozFontFeatureSettings": "tnum",
+    "WebkitFontFeatureSettings": "tnum",
     "borderBottom": "1px solid hsla(0,0%,0%,0.12)",
     "fontFeatureSettings": "tnum",
+    "msFontFeatureSettings": "tnum",
     "paddingBottom": "calc(0.75rem - 1px)",
     "paddingLeft": "1rem",
     "paddingRight": "1rem",
@@ -12519,6 +12879,9 @@ Object {
     "paddingLeft": "1.05rem",
     "paddingRight": 0,
     "paddingTop": 0,
+  },
+  "blockquote *:last-child": Object {
+    "marginBottom": 0,
   },
   "blockquote > :last-child": Object {
     "marginBottom": 0,
@@ -12759,6 +13122,9 @@ Object {
   "li": Object {
     "marginBottom": "calc(1.68rem / 2)",
   },
+  "li *:last-child": Object {
+    "marginBottom": 0,
+  },
   "li > ol": Object {
     "marginBottom": "calc(1.68rem / 2)",
     "marginLeft": "1.68rem",
@@ -12808,6 +13174,9 @@ Object {
     "paddingRight": 0,
     "paddingTop": 0,
   },
+  "p *:last-child": Object {
+    "marginBottom": 0,
+  },
   "pre": Object {
     "fontSize": "0.85rem",
     "lineHeight": "1.68rem",
@@ -12842,8 +13211,11 @@ Object {
     "width": "100%",
   },
   "td,th": Object {
+    "MozFontFeatureSettings": "tnum",
+    "WebkitFontFeatureSettings": "tnum",
     "borderBottom": "1px solid hsla(0,0%,0%,0.12)",
     "fontFeatureSettings": "tnum",
+    "msFontFeatureSettings": "tnum",
     "paddingBottom": "calc(0.84rem - 1px)",
     "paddingLeft": "1.12rem",
     "paddingRight": "1.12rem",
@@ -12953,6 +13325,9 @@ Object {
     "paddingLeft": "1.42188rem",
     "paddingRight": 0,
     "paddingTop": 0,
+  },
+  "blockquote *:last-child": Object {
+    "marginBottom": 0,
   },
   "blockquote > :last-child": Object {
     "marginBottom": 0,
@@ -13192,6 +13567,9 @@ Object {
   "li": Object {
     "marginBottom": "calc(1.75rem / 2)",
   },
+  "li *:last-child": Object {
+    "marginBottom": 0,
+  },
   "li > ol": Object {
     "marginBottom": "calc(1.75rem / 2)",
     "marginLeft": "1.75rem",
@@ -13243,6 +13621,9 @@ Object {
     "paddingRight": 0,
     "paddingTop": 0,
   },
+  "p *:last-child": Object {
+    "marginBottom": 0,
+  },
   "pre": Object {
     "fontSize": "0.85rem",
     "lineHeight": "1.75rem",
@@ -13277,8 +13658,11 @@ Object {
     "width": "100%",
   },
   "td,th": Object {
+    "MozFontFeatureSettings": "tnum",
+    "WebkitFontFeatureSettings": "tnum",
     "borderBottom": "1px solid hsla(0,0%,0%,0.12)",
     "fontFeatureSettings": "tnum",
+    "msFontFeatureSettings": "tnum",
     "paddingBottom": "calc(0.875rem - 1px)",
     "paddingLeft": "1.16667rem",
     "paddingRight": "1.16667rem",
@@ -13378,6 +13762,9 @@ Object {
     "paddingLeft": "1.75rem",
     "paddingRight": 0,
     "paddingTop": 0,
+  },
+  "blockquote *:last-child": Object {
+    "marginBottom": 0,
   },
   "body": Object {
     "MozFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
@@ -13601,6 +13988,9 @@ Object {
     "marginBottom": "calc(1.4rem / 2)",
     "marginLeft": "0.875rem",
   },
+  "li *:last-child": Object {
+    "marginBottom": 0,
+  },
   "li > ol": Object {
     "marginBottom": "calc(1.4rem / 2)",
     "marginLeft": "1.4rem",
@@ -13646,6 +14036,9 @@ Object {
     "paddingRight": 0,
     "paddingTop": 0,
   },
+  "p *:last-child": Object {
+    "marginBottom": 0,
+  },
   "pre": Object {
     "fontSize": "0.85rem",
     "lineHeight": "1.4rem",
@@ -13680,8 +14073,11 @@ Object {
     "width": "100%",
   },
   "td,th": Object {
+    "MozFontFeatureSettings": "tnum",
+    "WebkitFontFeatureSettings": "tnum",
     "borderBottom": "1px solid hsla(0,0%,0%,0.12)",
     "fontFeatureSettings": "tnum",
+    "msFontFeatureSettings": "tnum",
     "paddingBottom": "calc(0.7rem - 1px)",
     "paddingLeft": "0.93333rem",
     "paddingRight": "0.93333rem",
