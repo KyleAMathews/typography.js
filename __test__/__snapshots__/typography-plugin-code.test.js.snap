@@ -46,9 +46,14 @@ Object {
     "paddingTop": 0,
   },
   "body": Object {
+    "MozFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "WebkitFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "color": "hsla(0,0%,0%,0.8)",
     "fontFamily": "georgia,serif",
+    "fontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "fontKerning": "normal",
     "fontWeight": "normal",
+    "msFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "wordWrap": "break-word",
   },
   "code": Object {
@@ -449,9 +454,14 @@ Object {
     "paddingTop": 0,
   },
   "body": Object {
+    "MozFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "WebkitFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "color": "hsla(0,0%,0%,0.8)",
     "fontFamily": "georgia,serif",
+    "fontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "fontKerning": "normal",
     "fontWeight": "normal",
+    "msFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "wordWrap": "break-word",
   },
   "code": Object {
@@ -852,9 +862,14 @@ Object {
     "paddingTop": 0,
   },
   "body": Object {
+    "MozFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "WebkitFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "color": "hsla(0,0%,0%,0.8)",
     "fontFamily": "georgia,serif",
+    "fontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "fontKerning": "normal",
     "fontWeight": "normal",
+    "msFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
     "wordWrap": "break-word",
   },
   "code": Object {
