@@ -162,6 +162,13 @@ module.exports = (vr: any, options: OptionsType) => {
     marginBottom: 0,
   })
 
+  // Ensure li > p is 1/2 margin — this is another markdown => compiler oddity.
+  styles = setStyles(styles, [
+    'li > p',
+  ], {
+    marginBottom: `calc(${blockMarginBottom} / 2)`,
+  })
+
   // Make generally smaller elements, smaller.
   styles = setStyles(styles, ['code', 'kbd', 'pre', 'samp'], {
     ...vr.adjustFontSizeTo('85%'),
