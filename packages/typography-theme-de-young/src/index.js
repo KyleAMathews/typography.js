@@ -7,7 +7,7 @@ import verticalRhythm from 'compass-vertical-rhythm'
 const theme: OptionsType = {
   title: 'de Young',
   baseFontSize: '20px',
-  baseLineHeight: 1.65,
+  baseLineHeight: 1.45,
   googleFonts: [
     {
       name: 'Alegreya Sans',
@@ -33,11 +33,6 @@ const theme: OptionsType = {
   bodyWeight: 400,
   boldWeight: 700,
   overrideStyles: ({ rhythm }) => {
-    const vr = verticalRhythm({
-      baseFontSize: '18px',
-      baseLineHeight: '29.7px',
-    })
-
     return {
       a: {
         color: 'hsl(230,55%,58%)',
@@ -57,8 +52,9 @@ const theme: OptionsType = {
         marginBottom: 0,
       },
       [MOBILE_MEDIA_QUERY]: {
+        // Make baseFontSize on mobile 18px.
         html: {
-          ...vr.establishBaseline(),
+          fontSize: `${18/16 * 100}%`,
         },
         blockquote: {
           borderLeft: `${rhythm(3/16)} solid ${gray(80)}`,
