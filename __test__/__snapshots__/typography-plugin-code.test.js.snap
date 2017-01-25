@@ -280,6 +280,9 @@ Object {
     "marginLeft": "1.5rem",
     "marginTop": "calc(1rem / 2)",
   },
+  "li > p": Object {
+    "marginBottom": "calc(1rem / 2)",
+  },
   "li > ul": Object {
     "marginBottom": "calc(1rem / 2)",
     "marginLeft": "1.5rem",
@@ -700,6 +703,9 @@ Object {
     "marginLeft": "1.5rem",
     "marginTop": "calc(1.5rem / 2)",
   },
+  "li > p": Object {
+    "marginBottom": "calc(1.5rem / 2)",
+  },
   "li > ul": Object {
     "marginBottom": "calc(1.5rem / 2)",
     "marginLeft": "1.5rem",
@@ -1119,6 +1125,9 @@ Object {
     "marginBottom": "calc(1.5rem / 2)",
     "marginLeft": "1.5rem",
     "marginTop": "calc(1.5rem / 2)",
+  },
+  "li > p": Object {
+    "marginBottom": "calc(1.5rem / 2)",
   },
   "li > ul": Object {
     "marginBottom": "calc(1.5rem / 2)",
