@@ -6,7 +6,8 @@ import { MOBILE_MEDIA_QUERY } from 'typography-breakpoint-constants'
 const theme: OptionsType = {
   title: 'Doelger',
   baseFontSize: '17px',
-  baseLineHeight: 1.53,
+  baseLineHeight: 1.45,
+  blockMarginBottom: 0.8,
   googleFonts: [
     {
       name: 'Arvo',
@@ -44,6 +45,7 @@ const theme: OptionsType = {
         backgroundImage: 'none',
       },
       'h1,h2,h3,h4,h5,h6': {
+        lineHeight: 1.2,
         marginTop: rhythm(1.5),
         marginBottom: rhythm(0.5),
       },

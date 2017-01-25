@@ -7,7 +7,8 @@ import verticalRhythm from 'compass-vertical-rhythm'
 const theme: OptionsType = {
   title: 'Alton',
   baseFontSize: '18px',
-  baseLineHeight: 1.78,
+  baseLineHeight: 1.45,
+  blockMarginBottom: 0.8,
   googleFonts: [
     {
       name: 'Domine',
@@ -31,51 +32,47 @@ const theme: OptionsType = {
   headerWeight: 700,
   bodyWeight: 400,
   boldWeight: 700,
-  overrideStyles: ({ adjustFontSizeTo, scale, rhythm }, options) => {
-    const vr = verticalRhythm({
-      baseFontSize: '16px',
-      baseLineHeight: '28.44px',
-    })
-
-    return {
-      a: {
-        color: '#ff5700',
-        textDecoration: 'none',
-      },
-      'a:hover,a:active': {
-        color: options.bodyColor,
+  overrideStyles: ({ adjustFontSizeTo, scale, rhythm }, options) => ({
+    'h1,h2,h3,h4,h5,h6': {
+      lineHeight: 1.1,
+    },
+    a: {
+      color: '#ff5700',
+      textDecoration: 'none',
+    },
+    'a:hover,a:active': {
+      color: options.bodyColor,
+    },
+    blockquote: {
+      ...scale(1/5),
+      color: gray(41),
+      fontStyle: 'italic',
+      paddingLeft: rhythm(13/16),
+      marginLeft: 0,
+      borderLeft: `${rhythm(3/16)} solid ${gray(10)}`,
+    },
+    'blockquote > :last-child': {
+      marginBottom: 0,
+    },
+    'blockquote cite': {
+      ...adjustFontSizeTo(options.baseFontSize),
+      color: options.bodyColor,
+      fontWeight: options.bodyWeight,
+    },
+    'blockquote cite:before': {
+      content: '"— "',
+    },
+    [MOBILE_MEDIA_QUERY]: {
+      html: {
+        fontSize: `${16/16 * 100}%`,
       },
       blockquote: {
-        ...scale(1/5),
-        color: gray(41),
-        fontStyle: 'italic',
-        paddingLeft: rhythm(13/16),
-        marginLeft: 0,
-        borderLeft: `${rhythm(3/16)} solid ${gray(10)}`,
+        marginLeft: rhythm(-3/4),
+        marginRight: 0,
+        paddingLeft: rhythm(9/16),
       },
-      'blockquote > :last-child': {
-        marginBottom: 0,
-      },
-      'blockquote cite': {
-        ...adjustFontSizeTo(options.baseFontSize),
-        color: options.bodyColor,
-        fontWeight: options.bodyWeight,
-      },
-      'blockquote cite:before': {
-        content: '"— "',
-      },
-      [MOBILE_MEDIA_QUERY]: {
-        html: {
-          ...vr.establishBaseline(),
-        },
-        blockquote: {
-          marginLeft: rhythm(-3/4),
-          marginRight: 0,
-          paddingLeft: rhythm(9/16),
-        },
-      },
-    }
-  },
+    },
+  }),
 }
 
 export default theme
