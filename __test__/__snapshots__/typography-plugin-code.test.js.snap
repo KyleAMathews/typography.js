@@ -398,7 +398,7 @@ Object {
   "tt,code": Object {
     "backgroundColor": "hsla(0,0%,0%,0.04)",
     "borderRadius": "3px",
-    "fontFamily": "Consolas,\"Roboto Mono\",\"Droid Sans Mono\",\"Liberation Mono\",Menlo,Courier,monospace",
+    "fontFamily": "\"SFMono-Regular\", Consolas,\"Roboto Mono\",\"Droid Sans Mono\",\"Liberation Mono\",Menlo,Courier,monospace",
     "padding": 0,
     "paddingBottom": "0.2em",
     "paddingTop": "0.2em",
@@ -821,7 +821,7 @@ Object {
   "tt,code": Object {
     "backgroundColor": "hsla(0,0%,0%,0.04)",
     "borderRadius": "3px",
-    "fontFamily": "Consolas,\"Roboto Mono\",\"Droid Sans Mono\",\"Liberation Mono\",Menlo,Courier,monospace",
+    "fontFamily": "\"SFMono-Regular\", Consolas,\"Roboto Mono\",\"Droid Sans Mono\",\"Liberation Mono\",Menlo,Courier,monospace",
     "padding": 0,
     "paddingBottom": "0.2em",
     "paddingTop": "0.2em",
@@ -1244,7 +1244,7 @@ Object {
   "tt,code": Object {
     "backgroundColor": "hsla(0,0%,0%,0.04)",
     "borderRadius": "3px",
-    "fontFamily": "Consolas,\"Roboto Mono\",\"Droid Sans Mono\",\"Liberation Mono\",Menlo,Courier,monospace",
+    "fontFamily": "\"SFMono-Regular\", Consolas,\"Roboto Mono\",\"Droid Sans Mono\",\"Liberation Mono\",Menlo,Courier,monospace",
     "padding": 0,
     "paddingBottom": "0.2em",
     "paddingTop": "0.2em",
