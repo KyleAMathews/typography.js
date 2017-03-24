@@ -316,9 +316,10 @@ for inline styles.
 
 [build-status]: https://travis-ci.org/KyleAMathews/typography.js
 
+[coverage-status]: https://codecov.io/github/KyleAMathews/typography.js
+
 [coverage-badge]: https://img.shields.io/codecov/c/github/KyleAMathews/typography.js.svg
 
-[coverage-status]: https://codecov.io/github/KyleAMathews/typography.js
 =======
 
 ## Backers
