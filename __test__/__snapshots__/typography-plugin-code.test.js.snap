@@ -1,3 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`CodePlugin() should accept a custom blockMarginBottom 1`] = `
 Object {
   "*": Object {
@@ -49,14 +51,14 @@ Object {
     "marginBottom": 0,
   },
   "body": Object {
-    "MozFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
-    "WebkitFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "MozFontFeatureSettings": "\\"kern\\", \\"liga\\", \\"clig\\", \\"calt\\"",
+    "WebkitFontFeatureSettings": "\\"kern\\", \\"liga\\", \\"clig\\", \\"calt\\"",
     "color": "hsla(0,0%,0%,0.8)",
     "fontFamily": "georgia,serif",
-    "fontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "fontFeatureSettings": "\\"kern\\", \\"liga\\", \\"clig\\", \\"calt\\"",
     "fontKerning": "normal",
     "fontWeight": "normal",
-    "msFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "msFontFeatureSettings": "\\"kern\\", \\"liga\\", \\"clig\\", \\"calt\\"",
     "wordWrap": "break-word",
   },
   "code": Object {
@@ -64,7 +66,7 @@ Object {
     "lineHeight": "1.5rem",
   },
   "code:before,code:after,tt:before,tt:after": Object {
-    "content": "\" \"",
+    "content": "\\" \\"",
     "letterSpacing": "-0.2em",
   },
   "dd": Object {
@@ -348,7 +350,7 @@ Object {
     "lineHeight": 1.42,
   },
   "pre code:before,pre code:after,pre tt:before,pre tt:after": Object {
-    "content": "\"\"",
+    "content": "\\"\\"",
   },
   "samp": Object {
     "fontSize": "0.85rem",
@@ -372,11 +374,11 @@ Object {
     "width": "100%",
   },
   "td,th": Object {
-    "MozFontFeatureSettings": "\"tnum\"",
-    "WebkitFontFeatureSettings": "\"tnum\"",
+    "MozFontFeatureSettings": "\\"tnum\\"",
+    "WebkitFontFeatureSettings": "\\"tnum\\"",
     "borderBottom": "1px solid hsla(0,0%,0%,0.12)",
-    "fontFeatureSettings": "\"tnum\"",
-    "msFontFeatureSettings": "\"tnum\"",
+    "fontFeatureSettings": "\\"tnum\\"",
+    "msFontFeatureSettings": "\\"tnum\\"",
     "paddingBottom": "calc(0.75rem - 1px)",
     "paddingLeft": "1rem",
     "paddingRight": "1rem",
@@ -398,7 +400,7 @@ Object {
   "tt,code": Object {
     "backgroundColor": "hsla(0,0%,0%,0.04)",
     "borderRadius": "3px",
-    "fontFamily": "\"SFMono-Regular\", Consolas,\"Roboto Mono\",\"Droid Sans Mono\",\"Liberation Mono\",Menlo,Courier,monospace",
+    "fontFamily": "\\"SFMono-Regular\\", Consolas,\\"Roboto Mono\\",\\"Droid Sans Mono\\",\\"Liberation Mono\\",Menlo,Courier,monospace",
     "padding": 0,
     "paddingBottom": "0.2em",
     "paddingTop": "0.2em",
@@ -472,14 +474,14 @@ Object {
     "marginBottom": 0,
   },
   "body": Object {
-    "MozFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
-    "WebkitFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "MozFontFeatureSettings": "\\"kern\\", \\"liga\\", \\"clig\\", \\"calt\\"",
+    "WebkitFontFeatureSettings": "\\"kern\\", \\"liga\\", \\"clig\\", \\"calt\\"",
     "color": "hsla(0,0%,0%,0.8)",
     "fontFamily": "georgia,serif",
-    "fontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "fontFeatureSettings": "\\"kern\\", \\"liga\\", \\"clig\\", \\"calt\\"",
     "fontKerning": "normal",
     "fontWeight": "normal",
-    "msFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "msFontFeatureSettings": "\\"kern\\", \\"liga\\", \\"clig\\", \\"calt\\"",
     "wordWrap": "break-word",
   },
   "code": Object {
@@ -487,7 +489,7 @@ Object {
     "lineHeight": "1.5rem",
   },
   "code:before,code:after,tt:before,tt:after": Object {
-    "content": "\" \"",
+    "content": "\\" \\"",
     "letterSpacing": "-0.2em",
   },
   "dd": Object {
@@ -771,7 +773,7 @@ Object {
     "lineHeight": 1.42,
   },
   "pre code:before,pre code:after,pre tt:before,pre tt:after": Object {
-    "content": "\"\"",
+    "content": "\\"\\"",
   },
   "samp": Object {
     "fontSize": "0.85rem",
@@ -795,11 +797,11 @@ Object {
     "width": "100%",
   },
   "td,th": Object {
-    "MozFontFeatureSettings": "\"tnum\"",
-    "WebkitFontFeatureSettings": "\"tnum\"",
+    "MozFontFeatureSettings": "\\"tnum\\"",
+    "WebkitFontFeatureSettings": "\\"tnum\\"",
     "borderBottom": "1px solid hsla(0,0%,0%,0.12)",
-    "fontFeatureSettings": "\"tnum\"",
-    "msFontFeatureSettings": "\"tnum\"",
+    "fontFeatureSettings": "\\"tnum\\"",
+    "msFontFeatureSettings": "\\"tnum\\"",
     "paddingBottom": "calc(0.75rem - 1px)",
     "paddingLeft": "1rem",
     "paddingRight": "1rem",
@@ -821,7 +823,7 @@ Object {
   "tt,code": Object {
     "backgroundColor": "hsla(0,0%,0%,0.04)",
     "borderRadius": "3px",
-    "fontFamily": "\"SFMono-Regular\", Consolas,\"Roboto Mono\",\"Droid Sans Mono\",\"Liberation Mono\",Menlo,Courier,monospace",
+    "fontFamily": "\\"SFMono-Regular\\", Consolas,\\"Roboto Mono\\",\\"Droid Sans Mono\\",\\"Liberation Mono\\",Menlo,Courier,monospace",
     "padding": 0,
     "paddingBottom": "0.2em",
     "paddingTop": "0.2em",
@@ -895,14 +897,14 @@ Object {
     "marginBottom": 0,
   },
   "body": Object {
-    "MozFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
-    "WebkitFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "MozFontFeatureSettings": "\\"kern\\", \\"liga\\", \\"clig\\", \\"calt\\"",
+    "WebkitFontFeatureSettings": "\\"kern\\", \\"liga\\", \\"clig\\", \\"calt\\"",
     "color": "hsla(0,0%,0%,0.8)",
     "fontFamily": "georgia,serif",
-    "fontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "fontFeatureSettings": "\\"kern\\", \\"liga\\", \\"clig\\", \\"calt\\"",
     "fontKerning": "normal",
     "fontWeight": "normal",
-    "msFontFeatureSettings": "\"kern\", \"liga\", \"clig\", \"calt\"",
+    "msFontFeatureSettings": "\\"kern\\", \\"liga\\", \\"clig\\", \\"calt\\"",
     "wordWrap": "break-word",
   },
   "code": Object {
@@ -910,7 +912,7 @@ Object {
     "lineHeight": "1.5rem",
   },
   "code:before,code:after,tt:before,tt:after": Object {
-    "content": "\" \"",
+    "content": "\\" \\"",
     "letterSpacing": "-0.2em",
   },
   "dd": Object {
@@ -1194,7 +1196,7 @@ Object {
     "lineHeight": 1.42,
   },
   "pre code:before,pre code:after,pre tt:before,pre tt:after": Object {
-    "content": "\"\"",
+    "content": "\\"\\"",
   },
   "samp": Object {
     "fontSize": "0.85rem",
@@ -1218,11 +1220,11 @@ Object {
     "width": "100%",
   },
   "td,th": Object {
-    "MozFontFeatureSettings": "\"tnum\"",
-    "WebkitFontFeatureSettings": "\"tnum\"",
+    "MozFontFeatureSettings": "\\"tnum\\"",
+    "WebkitFontFeatureSettings": "\\"tnum\\"",
     "borderBottom": "1px solid hsla(0,0%,0%,0.12)",
-    "fontFeatureSettings": "\"tnum\"",
-    "msFontFeatureSettings": "\"tnum\"",
+    "fontFeatureSettings": "\\"tnum\\"",
+    "msFontFeatureSettings": "\\"tnum\\"",
     "paddingBottom": "calc(0.75rem - 1px)",
     "paddingLeft": "1rem",
     "paddingRight": "1rem",
@@ -1244,7 +1246,7 @@ Object {
   "tt,code": Object {
     "backgroundColor": "hsla(0,0%,0%,0.04)",
     "borderRadius": "3px",
-    "fontFamily": "\"SFMono-Regular\", Consolas,\"Roboto Mono\",\"Droid Sans Mono\",\"Liberation Mono\",Menlo,Courier,monospace",
+    "fontFamily": "\\"SFMono-Regular\\", Consolas,\\"Roboto Mono\\",\\"Droid Sans Mono\\",\\"Liberation Mono\\",Menlo,Courier,monospace",
     "padding": 0,
     "paddingBottom": "0.2em",
     "paddingTop": "0.2em",
