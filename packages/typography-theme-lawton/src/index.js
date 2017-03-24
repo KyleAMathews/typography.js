@@ -48,7 +48,7 @@ const theme: OptionsType = {
         color: gray(26.6),
         borderLeft: '4px solid #999',
         paddingLeft: rhythm(blockMarginBottom),
-        marginLeft:  rhythm(blockMarginBottom),
+        marginLeft: rhythm(blockMarginBottom),
         marginRight: rhythm(blockMarginBottom),
         marginTop: rhythm(blockMarginBottom),
         marginBottom: rhythm(blockMarginBottom),

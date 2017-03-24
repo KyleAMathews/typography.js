@@ -80,8 +80,8 @@ class DesignTool extends React.Component {
     super()
     this.googleFonts = JSON.stringify(props.typography.options.googleFonts)
     const options = new Typography(props.typography.options).options
-    let bodyFamily = _.find(fontList, (font) => font.family === props.typography.options.bodyFontFamily[0])
-    let headerFamily = _.find(fontList, (font) => font.family === props.typography.options.headerFontFamily[0])
+    let bodyFamily = _.find(fontList, font => font.family === props.typography.options.bodyFontFamily[0])
+    let headerFamily = _.find(fontList, font => font.family === props.typography.options.headerFontFamily[0])
     if (!bodyFamily) { bodyFamily = {} }
     if (!headerFamily) { headerFamily = {} }
     this.state = {
@@ -111,7 +111,7 @@ class DesignTool extends React.Component {
       // If Google Fonts have changed, insert them.
       if (this.googleFonts !== JSON.stringify(newTypography.options.googleFonts)) {
         const googleFonts = ReactDOM.renderToStaticMarkup(
-          React.createFactory(GoogleFont)({ typography: newTypography })
+          React.createFactory(GoogleFont)({ typography: newTypography }),
         )
         const head = document.getElementsByTagName('head')[0]
         head.insertAdjacentHTML('beforeend', googleFonts)
@@ -159,7 +159,7 @@ class DesignTool extends React.Component {
             Pick theme
             </div>
             <Select
-              options={themeRegistry.map((theme) => theme.title)}
+              options={themeRegistry.map(theme => theme.title)}
               value={this.state.selectedTheme}
               style={{
                 width: '100%',
@@ -167,10 +167,10 @@ class DesignTool extends React.Component {
               onChange={(value) => {
                 const newTheme = new Typography(themeRegistry[value].module)
                 let newBodyFamily = _.find(
-                  fontList, (font) => font.family === newTheme.options.bodyFontFamily[0]
+                  fontList, font => font.family === newTheme.options.bodyFontFamily[0],
                 )
                 let newHeaderFamily = _.find(
-                  fontList, (font) => font.family === newTheme.options.headerFontFamily[0]
+                  fontList, font => font.family === newTheme.options.headerFontFamily[0],
                 )
                 if (!newBodyFamily) { newBodyFamily = {} }
                 if (!newHeaderFamily) { newHeaderFamily = {} }
@@ -227,7 +227,7 @@ class DesignTool extends React.Component {
           </SectionRow>
           <SectionRow>
             <ModularScaleTool
-              key='scale'
+              key="scale"
               scaleRatio={this.state.options.scaleRatio}
               onChange={(newScale) => {
                 const newOptions = { ...this.state.options }
@@ -248,7 +248,7 @@ class DesignTool extends React.Component {
                 onValueChange={(value) => {
                   const options = this.state.options
                   options.blockMarginBottom = parseFloat(value)
-                  this.setState({ options: options })
+                  this.setState({ options })
                 }}
               />
             </SectionTool>
@@ -275,7 +275,7 @@ class DesignTool extends React.Component {
                 family={this.state.headerFamily}
                 weight={this.state.options.headerWeight}
                 options={this.state.options}
-                onChange={(newOptions) => this.setState({ options: newOptions })}
+                onChange={newOptions => this.setState({ options: newOptions })}
               />
             </SectionTool>
             <SectionTool
@@ -291,7 +291,7 @@ class DesignTool extends React.Component {
                 onValueChange={(value) => {
                   const options = this.state.options
                   options.headerGray = value
-                  this.setState({ options: options })
+                  this.setState({ options })
                 }}
               />
             </SectionTool>
@@ -318,7 +318,7 @@ class DesignTool extends React.Component {
                 family={this.state.bodyFamily}
                 weight={this.state.options.bodyWeight}
                 options={this.state.options}
-                onChange={(newOptions) => this.setState({ options: newOptions })}
+                onChange={newOptions => this.setState({ options: newOptions })}
               />
             </SectionTool>
             <SectionTool
@@ -329,7 +329,7 @@ class DesignTool extends React.Component {
                 family={this.state.bodyFamily}
                 weight={this.state.options.boldWeight}
                 options={this.state.options}
-                onChange={(newOptions) => this.setState({ options: newOptions })}
+                onChange={newOptions => this.setState({ options: newOptions })}
               />
             </SectionTool>
           </SectionRow>
@@ -347,7 +347,7 @@ class DesignTool extends React.Component {
                 onValueChange={(value) => {
                   const options = this.state.options
                   options.bodyGray = value
-                  this.setState({ options: options })
+                  this.setState({ options })
                 }}
               />
             </SectionTool>

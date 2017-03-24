@@ -11,8 +11,8 @@ describe('CodePlugin()', () => {
   it('should add code styles', () => {
     const actual = typography({
       plugins: [
-        new CodePlugin()
-      ]
+        new CodePlugin(),
+      ],
     }).toJSON()
 
     expect(actual).toMatchSnapshot()
@@ -22,8 +22,8 @@ describe('CodePlugin()', () => {
     const actual = typography({
       blockMarginBottom: '1rem',
       plugins: [
-        new CodePlugin()
-      ]
+        new CodePlugin(),
+      ],
     }).toJSON()
 
     expect(actual).toMatchSnapshot()
@@ -33,8 +33,8 @@ describe('CodePlugin()', () => {
     const actual = typography({
       blockMarginBottom: null,
       plugins: [
-        new CodePlugin()
-      ]
+        new CodePlugin(),
+      ],
     }).toJSON()
 
     expect(actual).toMatchSnapshot()

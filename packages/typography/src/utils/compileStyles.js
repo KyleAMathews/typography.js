@@ -7,7 +7,7 @@ import isObject from 'lodash/isObject'
 
 import type { OptionsType } from 'Types'
 
-const compileStyles = (styles) => (
+const compileStyles = styles => (
   reduce(styles, ((stylesStr, ruleSet, selector) => {
     stylesStr += `${selector}{` // eslint-disable-line
     each(ruleSet, ((value, property) => {
@@ -18,7 +18,7 @@ const compileStyles = (styles) => (
       } else {
         let newStyle = `${decamelize(property, '-')}:${value};` // eslint-disable-line
         // If the property is prefixed, add an additional dash at the beginning.
-        const prefixes = [ 'Webkit', 'ms', 'Moz', 'O' ]
+        const prefixes = ['Webkit', 'ms', 'Moz', 'O']
         prefixes.forEach((prefix) => {
           if (property.slice(0, prefix.length) === prefix) {
             newStyle = `-${newStyle}`

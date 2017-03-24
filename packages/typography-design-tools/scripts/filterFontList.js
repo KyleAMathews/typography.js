@@ -5,10 +5,10 @@ const fontList = require('../googleFonts.json')
 const whiteList = require('../fontWhitelist')
 
 const filteredList = fontList.items.filter(
-  (item) => _.includes(whiteList, item.family)
+  item => _.includes(whiteList, item.family),
 )
 
-const mappedList = fontList.items.map((item) => ({
+const mappedList = fontList.items.map(item => ({
   category: item.category,
   family: item.family,
   weights: Object.keys(item.files),

@@ -19,10 +19,10 @@ const prepareFamilyWeights = (weights=[], filterOutItalics) => {
 
   // Remove italic options.
   if (filterOutItalics) {
-    newWeights = _.filter(newWeights, (weight) => parseUnit(weight)[1] !== 'italic')
+    newWeights = _.filter(newWeights, weight => parseUnit(weight)[1] !== 'italic')
   }
 
-  newWeights = _.sortBy(newWeights, (weight) => parseUnit(weight)[0])
+  newWeights = _.sortBy(newWeights, weight => parseUnit(weight)[0])
 
   return newWeights
 }
@@ -41,7 +41,7 @@ class FontWeightTool extends React.Component {
           pickFamilyWeightValue(
             this.props.family.weights,
             this.props.weight,
-            true
+            true,
           )
         }
         style={{
@@ -63,7 +63,7 @@ class FontWeightTool extends React.Component {
           }
 
           // Add weight to Google Fonts array.
-          const fontFamily = _.find(newOptions.googleFonts, (font) => font.name === this.props.family.family)
+          const fontFamily = _.find(newOptions.googleFonts, font => font.name === this.props.family.family)
           fontFamily.styles.push(newWeight.toString())
 
           // Also push italic if this is for body/bold
@@ -72,7 +72,7 @@ class FontWeightTool extends React.Component {
           }
 
           // Filter out old weight.
-          fontFamily.styles = _.filter(fontFamily.styles, (style) => (
+          fontFamily.styles = _.filter(fontFamily.styles, style => (
             parseUnit(style)[0].toString() !== this.props.weight.toString()
           ))
 

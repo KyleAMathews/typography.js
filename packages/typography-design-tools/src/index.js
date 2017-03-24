@@ -14,7 +14,7 @@ const wrapTypography = (typography) => {
     // Render tool component.
     ReactDOM.render(
       <DesignTool typography={typography} />,
-      typeof window !== 'undefined' ? document.getElementById('typography-design-tools') : void 0
+      typeof window !== 'undefined' ? document.getElementById('typography-design-tools') : void 0,
     )
   }
 
