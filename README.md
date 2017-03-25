@@ -69,9 +69,7 @@ typography.injectStyles()
 ```
 
 ## Themes
-We maintain 30 (and counting) themes that are ready to use on your next
-project. These are each published as separate NPM packages. Explore
-themes at http://kyleamathews.github.io/typography.js.
+We maintain 30 (and counting) themes that are ready to use on your next project. These are each published as separate NPM packages. Explore themes at http://kyleamathews.github.io/typography.js.
 
 ### Using themes
 
@@ -238,8 +236,7 @@ When creating a new instance of Typography, you can pass in a *configuration* ob
 * **headerFontFamily**: An array of strings specifying the font family stack for headers, e.g., `['Helvetica', 'sans-serif']`. Defaults to a system UI font stack.
 * **bodyFontFamily**: An array of strings specifying the font family stack for the body, defaults to `['georgia', 'serif']`
 * **headerColor**: A CSS color string to be set on headers. Defaults to `inherit`.
-* **bodyColor**: A CSS color string to be set for body text. Defaults
-to `hsl(0,0%,0%,0.8)`.
+* **bodyColor**: A CSS color string to be set for body text. Defaults to `hsl(0,0%,0%,0.8)`.
 * **headerWeight**: Specifies the font weight for headers. Defaults to `bold`.
 * **bodyWeight**: Specifies the font weight for body text. Defaults to `normal`.
 * **boldWeight**: Specifies the font weight for "bold" (b, strong, dt, th) elements. Defaults to `bold`.
@@ -287,7 +284,7 @@ Typography.js is a monorepo facilitated by [Lerna](https://github.com/lerna/lern
 **TODO**:
 - Document constants
 - Document compass-vertical-rhythm
-- Document using Typgraphy.js for inline styles.
+- Document using Typgraphy.js for inline styles
 
 ## Backers
 
