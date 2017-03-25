@@ -207,32 +207,33 @@ When creating a new instance of Typography, you can pass in a *configuration* ob
 * **baseLineHeight**: The base line height using the css unitless number, defaults to `1.5`
 * **scaleRatio**: The "scale ratio" for the theme. This value is the ratio between the `h1` font size and the `baseFontSize`. So if the scale ratio is `2` and the `baseFontSize` is `16px` then the `h1` font size is `32px`.
 
-```javascript
-{
-  scaleRatio: 2,
-}
-```
+	```javascript
+	{
+	  scaleRatio: 2,
+	}
+	```
 
 * **googleFonts**: An array specifying Google Fonts for this project.
-```javascript
-googleFonts: [
-  {
-    name: 'Montserrat',
-    styles: [
-      '700',
-    ],
-  },
-  {
-    name: 'Merriweather',
-    styles: [
-      '400',
-      '400i',
-      '700',
-      '700i',
-    ],
-  },
-],
-```
+
+	```javascript
+	googleFonts: [
+	  {
+	    name: 'Montserrat',
+	    styles: [
+	      '700',
+	    ],
+	  },
+	  {
+	    name: 'Merriweather',
+	    styles: [
+	      '400',
+	      '400i',
+	      '700',
+	      '700i',
+	    ],
+	  },
+	],
+	```
 
 * **headerFontFamily**: An array of strings specifying the font family stack for headers, e.g., `['Helvetica', 'sans-serif']`. Defaults to a system UI font stack.
 * **bodyFontFamily**: An array of strings specifying the font family stack for the body, defaults to `['georgia', 'serif']`
