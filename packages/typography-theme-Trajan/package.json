@@ -1,0 +1,27 @@
+{
+  "name": "typography-theme-trajan",
+  "version": "0.0.1",
+  "description": "A theme for Typography.js insprired by the typography-theme-wordpress-2016",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "css",
+    "typography",
+    "typography-theme"
+  ],
+  "author": "guoliim",
+  "license": "MIT",
+  "dependencies": {
+    "gray-percentage": "^2.0.0",
+    "typography-breakpoint-constants": "^0.14.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/guoliim/typography-theme-trajan"
+  },
+  "bugs": {
+    "url": "https://github.com/guoliim/typography-theme-trajan/issues"
+  }
+}
