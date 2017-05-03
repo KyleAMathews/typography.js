@@ -1,12 +1,7 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
-module.exports = React.createClass({
-  displayName: 'GoogleFont',
-
-  propTypes: {
-    typography: React.PropTypes.object.isRequired,
-  },
-
+class GoogleFont extends React.Component {
   render () {
     // Create family + styles string
     let fontsStr = ''
@@ -31,5 +26,13 @@ module.exports = React.createClass({
       }
     }
     return null
-  },
-})
+  }
+}
+
+GoogleFont.propTypes = {
+  typography: PropTypes.object.isRequired,
+}
+
+GoogleFont.displayName = 'GoogleFont'
+
+module.exports = GoogleFont
