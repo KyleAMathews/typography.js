@@ -7,7 +7,7 @@ import createStyles from './utils/createStyles'
 import compileStyles from './utils/compileStyles'
 import type { OptionsType } from 'Types'
 
-const typography = function (opts: OptionsType) {
+const typography = function(opts: OptionsType) {
   const defaults: OptionsType = {
     baseFontSize: '16px',
     baseLineHeight: 1.5,
@@ -52,17 +52,19 @@ const typography = function (opts: OptionsType) {
     return vr.adjustFontSizeTo(newFontSize)
   }
 
-  return ({
+  return {
     options,
     ...vr,
-    createStyles () { return this.toString() }, // TODO remove in next breaking release.
-    toJSON () {
+    createStyles() {
+      return this.toString()
+    }, // TODO remove in next breaking release.
+    toJSON() {
       return createStyles(vr, options)
     },
-    toString () {
+    toString() {
       return compileStyles(vr, options, this.toJSON())
     },
-    injectStyles () {
+    injectStyles() {
       if (typeof document !== 'undefined') {
         // Replace existing
         if (document.getElementById('typography.js')) {
@@ -76,7 +78,7 @@ const typography = function (opts: OptionsType) {
         }
       }
     },
-  })
+  }
 }
 
 module.exports = typography

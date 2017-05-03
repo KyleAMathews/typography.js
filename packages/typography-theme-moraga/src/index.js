@@ -11,12 +11,7 @@ const theme: OptionsType = {
   googleFonts: [
     {
       name: 'Source Sans Pro',
-      styles: [
-        '200',
-        '400',
-        '400i',
-        '700',
-      ],
+      styles: ['200', '400', '400i', '700'],
     },
   ],
   scaleRatio: 2.5,
@@ -47,11 +42,11 @@ const theme: OptionsType = {
         textDecoration: 'underline',
       },
       blockquote: {
-        ...scale(1/5),
+        ...scale(1 / 5),
         color: gray(40),
-        paddingLeft: rhythm(3/4),
+        paddingLeft: rhythm(3 / 4),
         marginLeft: 0,
-        borderLeft: `${rhythm(1/4)} solid ${gray(87)}`,
+        borderLeft: `${rhythm(1 / 4)} solid ${gray(87)}`,
       },
       // Mobile styles.
       [TABLET_MEDIA_QUERY]: {
@@ -59,12 +54,12 @@ const theme: OptionsType = {
           ...vr.establishBaseline(),
         },
         blockquote: {
-          marginLeft: rhythm(-3/4),
+          marginLeft: rhythm(-3 / 4),
           marginRight: 0,
-          paddingLeft: rhythm(1/2),
+          paddingLeft: rhythm(1 / 2),
         },
         table: {
-          ...scale(-1/5),
+          ...scale(-1 / 5),
         },
       },
     }

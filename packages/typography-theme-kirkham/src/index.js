@@ -1,27 +1,23 @@
 // @flow
 import gray from 'gray-percentage'
 import type { OptionsType } from 'Types'
-import { MOBILE_MEDIA_QUERY, TABLET_MEDIA_QUERY } from 'typography-breakpoint-constants'
+import {
+  MOBILE_MEDIA_QUERY,
+  TABLET_MEDIA_QUERY,
+} from 'typography-breakpoint-constants'
 
 const theme: OptionsType = {
   title: 'Kirkham',
   baseFontSize: '18px',
-  baseLineHeight: 5/3,
+  baseLineHeight: 5 / 3,
   googleFonts: [
     {
       name: 'Playfair Display',
-      styles: [
-        '700',
-      ],
+      styles: ['700'],
     },
     {
       name: 'Fira Sans',
-      styles: [
-        '400',
-        '400i',
-        '700',
-        '700i',
-      ],
+      styles: ['400', '400i', '700', '700i'],
     },
   ],
   headerFontFamily: ['Playfair Display', 'serif'],
@@ -36,12 +32,12 @@ const theme: OptionsType = {
       color: '#9f392b',
     },
     blockquote: {
-      ...scale(1/5),
+      ...scale(1 / 5),
       color: gray(41),
       fontStyle: 'italic',
-      paddingLeft: rhythm(13/16),
+      paddingLeft: rhythm(13 / 16),
       marginLeft: 0,
-      borderLeft: `${rhythm(3/16)} solid ${gray(80)}`,
+      borderLeft: `${rhythm(3 / 16)} solid ${gray(80)}`,
     },
     'blockquote > :last-child': {
       marginBottom: 0,
@@ -56,9 +52,9 @@ const theme: OptionsType = {
     },
     [MOBILE_MEDIA_QUERY]: {
       blockquote: {
-        marginLeft: rhythm(-3/4),
+        marginLeft: rhythm(-3 / 4),
         marginRight: 0,
-        paddingLeft: rhythm(9/16),
+        paddingLeft: rhythm(9 / 16),
       },
     },
     'h3,h4,h5,h6': {

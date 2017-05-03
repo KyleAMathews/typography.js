@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const Select = ({ options, style={}, value, onChange }) => {
+const Select = ({ options, style = {}, value, onChange }) => {
   const optionsEls = options.map((text, i) => (
     <option key={i} value={i}>{text}</option>
   ))
@@ -44,14 +44,15 @@ const Select = ({ options, style={}, value, onChange }) => {
       }}
       value={value}
       onChange={e => onChange(e.target.value)}
-      onKeyDown={(e) => {
+      onKeyDown={e => {
         const valueInt = parseInt(value, 10)
         let change = false
         let newValue
         if (e.which === 40 || e.which === 38) {
           e.preventDefault()
         }
-        if (e.which === 40) { // arrow down
+        if (e.which === 40) {
+          // arrow down
           change = true
           // At end?
           if (valueInt === options.length - 1) {
@@ -60,7 +61,8 @@ const Select = ({ options, style={}, value, onChange }) => {
             newValue = valueInt + 1
           }
         }
-        if (e.which === 38) { // arrow up
+        if (e.which === 38) {
+          // arrow up
           change = true
           // At beginning?
           if (valueInt === 0) {

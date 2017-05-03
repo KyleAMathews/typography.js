@@ -11,18 +11,11 @@ const theme: OptionsType = {
   googleFonts: [
     {
       name: 'Alegreya Sans',
-      styles: [
-        '500',
-      ],
+      styles: ['500'],
     },
     {
       name: 'Alegreya',
-      styles: [
-        '400',
-        '400i',
-        '700',
-        '700i',
-      ],
+      styles: ['400', '400i', '700', '700i'],
     },
   ],
   headerFontFamily: ['Alegreya Sans', 'sans-serif'],
@@ -33,7 +26,7 @@ const theme: OptionsType = {
   bodyWeight: 400,
   boldWeight: 700,
   overrideStyles: ({ rhythm }) => ({
-      // Lighten larger headers so they don't contrast so much with the body.
+    // Lighten larger headers so they don't contrast so much with the body.
     h1: {
       color: 'hsla(0,0%,0%,0.75)',
     },
@@ -49,14 +42,14 @@ const theme: OptionsType = {
     'h1,h2,h3,h4': {
       lineHeight: 1,
       marginTop: rhythm(1),
-      marginBottom: rhythm(1/2),
+      marginBottom: rhythm(1 / 2),
     },
     'h4,h5,h6': {
       textTransformation: 'uppercase',
     },
-      // Lists look better when not crowded by the larger headers.
+    // Lists look better when not crowded by the larger headers.
     ul: {
-      marginTop: rhythm(1/2),
+      marginTop: rhythm(1 / 2),
     },
     a: {
       color: 'hsl(230,55%,58%)',
@@ -68,23 +61,23 @@ const theme: OptionsType = {
     blockquote: {
       color: gray(35),
       fontStyle: 'italic',
-      paddingLeft: rhythm(11/16),
+      paddingLeft: rhythm(11 / 16),
       marginLeft: 0,
-      borderLeft: `${rhythm(5/16)} solid ${gray(50)}`,
+      borderLeft: `${rhythm(5 / 16)} solid ${gray(50)}`,
     },
     'blockquote > :last-child': {
       marginBottom: 0,
     },
     [MOBILE_MEDIA_QUERY]: {
-        // Make baseFontSize on mobile 18px.
+      // Make baseFontSize on mobile 18px.
       html: {
-        fontSize: `${18/16 * 100}%`,
+        fontSize: `${18 / 16 * 100}%`,
       },
       blockquote: {
-        borderLeft: `${rhythm(3/16)} solid ${gray(50)}`,
-        marginLeft: rhythm(-3/4),
+        borderLeft: `${rhythm(3 / 16)} solid ${gray(50)}`,
+        marginLeft: rhythm(-3 / 4),
         marginRight: 0,
-        paddingLeft: rhythm(9/16),
+        paddingLeft: rhythm(9 / 16),
       },
     },
   }),

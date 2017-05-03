@@ -7,24 +7,15 @@ const theme: OptionsType = {
   title: 'Wordpress Theme 2016',
   baseFontSize: '16px',
   baseLineHeight: 1.75,
-  scaleRatio: 5/2,
+  scaleRatio: 5 / 2,
   googleFonts: [
     {
       name: 'Montserrat',
-      styles: [
-        '700',
-      ],
+      styles: ['700'],
     },
     {
       name: 'Merriweather',
-      styles: [
-        '400',
-        '400i',
-        '700',
-        '700i',
-        '900',
-        '900i',
-      ],
+      styles: ['400', '400i', '700', '700i', '900', '900i'],
     },
   ],
   headerFontFamily: ['Merriweather', 'Georgia', 'serif'],
@@ -38,12 +29,12 @@ const theme: OptionsType = {
       fontFamily: ['Montserrat', 'sans-serif'].join(','),
     },
     blockquote: {
-      ...scale(1/5),
+      ...scale(1 / 5),
       color: gray(41),
       fontStyle: 'italic',
-      paddingLeft: rhythm(13/16),
+      paddingLeft: rhythm(13 / 16),
       marginLeft: rhythm(-1),
-      borderLeft: `${rhythm(3/16)} solid ${gray(10)}`,
+      borderLeft: `${rhythm(3 / 16)} solid ${gray(10)}`,
     },
     'blockquote > :last-child': {
       marginBottom: 0,
@@ -67,9 +58,9 @@ const theme: OptionsType = {
         marginLeft: rhythm(1),
       },
       blockquote: {
-        marginLeft: rhythm(-3/4),
+        marginLeft: rhythm(-3 / 4),
         marginRight: 0,
-        paddingLeft: rhythm(9/16),
+        paddingLeft: rhythm(9 / 16),
       },
     },
     'h1,h2,h3,h4,h5,h6': {
@@ -93,7 +84,7 @@ const theme: OptionsType = {
     'mark,ins': {
       background: '#007acc',
       color: 'white',
-      padding: `${rhythm(1/16)} ${rhythm(1/8)}`,
+      padding: `${rhythm(1 / 16)} ${rhythm(1 / 8)}`,
       textDecoration: 'none',
     },
   }),

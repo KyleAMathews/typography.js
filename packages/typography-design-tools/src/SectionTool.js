@@ -1,7 +1,7 @@
 import React from 'react'
 
 class SectionTool extends React.Component {
-  render () {
+  render() {
     return (
       <div
         style={{

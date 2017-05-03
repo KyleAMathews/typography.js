@@ -36,25 +36,25 @@ const theme: OptionsType = {
   bodyWeight: 'normal',
   boldWeight: 600,
   // Github has all block elements use 1/2 rhythm not a full rhythm.
-  blockMarginBottom: 1/2,
+  blockMarginBottom: 1 / 2,
   overrideStyles: ({ rhythm }) => ({
     h1: {
       borderBottom: `1px solid ${gray(93)}`,
-      paddingBottom: `calc(${rhythm(1/4)} - 1px)`,
-      marginBottom: rhythm(3/4),
+      paddingBottom: `calc(${rhythm(1 / 4)} - 1px)`,
+      marginBottom: rhythm(3 / 4),
       marginTop: rhythm(1.5),
     },
     h2: {
       borderBottom: `1px solid ${gray(93)}`,
-      paddingBottom: `calc(${rhythm(1/4)} - 1px)`,
-      marginBottom: rhythm(1/4),
+      paddingBottom: `calc(${rhythm(1 / 4)} - 1px)`,
+      marginBottom: rhythm(1 / 4),
       marginTop: rhythm(1),
     },
     h6: {
       color: gray(47),
     },
     'h3,h4,h5,h6': {
-      marginBottom: rhythm(1/2),
+      marginBottom: rhythm(1 / 2),
       marginTop: rhythm(1),
     },
     'ol,ul': {
@@ -77,7 +77,7 @@ const theme: OptionsType = {
       marginTop: 0,
       marginRight: 0,
       marginLeft: 0,
-      paddingLeft: `calc(${rhythm(1/2)} - 1px)`,
+      paddingLeft: `calc(${rhythm(1 / 2)} - 1px)`,
     },
   }),
 }

@@ -11,17 +11,11 @@ const theme: OptionsType = {
   googleFonts: [
     {
       name: 'Raleway',
-      styles: [
-        '800',
-      ],
+      styles: ['800'],
     },
     {
       name: 'Libre Baskerville',
-      styles: [
-        '400',
-        '400i',
-        '700',
-      ],
+      styles: ['400', '400i', '700'],
     },
   ],
   headerFontFamily: ['Raleway', 'sans-serif'],
@@ -31,7 +25,7 @@ const theme: OptionsType = {
   headerWeight: 800,
   bodyWeight: 400,
   boldWeight: 700,
-  blockMarginBottom: 2/3,
+  blockMarginBottom: 2 / 3,
   overrideStyles: ({ rhythm }, { blockMarginBottom }) => {
     const vr = verticalRhythm({
       baseFontSize: '12.8px',

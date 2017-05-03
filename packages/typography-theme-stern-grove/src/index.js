@@ -6,13 +6,11 @@ import { MOBILE_MEDIA_QUERY } from 'typography-breakpoint-constants'
 const theme: OptionsType = {
   title: 'Stern Grove',
   baseFontSize: '18px',
-  baseLineHeight: 5/3,
+  baseLineHeight: 5 / 3,
   googleFonts: [
     {
       name: 'Montserrat',
-      styles: [
-        '400',
-      ],
+      styles: ['400'],
     },
   ],
   headerFontFamily: ['Montserrat', 'sans-serif'],
@@ -31,16 +29,16 @@ const theme: OptionsType = {
       color: '#e32',
     },
     blockquote: {
-      ...scale(1/5),
+      ...scale(1 / 5),
       background: gray(97),
       color: gray(31),
-      paddingLeft: rhythm(14/16),
-      paddingRight: rhythm(1/2),
-      paddingTop: rhythm(1/2),
-      paddingBottom: rhythm(1/2),
+      paddingLeft: rhythm(14 / 16),
+      paddingRight: rhythm(1 / 2),
+      paddingTop: rhythm(1 / 2),
+      paddingBottom: rhythm(1 / 2),
       marginLeft: 0,
       marginRight: 0,
-      borderLeft: `${rhythm(2/16)} solid ${gray(80)}`,
+      borderLeft: `${rhythm(2 / 16)} solid ${gray(80)}`,
     },
     'blockquote > :last-child': {
       marginBottom: 0,
@@ -61,10 +59,10 @@ const theme: OptionsType = {
         marginLeft: rhythm(1),
       },
       blockquote: {
-        marginLeft: rhythm(-3/4),
-        marginRight: rhythm(-3/4),
-        paddingLeft: rhythm(11/16),
-        paddingRight: rhythm(3/4),
+        marginLeft: rhythm(-3 / 4),
+        marginRight: rhythm(-3 / 4),
+        paddingLeft: rhythm(11 / 16),
+        paddingRight: rhythm(3 / 4),
       },
     },
     'h1,h2,h3,h4,h5,h6': {

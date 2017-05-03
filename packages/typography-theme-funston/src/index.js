@@ -10,16 +10,11 @@ const theme: OptionsType = {
   googleFonts: [
     {
       name: 'Patua One',
-      styles: [
-        '400',
-      ],
+      styles: ['400'],
     },
     {
       name: 'Cabin Condensed',
-      styles: [
-        '400',
-        '700',
-      ],
+      styles: ['400', '700'],
     },
   ],
   headerFontFamily: ['Patua One', 'sans-serif'],
@@ -42,16 +37,16 @@ const theme: OptionsType = {
       color: '#3498DB',
     },
     blockquote: {
-      ...scale(1/5),
+      ...scale(1 / 5),
       color: gray(40),
-      paddingLeft: rhythm(13/16),
+      paddingLeft: rhythm(13 / 16),
       marginLeft: rhythm(-1),
-      borderLeft: `${rhythm(3/16)} solid ${gray(13)}`,
+      borderLeft: `${rhythm(3 / 16)} solid ${gray(13)}`,
     },
     [MOBILE_MEDIA_QUERY]: {
       blockquote: {
-        marginLeft: rhythm(-3/4),
-        paddingLeft: rhythm(9/16),
+        marginLeft: rhythm(-3 / 4),
+        paddingLeft: rhythm(9 / 16),
         marginRight: 0,
       },
     },
@@ -59,4 +54,3 @@ const theme: OptionsType = {
 }
 
 export default theme
-

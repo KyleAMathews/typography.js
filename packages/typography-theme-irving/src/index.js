@@ -11,16 +11,11 @@ const theme: OptionsType = {
   googleFonts: [
     {
       name: 'Exo',
-      styles: [
-        '700',
-      ],
+      styles: ['700'],
     },
     {
       name: 'Yrsa',
-      styles: [
-        '400',
-        '700',
-      ],
+      styles: ['400', '700'],
     },
   ],
   headerFontFamily: ['Exo', 'sans-serif'],
@@ -38,25 +33,25 @@ const theme: OptionsType = {
         color: '#3498DB',
       },
       blockquote: {
-        ...scale(1/5),
+        ...scale(1 / 5),
         color: gray(30),
-        paddingLeft: rhythm(3/4),
+        paddingLeft: rhythm(3 / 4),
         marginLeft: 0,
         marginRight: 0,
-        borderLeft: `${rhythm(1/4)} solid ${gray(13)}`,
+        borderLeft: `${rhythm(1 / 4)} solid ${gray(13)}`,
       },
       'h3,h4,h5,h6': {
-        marginBottom: rhythm(1/2),
+        marginBottom: rhythm(1 / 2),
       },
       table: {
-        ...scale(-1/5),
+        ...scale(-1 / 5),
       },
       // Mobile styles.
       [TABLET_MEDIA_QUERY]: {
         blockquote: {
-          marginLeft: rhythm(-3/4),
+          marginLeft: rhythm(-3 / 4),
           marginRight: 0,
-          paddingLeft: rhythm(1/2),
+          paddingLeft: rhythm(1 / 2),
         },
       },
     }

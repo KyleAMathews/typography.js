@@ -30,12 +30,12 @@ const theme: OptionsType = {
     ul: {
       listStyle: 'none',
       marginLeft: 0,
-      paddingLeft: rhythm(5/8),
-      textIndent: rhythm(-5/8),
+      paddingLeft: rhythm(5 / 8),
+      textIndent: rhythm(-5 / 8),
     },
     li: {
       display: 'list-item',
-      marginLeft: rhythm(5/8),
+      marginLeft: rhythm(5 / 8),
     },
     'ul li:before': {
       content: '"» "',
@@ -56,9 +56,9 @@ const theme: OptionsType = {
       marginTop: rhythm(1),
       marginRight: rhythm(2),
       marginBottom: 0,
-      marginLeft: rhythm(5/8),
+      marginLeft: rhythm(5 / 8),
       paddingLeft: rhythm(1.25),
-      borderLeft: `${rhythm(1/3)} solid ${gray(87)}`,
+      borderLeft: `${rhythm(1 / 3)} solid ${gray(87)}`,
     },
   }),
 }

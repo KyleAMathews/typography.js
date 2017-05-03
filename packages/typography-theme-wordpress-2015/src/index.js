@@ -10,10 +10,7 @@ const theme: OptionsType = {
   googleFonts: [
     {
       name: 'Noto Serif',
-      styles: [
-        '400',
-        '700',
-      ],
+      styles: ['400', '700'],
     },
   ],
   headerFontFamily: ['Noto Serif', 'serif'],
@@ -38,17 +35,17 @@ const theme: OptionsType = {
     },
     // children ol, ul
     'li>ol,li>ul': {
-      marginLeft: rhythm(2/3),
+      marginLeft: rhythm(2 / 3),
       marginBottom: 0,
     },
     // Blockquote.
     blockquote: {
-      ...scale(1/5),
+      ...scale(1 / 5),
       color: gray(41),
       fontStyle: 'italic',
-      paddingLeft: rhythm(5/8),
-      marginLeft: rhythm(-6/8),
-      borderLeft: `${rhythm(1/8)} solid rgba(51, 51, 51, 0.7)`,
+      paddingLeft: rhythm(5 / 8),
+      marginLeft: rhythm(-6 / 8),
+      borderLeft: `${rhythm(1 / 8)} solid rgba(51, 51, 51, 0.7)`,
     },
     'blockquote > :last-child': {
       marginBottom: 0,
@@ -66,9 +63,9 @@ const theme: OptionsType = {
         marginLeft: rhythm(1),
       },
       blockquote: {
-        marginLeft: rhythm(-3/4),
+        marginLeft: rhythm(-3 / 4),
         marginRight: 0,
-        paddingLeft: rhythm(9/16),
+        paddingLeft: rhythm(9 / 16),
       },
     },
   }),

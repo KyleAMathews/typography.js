@@ -53,11 +53,11 @@ const options = fontList.map(font => ({
   name: font.family,
 }))
 
-const pickBoldStyle = (name) => {
+const pickBoldStyle = name => {
   const family = _.find(fontList, font => font.family === name)
 
   // Pick heaviest weight that's not an italic.
-  let weights = _.map(family.weights, (weight) => {
+  let weights = _.map(family.weights, weight => {
     if (weight === 'regular') {
       return 400
     } else {
@@ -72,7 +72,7 @@ const pickBoldStyle = (name) => {
   }
 }
 
-function getSuggestions (value) {
+function getSuggestions(value) {
   const inputValue = value.trim().toLowerCase()
   const inputLength = inputValue.length
 
@@ -80,23 +80,24 @@ function getSuggestions (value) {
     return options
   }
 
-  return inputLength === 0 ? [] : options.filter(option => (
-    _.includes(option.name.toLowerCase(), inputValue)
-  ))
+  return inputLength === 0
+    ? []
+    : options.filter(option =>
+        _.includes(option.name.toLowerCase(), inputValue)
+      )
 }
 
-function getSuggestionValue (suggestion) { // when suggestion selected, this function tells
-  return suggestion.name                 // what should be the value of the input
+function getSuggestionValue(suggestion) {
+  // when suggestion selected, this function tells
+  return suggestion.name // what should be the value of the input
 }
 
-function renderSuggestion (suggestion) {
-  return (
-    <span>{suggestion.name}</span>
-  )
+function renderSuggestion(suggestion) {
+  return <span>{suggestion.name}</span>
 }
 
 class FontSelectTool extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super()
 
     let fontFamily
@@ -112,10 +113,12 @@ class FontSelectTool extends React.Component {
     }
 
     this.onChange = this.onChange.bind(this)
-    this.onSuggestionsUpdateRequested = this.onSuggestionsUpdateRequested.bind(this)
+    this.onSuggestionsUpdateRequested = this.onSuggestionsUpdateRequested.bind(
+      this
+    )
   }
 
-  onChange (event, { newValue }) {
+  onChange(event, { newValue }) {
     this.setState({
       value: newValue,
     })
@@ -136,15 +139,14 @@ class FontSelectTool extends React.Component {
         // Add font to Google Fonts array.
         newOptions.googleFonts.push({
           name: newValue,
-          styles: [
-            weight,
-          ],
+          styles: [weight],
         })
 
         // Filter out old font.
-        newOptions.googleFonts = _.filter(newOptions.googleFonts, font => (
-          font.name !== this.props.options.headerFontFamily[0]
-        ))
+        newOptions.googleFonts = _.filter(
+          newOptions.googleFonts,
+          font => font.name !== this.props.options.headerFontFamily[0]
+        )
       } else if (this.props.type === 'body') {
         // Set body font family.
         newOptions.bodyFontFamily = [newValue, family.category]
@@ -158,31 +160,27 @@ class FontSelectTool extends React.Component {
         // Add font to Google Fonts array.
         newOptions.googleFonts.push({
           name: newValue,
-          styles: [
-            '400',
-            '400i',
-            boldWeight.toString(),
-            `${boldWeight}i`,
-          ],
+          styles: ['400', '400i', boldWeight.toString(), `${boldWeight}i`],
         })
 
         // Filter out old font.
-        newOptions.googleFonts = _.filter(newOptions.googleFonts, font => (
-          font.name !== this.props.options.bodyFontFamily[0]
-        ))
+        newOptions.googleFonts = _.filter(
+          newOptions.googleFonts,
+          font => font.name !== this.props.options.bodyFontFamily[0]
+        )
       }
 
       this.props.onChange(newOptions, family)
     }
   }
 
-  onSuggestionsUpdateRequested ({ value }) {
+  onSuggestionsUpdateRequested({ value }) {
     this.setState({
       suggestions: getSuggestions(value),
     })
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     if (this.props.type === 'header') {
       this.setState({
         value: nextProps.options.headerFontFamily[0],
@@ -194,7 +192,7 @@ class FontSelectTool extends React.Component {
     }
   }
 
-  render () {
+  render() {
     const { value, suggestions } = this.state
     const inputProps = {
       placeholder: 'Type font family',

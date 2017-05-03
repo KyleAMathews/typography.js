@@ -6,15 +6,11 @@ const theme: OptionsType = {
   title: 'Wordpress Theme 2012',
   baseFontSize: '14px',
   baseLineHeight: 1.714,
-  scaleRatio: 8/5,
+  scaleRatio: 8 / 5,
   googleFonts: [
     {
       name: 'Open Sans',
-      styles: [
-        '400',
-        '400i',
-        '700',
-      ],
+      styles: ['400', '400i', '700'],
     },
   ],
   headerFontFamily: ['Open Sans', 'sans-serif'],
@@ -48,7 +44,7 @@ const theme: OptionsType = {
       marginLeft: rhythm(1.5),
     },
     table: {
-      ...scale(-1/5),
+      ...scale(-1 / 5),
       color: gray(46),
     },
     th: {

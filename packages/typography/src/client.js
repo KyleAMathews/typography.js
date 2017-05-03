@@ -5,7 +5,7 @@ import ms from 'modularscale'
 
 import type { OptionsType } from 'Types'
 
-const typography = function (opts: OptionsType) {
+const typography = function(opts: OptionsType) {
   const defaults: OptionsType = {
     baseFontSize: '16px',
     baseLineHeight: 1.5,
@@ -50,10 +50,10 @@ const typography = function (opts: OptionsType) {
     return vr.adjustFontSizeTo(newFontSize)
   }
 
-  return ({
+  return {
     options,
     ...vr,
-  })
+  }
 }
 
 module.exports = typography

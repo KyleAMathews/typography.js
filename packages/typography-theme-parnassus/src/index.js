@@ -1,7 +1,10 @@
 // @flow
 import gray from 'gray-percentage'
 import type { OptionsType } from 'Types'
-import { TABLET_MEDIA_QUERY, MOBILE_MEDIA_QUERY } from 'typography-breakpoint-constants'
+import {
+  TABLET_MEDIA_QUERY,
+  MOBILE_MEDIA_QUERY,
+} from 'typography-breakpoint-constants'
 import verticalRhythm from 'compass-vertical-rhythm'
 
 const theme: OptionsType = {
@@ -12,17 +15,11 @@ const theme: OptionsType = {
   googleFonts: [
     {
       name: 'Merriweather Sans',
-      styles: [
-        '800',
-      ],
+      styles: ['800'],
     },
     {
       name: 'Merriweather',
-      styles: [
-        '400',
-        '400i',
-        '700',
-      ],
+      styles: ['400', '400i', '700'],
     },
   ],
   headerFontFamily: ['Merriweather Sans', 'sans-serif'],
@@ -51,11 +48,11 @@ const theme: OptionsType = {
         marginTop: rhythm(2),
       },
       blockquote: {
-        ...scale(1/5),
+        ...scale(1 / 5),
         color: gray(41),
-        paddingLeft: rhythm(18/16),
+        paddingLeft: rhythm(18 / 16),
         marginLeft: 0,
-        borderLeft: `${rhythm(6/16)} solid`,
+        borderLeft: `${rhythm(6 / 16)} solid`,
         borderColor: gray(90),
       },
       'blockquote > :last-child': {
@@ -71,11 +68,11 @@ const theme: OptionsType = {
       },
       [MOBILE_MEDIA_QUERY]: {
         blockquote: {
-          marginLeft: rhythm(-3/4),
+          marginLeft: rhythm(-3 / 4),
           marginRight: 0,
-          borderLeft: `${rhythm(3/16)} solid`,
+          borderLeft: `${rhythm(3 / 16)} solid`,
           borderColor: gray(90),
-          paddingLeft: rhythm(9/16),
+          paddingLeft: rhythm(9 / 16),
         },
       },
       [TABLET_MEDIA_QUERY]: {

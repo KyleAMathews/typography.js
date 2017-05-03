@@ -10,17 +10,11 @@ const theme: OptionsType = {
   googleFonts: [
     {
       name: 'Montserrat',
-      styles: [
-        '700',
-      ],
+      styles: ['700'],
     },
     {
       name: 'Arvo',
-      styles: [
-        '400',
-        '400i',
-        '700',
-      ],
+      styles: ['400', '400i', '700'],
     },
   ],
   headerFontFamily: ['Montserrat', 'sans-serif'],
@@ -42,11 +36,11 @@ const theme: OptionsType = {
       marginTop: rhythm(2),
     },
     blockquote: {
-      ...scale(1/5),
+      ...scale(1 / 5),
       color: gray(41),
-      paddingLeft: rhythm(13/16),
+      paddingLeft: rhythm(13 / 16),
       marginLeft: 0,
-      borderLeft: `${rhythm(3/16)} solid #fca206`,
+      borderLeft: `${rhythm(3 / 16)} solid #fca206`,
     },
     'blockquote > :last-child': {
       marginBottom: 0,
@@ -61,9 +55,9 @@ const theme: OptionsType = {
     },
     [MOBILE_MEDIA_QUERY]: {
       blockquote: {
-        marginLeft: rhythm(-3/4),
+        marginLeft: rhythm(-3 / 4),
         marginRight: 0,
-        paddingLeft: rhythm(9/16),
+        paddingLeft: rhythm(9 / 16),
       },
     },
   }),

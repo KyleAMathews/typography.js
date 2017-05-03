@@ -4,8 +4,7 @@ import gray from 'gray-percentage'
 import isNumber from 'lodash/isNumber'
 import isString from 'lodash/isString'
 
-const CodePlugin = (): Function =>
-({ rhythm }, options: OptionsType) => {
+const CodePlugin = (): Function => ({ rhythm }, options: OptionsType) => {
   let blockMarginBottom
   if (isNumber(options.blockMarginBottom)) {
     blockMarginBottom = rhythm(options.blockMarginBottom)

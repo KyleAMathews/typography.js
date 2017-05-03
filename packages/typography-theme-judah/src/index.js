@@ -6,22 +6,15 @@ import { MOBILE_MEDIA_QUERY } from 'typography-breakpoint-constants'
 const theme: OptionsType = {
   title: 'Judah',
   baseFontSize: '18px',
-  baseLineHeight: 5/3,
+  baseLineHeight: 5 / 3,
   googleFonts: [
     {
       name: 'Roboto Condensed',
-      styles: [
-        '400',
-        '400i',
-      ],
+      styles: ['400', '400i'],
     },
     {
       name: 'Vollkorn',
-      styles: [
-        '400',
-        '400i',
-        '700',
-      ],
+      styles: ['400', '400i', '700'],
     },
   ],
   headerFontFamily: ['Roboto Condensed', 'sans-serif'],
@@ -41,12 +34,12 @@ const theme: OptionsType = {
       textDecoration: 'none',
     },
     blockquote: {
-      ...scale(1/5),
+      ...scale(1 / 5),
       color: gray(0),
       fontStyle: 'italic',
-      paddingLeft: rhythm(13/16),
+      paddingLeft: rhythm(13 / 16),
       marginLeft: 0,
-      borderLeft: `${rhythm(3/16)} solid ${gray(80)}`,
+      borderLeft: `${rhythm(3 / 16)} solid ${gray(80)}`,
     },
     'blockquote > :last-child': {
       marginBottom: 0,
@@ -67,9 +60,9 @@ const theme: OptionsType = {
         marginLeft: rhythm(1),
       },
       blockquote: {
-        marginLeft: rhythm(-3/4),
+        marginLeft: rhythm(-3 / 4),
         marginRight: 0,
-        paddingLeft: rhythm(9/16),
+        paddingLeft: rhythm(9 / 16),
       },
     },
     'h5,h6': {

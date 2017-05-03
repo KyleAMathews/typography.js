@@ -16,9 +16,13 @@ import FontSelectTool from './FontSelectTool'
 import FontWeightTool from './FontWeightTool'
 import fontList from '../filteredGoogleFontList.json'
 
-const requireThemes = require.context('../../', true, /^\.\/typography-theme.*\/src\/index.js$/)
+const requireThemes = require.context(
+  '../../',
+  true,
+  /^\.\/typography-theme.*\/src\/index.js$/
+)
 const themeRegistry = []
-_.each(themes, (theme) => {
+_.each(themes, theme => {
   themeRegistry.push({
     name: theme.name,
     title: theme.title,
@@ -76,14 +80,24 @@ const SectionHeader = ({ children }) => (
 )
 
 class DesignTool extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super()
     this.googleFonts = JSON.stringify(props.typography.options.googleFonts)
     const options = new Typography(props.typography.options).options
-    let bodyFamily = _.find(fontList, font => font.family === props.typography.options.bodyFontFamily[0])
-    let headerFamily = _.find(fontList, font => font.family === props.typography.options.headerFontFamily[0])
-    if (!bodyFamily) { bodyFamily = {} }
-    if (!headerFamily) { headerFamily = {} }
+    let bodyFamily = _.find(
+      fontList,
+      font => font.family === props.typography.options.bodyFontFamily[0]
+    )
+    let headerFamily = _.find(
+      fontList,
+      font => font.family === props.typography.options.headerFontFamily[0]
+    )
+    if (!bodyFamily) {
+      bodyFamily = {}
+    }
+    if (!headerFamily) {
+      headerFamily = {}
+    }
     this.state = {
       selectedTheme: 0,
       options,
@@ -92,7 +106,7 @@ class DesignTool extends React.Component {
     }
   }
 
-  render () {
+  render() {
     const options = themeRegistry.map((theme, i) => (
       <option key={i} value={i}>{theme.title}</option>
     ))
@@ -109,9 +123,11 @@ class DesignTool extends React.Component {
       newTypography.injectStyles()
 
       // If Google Fonts have changed, insert them.
-      if (this.googleFonts !== JSON.stringify(newTypography.options.googleFonts)) {
+      if (
+        this.googleFonts !== JSON.stringify(newTypography.options.googleFonts)
+      ) {
         const googleFonts = ReactDOM.renderToStaticMarkup(
-          React.createFactory(GoogleFont)({ typography: newTypography }),
+          React.createFactory(GoogleFont)({ typography: newTypography })
         )
         const head = document.getElementsByTagName('head')[0]
         head.insertAdjacentHTML('beforeend', googleFonts)
@@ -156,7 +172,7 @@ class DesignTool extends React.Component {
                 marginTop: 7.5,
               }}
             >
-            Pick theme
+              Pick theme
             </div>
             <Select
               options={themeRegistry.map(theme => theme.title)}
@@ -164,16 +180,22 @@ class DesignTool extends React.Component {
               style={{
                 width: '100%',
               }}
-              onChange={(value) => {
+              onChange={value => {
                 const newTheme = new Typography(themeRegistry[value].module)
                 let newBodyFamily = _.find(
-                  fontList, font => font.family === newTheme.options.bodyFontFamily[0],
+                  fontList,
+                  font => font.family === newTheme.options.bodyFontFamily[0]
                 )
                 let newHeaderFamily = _.find(
-                  fontList, font => font.family === newTheme.options.headerFontFamily[0],
+                  fontList,
+                  font => font.family === newTheme.options.headerFontFamily[0]
                 )
-                if (!newBodyFamily) { newBodyFamily = {} }
-                if (!newHeaderFamily) { newHeaderFamily = {} }
+                if (!newBodyFamily) {
+                  newBodyFamily = {}
+                }
+                if (!newHeaderFamily) {
+                  newHeaderFamily = {}
+                }
                 this.setState({
                   selectedTheme: parseInt(value, 10),
                   options: newTheme.options,
@@ -187,9 +209,7 @@ class DesignTool extends React.Component {
         <Section>
           <SectionHeader>Base sizes</SectionHeader>
           <SectionRow>
-            <SectionTool
-              title="Font size"
-            >
+            <SectionTool title="Font size">
               <NumberEditor
                 unit="px"
                 value={parseUnit(this.state.options.baseFontSize)[0]}
@@ -197,16 +217,14 @@ class DesignTool extends React.Component {
                 max={100}
                 step={0.25}
                 decimals={2}
-                onValueChange={(value) => {
+                onValueChange={value => {
                   const newOptions = { ...this.state.options }
                   newOptions.baseFontSize = `${value}px`
                   this.setState({ options: newOptions })
                 }}
               />
             </SectionTool>
-            <SectionTool
-              title="Line Height"
-            >
+            <SectionTool title="Line Height">
               <NumberEditor
                 unit="number"
                 value={this.state.options.baseLineHeight}
@@ -214,7 +232,7 @@ class DesignTool extends React.Component {
                 max={2.5}
                 step={0.01}
                 decimals={2}
-                onValueChange={(value) => {
+                onValueChange={value => {
                   const newOptions = { ...this.state.options }
                   const fontsize = parseUnit(this.state.options.baseFontSize)[0]
                   newOptions.baseLineHeight = value
@@ -229,15 +247,13 @@ class DesignTool extends React.Component {
             <ModularScaleTool
               key="scale"
               scaleRatio={this.state.options.scaleRatio}
-              onChange={(newScale) => {
+              onChange={newScale => {
                 const newOptions = { ...this.state.options }
                 newOptions.scaleRatio = newScale
                 this.setState({ options: newOptions })
               }}
             />
-            <SectionTool
-              title="Paragraph Spacing"
-            >
+            <SectionTool title="Paragraph Spacing">
               <NumberEditor
                 unit="rhythm"
                 value={this.state.options.blockMarginBottom}
@@ -245,7 +261,7 @@ class DesignTool extends React.Component {
                 max={3}
                 step={0.1}
                 decimals={2}
-                onValueChange={(value) => {
+                onValueChange={value => {
                   const options = this.state.options
                   options.blockMarginBottom = parseFloat(value)
                   this.setState({ options })
@@ -267,9 +283,7 @@ class DesignTool extends React.Component {
             />
           </SectionRow>
           <SectionRow>
-            <SectionTool
-              title="Weight"
-            >
+            <SectionTool title="Weight">
               <FontWeightTool
                 type="header"
                 family={this.state.headerFamily}
@@ -278,9 +292,7 @@ class DesignTool extends React.Component {
                 onChange={newOptions => this.setState({ options: newOptions })}
               />
             </SectionTool>
-            <SectionTool
-              title="Gray value"
-            >
+            <SectionTool title="Gray value">
               <NumberEditor
                 unit="%"
                 value={this.state.options.headerGray}
@@ -288,7 +300,7 @@ class DesignTool extends React.Component {
                 max={100}
                 step={1}
                 decimals={0}
-                onValueChange={(value) => {
+                onValueChange={value => {
                   const options = this.state.options
                   options.headerGray = value
                   this.setState({ options })
@@ -310,9 +322,7 @@ class DesignTool extends React.Component {
             />
           </SectionRow>
           <SectionRow>
-            <SectionTool
-              title="Body Weight"
-            >
+            <SectionTool title="Body Weight">
               <FontWeightTool
                 type="body"
                 family={this.state.bodyFamily}
@@ -321,9 +331,7 @@ class DesignTool extends React.Component {
                 onChange={newOptions => this.setState({ options: newOptions })}
               />
             </SectionTool>
-            <SectionTool
-              title="Bold Weight"
-            >
+            <SectionTool title="Bold Weight">
               <FontWeightTool
                 type="bold"
                 family={this.state.bodyFamily}
@@ -334,9 +342,7 @@ class DesignTool extends React.Component {
             </SectionTool>
           </SectionRow>
           <SectionRow>
-            <SectionTool
-              title="Body gray"
-            >
+            <SectionTool title="Body gray">
               <NumberEditor
                 unit="%"
                 value={this.state.options.bodyGray}
@@ -344,7 +350,7 @@ class DesignTool extends React.Component {
                 max={100}
                 step={1}
                 decimals={0}
-                onValueChange={(value) => {
+                onValueChange={value => {
                   const options = this.state.options
                   options.bodyGray = value
                   this.setState({ options })

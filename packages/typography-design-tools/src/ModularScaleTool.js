@@ -5,11 +5,9 @@ import SectionTool from './SectionTool'
 import msToRatio from './msToRatio'
 
 class ModularScale extends React.Component {
-  render () {
+  render() {
     return (
-      <SectionTool
-        title="Scale Ratio"
-      >
+      <SectionTool title="Scale Ratio">
         <NumberEditor
           unit="ratio"
           value={msToRatio(this.props.scaleRatio)}
@@ -17,7 +15,7 @@ class ModularScale extends React.Component {
           max={6}
           step={0.1}
           decimals={2}
-          onValueChange={(value) => {
+          onValueChange={value => {
             const valueFloat = parseFloat(value)
             this.props.onChange(valueFloat)
           }}

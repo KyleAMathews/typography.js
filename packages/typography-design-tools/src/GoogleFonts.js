@@ -10,12 +10,14 @@ const Font = ({ font }) => (
     }}
   >
     {font.name} — {font.styles.length} styles
-    </div>
-  )
+  </div>
+)
 
 class GoogleFontsTool extends React.Component {
-  render () {
-    const fonts = this.props.options.googleFonts.map(font => <Font font={font} />)
+  render() {
+    const fonts = this.props.options.googleFonts.map(font => (
+      <Font font={font} />
+    ))
     return (
       <div>
         {fonts}

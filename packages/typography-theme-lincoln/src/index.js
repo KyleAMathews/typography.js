@@ -11,17 +11,11 @@ const theme: OptionsType = {
   googleFonts: [
     {
       name: 'Varela Round',
-      styles: [
-        '400',
-      ],
+      styles: ['400'],
     },
     {
       name: 'Lora',
-      styles: [
-        '400',
-        '400i',
-        '700',
-      ],
+      styles: ['400', '400i', '700'],
     },
   ],
   headerFontFamily: ['Varela Round', 'sans-serif'],
@@ -59,10 +53,10 @@ const theme: OptionsType = {
       },
       // Blockquote styles.
       blockquote: {
-        ...scale(1/5),
-        borderLeft: `${rhythm(6/16)} solid ${linkColor}`,
+        ...scale(1 / 5),
+        borderLeft: `${rhythm(6 / 16)} solid ${linkColor}`,
         color: gray(35),
-        paddingLeft: rhythm(10/16),
+        paddingLeft: rhythm(10 / 16),
         fontStyle: 'italic',
         marginLeft: 0,
         marginRight: 0,
@@ -84,11 +78,11 @@ const theme: OptionsType = {
           ...vr.establishBaseline(),
         },
         blockquote: {
-          borderLeft: `${rhythm(3/16)} solid ${linkColor}`,
+          borderLeft: `${rhythm(3 / 16)} solid ${linkColor}`,
           color: gray(41),
-          paddingLeft: rhythm(9/16),
+          paddingLeft: rhythm(9 / 16),
           fontStyle: 'italic',
-          marginLeft: rhythm(-3/4),
+          marginLeft: rhythm(-3 / 4),
           marginRight: 0,
         },
       },
@@ -97,4 +91,3 @@ const theme: OptionsType = {
 }
 
 export default theme
-

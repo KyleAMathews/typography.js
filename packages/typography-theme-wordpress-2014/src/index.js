@@ -9,13 +9,7 @@ const theme: OptionsType = {
   googleFonts: [
     {
       name: 'Lato',
-      styles: [
-        '300',
-        '300i',
-        '400',
-        '400i',
-        '600',
-      ],
+      styles: ['300', '300i', '400', '400i', '600'],
     },
   ],
   headerFontFamily: ['Lato', 'serif'],
@@ -30,16 +24,16 @@ const theme: OptionsType = {
       marginBottom: rhythm(0.5),
     },
     'ul,ol': {
-      marginLeft: rhythm(5/6),
+      marginLeft: rhythm(5 / 6),
     },
     // children ol, ul
     'li>ol,li>ul': {
-      marginLeft: rhythm(5/6),
+      marginLeft: rhythm(5 / 6),
       marginBottom: 0,
     },
     // Blockquote styles.
     blockquote: {
-      ...scale(1/5),
+      ...scale(1 / 5),
       fontWeight: 300,
       color: gray(46),
       fontStyle: 'italic',
@@ -62,4 +56,3 @@ const theme: OptionsType = {
 }
 
 export default theme
-

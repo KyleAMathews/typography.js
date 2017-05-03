@@ -13,10 +13,7 @@ const theme: OptionsType = {
   googleFonts: [
     {
       name: 'Lato',
-      styles: [
-        '400',
-        '700',
-      ],
+      styles: ['400', '700'],
     },
   ],
   scaleRatio: 1.618,

@@ -11,17 +11,11 @@ const theme: OptionsType = {
   googleFonts: [
     {
       name: 'Rosario',
-      styles: [
-        '700',
-      ],
+      styles: ['700'],
     },
     {
       name: 'Crimson Text',
-      styles: [
-        '400',
-        '400i',
-        '600',
-      ],
+      styles: ['400', '400i', '600'],
     },
   ],
   headerFontFamily: ['Rosario', 'sans-serif'],
@@ -53,19 +47,19 @@ const theme: OptionsType = {
         marginBottom: rhythm(0.5),
       },
       'ul,ol': {
-        marginLeft: rhythm(2/3),
+        marginLeft: rhythm(2 / 3),
       },
       // children ol, ul
       'li>ol,li>ul': {
-        marginLeft: rhythm(2/3),
+        marginLeft: rhythm(2 / 3),
         marginBottom: 0,
       },
       // Blockquote styles.
       blockquote: {
-        ...scale(1/5),
-        borderLeft: `${rhythm(3/16)} solid ${linkColor}`,
+        ...scale(1 / 5),
+        borderLeft: `${rhythm(3 / 16)} solid ${linkColor}`,
         color: gray(41),
-        paddingLeft: rhythm(13/16),
+        paddingLeft: rhythm(13 / 16),
         fontStyle: 'italic',
         marginLeft: 0,
         marginRight: 0,
@@ -87,11 +81,11 @@ const theme: OptionsType = {
           ...vr.establishBaseline(),
         },
         blockquote: {
-          borderLeft: `${rhythm(3/16)} solid ${linkColor}`,
+          borderLeft: `${rhythm(3 / 16)} solid ${linkColor}`,
           color: gray(41),
-          paddingLeft: rhythm(9/16),
+          paddingLeft: rhythm(9 / 16),
           fontStyle: 'italic',
-          marginLeft: rhythm(-3/4),
+          marginLeft: rhythm(-3 / 4),
           marginRight: 0,
         },
       },
@@ -100,4 +94,3 @@ const theme: OptionsType = {
 }
 
 export default theme
-

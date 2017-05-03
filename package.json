@@ -41,6 +41,7 @@
     "build": "lerna run build",
     "flow": "flow",
     "lint": "eslint --ext .js,.jsx --ignore-path .gitignore .",
+    "format": "prettier --write --single-quote  --trailing-comma es5 --no-semi packages/**/src/*.js",
     "publish": "npm run build && lerna publish && lerna-npm-readme-hack",
     "test": "npm run build && npm run lint && npm run test-api",
     "test-api": "jest",
@@ -48,5 +49,7 @@
     "test-coverage": "npm run test-api -- --coverage",
     "watch": "lerna run watch"
   },
-  "dependencies": {}
+  "dependencies": {
+    "prettier": "^1.3.0"
+  }
 }

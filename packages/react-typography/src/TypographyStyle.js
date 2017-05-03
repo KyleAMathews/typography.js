@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 class TypographyStyle extends React.Component {
-    render () {
+  render() {
     return React.DOM.style({
       id: 'typography.js',
       dangerouslySetInnerHTML: {
@@ -14,8 +14,8 @@ class TypographyStyle extends React.Component {
 
 TypographyStyle.propTypes = {
   typography: PropTypes.object.isRequired,
-};
+}
 
-TypographyStyle.displayName = 'TypographyStyle';
+TypographyStyle.displayName = 'TypographyStyle'
 
-module.exports = TypographyStyle;
+module.exports = TypographyStyle

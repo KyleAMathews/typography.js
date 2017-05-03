@@ -9,18 +9,11 @@ const theme: OptionsType = {
   googleFonts: [
     {
       name: 'Bitter',
-      styles: [
-        '700',
-      ],
+      styles: ['700'],
     },
     {
       name: 'Source Sans Pro',
-      styles: [
-        '300i',
-        '400',
-        '400i',
-        '700',
-      ],
+      styles: ['300i', '400', '400i', '700'],
     },
   ],
   headerFontFamily: ['Bitter', 'serif'],
@@ -31,11 +24,11 @@ const theme: OptionsType = {
   boldWeight: 700,
   overrideStyles: ({ adjustFontSizeTo, scale, rhythm }, options) => ({
     h1: {
-      ...scale(8/5),
+      ...scale(8 / 5),
     },
     [TABLET_MEDIA_QUERY]: {
       h1: {
-        ...scale(5/5),
+        ...scale(5 / 5),
       },
     },
     a: {
@@ -55,7 +48,7 @@ const theme: OptionsType = {
       paddingLeft: rhythm(1.5),
     },
     blockquote: {
-      ...scale(1/5),
+      ...scale(1 / 5),
       fontWeight: 300,
       fontStyle: 'italic',
       marginLeft: rhythm(1.5),
@@ -71,14 +64,14 @@ const theme: OptionsType = {
       marginBottom: rhythm(1.25),
     },
     table: {
-      ...scale(-1/5),
+      ...scale(-1 / 5),
     },
     th: {
       fontWeight: options.boldWeight,
       textTransform: 'uppercase',
     },
     dl: {
-      marginLeft: rhythm(3/4),
+      marginLeft: rhythm(3 / 4),
     },
   }),
 }

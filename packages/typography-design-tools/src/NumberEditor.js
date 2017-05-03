@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
 })
 
 class NumberEditor extends React.Component {
-  render () {
+  render() {
     // TODO wrap onChange and if value isn't a number, set to minimum value.
     return (
       <div>

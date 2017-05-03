@@ -12,18 +12,11 @@ const theme: OptionsType = {
   googleFonts: [
     {
       name: 'Domine',
-      styles: [
-        '700',
-      ],
+      styles: ['700'],
     },
     {
       name: 'Open Sans',
-      styles: [
-        '400',
-        '400i',
-        '700',
-        '700i',
-      ],
+      styles: ['400', '400i', '700', '700i'],
     },
   ],
   headerFontFamily: ['Domine', 'sans-serif'],
@@ -44,12 +37,12 @@ const theme: OptionsType = {
       color: options.bodyColor,
     },
     blockquote: {
-      ...scale(1/5),
+      ...scale(1 / 5),
       color: gray(41),
       fontStyle: 'italic',
-      paddingLeft: rhythm(13/16),
+      paddingLeft: rhythm(13 / 16),
       marginLeft: 0,
-      borderLeft: `${rhythm(3/16)} solid ${gray(10)}`,
+      borderLeft: `${rhythm(3 / 16)} solid ${gray(10)}`,
     },
     'blockquote > :last-child': {
       marginBottom: 0,
@@ -64,12 +57,12 @@ const theme: OptionsType = {
     },
     [MOBILE_MEDIA_QUERY]: {
       html: {
-        fontSize: `${16/16 * 100}%`,
+        fontSize: `${16 / 16 * 100}%`,
       },
       blockquote: {
-        marginLeft: rhythm(-3/4),
+        marginLeft: rhythm(-3 / 4),
         marginRight: 0,
-        paddingLeft: rhythm(9/16),
+        paddingLeft: rhythm(9 / 16),
       },
     },
   }),

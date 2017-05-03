@@ -6,7 +6,17 @@ const theme: OptionsType = {
   baseFontSize: '16px',
   baseLineHeight: 1.5,
   scaleRatio: 1.3125,
-  headerFontFamily: ['Helvetica Neue', 'Helvetica', 'Segoe UI', 'Arial', 'freesans', 'sans-serif', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'], // eslint-disable-line
+  headerFontFamily: [
+    'Helvetica Neue',
+    'Helvetica',
+    'Segoe UI',
+    'Arial',
+    'freesans',
+    'sans-serif',
+    'Apple Color Emoji',
+    'Segoe UI Emoji',
+    'Segoe UI Symbol',
+  ], // eslint-disable-line
   bodyFontFamily: ['georgia', 'serif'],
   headerColor: 'hsla(0,0%,0%,1)',
   bodyColor: 'hsla(0,0%,0%,0.8)',

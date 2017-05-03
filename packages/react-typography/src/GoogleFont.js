@@ -2,11 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 class GoogleFont extends React.Component {
-  render () {
+  render() {
     // Create family + styles string
     let fontsStr = ''
     if (this.props.typography.options.googleFonts) {
-      const fonts = this.props.typography.options.googleFonts.map((font) => {
+      const fonts = this.props.typography.options.googleFonts.map(font => {
         let str = ''
         str += font.name.split(' ').join('+')
         str += ':'

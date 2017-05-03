@@ -15,7 +15,7 @@ const theme: OptionsType = {
   overrideStyles: ({ rhythm }) => ({
     'h1,h2,h3,h4,h5,h6': {
       borderBottom: '1px solid rgb(170, 170, 170)',
-      marginBottom: `calc(${rhythm(1/4)} - 1px)`,
+      marginBottom: `calc(${rhythm(1 / 4)} - 1px)`,
       marginTop: rhythm(1),
     },
     'p,ol,ul': {

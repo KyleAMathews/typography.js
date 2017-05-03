@@ -10,17 +10,11 @@ const theme: OptionsType = {
   googleFonts: [
     {
       name: 'Neuton',
-      styles: [
-        '700',
-      ],
+      styles: ['700'],
     },
     {
       name: 'Lato',
-      styles: [
-        '400',
-        '400i',
-        '700',
-      ],
+      styles: ['400', '400i', '700'],
     },
   ],
   headerFontFamily: ['Neuton', 'sans-serif'],
@@ -42,11 +36,11 @@ const theme: OptionsType = {
       marginTop: rhythm(2),
     },
     blockquote: {
-      ...scale(1/5),
+      ...scale(1 / 5),
       color: gray(41),
-      paddingLeft: rhythm(18/16),
+      paddingLeft: rhythm(18 / 16),
       marginLeft: 0,
-      borderLeft: `${rhythm(6/16)} solid`,
+      borderLeft: `${rhythm(6 / 16)} solid`,
       borderColor: '#612423',
     },
     'blockquote > :last-child': {
@@ -62,11 +56,11 @@ const theme: OptionsType = {
     },
     [MOBILE_MEDIA_QUERY]: {
       blockquote: {
-        marginLeft: rhythm(-3/4),
+        marginLeft: rhythm(-3 / 4),
         marginRight: 0,
-        borderLeft: `${rhythm(3/16)} solid`,
+        borderLeft: `${rhythm(3 / 16)} solid`,
         borderColor: '#612423',
-        paddingLeft: rhythm(9/16),
+        paddingLeft: rhythm(9 / 16),
       },
     },
   }),
