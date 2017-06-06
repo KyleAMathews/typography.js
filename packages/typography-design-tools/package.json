@@ -1,6 +1,6 @@
 {
   "name": "typography-design-tools",
-  "version": "0.15.10",
+  "version": "0.15.11",
   "description": "Design tools for Typography.js",
   "main": "./dist/index.js",
   "keywords": [

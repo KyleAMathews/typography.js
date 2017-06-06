@@ -1,7 +1,7 @@
 {
   "name": "typography-theme-ocean-beach",
   "description": "A theme for Typography.js",
-  "version": "0.15.10",
+  "version": "0.15.11",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "gray-percentage": "^2.0.0",
