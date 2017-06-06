@@ -39,7 +39,7 @@ themeRegistry.unshift({
 
 const toolTypography = new Typography({ includeNormalize: false })
 
-const Section = ({ children }) => (
+const Section = ({ children }) =>
   <div
     style={{
       clear: 'both',
@@ -50,8 +50,7 @@ const Section = ({ children }) => (
   >
     {children}
   </div>
-)
-const SectionRow = ({ children }) => (
+const SectionRow = ({ children }) =>
   <div
     style={{
       marginBottom: 3.75,
@@ -60,9 +59,8 @@ const SectionRow = ({ children }) => (
   >
     {children}
   </div>
-)
 
-const SectionHeader = ({ children }) => (
+const SectionHeader = ({ children }) =>
   <div
     style={{
       background: gray(17),
@@ -77,7 +75,6 @@ const SectionHeader = ({ children }) => (
   >
     {children}
   </div>
-)
 
 class DesignTool extends React.Component {
   constructor(props) {
@@ -107,9 +104,9 @@ class DesignTool extends React.Component {
   }
 
   render() {
-    const options = themeRegistry.map((theme, i) => (
+    const options = themeRegistry.map((theme, i) =>
       <option key={i} value={i}>{theme.title}</option>
-    ))
+    )
 
     // Inject active theme.
     if (typeof document !== 'undefined') {

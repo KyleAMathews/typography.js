@@ -3,7 +3,7 @@ import _ from 'lodash'
 import fontList from '../filteredGoogleFontList.json'
 import Select from 'react-select'
 
-const Font = ({ font }) => (
+const Font = ({ font }) =>
   <div
     style={{
       marginBottom: 7.5,
@@ -11,13 +11,12 @@ const Font = ({ font }) => (
   >
     {font.name} — {font.styles.length} styles
   </div>
-)
 
 class GoogleFontsTool extends React.Component {
   render() {
-    const fonts = this.props.options.googleFonts.map(font => (
+    const fonts = this.props.options.googleFonts.map(font =>
       <Font font={font} />
-    ))
+    )
     return (
       <div>
         {fonts}

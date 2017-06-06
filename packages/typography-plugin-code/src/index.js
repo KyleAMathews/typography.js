@@ -17,7 +17,8 @@ const CodePlugin = (): Function => ({ rhythm }, options: OptionsType) => {
     'tt,code': {
       backgroundColor: gray(96),
       borderRadius: '3px',
-      fontFamily: '"SFMono-Regular", Consolas,"Roboto Mono","Droid Sans Mono","Liberation Mono",Menlo,Courier,monospace',
+      fontFamily:
+        '"SFMono-Regular", Consolas,"Roboto Mono","Droid Sans Mono","Liberation Mono",Menlo,Courier,monospace',
       padding: 0,
       paddingTop: '0.2em',
       paddingBottom: '0.2em',
