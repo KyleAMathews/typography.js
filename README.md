@@ -146,6 +146,7 @@ const typography = new Typography(funstonTheme)
 * [typography-theme-wordpress-github](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-github/)
 * [typography-theme-wordpress-wikipedia](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-wikipedia/)
 * [typography-theme-trajan](https://github.com/guoliim/typography-theme-trajan)
+* [typography-theme-zacklive](https://github.com/ZacharyChim/typography-theme-zacklive)
 * If you publish your own, create a PR to add it here!
 
 ## Plugins
