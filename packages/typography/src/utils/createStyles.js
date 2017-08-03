@@ -238,7 +238,7 @@ module.exports = (vr: any, options: OptionsType) => {
 
   each([h1, h2, h3, h4, h5, h6], (header, i) => {
     styles = set(styles, `h${i + 1}.fontSize`, header.fontSize)
-    styles = set(styles, `h${i + 1}.lineHeight`, header.lineHeight)
+    styles = set(styles, `h${i + 1}.lineHeight`, options.headerLineHeight)
   })
 
   // TODO add support for Breakpoints here.
