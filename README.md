@@ -50,7 +50,7 @@ import Typography from 'typography'
 
 const typography = new Typography({
   baseFontSize: '18px',
-  baseLineHeight: 1.666,
+  baseLineHeight: 1.45,
   headerFontFamily: ['Avenir Next', 'Helvetica Neue', 'Segoe UI', 'Helvetica', 'Arial', 'sans-serif'],
   bodyFontFamily: ['Georgia', 'serif'],
   // See below for the full list of options.
@@ -212,7 +212,7 @@ When creating a new instance of Typography, you can pass in an
 
 * **title**: The theme title.
 * **baseFontSize**: The base font size in pixels, defaults to `16px`.
-* **baseLineHeight**: The base line height using the css unitless number, defaults to `1.5`.
+* **baseLineHeight**: The base line height using the css unitless number, defaults to `1.45`.
 * **scaleRatio**: The "scale ratio" for the theme. This value is the ratio
   between the `h1` font size and the `baseFontSize`. So if the scale ratio is `2`
   and the `baseFontSize` is `16px` then the `h1` font size is `32px`.

@@ -8,7 +8,8 @@ import type { OptionsType } from 'Types'
 const typography = function(opts: OptionsType) {
   const defaults: OptionsType = {
     baseFontSize: '16px',
-    baseLineHeight: 1.5,
+    baseLineHeight: 1.45,
+    headerLineHeight: 1.1,
     scaleRatio: 2,
     googleFonts: [],
     headerFontFamily: [
