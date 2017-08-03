@@ -105,7 +105,9 @@ class DesignTool extends React.Component {
 
   render() {
     const options = themeRegistry.map((theme, i) =>
-      <option key={i} value={i}>{theme.title}</option>
+      <option key={i} value={i}>
+        {theme.title}
+      </option>
     )
 
     // Inject active theme.
