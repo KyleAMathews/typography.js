@@ -50,6 +50,8 @@
     "watch": "lerna run watch"
   },
   "dependencies": {
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-react": "^6.24.1",
     "prettier": "^1.5.3"
   }
 }

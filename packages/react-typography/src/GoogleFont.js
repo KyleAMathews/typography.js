@@ -1,29 +1,29 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-class GoogleFont extends React.Component {
-  render() {
-    // Create family + styles string
-    let fontsStr = ''
-    if (this.props.typography.options.googleFonts) {
-      const fonts = this.props.typography.options.googleFonts.map(font => {
-        let str = ''
-        str += font.name.split(' ').join('+')
-        str += ':'
-        str += font.styles.join(',')
+const GoogleFont = props => {
+  // Create family + styles string
+  let fontsStr = ''
+  if (props.typography.options.googleFonts) {
+    const fonts = props.typography.options.googleFonts.map(font => {
+      let str = ''
+      str += font.name.split(' ').join('+')
+      str += ':'
+      str += font.styles.join(',')
 
-        return str
-      })
+      return str
+    })
 
-      fontsStr = fonts.join('|')
+    fontsStr = fonts.join('|')
 
-      if (fontsStr) {
-        return React.DOM.link({
-          href: `//fonts.googleapis.com/css?family=${fontsStr}`,
-          rel: 'stylesheet',
-          type: 'text/css',
-        })
-      }
+    if (fontsStr) {
+      return (
+        <link
+          href={`//fonts.googleapis.com/css?family=${fontsStr}`}
+          rel={'stylesheet'}
+          type={'text/css'}
+        />
+      )
     }
     return null
   }

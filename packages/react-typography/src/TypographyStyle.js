@@ -1,18 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-class TypographyStyle extends React.Component {
-  render() {
-    return (
-      <style
-        id={'typography.js'}
-        dangerouslySetInnerHTML={{
-          __html: this.props.typography.toString(),
-        }}
-      />
-    )
-  }
-}
+const TypographyStyle = props =>
+  <style
+    id={'typography.js'}
+    dangerouslySetInnerHTML={{
+      __html: props.typography.toString(),
+    }}
+  />
 
 TypographyStyle.propTypes = {
   typography: PropTypes.object.isRequired,

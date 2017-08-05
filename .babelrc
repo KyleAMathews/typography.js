@@ -1,4 +1,18 @@
 {
-  "presets": ['es2015', 'stage-0'],
-  "plugins": ["transform-flow-strip-types", "transform-object-rest-spread"]
+  "sourceMaps": true,
+  "presets": [
+    [
+      "env",
+      {
+        "targets": {
+          "node": 4.0,
+          "uglify": true,
+        }
+      }
+    ],
+    "react",
+  ],
+  "plugins": [
+    "transform-object-rest-spread",
+  ]
 }
