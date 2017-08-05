@@ -3,12 +3,14 @@ import PropTypes from 'prop-types'
 
 class TypographyStyle extends React.Component {
   render() {
-    return React.DOM.style({
-      id: 'typography.js',
-      dangerouslySetInnerHTML: {
-        __html: this.props.typography.toString(),
-      },
-    })
+    return (
+      <style
+        id={'typography.js'}
+        dangerouslySetInnerHTML={{
+          __html: this.props.typography.toString(),
+        }}
+      />
+    )
   }
 }
 
