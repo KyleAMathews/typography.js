@@ -9,7 +9,9 @@ import {
 const theme: OptionsType = {
   title: 'Kirkham',
   baseFontSize: '18px',
-  baseLineHeight: 5 / 3,
+  baseLineHeight: 1.44,
+  scaleRatio: 2.15,
+  blockMarginBottom: 0.75,
   googleFonts: [
     {
       name: 'Playfair Display',
