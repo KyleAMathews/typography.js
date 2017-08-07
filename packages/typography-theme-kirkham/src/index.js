@@ -59,9 +59,6 @@ const theme: OptionsType = {
         paddingLeft: rhythm(9 / 16),
       },
     },
-    'h3,h4,h5,h6': {
-      fontStyle: 'italic',
-    },
   }),
 }
 
