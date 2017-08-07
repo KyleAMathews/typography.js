@@ -1,7 +1,7 @@
 {
   "name": "typography-theme-kirkham",
   "description": "A theme for Typography.js",
-  "version": "0.16.2",
+  "version": "0.16.3",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "gray-percentage": "^2.0.0",
