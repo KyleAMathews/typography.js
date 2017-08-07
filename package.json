@@ -20,7 +20,7 @@
     "jest": "19",
     "jest-cli": "19",
     "json2md": "^1.5.8",
-    "lerna": "^2.0.0-rc.5",
+    "lerna": "^2.0.0",
     "lodash": "^4.17.4",
     "phantom": "^4.0.1",
     "phantomjs-prebuilt": "^2.1.14",
