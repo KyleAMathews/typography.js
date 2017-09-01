@@ -1,18 +1,18 @@
-# Noriega — a <a href='https://github.com/kyleamathews/typography.js'>Typography.js</a> theme
+# Bootstrap — a <a href='https://github.com/kyleamathews/typography.js'>Typography.js</a> theme
 
 A theme for Typography.js
 
 ## Install
 ```bash
-npm install --save typography typography-theme-noriega
+npm install --save typography typography-theme-bootstrap
 ```
 ## Usage
 ```javascript
 import Typography from 'typography'
-import noriegaTheme from 'typography-theme-noriega'
+import bootstrapTheme from 'typography-theme-bootstrap'
 
-const typography = new Typography(noriegaTheme)
+const typography = new Typography(bootstrapTheme)
 ```
 ## More on theme
 
-Noriega uses "<a href='https://fonts.google.com/specimen/Lato'>Lato</a>" for headers and "<a href='https://fonts.google.com/specimen/Lato'>Lato</a>" for body text
+Bootstrap uses system font for body text, more info can be found <a href="https://css-tricks.com/snippets/css/system-font-stack/">here</a>
