@@ -17,11 +17,11 @@ const styles = StyleSheet.create({
 })
 
 const Select = ({ options, style = {}, value, onChange }) => {
-  const optionsEls = options.map((text, i) =>
+  const optionsEls = options.map((text, i) => (
     <option key={i} value={i}>
       {text}
     </option>
-  )
+  ))
   return (
     <select
       className={css(styles.editor)}

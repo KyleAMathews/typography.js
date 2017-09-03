@@ -94,11 +94,7 @@ function getSuggestionValue(suggestion) {
 }
 
 function renderSuggestion(suggestion) {
-  return (
-    <span>
-      {suggestion.name}
-    </span>
-  )
+  return <span>{suggestion.name}</span>
 }
 
 class FontSelectTool extends React.Component {
