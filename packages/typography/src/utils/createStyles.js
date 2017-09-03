@@ -6,7 +6,6 @@ import isNumber from "lodash/isNumber"
 import isString from "lodash/isString"
 import isFunction from "lodash/isFunction"
 import isArray from "lodash/isArray"
-import includes from "lodash/includes"
 import merge from "lodash/merge"
 import reduce from "lodash/reduce"
 
@@ -32,8 +31,10 @@ const setStyles = (
 }
 
 // Wrap font names in quotes, unless the font name is actually a keyword.
-const fontKeywords = ['serif', 'sans-serif'];
-const wrapFontFamily = (fontFamily) => includes(fontKeywords, fontFamily) ? fontFamily : `'${fontFamily}'`;
+// See https://stackoverflow.com/a/13752149
+const genericFontFamilies = ['serif', 'sans-serif']
+const wrapFontFamily = (fontFamily) =>
+  genericFontFamilies.indexOf(fontFamily) !== -1 ? fontFamily : `'${fontFamily}'`
 
 module.exports = (vr: any, options: OptionsType) => {
   let styles = {}
