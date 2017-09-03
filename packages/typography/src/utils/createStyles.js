@@ -30,6 +30,12 @@ const setStyles = (
   return styles
 }
 
+// Wrap font names in quotes, unless the font name is actually a keyword.
+// See https://stackoverflow.com/a/13752149
+const genericFontFamilies = ['serif', 'sans-serif']
+const wrapFontFamily = (fontFamily) =>
+  genericFontFamilies.indexOf(fontFamily) !== -1 ? fontFamily : `'${fontFamily}'`
+
 module.exports = (vr: any, options: OptionsType) => {
   let styles = {}
   const { fontSize, lineHeight } = vr.establishBaseline()
@@ -37,7 +43,7 @@ module.exports = (vr: any, options: OptionsType) => {
   // Base HTML styles.
   styles = setStyles(styles, "html", {
     font: `${fontSize}/${lineHeight} ${options.bodyFontFamily
-      .map(f => `'${f}'`)
+      .map(wrapFontFamily)
       .join(",")}`,
     boxSizing: "border-box",
     overflowY: "scroll",
@@ -51,7 +57,7 @@ module.exports = (vr: any, options: OptionsType) => {
   // Base body styles.
   styles = setStyles(styles, "body", {
     color: options.bodyColor,
-    fontFamily: options.bodyFontFamily.map(f => `'${f}'`).join(","),
+    fontFamily: options.bodyFontFamily.map(wrapFontFamily).join(","),
     fontWeight: options.bodyWeight,
     wordWrap: "break-word",
     fontKerning: "normal",
@@ -223,7 +229,7 @@ module.exports = (vr: any, options: OptionsType) => {
   // Create styles for headers.
   styles = setStyles(styles, ["h1", "h2", "h3", "h4", "h5", "h6"], {
     color: options.headerColor,
-    fontFamily: options.headerFontFamily.map(f => `'${f}'`).join(","),
+    fontFamily: options.headerFontFamily.map(wrapFontFamily).join(","),
     fontWeight: options.headerWeight,
     textRendering: "optimizeLegibility",
   })
