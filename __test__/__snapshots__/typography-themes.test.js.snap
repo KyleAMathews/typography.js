@@ -503,7 +503,7 @@ Object {
     "MozFontFeatureSettings": "\\"kern\\", \\"liga\\", \\"clig\\", \\"calt\\"",
     "WebkitFontFeatureSettings": "\\"kern\\", \\"liga\\", \\"clig\\", \\"calt\\"",
     "color": "hsla(204,12.449720506%,0%,0.77)",
-    "fontFamily": "'-apple-system','BlinkMacSystemFont','Segoe UI','Roboto','Oxygen','Ubuntu','Cantarell','Fira Sans','Droid Sans','Helvetica Neue',sans-serif",
+    "fontFamily": "-apple-system,'BlinkMacSystemFont','Segoe UI','Roboto','Oxygen','Ubuntu','Cantarell','Fira Sans','Droid Sans','Helvetica Neue',sans-serif",
     "fontFeatureSettings": "\\"kern\\", \\"liga\\", \\"clig\\", \\"calt\\"",
     "fontKerning": "normal",
     "fontWeight": 400,
@@ -569,7 +569,7 @@ Object {
   },
   "h1": Object {
     "color": "inherit",
-    "fontFamily": "'-apple-system','BlinkMacSystemFont','Segoe UI','Roboto','Oxygen','Ubuntu','Cantarell','Fira Sans','Droid Sans','Helvetica Neue',sans-serif",
+    "fontFamily": "-apple-system,'BlinkMacSystemFont','Segoe UI','Roboto','Oxygen','Ubuntu','Cantarell','Fira Sans','Droid Sans','Helvetica Neue',sans-serif",
     "fontSize": "2.25rem",
     "fontWeight": 500,
     "lineHeight": "3rem",
@@ -585,7 +585,7 @@ Object {
   },
   "h2": Object {
     "color": "inherit",
-    "fontFamily": "'-apple-system','BlinkMacSystemFont','Segoe UI','Roboto','Oxygen','Ubuntu','Cantarell','Fira Sans','Droid Sans','Helvetica Neue',sans-serif",
+    "fontFamily": "-apple-system,'BlinkMacSystemFont','Segoe UI','Roboto','Oxygen','Ubuntu','Cantarell','Fira Sans','Droid Sans','Helvetica Neue',sans-serif",
     "fontSize": "1.83712rem",
     "fontWeight": 500,
     "lineHeight": "2.25rem",
@@ -601,7 +601,7 @@ Object {
   },
   "h3": Object {
     "color": "inherit",
-    "fontFamily": "'-apple-system','BlinkMacSystemFont','Segoe UI','Roboto','Oxygen','Ubuntu','Cantarell','Fira Sans','Droid Sans','Helvetica Neue',sans-serif",
+    "fontFamily": "-apple-system,'BlinkMacSystemFont','Segoe UI','Roboto','Oxygen','Ubuntu','Cantarell','Fira Sans','Droid Sans','Helvetica Neue',sans-serif",
     "fontSize": "1.5rem",
     "fontWeight": 500,
     "lineHeight": "2.25rem",
@@ -617,7 +617,7 @@ Object {
   },
   "h4": Object {
     "color": "inherit",
-    "fontFamily": "'-apple-system','BlinkMacSystemFont','Segoe UI','Roboto','Oxygen','Ubuntu','Cantarell','Fira Sans','Droid Sans','Helvetica Neue',sans-serif",
+    "fontFamily": "-apple-system,'BlinkMacSystemFont','Segoe UI','Roboto','Oxygen','Ubuntu','Cantarell','Fira Sans','Droid Sans','Helvetica Neue',sans-serif",
     "fontSize": "1.14471rem",
     "fontWeight": 500,
     "lineHeight": "1.5rem",
@@ -633,7 +633,7 @@ Object {
   },
   "h5": Object {
     "color": "inherit",
-    "fontFamily": "'-apple-system','BlinkMacSystemFont','Segoe UI','Roboto','Oxygen','Ubuntu','Cantarell','Fira Sans','Droid Sans','Helvetica Neue',sans-serif",
+    "fontFamily": "-apple-system,'BlinkMacSystemFont','Segoe UI','Roboto','Oxygen','Ubuntu','Cantarell','Fira Sans','Droid Sans','Helvetica Neue',sans-serif",
     "fontSize": "0.87358rem",
     "fontWeight": 500,
     "lineHeight": "1.5rem",
@@ -649,7 +649,7 @@ Object {
   },
   "h6": Object {
     "color": "inherit",
-    "fontFamily": "'-apple-system','BlinkMacSystemFont','Segoe UI','Roboto','Oxygen','Ubuntu','Cantarell','Fira Sans','Droid Sans','Helvetica Neue',sans-serif",
+    "fontFamily": "-apple-system,'BlinkMacSystemFont','Segoe UI','Roboto','Oxygen','Ubuntu','Cantarell','Fira Sans','Droid Sans','Helvetica Neue',sans-serif",
     "fontSize": "0.76314rem",
     "fontWeight": 500,
     "lineHeight": "1.5rem",
@@ -688,7 +688,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "font": "100%/1.5em '-apple-system','BlinkMacSystemFont','Segoe UI','Roboto','Oxygen','Ubuntu','Cantarell','Fira Sans','Droid Sans','Helvetica Neue',sans-serif",
+    "font": "100%/1.5em -apple-system,'BlinkMacSystemFont','Segoe UI','Roboto','Oxygen','Ubuntu','Cantarell','Fira Sans','Droid Sans','Helvetica Neue',sans-serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -3093,7 +3093,7 @@ Object {
     "MozFontFeatureSettings": "\\"kern\\", \\"liga\\", \\"clig\\", \\"calt\\"",
     "WebkitFontFeatureSettings": "\\"kern\\", \\"liga\\", \\"clig\\", \\"calt\\"",
     "color": "hsla(0,0%,0%,0.8)",
-    "fontFamily": "'-apple-system','BlinkMacSystemFont','Segoe UI','Roboto','Helvetica','Arial',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol'",
+    "fontFamily": "-apple-system,'BlinkMacSystemFont','Segoe UI','Roboto','Helvetica','Arial',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol'",
     "fontFeatureSettings": "\\"kern\\", \\"liga\\", \\"clig\\", \\"calt\\"",
     "fontKerning": "normal",
     "fontWeight": "normal",
@@ -3160,7 +3160,7 @@ Object {
   "h1": Object {
     "borderBottom": "1px solid hsla(0,0%,0%,0.07)",
     "color": "inherit",
-    "fontFamily": "'-apple-system','BlinkMacSystemFont','Segoe UI','Roboto','Helvetica','Arial',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol'",
+    "fontFamily": "-apple-system,'BlinkMacSystemFont','Segoe UI','Roboto','Helvetica','Arial',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol'",
     "fontSize": "2rem",
     "fontWeight": 600,
     "lineHeight": 1.1,
@@ -3177,7 +3177,7 @@ Object {
   "h2": Object {
     "borderBottom": "1px solid hsla(0,0%,0%,0.07)",
     "color": "inherit",
-    "fontFamily": "'-apple-system','BlinkMacSystemFont','Segoe UI','Roboto','Helvetica','Arial',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol'",
+    "fontFamily": "-apple-system,'BlinkMacSystemFont','Segoe UI','Roboto','Helvetica','Arial',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol'",
     "fontSize": "1.51572rem",
     "fontWeight": 600,
     "lineHeight": 1.1,
@@ -3193,7 +3193,7 @@ Object {
   },
   "h3": Object {
     "color": "inherit",
-    "fontFamily": "'-apple-system','BlinkMacSystemFont','Segoe UI','Roboto','Helvetica','Arial',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol'",
+    "fontFamily": "-apple-system,'BlinkMacSystemFont','Segoe UI','Roboto','Helvetica','Arial',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol'",
     "fontSize": "1.31951rem",
     "fontWeight": 600,
     "lineHeight": 1.1,
@@ -3213,7 +3213,7 @@ Object {
   },
   "h4": Object {
     "color": "inherit",
-    "fontFamily": "'-apple-system','BlinkMacSystemFont','Segoe UI','Roboto','Helvetica','Arial',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol'",
+    "fontFamily": "-apple-system,'BlinkMacSystemFont','Segoe UI','Roboto','Helvetica','Arial',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol'",
     "fontSize": "1rem",
     "fontWeight": 600,
     "lineHeight": 1.1,
@@ -3229,7 +3229,7 @@ Object {
   },
   "h5": Object {
     "color": "inherit",
-    "fontFamily": "'-apple-system','BlinkMacSystemFont','Segoe UI','Roboto','Helvetica','Arial',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol'",
+    "fontFamily": "-apple-system,'BlinkMacSystemFont','Segoe UI','Roboto','Helvetica','Arial',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol'",
     "fontSize": "0.87055rem",
     "fontWeight": 600,
     "lineHeight": 1.1,
@@ -3245,7 +3245,7 @@ Object {
   },
   "h6": Object {
     "color": "hsla(0,0%,0%,0.53)",
-    "fontFamily": "'-apple-system','BlinkMacSystemFont','Segoe UI','Roboto','Helvetica','Arial',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol'",
+    "fontFamily": "-apple-system,'BlinkMacSystemFont','Segoe UI','Roboto','Helvetica','Arial',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol'",
     "fontSize": "0.81225rem",
     "fontWeight": 600,
     "lineHeight": 1.1,
@@ -3284,7 +3284,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "font": "100%/1.625em '-apple-system','BlinkMacSystemFont','Segoe UI','Roboto','Helvetica','Arial',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol'",
+    "font": "100%/1.625em -apple-system,'BlinkMacSystemFont','Segoe UI','Roboto','Helvetica','Arial',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol'",
     "overflowY": "scroll",
   },
   "iframe": Object {
