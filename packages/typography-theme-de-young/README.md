@@ -1,18 +1,18 @@
-# Elk Glen — a <a href='https://github.com/kyleamathews/typography.js'>Typography.js</a> theme
+# de Young — a <a href='https://github.com/kyleamathews/typography.js'>Typography.js</a> theme
 
 A theme for Typography.js
 
 ## Install
 ```bash
-npm install --save typography typography-theme-elk-glen
+npm install --save typography typography-theme-de-young
 ```
 ## Usage
 ```javascript
 import Typography from 'typography'
-import elkGlenTheme from 'typography-theme-elk-glen'
+import deYoungTheme from 'typography-theme-de-young'
 
-const typography = new Typography(elkGlenTheme)
+const typography = new Typography(deYoungTheme)
 ```
 ## More on theme
 
-Elk Glen uses "<a href='https://fonts.google.com/specimen/Alegreya+Sans'>Alegreya Sans</a>" for headers and "<a href='https://fonts.google.com/specimen/Alegreya'>Alegreya</a>" for body text
+de Young uses "<a href='https://fonts.google.com/specimen/Alegreya+Sans'>Alegreya Sans</a>" for headers and "<a href='https://fonts.google.com/specimen/Alegreya'>Alegreya</a>" for body text
