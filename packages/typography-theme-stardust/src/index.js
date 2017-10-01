@@ -15,7 +15,7 @@ const theme: OptionsType = {
       styles: ['400', '600'],
     },
   ],
-  headersFontFamily: ['Josefin Sans', 'sans-serif'],
+  headerFontFamily: ['Josefin Sans', 'sans-serif'],
   bodyFontFamily: ['Merriweather', 'serif'],
   headerColor: 'hsla(0, 0%, 0%, 0.9)',
   bodyColor: 'hsla(0, 0%, 0%, 0.8)',
