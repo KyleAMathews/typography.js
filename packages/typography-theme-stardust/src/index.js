@@ -22,6 +22,7 @@ const theme: OptionsType = {
   headerWeight: 600,
   bodyWeight: 300,
   boldWeight: 400,
+  scaleRatio: 1.60
 }
 
 export default theme
