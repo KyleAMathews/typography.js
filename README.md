@@ -103,7 +103,7 @@ styles on a theme:
 ```javascript
 import Typography from 'typography'
 import funstonTheme from 'typography-theme-funston'
-funston.overrideThemeStyles = ({ rhythm }, options) => ({
+funstonTheme.overrideThemeStyles = ({ rhythm }, options) => ({
   'h2,h3': {
     marginBottom: rhythm(1/2),
     marginTop: rhythm(2),
