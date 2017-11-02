@@ -1,6 +1,6 @@
 {
   "name": "typography-theme-legible",
-  "version": "0.16.9",
+  "version": "0.16.10",
   "description": "Legible theme for Typography.js",
   "author": "Esa Juhana Lahikainen <info@esajuhana.co0m>",
   "keywords": [
@@ -8,13 +8,13 @@
     "typography",
     "typography-theme"
   ],
-    "license": "MIT",
-    "repository": {
+  "license": "MIT",
+  "repository": {
     "type": "git",
     "url": "https://github.com/KyleAMathews/typography.js.git"
   },
-    "main": "./dist/index.js",
-    "scripts": {
+  "main": "./dist/index.js",
+  "scripts": {
     "build": "../../node_modules/.bin/babel src --out-dir dist/",
     "flow": "../../node_modules/.bin/flow",
     "lint": "../../node_modules/.bin/eslint --ext .js,.jsx --ignore-path .gitignore .",
