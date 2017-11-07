@@ -350,7 +350,7 @@ Object {
     "lineHeight": 1.42,
   },
   "pre code:before,pre code:after,pre tt:before,pre tt:after": Object {
-    "content": "\\"\\"",
+    "content": "none",
   },
   "samp": Object {
     "fontSize": "0.85rem",
@@ -773,7 +773,7 @@ Object {
     "lineHeight": 1.42,
   },
   "pre code:before,pre code:after,pre tt:before,pre tt:after": Object {
-    "content": "\\"\\"",
+    "content": "none",
   },
   "samp": Object {
     "fontSize": "0.85rem",
@@ -1196,7 +1196,7 @@ Object {
     "lineHeight": 1.42,
   },
   "pre code:before,pre code:after,pre tt:before,pre tt:after": Object {
-    "content": "\\"\\"",
+    "content": "none",
   },
   "samp": Object {
     "fontSize": "0.85rem",

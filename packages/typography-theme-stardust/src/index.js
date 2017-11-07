@@ -4,7 +4,7 @@ import type { OptionsType } from '../../../Types'
 const theme: OptionsType = {
   title: 'Stardust',
   baseFontSize: '20px',
-  baseLineHeight: 1.60,
+  baseLineHeight: 1.6,
   googleFonts: [
     {
       name: 'Merriweather',
@@ -22,7 +22,7 @@ const theme: OptionsType = {
   headerWeight: 600,
   bodyWeight: 300,
   boldWeight: 400,
-  scaleRatio: 1.60
+  scaleRatio: 1.6,
 }
 
 export default theme
