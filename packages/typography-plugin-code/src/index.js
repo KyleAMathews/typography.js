@@ -42,7 +42,7 @@ const CodePlugin = (): Function => ({ rhythm }, options: OptionsType) => {
     },
     // But don't add spaces if the code is inside a pre.
     'pre code:before,pre code:after,pre tt:before,pre tt:after': {
-      content: '""',
+      content: 'none',
     },
   }
 }
