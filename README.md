@@ -42,7 +42,7 @@ NPM](https://www.npmjs.com/browse/keyword/typography-theme).
 * [React Headroom](https://kyleamathews.github.io/react-headroom/) ([source](https://github.com/KyleAMathews/react-headroom/blob/master/www/utils/typography.js))
 * [Gatsby Blog Starter](http://gatsbyjs.github.io/gatsby-starter-blog/) ([source](https://github.com/gatsbyjs/gatsby-starter-blog/blob/master/utils/typography.js))
 * [ollieglass.com](http://ollieglass.com/)
-* [markjoelchavez.com](https://markjoelchavez.com)
+* [markOnSoftware](https://markjoelchavez.com)
 * [Edit this file to add yours!](https://github.com/KyleAMathews/typography.js/blob/master/README.md)
 
 ## Javascript usage
