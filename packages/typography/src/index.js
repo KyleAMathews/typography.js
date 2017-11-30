@@ -27,7 +27,7 @@ const typography = function(opts: OptionsType) {
       'Helvetica Neue',
       'sans-serif',
     ],
-    bodyFontFamily: ['georgia', 'serif'],
+    bodyFontFamily: ['Georgia', 'serif'],
     headerColor: 'inherit',
     bodyColor: 'hsla(0,0%,0%,0.8)',
     headerWeight: 'bold',
