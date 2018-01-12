@@ -1,7 +1,7 @@
 {
   "name": "react-typography",
   "description": "Helpful React components for Typography.js",
-  "version": "0.16.12",
+  "version": "0.16.13",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "peerDependencies": {
     "react": "^0.14.0 || ^15.0.0 || ^16.0.0"
