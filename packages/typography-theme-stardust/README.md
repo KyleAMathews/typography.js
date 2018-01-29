@@ -9,7 +9,7 @@ npm install --save typography typography-theme-stardust
 ## Usage
 ```javascript
 import Typography from 'typography'
-import stardustTheme from 'typography-theme-typography'
+import stardustTheme from 'typography-theme-stardust'
 
 const typography = new Typography(stardustTheme)
 ```
