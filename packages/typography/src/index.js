@@ -7,7 +7,7 @@ import createStyles from './utils/createStyles'
 import compileStyles from './utils/compileStyles'
 import type { OptionsType } from 'Types'
 
-const typography = function(opts: OptionsType) {
+const typography = function (opts: OptionsType) {
   const defaults: OptionsType = {
     baseFontSize: '16px',
     baseLineHeight: 1.45,
@@ -92,11 +92,13 @@ module.exports = typography
 //       // any valid media query.
 //       baseFontSize: "20px",
 //       bodyColor: "red",
-//       scaleRatio: 2.5 // Override the default scale
+//       scaleRatio: 2.5, // Override the default scale
 //     },
 //     "@media screen and (min-width:1200px)": {
 //       // any valid media query.
-//       scaleRatio: 4 // Override the default scale
+//       scaleRatio: 4, // Override the default scale
+//       headerWeight: 'normal',
+//       headerColor: 'orange'
 //     }
 //   }
 // });
