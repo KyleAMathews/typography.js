@@ -94,33 +94,7 @@ export default (vr: any, options: OptionsType) => {
     blockMarginBottom = vr.rhythm(1)
   }
   styles = setStyles(
-    styles,
-    [
-      "h1",
-      "h2",
-      "h3",
-      "h4",
-      "h5",
-      "h6",
-      "hgroup",
-      "ul",
-      "ol",
-      "dl",
-      "dd",
-      "p",
-      "figure",
-      "pre",
-      "table",
-      "fieldset",
-      "blockquote",
-      "form",
-      "noscript",
-      "iframe",
-      "img",
-      "hr",
-      "address",
-    ],
-    {
+    styles, "h1, h2, h3, h4, h5, h6, hgroup, ul, ol, dl, dd, p, figure, pre, table, fieldset, blockquote, form, noscript, iframe, img, hr, address", {
       // Reset margin/padding to 0.
       marginLeft: 0,
       marginRight: 0,
@@ -141,7 +115,7 @@ export default (vr: any, options: OptionsType) => {
   })
 
   // b, strong.
-  styles = setStyles(styles, ["b", "strong", "dt", "th"], {
+  styles = setStyles(styles, "b, strong, dt, th", {
     fontWeight: options.boldWeight,
   })
 
@@ -154,7 +128,7 @@ export default (vr: any, options: OptionsType) => {
   })
 
   // ol, ul.
-  styles = setStyles(styles, ["ol", "ul"], {
+  styles = setStyles(styles, "ol, ul", {
     listStylePosition: "outside",
     listStyleImage: "none",
     marginLeft: vr.rhythm(1),
@@ -166,12 +140,12 @@ export default (vr: any, options: OptionsType) => {
   })
 
   // Remove default padding on list items.
-  styles = setStyles(styles, ["ol li", "ul li"], {
+  styles = setStyles(styles, "ol li, ul li", {
     paddingLeft: 0,
   })
 
   // children ol, ul.
-  styles = setStyles(styles, ["li > ol", "li > ul"], {
+  styles = setStyles(styles, "li > ol, li > ul", {
     marginLeft: vr.rhythm(1),
     marginBottom: `calc(${blockMarginBottom} / 2)`,
     marginTop: `calc(${blockMarginBottom} / 2)`,
@@ -182,7 +156,7 @@ export default (vr: any, options: OptionsType) => {
   // as they put paragraphs within LIs amoung other oddities.
   styles = setStyles(
     styles,
-    ["blockquote *:last-child", "li *:last-child", "p *:last-child"],
+    "blockquote *:last-child, li *:last-child, p *:last-child",
     {
       marginBottom: 0,
     }
@@ -194,12 +168,12 @@ export default (vr: any, options: OptionsType) => {
   })
 
   // Make generally smaller elements, smaller.
-  styles = setStyles(styles, ["code", "kbd", "pre", "samp"], {
+  styles = setStyles(styles, "code, kbd, pre, samp", {
     ...vr.adjustFontSizeTo("85%"),
   })
 
   // Abbr, Acronym.
-  styles = setStyles(styles, ["abbr", "acronym"], {
+  styles = setStyles(styles, "abbr, acronym", {
     borderBottom: `1px dotted ${gray(50)}`,
     cursor: "help",
   })
@@ -210,15 +184,15 @@ export default (vr: any, options: OptionsType) => {
   }
 
   // Table styles.
-  styles = setStyles(styles, ["table"], {
+  styles = setStyles(styles, "table", {
     ...vr.adjustFontSizeTo(options.baseFontSize),
     borderCollapse: "collapse",
     width: "100%",
   })
-  styles = setStyles(styles, ["thead"], {
+  styles = setStyles(styles, "thead", {
     textAlign: "left",
   })
-  styles = setStyles(styles, ["td,th"], {
+  styles = setStyles(styles, "td, th", {
     textAlign: "left",
     borderBottom: `1px solid ${gray(88)}`,
     fontFeatureSettings: '"tnum"',
@@ -238,7 +212,7 @@ export default (vr: any, options: OptionsType) => {
   })
 
   // Create styles for headers.
-  styles = setStyles(styles, ["h1", "h2", "h3", "h4", "h5", "h6"], {
+  styles = setStyles(styles, "h1, h2, h3, h4, h5, h6", {
     color: options.headerColor,
     fontFamily: options.headerFontFamily.map(wrapFontFamily).join(","),
     fontWeight: options.headerWeight,
