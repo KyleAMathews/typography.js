@@ -243,7 +243,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "font": "100%/1.45em 'georgia',serif",
+    "font": "100%/1.45 'georgia',serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -666,7 +666,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "font": "100%/1.45em 'georgia',serif",
+    "font": "100%/1.45 'georgia',serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -1089,7 +1089,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "font": "100%/1.45em 'georgia',serif",
+    "font": "100%/1.45 'georgia',serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
