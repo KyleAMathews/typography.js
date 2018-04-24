@@ -276,7 +276,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "font": "112.5%/1.45em 'Open Sans',sans-serif",
+    "font": "112.5%/1.45 'Open Sans',sans-serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -688,7 +688,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "font": "100%/1.5em -apple-system,'BlinkMacSystemFont','Segoe UI','Roboto','Oxygen','Ubuntu','Cantarell','Fira Sans','Droid Sans','Helvetica Neue',sans-serif",
+    "font": "100%/1.5 -apple-system,'BlinkMacSystemFont','Segoe UI','Roboto','Oxygen','Ubuntu','Cantarell','Fira Sans','Droid Sans','Helvetica Neue',sans-serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -1122,7 +1122,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "font": "125%/1.45em 'Alegreya',sans-serif",
+    "font": "125%/1.45 'Alegreya',sans-serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -1563,7 +1563,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "font": "106.25%/1.45em 'Cabin',serif",
+    "font": "106.25%/1.45 'Cabin',serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -2007,7 +2007,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "font": "125%/1.5em 'PT Sans',sans-serif",
+    "font": "125%/1.5 'PT Sans',sans-serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -2452,7 +2452,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "font": "125%/1.45em 'Quattrocento Sans',serif",
+    "font": "125%/1.45 'Quattrocento Sans',serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -2870,7 +2870,7 @@ Object {
   "html": Object {
     "-webkit-font-smoothing": "antialiased",
     "boxSizing": "border-box",
-    "font": "125%/1.4em 'Cabin Condensed','georgia',sans-serif",
+    "font": "125%/1.4 'Cabin Condensed','georgia',sans-serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -3284,7 +3284,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "font": "100%/1.625em -apple-system,'BlinkMacSystemFont','Segoe UI','Roboto','Helvetica','Arial',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol'",
+    "font": "100%/1.625 -apple-system,'BlinkMacSystemFont','Segoe UI','Roboto','Helvetica','Arial',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol'",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -3722,7 +3722,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "font": "100%/1.6875em 'Arvo',sans-serif",
+    "font": "100%/1.6875 'Arvo',sans-serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -4141,7 +4141,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "font": "131.25%/1.38em 'Yrsa','georgia',sans-serif",
+    "font": "131.25%/1.38 'Yrsa','georgia',sans-serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -4579,7 +4579,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "font": "112.5%/1.66667em 'Vollkorn','Georgia',serif",
+    "font": "112.5%/1.6666666666666667 'Vollkorn','Georgia',serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -5006,7 +5006,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "font": "112.5%/1.44em 'Fira Sans',sans-serif",
+    "font": "112.5%/1.44 'Fira Sans',sans-serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -5421,7 +5421,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "font": "100%/1.5em 'Libre Baskerville',serif",
+    "font": "100%/1.5 'Libre Baskerville',serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -5820,7 +5820,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "font": "100%/1.4em 'Fira Sans',sans-serif",
+    "font": "100%/1.4 'Fira Sans',sans-serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -6265,7 +6265,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "font": "118.75%/1.58em 'Lora',serif",
+    "font": "118.75%/1.58 'Lora',serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -6699,7 +6699,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "font": "112.5%/1.56em 'Source Sans Pro',sans-serif",
+    "font": "112.5%/1.56 'Source Sans Pro',sans-serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -7098,7 +7098,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "font": "112.5%/1.61em 'Lato',sans-serif",
+    "font": "112.5%/1.61 'Lato',sans-serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -7542,7 +7542,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "font": "118.75%/1.58em 'Roboto',serif",
+    "font": "118.75%/1.58 'Roboto',serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -7988,7 +7988,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "font": "106.25%/1.82em 'Merriweather',sans-serif",
+    "font": "106.25%/1.82 'Merriweather',sans-serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -8423,7 +8423,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "font": "100%/1.5625em 'Source Sans Pro',sans-serif",
+    "font": "100%/1.5625 'Source Sans Pro',sans-serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -8822,7 +8822,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "font": "125%/1.6em 'Merriweather',serif",
+    "font": "125%/1.6 'Merriweather',serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -9260,7 +9260,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "font": "112.5%/1.66667em 'Georgia','Cambria',serif",
+    "font": "112.5%/1.6666666666666667 'Georgia','Cambria',serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -9696,7 +9696,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "font": "112.5%/1.722em 'Lato',sans-serif",
+    "font": "112.5%/1.722 'Lato',sans-serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -10140,7 +10140,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "font": "112.5%/1.78em 'Merriweather','Georgia',serif",
+    "font": "112.5%/1.78 'Merriweather','Georgia',serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -10589,7 +10589,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "font": "131.25%/1.5em 'Crimson Text',serif",
+    "font": "131.25%/1.5 'Crimson Text',serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -11016,7 +11016,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "font": "106.25%/1.53em 'Source Sans Pro',sans-serif",
+    "font": "106.25%/1.53 'Source Sans Pro',sans-serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -11431,7 +11431,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "font": "87.5%/1.57em sans-serif",
+    "font": "87.5%/1.57 sans-serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -11860,7 +11860,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "font": "100%/1.5em 'georgia',serif",
+    "font": "100%/1.5 'georgia',serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -12269,7 +12269,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "font": "93.75%/1.6em 'Helvetica Neue','Helvetica','Segoe UI','Arial','freesans',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol'",
+    "font": "93.75%/1.6 'Helvetica Neue','Helvetica','Segoe UI','Arial','freesans',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol'",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -12689,7 +12689,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "font": "87.5%/1.714em 'Open Sans',sans-serif",
+    "font": "87.5%/1.714 'Open Sans',sans-serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -13121,7 +13121,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "font": "100%/1.5em 'Source Sans Pro',serif",
+    "font": "100%/1.5 'Source Sans Pro',serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -13551,7 +13551,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "font": "100%/1.5em 'Lato',serif",
+    "font": "100%/1.5 'Lato',serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -13991,7 +13991,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "font": "118.75%/1.68em 'Noto Serif',serif",
+    "font": "118.75%/1.68 'Noto Serif',serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -14439,7 +14439,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "font": "100%/1.75em 'Merriweather','Georgia',serif",
+    "font": "100%/1.75 'Merriweather','Georgia',serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -14861,7 +14861,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "font": "75%/1.4em 'Lucida Grande','Verdana','Arial','Sans-Serif'",
+    "font": "75%/1.4 'Lucida Grande','Verdana','Arial','Sans-Serif'",
     "overflowY": "scroll",
   },
   "iframe": Object {

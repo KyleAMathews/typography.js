@@ -28,11 +28,15 @@
     "type": "git",
     "url": "https://github.com/KyleAMathews/typography.js.git"
   },
+  "source": "src/index.js",
   "main": "dist/index.js",
   "scripts": {
-    "build": "../../node_modules/.bin/babel src --out-dir dist/",
+    "build": "microbundle",
     "flow": "../../node_modules/.bin/flow",
     "lint": "../../node_modules/.bin/eslint --ext .js,.jsx --ignore-path ../../.gitignore .",
-    "watch": "../../node_modules/.bin/babel -w src --out-dir dist/"
+    "watch": "microbundle watch"
+  },
+  "devDependencies": {
+    "microbundle": "^0.4.4"
   }
 }
