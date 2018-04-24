@@ -3,6 +3,8 @@ import objectAssign from "object-assign"
 import verticalRhythm from "compass-vertical-rhythm"
 import ms from "modularscale"
 
+import createStyles from "./utils/createStyles"
+import compileStyles from "./utils/compileStyles"
 import type { OptionsType } from "Types"
 
 const typography = function(opts: OptionsType) {
@@ -54,6 +56,29 @@ const typography = function(opts: OptionsType) {
   return {
     options,
     ...vr,
+    createStyles() {
+      return this.toString()
+    }, // TODO remove in next breaking release.
+    toJSON() {
+      return createStyles(vr, options)
+    },
+    toString() {
+      return compileStyles(vr, options, this.toJSON())
+    },
+    injectStyles() {
+      if (typeof document !== "undefined") {
+        // Replace existing
+        if (document.getElementById("typography.js")) {
+          const styleNode = document.getElementById("typography.js")
+          styleNode.innerHTML = this.toString()
+        } else {
+          const node = document.createElement("style")
+          node.id = "typography.js"
+          node.innerHTML = this.toString()
+          document.head.appendChild(node)
+        }
+      }
+    },
   }
 }
 

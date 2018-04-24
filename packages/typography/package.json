@@ -31,10 +31,10 @@
   "source": "src/index.js",
   "main": "dist/index.js",
   "scripts": {
-    "build": "microbundle",
+    "build": "microbundle && microbundle --entry src/server.js --output dist/server.js",
     "flow": "../../node_modules/.bin/flow",
     "lint": "../../node_modules/.bin/eslint --ext .js,.jsx --ignore-path ../../.gitignore .",
-    "watch": "microbundle watch"
+    "watch": "microbundle watch && microbundle --watch --entry src/server.js --output dist/server.js"
   },
   "devDependencies": {
     "microbundle": "^0.4.4"
