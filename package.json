@@ -39,7 +39,7 @@
     "build": "lerna run build",
     "flow": "flow",
     "lint": "eslint --ext .js,.jsx --ignore-path .gitignore .",
-    "format": "prettier --write --single-quote  --trailing-comma es5 --no-semi packages/**/src/*.js",
+    "format": "prettier --write packages/**/src/*.js",
     "publish": "npm run build && lerna publish",
     "test": "npm run build && npm run lint && npm run test-api",
     "test-api": "jest",

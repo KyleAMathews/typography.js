@@ -1,50 +1,50 @@
 // @flow
-import gray from 'gray-percentage'
-import type { OptionsType } from 'Types'
+import gray from "gray-percentage"
+import type { OptionsType } from "Types"
 import {
   TABLET_MEDIA_QUERY,
   MOBILE_MEDIA_QUERY,
-} from 'typography-breakpoint-constants'
-import verticalRhythm from 'compass-vertical-rhythm'
+} from "typography-breakpoint-constants"
+import verticalRhythm from "compass-vertical-rhythm"
 
 const theme: OptionsType = {
-  title: 'Parnassus',
-  baseFontSize: '17px',
+  title: "Parnassus",
+  baseFontSize: "17px",
   baseLineHeight: 1.82,
   scaleRatio: 2.25,
   googleFonts: [
     {
-      name: 'Merriweather Sans',
-      styles: ['800'],
+      name: "Merriweather Sans",
+      styles: ["800"],
     },
     {
-      name: 'Merriweather',
-      styles: ['400', '400i', '700'],
+      name: "Merriweather",
+      styles: ["400", "400i", "700"],
     },
   ],
-  headerFontFamily: ['Merriweather Sans', 'sans-serif'],
-  bodyFontFamily: ['Merriweather', 'sans-serif'],
-  headerColor: 'hsla(0,0%,0%,0.9)',
-  bodyColor: 'hsla(0,0%,0%,0.8)',
+  headerFontFamily: ["Merriweather Sans", "sans-serif"],
+  bodyFontFamily: ["Merriweather", "sans-serif"],
+  headerColor: "hsla(0,0%,0%,0.9)",
+  bodyColor: "hsla(0,0%,0%,0.8)",
   headerWeight: 800,
   bodyWeight: 400,
   boldWeight: 700,
   overrideStyles: ({ adjustFontSizeTo, scale, rhythm }, options) => {
     const vr = verticalRhythm({
-      baseFontSize: '15px',
-      baseLineHeight: '27.35px',
+      baseFontSize: "15px",
+      baseLineHeight: "27.35px",
     })
 
     return {
       a: {
-        color: '#375c85',
-        textDecoration: 'none',
-        boxShadow: '0 1px 0 0 currentColor',
+        color: "#375c85",
+        textDecoration: "none",
+        boxShadow: "0 1px 0 0 currentColor",
       },
-      'a:hover,a:active': {
-        boxShadow: 'none',
+      "a:hover,a:active": {
+        boxShadow: "none",
       },
-      'h1,h2,h3,h4,h5,h6': {
+      "h1,h2,h3,h4,h5,h6": {
         marginTop: rhythm(2),
       },
       blockquote: {
@@ -55,15 +55,15 @@ const theme: OptionsType = {
         borderLeft: `${rhythm(6 / 16)} solid`,
         borderColor: gray(90),
       },
-      'blockquote > :last-child': {
+      "blockquote > :last-child": {
         marginBottom: 0,
       },
-      'blockquote cite': {
+      "blockquote cite": {
         ...adjustFontSizeTo(options.baseFontSize),
         color: options.bodyColor,
         fontWeight: options.bodyWeight,
       },
-      'blockquote cite:before': {
+      "blockquote cite:before": {
         content: '"— "',
       },
       [MOBILE_MEDIA_QUERY]: {

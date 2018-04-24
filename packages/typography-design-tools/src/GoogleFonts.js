@@ -1,7 +1,7 @@
-import React from 'react'
-import _ from 'lodash'
-import fontList from '../filteredGoogleFontList.json'
-import Select from 'react-select'
+import React from "react"
+import _ from "lodash"
+import fontList from "../filteredGoogleFontList.json"
+import Select from "react-select"
 
 const Font = ({ font }) => (
   <div

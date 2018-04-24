@@ -1,25 +1,25 @@
 // @flow
-import type { OptionsType } from 'Types'
-import gray from 'gray-percentage'
+import type { OptionsType } from "Types"
+import gray from "gray-percentage"
 
 const theme: OptionsType = {
-  title: 'US Web Design Standards',
-  baseFontSize: '17px',
+  title: "US Web Design Standards",
+  baseFontSize: "17px",
   baseLineHeight: 1.53,
   scale: 2.35,
   googleFonts: [
     {
-      name: 'Merriweather',
-      styles: ['700'],
+      name: "Merriweather",
+      styles: ["700"],
     },
     {
-      name: 'Source Sans Pro',
-      styles: ['400', '400i', '700'],
+      name: "Source Sans Pro",
+      styles: ["400", "400i", "700"],
     },
   ],
-  headerFontFamily: ['Merriweather', 'serif'],
-  bodyFontFamily: ['Source Sans Pro', 'sans-serif'],
-  bodyColor: 'hsla(0,0%,0%,0.8)',
+  headerFontFamily: ["Merriweather", "serif"],
+  bodyFontFamily: ["Source Sans Pro", "sans-serif"],
+  bodyColor: "hsla(0,0%,0%,0.8)",
   headerWeight: 700,
   bodyWeight: 400,
   boldWeight: 700,
@@ -31,15 +31,15 @@ const theme: OptionsType = {
     h5: scale(-1 / 8),
     h6: {
       ...scale(-2 / 8),
-      fontFamily: options.bodyFontFamily.join(','),
+      fontFamily: options.bodyFontFamily.join(","),
       fontWeight: options.bodyWeight,
-      textTransform: 'uppercase',
+      textTransform: "uppercase",
     },
     a: {
-      color: '#0071bc',
+      color: "#0071bc",
     },
-    'a:visited': {
-      color: '#4c2c92',
+    "a:visited": {
+      color: "#4c2c92",
     },
     blockquote: {
       ...scale(1 / 4),
@@ -50,14 +50,14 @@ const theme: OptionsType = {
       paddingLeft: rhythm(2 / 3),
       paddingRight: rhythm(2 / 3),
     },
-    'blockquote > :last-child': {
+    "blockquote > :last-child": {
       marginBottom: 0,
     },
-    'blockquote cite': {
+    "blockquote cite": {
       ...adjustFontSizeTo(options.baseFontSize),
       color: gray(54, 204),
       fontWeight: options.bodyWeight,
-      fontStyle: 'normal',
+      fontStyle: "normal",
     },
   }),
 }
