@@ -1,6 +1,6 @@
 // @flow
 
-import typography from "../packages/typography/src/index"
+import typography from "../packages/typography/src/server"
 
 describe("typography(options?)", () => {
   it("should be a function", () => {

@@ -4,7 +4,8 @@
   "version": "0.16.13",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "peerDependencies": {
-    "react": "^0.14.0 || ^15.0.0 || ^16.0.0"
+    "react": "^0.14.0 || ^15.0.0 || ^16.0.0",
+    "typography": "^1.0.0"
   },
   "keywords": [
     "css",
