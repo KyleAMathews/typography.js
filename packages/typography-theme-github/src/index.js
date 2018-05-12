@@ -3,7 +3,7 @@ import gray from 'gray-percentage'
 import type { OptionsType } from 'Types'
 
 const theme: OptionsType = {
-  title: 'Github',
+  title: 'GitHub',
   baseFontSize: '16px',
   baseLineHeight: 1.625,
   headerFontFamily: [
