@@ -67,7 +67,7 @@ typography.injectStyles()
 
 ## Themes
 We maintain 30 (and counting) themes that are ready to use on your next
-project. These are each published as seperate NPM packages. Explore
+project. These are each published as separate NPM packages. Explore
 themes at http://kyleamathews.github.io/typography.js.
 
 ### Using themes
