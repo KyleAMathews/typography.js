@@ -17,7 +17,7 @@ const theme: OptionsType = {
     },
   ],
   headerFontFamily: ['Bitter', 'serif'],
-  bodyFontFamily: ['Source Sans Pro', 'serif'],
+  bodyFontFamily: ['Source Sans Pro', 'sans-serif'],
   bodyColor: 'hsla(0,0%,0%,0.93)',
   headerWeight: '700',
   bodyWeight: 400,

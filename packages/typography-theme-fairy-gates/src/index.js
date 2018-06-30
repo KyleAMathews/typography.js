@@ -19,7 +19,7 @@ const theme: OptionsType = {
     },
   ],
   headerFontFamily: ['Work Sans', 'sans-serif'],
-  bodyFontFamily: ['Quattrocento Sans', 'serif'],
+  bodyFontFamily: ['Quattrocento Sans', 'sans-serif'],
   headerColor: 'hsla(0,0%,0%,0.9)',
   bodyColor: 'hsla(0,0%,0%,0.8)',
   headerWeight: '600',
