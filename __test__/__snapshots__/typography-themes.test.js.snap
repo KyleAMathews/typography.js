@@ -1745,7 +1745,7 @@ Object {
     },
     "html": Object {
       "fontSize": "106.25%",
-      "lineHeight": "1.45em",
+      "lineHeight": "24.65px",
     },
   },
   "a": Object {
@@ -2189,7 +2189,7 @@ Object {
     },
     "html": Object {
       "fontSize": "106.25%",
-      "lineHeight": "1.45em",
+      "lineHeight": "24.65px",
     },
   },
   "a": Object {
@@ -5180,7 +5180,7 @@ Object {
   "@media only screen and (max-width:480px)": Object {
     "html": Object {
       "fontSize": "80%",
-      "lineHeight": "1.5em",
+      "lineHeight": "19.2px",
     },
   },
   "a": Object {
@@ -6002,7 +6002,7 @@ Object {
     },
     "html": Object {
       "fontSize": "106.25%",
-      "lineHeight": "1.64706em",
+      "lineHeight": "28px",
     },
   },
   "a": Object {
@@ -6448,7 +6448,7 @@ Object {
     },
     "html": Object {
       "fontSize": "100%",
-      "lineHeight": "1.555em",
+      "lineHeight": "24.88px",
     },
     "table": Object {
       "fontSize": "0.83255rem",
@@ -7280,7 +7280,7 @@ Object {
     },
     "html": Object {
       "fontSize": "106.25%",
-      "lineHeight": "1.64706em",
+      "lineHeight": "28px",
     },
   },
   "a": Object {
@@ -7729,7 +7729,7 @@ Object {
   "@media only screen and (max-width:768px)": Object {
     "html": Object {
       "fontSize": "93.75%",
-      "lineHeight": "1.82333em",
+      "lineHeight": "27.35px",
     },
   },
   "a": Object {
@@ -10326,7 +10326,7 @@ Object {
     },
     "html": Object {
       "fontSize": "118.75%",
-      "lineHeight": "1.57105em",
+      "lineHeight": "29.85px",
     },
   },
   "a": Object {

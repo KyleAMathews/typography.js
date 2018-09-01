@@ -36,6 +36,7 @@
   },
   "private": true,
   "scripts": {
+    "bootstrap": "lerna bootstrap",
     "build": "lerna run build",
     "flow": "flow",
     "lint": "eslint --ext .js,.jsx --ignore-path .gitignore .",
