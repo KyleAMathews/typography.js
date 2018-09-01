@@ -1,17 +1,17 @@
-import React from "react"
-import ReactNumberEditor from "react-number-editor"
-import gray from "gray-percentage"
-import { StyleSheet, css } from "aphrodite"
+import React from 'react'
+import ReactNumberEditor from 'react-number-editor'
+import gray from 'gray-percentage'
+import { StyleSheet, css } from 'aphrodite'
 
 const styles = StyleSheet.create({
   editor: {
-    ":active": {
+    ':active': {
       borderColor: gray(75, 0, true),
     },
-    ":hover": {
+    ':hover': {
       borderColor: gray(75, 0, true),
     },
-    ":focus": {
+    ':focus': {
       borderColor: gray(75, 0, true),
     },
   },
@@ -27,12 +27,12 @@ class NumberEditor extends React.Component {
           className={css(styles.editor)}
           style={{
             background: gray(20),
-            border: "1px solid",
+            border: '1px solid',
             borderColor: gray(50, 0, true),
             borderRadius: 3,
             color: gray(90, 0, true),
             fontSize: 12,
-            padding: "2px 8px",
+            padding: '2px 8px',
             width: 80,
           }}
         />
@@ -40,7 +40,7 @@ class NumberEditor extends React.Component {
           style={{
             color: gray(60, 0, true),
             fontSize: 10,
-            position: "absolute",
+            position: 'absolute',
             right: 5,
             top: 4,
           }}

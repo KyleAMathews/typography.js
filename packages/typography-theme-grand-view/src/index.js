@@ -1,38 +1,38 @@
 // @flow
-import gray from "gray-percentage"
-import type { OptionsType } from "Types"
-import { MOBILE_MEDIA_QUERY } from "typography-breakpoint-constants"
+import gray from 'gray-percentage'
+import type { OptionsType } from 'Types'
+import { MOBILE_MEDIA_QUERY } from 'typography-breakpoint-constants'
 
 const theme: OptionsType = {
-  title: "Grand View",
-  baseFontSize: "16px",
+  title: 'Grand View',
+  baseFontSize: '16px',
   baseLineHeight: 1.6875,
   googleFonts: [
     {
-      name: "Montserrat",
-      styles: ["700"],
+      name: 'Montserrat',
+      styles: ['700'],
     },
     {
-      name: "Arvo",
-      styles: ["400", "400i", "700"],
+      name: 'Arvo',
+      styles: ['400', '400i', '700'],
     },
   ],
-  headerFontFamily: ["Montserrat", "sans-serif"],
-  bodyFontFamily: ["Arvo", "sans-serif"],
-  headerColor: "hsla(0,0%,0%,1)",
-  bodyColor: "hsla(0,0%,0%,0.8)",
+  headerFontFamily: ['Montserrat', 'sans-serif'],
+  bodyFontFamily: ['Arvo', 'sans-serif'],
+  headerColor: 'hsla(0,0%,0%,1)',
+  bodyColor: 'hsla(0,0%,0%,0.8)',
   headerWeight: 700,
   bodyWeight: 400,
   boldWeight: 700,
   overrideStyles: ({ adjustFontSizeTo, scale, rhythm }, options) => ({
     a: {
-      color: "#d65947",
-      textDecoration: "none",
+      color: '#d65947',
+      textDecoration: 'none',
     },
-    "a:hover,a:active": {
+    'a:hover,a:active': {
       color: options.bodyColor,
     },
-    "h1,h2,h3,h4,h5,h6": {
+    'h1,h2,h3,h4,h5,h6': {
       marginTop: rhythm(2),
     },
     blockquote: {
@@ -42,15 +42,15 @@ const theme: OptionsType = {
       marginLeft: 0,
       borderLeft: `${rhythm(3 / 16)} solid #fca206`,
     },
-    "blockquote > :last-child": {
+    'blockquote > :last-child': {
       marginBottom: 0,
     },
-    "blockquote cite": {
+    'blockquote cite': {
       ...adjustFontSizeTo(options.baseFontSize),
       color: options.bodyColor,
       fontWeight: options.bodyWeight,
     },
-    "blockquote cite:before": {
+    'blockquote cite:before': {
       content: '"— "',
     },
     [MOBILE_MEDIA_QUERY]: {

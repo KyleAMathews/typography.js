@@ -1,47 +1,47 @@
-import React from "react"
-import Select from "react-select"
-import fontList from "../filteredGoogleFontList.json"
-import { StyleSheet, css } from "aphrodite"
-import _ from "lodash"
-import Autosuggest from "react-autosuggest"
-import gray from "gray-percentage"
+import React from 'react'
+import Select from 'react-select'
+import fontList from '../filteredGoogleFontList.json'
+import { StyleSheet, css } from 'aphrodite'
+import _ from 'lodash'
+import Autosuggest from 'react-autosuggest'
+import gray from 'gray-percentage'
 
 const styles = StyleSheet.create({
   input: {
     background:
       "url(\"data:image/svg+xml;utf8,<svg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='18' height='18' viewBox='0 0 24 24'><path fill='rgb(153, 153, 153)' d='M7.406 7.828l4.594 4.594 4.594-4.594 1.406 1.406-6 6-6-6z'></path></svg>\")",
     backgroundColor: gray(20),
-    backgroundPosition: "100% 50%",
-    backgroundRepeat: "no-repeat",
-    border: "1px solid",
+    backgroundPosition: '100% 50%',
+    backgroundRepeat: 'no-repeat',
+    border: '1px solid',
     borderColor: gray(50, 0, true),
     borderRadius: 3,
     color: gray(90, 0, true),
     fontSize: 12,
-    width: "100%",
-    padding: "2px 8px",
+    width: '100%',
+    padding: '2px 8px',
     marginBottom: 3.75,
   },
   suggestionsContainer: {
     background: gray(20),
-    border: "1px solid",
+    border: '1px solid',
     borderColor: gray(50, 0, true),
     borderRadius: 3,
     color: gray(90, 0, true),
     fontSize: 12,
     padding: 0,
     margin: 0,
-    listStyle: "none",
-    position: "absolute",
+    listStyle: 'none',
+    position: 'absolute',
     zIndex: 1,
-    overflow: "hidden",
-    overflowY: "scroll",
-    maxHeight: "500px",
-    width: "93%",
+    overflow: 'hidden',
+    overflowY: 'scroll',
+    maxHeight: '500px',
+    width: '93%',
   },
   suggestion: {
     color: gray(90, 0, true),
-    padding: "3.75px 7px",
+    padding: '3.75px 7px',
     margin: 0,
   },
   suggestionFocused: {
@@ -59,7 +59,7 @@ const pickBoldStyle = name => {
 
   // Pick heaviest weight that's not an italic.
   let weights = _.map(family.weights, weight => {
-    if (weight === "regular") {
+    if (weight === 'regular') {
       return 400
     } else {
       return parseInt(weight, 10)
@@ -77,7 +77,7 @@ function getSuggestions(value) {
   const inputValue = value.trim().toLowerCase()
   const inputLength = inputValue.length
 
-  if (inputValue === "") {
+  if (inputValue === '') {
     return options
   }
 
@@ -102,15 +102,15 @@ class FontSelectTool extends React.Component {
     super()
 
     let fontFamily
-    if (props.type === "header") {
+    if (props.type === 'header') {
       fontFamily = props.options.headerFontFamily[0]
-    } else if (props.type === "body") {
+    } else if (props.type === 'body') {
       fontFamily = props.options.bodyFontFamily[0]
     }
 
     this.state = {
       value: fontFamily,
-      suggestions: getSuggestions(""),
+      suggestions: getSuggestions(''),
     }
 
     this.onChange = this.onChange.bind(this)
@@ -128,7 +128,7 @@ class FontSelectTool extends React.Component {
 
     if (family) {
       // Choose weight for choosen header font.
-      if (this.props.type === "header") {
+      if (this.props.type === 'header') {
         // Set header font family.
         newOptions.headerFontFamily = [newValue, family.category]
 
@@ -148,7 +148,7 @@ class FontSelectTool extends React.Component {
           newOptions.googleFonts,
           font => font.name !== this.props.options.headerFontFamily[0]
         )
-      } else if (this.props.type === "body") {
+      } else if (this.props.type === 'body') {
         // Set body font family.
         newOptions.bodyFontFamily = [newValue, family.category]
 
@@ -161,7 +161,7 @@ class FontSelectTool extends React.Component {
         // Add font to Google Fonts array.
         newOptions.googleFonts.push({
           name: newValue,
-          styles: ["400", "400i", boldWeight.toString(), `${boldWeight}i`],
+          styles: ['400', '400i', boldWeight.toString(), `${boldWeight}i`],
         })
 
         // Filter out old font.
@@ -182,11 +182,11 @@ class FontSelectTool extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.type === "header") {
+    if (this.props.type === 'header') {
       this.setState({
         value: nextProps.options.headerFontFamily[0],
       })
-    } else if (this.props.type === "body") {
+    } else if (this.props.type === 'body') {
       this.setState({
         value: nextProps.options.bodyFontFamily[0],
       })
@@ -196,7 +196,7 @@ class FontSelectTool extends React.Component {
   render() {
     const { value, suggestions } = this.state
     const inputProps = {
-      placeholder: "Type font family",
+      placeholder: 'Type font family',
       value,
       onChange: this.onChange,
     }

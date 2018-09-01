@@ -1,38 +1,38 @@
 // @flow
-import objectAssign from "object-assign"
-import verticalRhythm from "compass-vertical-rhythm"
-import ms from "modularscale"
+import objectAssign from 'object-assign'
+import verticalRhythm from 'compass-vertical-rhythm'
+import ms from 'modularscale'
 
-import createStyles from "./utils/createStyles"
-import compileStyles from "./utils/compileStyles"
-import type { OptionsType } from "Types"
+import createStyles from './utils/createStyles'
+import compileStyles from './utils/compileStyles'
+import type { OptionsType } from 'Types'
 
 const typography = function(opts: OptionsType) {
   const defaults: OptionsType = {
-    baseFontSize: "16px",
+    baseFontSize: '16px',
     baseLineHeight: 1.45,
     headerLineHeight: 1.1,
     scaleRatio: 2,
     googleFonts: [],
     headerFontFamily: [
-      "-apple-system",
-      "BlinkMacSystemFont",
-      "Segoe UI",
-      "Roboto",
-      "Oxygen",
-      "Ubuntu",
-      "Cantarell",
-      "Fira Sans",
-      "Droid Sans",
-      "Helvetica Neue",
-      "sans-serif",
+      '-apple-system',
+      'BlinkMacSystemFont',
+      'Segoe UI',
+      'Roboto',
+      'Oxygen',
+      'Ubuntu',
+      'Cantarell',
+      'Fira Sans',
+      'Droid Sans',
+      'Helvetica Neue',
+      'sans-serif',
     ],
-    bodyFontFamily: ["georgia", "serif"],
-    headerColor: "inherit",
-    bodyColor: "hsla(0,0%,0%,0.8)",
-    headerWeight: "bold",
-    bodyWeight: "normal",
-    boldWeight: "bold",
+    bodyFontFamily: ['georgia', 'serif'],
+    headerColor: 'inherit',
+    bodyColor: 'hsla(0,0%,0%,0.8)',
+    headerWeight: 'bold',
+    bodyWeight: 'normal',
+    boldWeight: 'bold',
     includeNormalize: true,
     blockMarginBottom: 1,
   }
@@ -66,14 +66,14 @@ const typography = function(opts: OptionsType) {
       return compileStyles(vr, options, this.toJSON())
     },
     injectStyles() {
-      if (typeof document !== "undefined") {
+      if (typeof document !== 'undefined') {
         // Replace existing
-        if (document.getElementById("typography.js")) {
-          const styleNode = document.getElementById("typography.js")
+        if (document.getElementById('typography.js')) {
+          const styleNode = document.getElementById('typography.js')
           styleNode.innerHTML = this.toString()
         } else {
-          const node = document.createElement("style")
-          node.id = "typography.js"
+          const node = document.createElement('style')
+          node.id = 'typography.js'
           node.innerHTML = this.toString()
           document.head.appendChild(node)
         }

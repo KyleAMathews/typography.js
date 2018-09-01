@@ -1,17 +1,17 @@
 // @flow
-import type { OptionsType } from "Types"
-import gray from "gray-percentage"
+import type { OptionsType } from 'Types'
+import gray from 'gray-percentage'
 
 const theme: OptionsType = {
-  title: "Wordpress Kubrick",
-  baseFontSize: "12px",
+  title: 'Wordpress Kubrick',
+  baseFontSize: '12px',
   baseLineHeight: 1.4,
-  headerFontFamily: ["Lucida Grande", "Verdana", "Arial", "Sans-Serif"],
-  bodyFontFamily: ["Lucida Grande", "Verdana", "Arial", "Sans-Serif"],
-  bodyColor: "hsla(0,0%,0%,0.8)",
-  headerWeight: "bold",
-  bodyWeight: "normal",
-  boldWeight: "bold",
+  headerFontFamily: ['Lucida Grande', 'Verdana', 'Arial', 'Sans-Serif'],
+  bodyFontFamily: ['Lucida Grande', 'Verdana', 'Arial', 'Sans-Serif'],
+  bodyColor: 'hsla(0,0%,0%,0.8)',
+  headerWeight: 'bold',
+  bodyWeight: 'normal',
+  boldWeight: 'bold',
   overrideStyles: ({ rhythm }) => ({
     h2: {
       marginTop: rhythm(2),
@@ -20,36 +20,36 @@ const theme: OptionsType = {
       marginTop: rhythm(2),
     },
     p: {
-      marginBottom: "1em",
-      marginTop: "1em",
+      marginBottom: '1em',
+      marginTop: '1em',
     },
     ol: {
       marginBottom: 0,
       marginLeft: rhythm(2.125),
     },
     ul: {
-      listStyle: "none",
+      listStyle: 'none',
       marginLeft: 0,
       paddingLeft: rhythm(5 / 8),
       textIndent: rhythm(-5 / 8),
     },
     li: {
-      display: "list-item",
+      display: 'list-item',
       marginLeft: rhythm(5 / 8),
     },
-    "ul li:before": {
+    'ul li:before': {
       content: '"» "',
     },
     a: {
-      color: "#06c",
-      textDecoration: "none",
+      color: '#06c',
+      textDecoration: 'none',
     },
-    "a:hover": {
-      color: "#147",
-      textDecoration: "underline",
+    'a:hover': {
+      color: '#147',
+      textDecoration: 'underline',
     },
-    "a:visited": {
-      color: "#b85b5a",
+    'a:visited': {
+      color: '#b85b5a',
     },
     blockquote: {
       color: gray(47),

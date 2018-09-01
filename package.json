@@ -40,7 +40,7 @@
     "build": "lerna run build",
     "flow": "flow",
     "lint": "eslint --ext .js,.jsx --ignore-path .gitignore .",
-    "format": "prettier --write packages/**/src/*.js",
+    "format": "prettier --write __test__/** packages/**/src/*.js",
     "publish": "npm run build && lerna publish",
     "test": "npm run build && npm run lint && npm run test-api",
     "test-api": "jest",

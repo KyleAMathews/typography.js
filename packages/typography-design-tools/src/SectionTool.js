@@ -1,18 +1,18 @@
-import React from "react"
+import React from 'react'
 
 class SectionTool extends React.Component {
   render() {
     return (
       <div
         style={{
-          float: "left",
+          float: 'left',
           marginRight: 5,
         }}
       >
         <span
           style={{
             fontSize: 10,
-            lineHeight: "15px",
+            lineHeight: '15px',
           }}
         >
           {this.props.title}
@@ -20,8 +20,8 @@ class SectionTool extends React.Component {
         <br />
         <div
           style={{
-            position: "relative",
-            overflow: "hidden",
+            position: 'relative',
+            overflow: 'hidden',
             width: 80,
           }}
         >

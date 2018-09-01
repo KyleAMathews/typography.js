@@ -1,17 +1,17 @@
-import React from "react"
-import Select from "./Select"
-import _ from "lodash"
-import parseUnit from "parse-unit"
+import React from 'react'
+import Select from './Select'
+import _ from 'lodash'
+import parseUnit from 'parse-unit'
 
 const prepareFamilyWeights = (weights = [], filterOutItalics) => {
   let newWeights
 
   // Convert regular/italic to 400 / 400italic
   newWeights = weights.map(weight => {
-    if (weight === "regular") {
-      return "400"
-    } else if (weight === "italic") {
-      return "400italic"
+    if (weight === 'regular') {
+      return '400'
+    } else if (weight === 'italic') {
+      return '400italic'
     } else {
       return weight
     }
@@ -21,7 +21,7 @@ const prepareFamilyWeights = (weights = [], filterOutItalics) => {
   if (filterOutItalics) {
     newWeights = _.filter(
       newWeights,
-      weight => parseUnit(weight)[1] !== "italic"
+      weight => parseUnit(weight)[1] !== 'italic'
     )
   }
 
@@ -46,7 +46,7 @@ class FontWeightTool extends React.Component {
           true
         )}
         style={{
-          width: "100%",
+          width: '100%',
         }}
         onChange={value => {
           const newOptions = { ...this.props.options }
@@ -55,11 +55,11 @@ class FontWeightTool extends React.Component {
           const newWeight = weights[value]
 
           // Set new weight.
-          if (this.props.type === "header") {
+          if (this.props.type === 'header') {
             newOptions.headerWeight = newWeight
-          } else if (this.props.type === "body") {
+          } else if (this.props.type === 'body') {
             newOptions.bodyWeight = newWeight
-          } else if (this.props.type === "bold") {
+          } else if (this.props.type === 'bold') {
             newOptions.boldWeight = newWeight
           }
 
@@ -71,7 +71,7 @@ class FontWeightTool extends React.Component {
           fontFamily.styles.push(newWeight.toString())
 
           // Also push italic if this is for body/bold
-          if (this.props.type === "body" || this.props.type === "bold") {
+          if (this.props.type === 'body' || this.props.type === 'bold') {
             fontFamily.styles.push(`${newWeight}i`)
           }
 

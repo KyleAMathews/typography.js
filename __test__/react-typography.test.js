@@ -1,20 +1,20 @@
 // @flow
 
-import React from "react"
-import typography from "../packages/typography/src/server"
+import React from 'react'
+import typography from '../packages/typography/src/server'
 import {
   GoogleFont,
   TypographyStyle,
-} from "../packages/react-typography/src/index"
-import renderer from "react-test-renderer"
+} from '../packages/react-typography/src/index'
+import renderer from 'react-test-renderer'
 
-it("should return a structure", () => {
+it('should return a structure', () => {
   expect(GoogleFont).toEqual(jasmine.any(Function))
   expect(TypographyStyle).toEqual(jasmine.any(Function))
 })
 
-describe("GoogleFont", () => {
-  it("should render with typography object", () => {
+describe('GoogleFont', () => {
+  it('should render with typography object', () => {
     const component = renderer.create(
       React.createElement(GoogleFont, {
         typography: typography(),
@@ -25,14 +25,14 @@ describe("GoogleFont", () => {
     expect(tree).toMatchSnapshot()
   })
 
-  it("should render with googleFonts options", () => {
+  it('should render with googleFonts options', () => {
     const component = renderer.create(
       React.createElement(GoogleFont, {
         typography: typography({
           googleFonts: [
             {
-              name: "Montserrat",
-              styles: ["700"],
+              name: 'Montserrat',
+              styles: ['700'],
             },
           ],
         }),
@@ -44,8 +44,8 @@ describe("GoogleFont", () => {
   })
 })
 
-describe("TypographyStyle", () => {
-  it("should render with typography object", () => {
+describe('TypographyStyle', () => {
+  it('should render with typography object', () => {
     const component = renderer.create(
       React.createElement(TypographyStyle, {
         typography: typography({

@@ -1,23 +1,23 @@
-import React from "react"
-import ReactDOM from "react-dom/server"
-import Typography from "typography"
-import { GoogleFont } from "react-typography"
-import _ from "lodash"
-import themes from "../themes"
-import NumberEditor from "./NumberEditor"
-import gray from "gray-percentage"
-import GoogleFonts from "./GoogleFonts"
-import Select from "./Select"
-import SectionTool from "./SectionTool"
-import msToRatio from "./msToRatio"
-import ModularScaleTool from "./ModularScaleTool"
-import parseUnit from "parse-unit"
-import FontSelectTool from "./FontSelectTool"
-import FontWeightTool from "./FontWeightTool"
-import fontList from "../filteredGoogleFontList.json"
+import React from 'react'
+import ReactDOM from 'react-dom/server'
+import Typography from 'typography'
+import { GoogleFont } from 'react-typography'
+import _ from 'lodash'
+import themes from '../themes'
+import NumberEditor from './NumberEditor'
+import gray from 'gray-percentage'
+import GoogleFonts from './GoogleFonts'
+import Select from './Select'
+import SectionTool from './SectionTool'
+import msToRatio from './msToRatio'
+import ModularScaleTool from './ModularScaleTool'
+import parseUnit from 'parse-unit'
+import FontSelectTool from './FontSelectTool'
+import FontWeightTool from './FontWeightTool'
+import fontList from '../filteredGoogleFontList.json'
 
 const requireThemes = require.context(
-  "../../",
+  '../../',
   true,
   /^\.\/typography-theme.*\/src\/index.js$/
 )
@@ -32,8 +32,8 @@ _.each(themes, theme => {
 
 // Add default theme
 themeRegistry.unshift({
-  name: "default",
-  title: "Default",
+  name: 'default',
+  title: 'Default',
   module: {},
 })
 
@@ -42,7 +42,7 @@ const toolTypography = new Typography({ includeNormalize: false })
 const Section = ({ children }) => (
   <div
     style={{
-      clear: "both",
+      clear: 'both',
       paddingBottom: 3.75,
       paddingLeft: 7.5,
       paddingRight: 7.5,
@@ -55,7 +55,7 @@ const SectionRow = ({ children }) => (
   <div
     style={{
       marginBottom: 3.75,
-      overflow: "hidden",
+      overflow: 'hidden',
     }}
   >
     {children}
@@ -66,7 +66,7 @@ const SectionHeader = ({ children }) => (
   <div
     style={{
       background: gray(17),
-      borderBottom: "1px solid",
+      borderBottom: '1px solid',
       borderColor: gray(50, 0, true),
       fontSize: 13,
       paddingLeft: 7.5,
@@ -114,7 +114,7 @@ class DesignTool extends React.Component {
     ))
 
     // Inject active theme.
-    if (typeof document !== "undefined") {
+    if (typeof document !== 'undefined') {
       let activeTheme = themeRegistry[this.state.selectedTheme].module
       // Copy over plugins/overrideThemeStyles
       activeTheme = { ...activeTheme, ...this.state.options }
@@ -131,8 +131,8 @@ class DesignTool extends React.Component {
         const googleFonts = ReactDOM.renderToStaticMarkup(
           React.createFactory(GoogleFont)({ typography: newTypography })
         )
-        const head = document.getElementsByTagName("head")[0]
-        head.insertAdjacentHTML("beforeend", googleFonts)
+        const head = document.getElementsByTagName('head')[0]
+        head.insertAdjacentHTML('beforeend', googleFonts)
         this.googleFonts = JSON.stringify(newTypography.options.googleFonts)
       }
     }
@@ -145,18 +145,18 @@ class DesignTool extends React.Component {
           fontSize: 10,
           lineHeight: 1.5,
           letterSpacing: 0,
-          background: "rgba(0,0,0,0.65)",
-          color: "rgba(255,255,255,0.95)",
-          position: "fixed",
+          background: 'rgba(0,0,0,0.65)',
+          color: 'rgba(255,255,255,0.95)',
+          position: 'fixed',
           top: 0,
           right: 0,
-          WebkitFontSmoothing: "auto",
+          WebkitFontSmoothing: 'auto',
         }}
       >
         <Section>
           <div
             style={{
-              color: "rgba(255,255,255,0.95)",
+              color: 'rgba(255,255,255,0.95)',
               fontFamily: toolTypography.options.headerFontFamily,
               fontSize: 15,
               fontWeight: 300,
@@ -170,7 +170,7 @@ class DesignTool extends React.Component {
             <div
               style={{
                 fontSize: 10,
-                lineHeight: "15px",
+                lineHeight: '15px',
                 marginTop: 7.5,
               }}
             >
@@ -180,7 +180,7 @@ class DesignTool extends React.Component {
               options={themeRegistry.map(theme => theme.title)}
               value={this.state.selectedTheme}
               style={{
-                width: "100%",
+                width: '100%',
               }}
               onChange={value => {
                 const newTheme = new Typography(themeRegistry[value].module)
