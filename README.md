@@ -42,7 +42,6 @@ NPM](https://www.npmjs.com/browse/keyword/typography-theme).
 * [React Headroom](https://kyleamathews.github.io/react-headroom/) ([source](https://github.com/KyleAMathews/react-headroom/blob/master/www/utils/typography.js))
 * [Gatsby Blog Starter](http://gatsbyjs.github.io/gatsby-starter-blog/) ([source](https://github.com/gatsbyjs/gatsby-starter-blog/blob/master/src/utils/typography.js))
 * [ollieglass.com](http://ollieglass.com/)
-* [markOnSoftware](https://markjoelchavez.com)
 * [Edit this file to add yours!](https://github.com/KyleAMathews/typography.js/blob/master/README.md)
 
 ## Javascript usage
@@ -69,7 +68,7 @@ typography.injectStyles()
 
 ## Themes
 We maintain 30 (and counting) themes that are ready to use on your next
-project. These are each published as seperate NPM packages. Explore
+project. These are each published as separate NPM packages. Explore
 themes at http://kyleamathews.github.io/typography.js.
 
 ### Using themes
@@ -154,6 +153,7 @@ const typography = new Typography(funstonTheme)
 * [typography-theme-wordpress-2016](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-wordpress-2016/)
 * [typography-theme-trajan](https://github.com/guoliim/typography-theme-trajan)
 * [typography-theme-zacklive](https://github.com/ZacharyChim/typography-theme-zacklive)
+* [typography-theme-anonymous](https://github.com/leimonio/typography-theme-anonymous)
 * If you publish your own, create a PR to add it here!
 
 ## Plugins
