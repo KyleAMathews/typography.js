@@ -32,3 +32,5 @@ examples/bundle.js
 .gatsby-context.js
 .idea/
 www/public
+packages/**/package-lock.json
+packages/**/yarn.lock
