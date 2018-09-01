@@ -1,5 +1,3 @@
-# Typography.js
-A powerful toolkit for building websites with beautiful typography.
 # Typography.js [![Build Status][build-badge]][build-status] [![Coverage Status][coverage-badge]][coverage-status]
 A powerful toolkit for building websites with beautiful design.
 
@@ -46,8 +44,11 @@ NPM](https://www.npmjs.com/browse/keyword/typography-theme).
 
 ## Javascript usage
 ```javascript
-import Typography from 'typography/dist/server'
-// Import the non-server version of the code to use in the browser e.g. with css-in-js.
+import Typography from 'typography/server'
+// The server entry has the `injectStyles` function for inserting the CSS client-side.
+// For React SSRed apps, use `react-typography` and the component `TypographyStyles` to add
+// the CSS to the `<head>` and then use the plain typography entry for the rhythm/scale functions
+// in the client. If you use Gatsby and `gatsby-plugin-typography`, this is done automatically for you.
 // import Typography from 'typography'
 
 const typography = new Typography({
@@ -80,7 +81,7 @@ Here's an example of how to use the Funston theme.
 2. Then import and pass into Typography when initializing.
 
 ```javascript
-import Typography from 'typography/dist/server'
+import Typography from 'typography/server'
 import funstonTheme from 'typography-theme-funston'
 
 const typography = new Typography(funstonTheme)
@@ -92,7 +93,7 @@ needed. For example, if you're using the Funston theme but want to
 increase the base font size slightly:
 
 ```javascript
-import Typography from 'typography/dist/server'
+import Typography from 'typography/server'
 import funstonTheme from 'typography-theme-funston'
 funstonTheme.baseFontSize = '22px' // was 20px.
 
@@ -103,7 +104,7 @@ Or you can use the imperative API `overrideThemeStyles` to directly set/override
 styles on a theme:
 
 ```javascript
-import Typography from 'typography/dist/server'
+import Typography from 'typography/server'
 import funstonTheme from 'typography-theme-funston'
 funstonTheme.overrideThemeStyles = ({ rhythm }, options) => ({
   'h2,h3': {
@@ -169,7 +170,7 @@ To use the Code plugin, first install using NPM.
 Then add to your theme before creating a new typography object.
 
 ```javascript
-import Typography from 'typography/dist/server'
+import Typography from 'typography/server'
 import CodePlugin from 'typography-plugin-code'
 import sternGroveTheme from 'typography-theme-stern-grove'
 

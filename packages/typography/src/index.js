@@ -46,7 +46,7 @@ const typography = function(opts: OptionsType) {
     // This doesn't pick the right scale ratio if a theme has more than one ratio.
     // Perhaps add optional parameter for a width and it'll get the ratio
     // for this width. Tricky part is maxWidth could be set in non-pixels.
-    const baseFont = parseInt(options.baseFontSize, 10)
+    const baseFont = options.baseFontSize.slice(0, -2)
     const newFontSize = `${ms(value, options.scaleRatio) * baseFont}px`
     return vr.adjustFontSizeTo(newFontSize)
   }
@@ -57,4 +57,4 @@ const typography = function(opts: OptionsType) {
   }
 }
 
-export default typography
+module.exports = typography

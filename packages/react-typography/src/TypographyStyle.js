@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Typography from 'typography/dist/server'
+import Typography from 'typography/server'
 
 const TypographyStyle = props => (
   <style
