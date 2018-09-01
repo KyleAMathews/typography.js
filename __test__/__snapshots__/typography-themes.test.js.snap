@@ -2263,7 +2263,7 @@ Object {
     "MozFontFeatureSettings": "\\"kern\\", \\"liga\\", \\"clig\\", \\"calt\\"",
     "WebkitFontFeatureSettings": "\\"kern\\", \\"liga\\", \\"clig\\", \\"calt\\"",
     "color": "hsla(0,0%,0%,0.8)",
-    "fontFamily": "'Quattrocento Sans',serif",
+    "fontFamily": "'Quattrocento Sans',sans-serif",
     "fontFeatureSettings": "\\"kern\\", \\"liga\\", \\"clig\\", \\"calt\\"",
     "fontKerning": "normal",
     "fontWeight": 400,
@@ -2452,7 +2452,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "font": "125%/1.45 'Quattrocento Sans',serif",
+    "font": "125%/1.45 'Quattrocento Sans',sans-serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
@@ -12936,7 +12936,7 @@ Object {
     "MozFontFeatureSettings": "\\"kern\\", \\"liga\\", \\"clig\\", \\"calt\\"",
     "WebkitFontFeatureSettings": "\\"kern\\", \\"liga\\", \\"clig\\", \\"calt\\"",
     "color": "hsla(0,0%,0%,0.93)",
-    "fontFamily": "'Source Sans Pro',serif",
+    "fontFamily": "'Source Sans Pro',sans-serif",
     "fontFeatureSettings": "\\"kern\\", \\"liga\\", \\"clig\\", \\"calt\\"",
     "fontKerning": "normal",
     "fontWeight": 400,
@@ -13121,7 +13121,7 @@ Object {
   },
   "html": Object {
     "boxSizing": "border-box",
-    "font": "100%/1.5 'Source Sans Pro',serif",
+    "font": "100%/1.5 'Source Sans Pro',sans-serif",
     "overflowY": "scroll",
   },
   "iframe": Object {
