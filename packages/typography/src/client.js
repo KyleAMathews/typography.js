@@ -57,4 +57,4 @@ const typography = function(opts: OptionsType) {
   }
 }
 
-module.exports = typography
+export default typography

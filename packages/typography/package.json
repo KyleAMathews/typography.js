@@ -31,9 +31,10 @@
   "source": "src/index.js",
   "main": "dist/index.js",
   "scripts": {
-    "build": "npm-run-all build-client build-server",
+    "build": "npm-run-all build-index build-client build-server",
+    "build-client": "microbundle --entry src/client.js --output dist/client.js",
     "build-server": "microbundle --entry src/server.js --output dist/server.js",
-    "build-client": "microbundle",
+    "build-index": "microbundle",
     "flow": "../../node_modules/.bin/flow",
     "lint": "../../node_modules/.bin/eslint --ext .js,.jsx --ignore-path ../../.gitignore .",
     "watch": "microbundle watch && microbundle --watch --entry src/server.js --output dist/server.js"
