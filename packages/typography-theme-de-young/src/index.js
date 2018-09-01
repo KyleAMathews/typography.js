@@ -71,7 +71,7 @@ const theme: OptionsType = {
     [MOBILE_MEDIA_QUERY]: {
       // Make baseFontSize on mobile 18px.
       html: {
-        fontSize: `${18 / 16 * 100}%`,
+        fontSize: `${(18 / 16) * 100}%`,
       },
       blockquote: {
         borderLeft: `${rhythm(3 / 16)} solid ${gray(50)}`,
