@@ -1,7 +1,7 @@
 {
   "name": "typography-plugin-code",
   "description": "A plugin for Typography.js that provides basic code styling both inline and block",
-  "version": "0.16.11",
+  "version": "1.0.0-alpha.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "main": "./dist/index.js",
   "keywords": [

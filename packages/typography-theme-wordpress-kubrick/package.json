@@ -1,7 +1,7 @@
 {
   "name": "typography-theme-wordpress-kubrick",
   "description": "A theme for Typography.js inspired by the typography of the Wordpress Kubrick theme",
-  "version": "0.15.10",
+  "version": "1.0.0-alpha.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "gray-percentage": "^2.0.0"

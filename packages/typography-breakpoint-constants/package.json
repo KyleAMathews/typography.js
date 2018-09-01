@@ -1,7 +1,7 @@
 {
   "name": "typography-breakpoint-constants",
   "description": "Provide helpful constants for setting responsive breakpoints",
-  "version": "0.15.10",
+  "version": "1.0.0-alpha.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "keywords": [
     "css",

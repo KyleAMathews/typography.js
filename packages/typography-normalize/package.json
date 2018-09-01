@@ -1,7 +1,7 @@
 {
   "name": "typography-normalize",
   "description": "Provides normalize.css as a commonjs module.",
-  "version": "0.14.0",
+  "version": "1.0.0-alpha.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "keywords": [
     "css",
