@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.0.0-alpha.4"></a>
+# [1.0.0-alpha.4](https://github.com/KyleAMathews/typography.js/compare/typography@1.0.0-alpha.3...typography@1.0.0-alpha.4) (2018-09-01)
+
+**Note:** Version bump only for package typography
+
+
+
+
+
 <a name="1.0.0-alpha.3"></a>
 # [1.0.0-alpha.3](https://github.com/KyleAMathews/typography.js/compare/typography@1.0.0-alpha.2...typography@1.0.0-alpha.3) (2018-09-01)
 
