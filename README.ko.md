@@ -1,7 +1,7 @@
 # Typography.js
-A powerful toolkit for building websites with beautiful typography.
+typography는 웹사이트를 구축할 수 있는 강력한 툴킷입니다.
 # Typography.js [![Build Status][build-badge]][build-status] [![Coverage Status][coverage-badge]][coverage-status]
-A powerful toolkit for building websites with beautiful design.
+아름다운 디자인으로 웹사이트를 구축할 수 있는 강력한 툴킷입니다.
 
 ## Install 
 `npm install typography`
@@ -10,34 +10,31 @@ A powerful toolkit for building websites with beautiful design.
 http://kyleamathews.github.io/typography.js
 
 ## Why
-The goal of Typography.js is to provide a high-level elegant API for
-expressing typographic design intent.
+typography.js의 목표는 typography 디자인의 의도를 표현하기 위해 high-level의 훌륭한 API를 제공합니다.
 
-Typography is a complex *system* of interrelated styles. 100s of style
-declarations on dozens of elements must be in harmonious order. Trying
-one design change can mean making dozens of tedious recalculations and
-CSS value changes. Creating new Typography themes with CSS feels hard.
+Typography는 interrelated styles의 복잡한 *시스템*입니다. 수십개의 요소에
+대한 스타일 선언 100여개는 균형잡힌 순서로 선언되어야 합니다. 하나의 디자인이
+변경된느 것은 수십 개의 지루한 검토 및 css가 변경됨을 의미할 수 있습니다.
+CSS를 사용해 새로운 Typography를 만드는 것이 어렵게 느껴질 수 있습니다.
 
-Typography.js provides a vastly simpler way to define and
-explore typography designs.
+Typography.js는 훨씬 더 간단한 방법으로 typography 디자인을
+정의하고 탐색할 수 있는 매우 간단한 방법을 제공합니다.
 
-You provide configuration to the Typography.js JS api and it uses its
-Typography engine to generate CSS for block and inline
-elements.
+Typography.js의 JS api에 대한 설정을 제공해 Typography 엔진이
+block과 inline element에 대한 CSS를 생성합니다.
 
-Typography.js makes it easy to create designs that are unique, personal, and
-custom to your project.
+Typography.js를 사용하면 프로젝트에 고유하고 개인적이며 맞춤화된 디자인을 보다 쉽게
+만들 수 있습니다.
 
 ## Themes & Plugins
-- **themes**: Typography.js themes are simple Javascript objects. As
-  such they're easy to share across projects or even
-  [open source and share via
-NPM](https://www.npmjs.com/browse/keyword/typography-theme).
-- **plugins**: Plugins are functions that extend or modify the core
-  Typography engine. They can change how headers are styled
-  or add specialized styles e.g. for code or tables.
+- **themes**: Typography.js 테마는 간단한 자바스크립트 객체입니다.
+  따라서 프로젝트 사이에서 쉽게 공유될 수 있습니다.
+  [open source and share via NPM](https://www.npmjs.com/browse/keyword/typography-theme).
+- **plugins**: 플로그인은 Typography의 엔진을 확장하거나 수정하는 기능입니다.
+  헤더의 스타일 지정 방법을 변경하거나, 코드 또는 테이블과 같은 특수한 시스템을
+  추가할 수 있습니다.
 
-## Sites that use Typography.js
+## Typography.js를 사용하는 사이트
 * [bricolage.io](https://bricolage.io/?utm_source=github.com) ([source](https://github.com/KyleAMathews/blog/blob/master/blog-typography.coffee))
 * [React Headroom](https://kyleamathews.github.io/react-headroom/) ([source](https://github.com/KyleAMathews/react-headroom/blob/master/www/utils/typography.js))
 * [Gatsby Blog Starter](http://gatsbyjs.github.io/gatsby-starter-blog/) ([source](https://github.com/gatsbyjs/gatsby-starter-blog/blob/master/src/utils/typography.js))
@@ -67,17 +64,17 @@ typography.injectStyles()
 ```
 
 ## Themes
-We maintain 30 (and counting) themes that are ready to use on your next
-project. These are each published as separate NPM packages. Explore
-themes at http://kyleamathews.github.io/typography.js.
+우리는 당신의 다음 프로젝트에서 사용할 수 있는 30여개의 테마를 보유하고 있습니다.
+이들은 각각 별도의 NPM package로 게시되어 있으며,
+http://kyleamathews.github.io/typography.js 에서 확인할 수 있습니다.
 
-### Using themes
+### themes 사용하기
 
-Here's an example of how to use the Funston theme.
+다음은 Funston 테마를 사용하는 방법에 대한 예시입니다.
 
-1. First save the package to your project `npm install --save
-   typography-theme-funston`
-2. Then import and pass into Typography when initializing.
+1. 먼저, 패키지를 프로젝트에 저장합니다.
+  `npm install --save typography-theme-funston`
+2. Typography를 초기화할 때 전달합니다.
 
 ```javascript
 import Typography from 'typography'
@@ -87,9 +84,9 @@ const typography = new Typography(funstonTheme)
 ```
 
 ### Customizing themes
-Themes are just javascript objects so it's easy to modify them as
-needed. For example, if you're using the Funston theme but want to
-increase the base font size slightly:
+테마는 자바스크립트 객체이므로 필요할 때 쉽게 수정할 수 있습니다.
+예를 들어, Funston theme를 사용한다 하더라도 기본 크기를 조금
+키우려는 경우:
 
 ```javascript
 import Typography from 'typography'
@@ -99,8 +96,8 @@ funstonTheme.baseFontSize = '22px' // was 20px.
 const typography = new Typography(funstonTheme)
 ```
 
-Or you can use the imperative API `overrideThemeStyles` to directly set/override
-styles on a theme:
+또는 필수 API `overrideThemeStyles`를 사용해 테마의 스타일을
+직접 설정하거나 재정의할 수 있습니다.:
 
 ```javascript
 import Typography from 'typography'
@@ -157,16 +154,16 @@ const typography = new Typography(funstonTheme)
 * If you publish your own, create a PR to add it here!
 
 ## Plugins
-Plugins are functions that extend or modify the core typography engine.
-they can change how headers are styled or add specialized styles e.g.
-for code or tables. Currently there's one plugin available,
+플러그인은 typography의 엔진을 확장하거나 수정하는 기능입니다.
+이것은 headers의 스타일을 변경하거나 특수 스타일을 추가할 수 있습니다.
+예사: 코드 또는 테이블용으로 현재 살용할 수 있는 플러그인이 있습니다.
 `typography-plugin-code`.
 
-To use the Code plugin, first install using NPM.
+플러그인을 사용하기 위해서는 먼저 NPM을 사용해 설치해야 합니다.
 
 `npm install --save typography-plugin-code`
 
-Then add to your theme before creating a new typography object.
+그 다음, 새로운 typography 객체를 생성하기 전에 테마에 추가합니다.
 
 ```javascript
 import Typography from 'typography'
@@ -181,17 +178,15 @@ const typography = new Typography(sternGroveTheme)
 ```
 
 ## React.js helper components.
-Typography.js includes two helper components for your React.js projects,
-`TypographyStyle` and `GoogleFont`. These are ideal for
-server-rendering.
+Typography.js는 React.js 프로젝트를 위한 두 가지의 구성 요소
+`TypographyStyle`과 `GoogleFont`가 포함되어 있습니다.
+이러한 방법은 server-rendering에 적합합니다.
 
-* `TypographyStyle` creates a style element and inserts the generated
-  CSS for your theme.
-* `GoogleFont` creates the link element to include the Google Fonts &
-  weights specified in your theme.
+* `TypographyStyle`은 style element를 만들고, 생성된 css를 테마에 적용시킵니다.
+* `GoogleFont`는 테마에 지정된 Google Fonts & Weight를 포함하는 link element를 만듭니다.
 
-To use, first install the package `npm install --save react-typography`
-then import them into your `html.js` file.
+사용하기 위해서는 먼저 패키지를 설치한 뒤`npm install --save react-typography`,
+`html.js` 파일에 포함시킵니다.
 
 ```javascript
 import { TypographyStyle, GoogleFont } from 'react-typography'
@@ -214,21 +209,22 @@ import typography from 'utils/typography'
 ## API
 
 ### Configuration
-When creating a new instance of Typography, you can pass in an
-*configuration* object. All configuration keys are optional.
+Typography의 새로운 instance를 만들 때 *configuration* 객체를 전달할 수 있습니다.
+모든 값은 선택사항입니다.
 
-* **title**: The theme title.
-* **baseFontSize**: The base font size in pixels, defaults to `16px`.
-* **baseLineHeight**: The base line height using the css unitless number, defaults to `1.45`.
-* **scaleRatio**: The "scale ratio" for the theme. This value is the ratio
-  between the `h1` font size and the `baseFontSize`. So if the scale ratio is `2`
-  and the `baseFontSize` is `16px` then the `h1` font size is `32px`.
+* **title**: 테마의 제목.
+* **baseFontSize**: base font의 크기는 픽셀 단위이며, 기본값은 `16`px입니다.
+* **baseLineHeight**: css unitless number의 base line 높이 값은 `1.45`입니다.
+* **scaleRatio**: 테마의 척도 비율(scale ratio)입니다.
+  이 값은 `h1`의 글꼴 크기와 `baseFontSize` 사이의 비율입니다.
+  그래서 만약 척도 비율이 `2`이고, `baseFontSize`가 `16px`이라면,
+  `h1`의 크기는 `32`px입니다.
 ```javascript
 {
   scaleRatio: 2,
 }
 ```
-* **googleFonts**: An array specifying Google Fonts for this project.
+* **googleFonts**: 프로젝트의 google Font를 지정합니다.
 ```javascript
 googleFonts: [
   {
@@ -248,33 +244,24 @@ googleFonts: [
   },
 ],
 ```
-* **headerFontFamily**: An array of strings specifying the font family
-  stack for headers e.g. `['Helvetica', 'sans-serif']`. Defaults to a
-system UI font stack.
-* **bodyFontFamily**: An array of strings specifying the font family
-  stack for the body, defaults to `['georgia', 'serif']`.
-* **headerColor**: A css color string to be set on headers. Defaults
-  to `inherit`.
-* **bodyColor**: A css color string to be set for body text. Defaults
-to `hsl(0,0%,0%,0.8)`.
-* **headerWeight**: Specify the font weight for headers. Defaults to
-`bold`.
-* **bodyWeight**: Specify the font weight for body text. Defaults to
-  `normal`.
-* **boldWeight**: Specify the font weight for "bold" (b, strong, dt, th)
-  elements. Defaults to `bold`.
-* **blockMarginBottom**: Specify the default margin-bottom for block
-  elements. Defaults to one "rhythm unit" (i.e. the height of the base line height).
-* **includeNormalize**: Include normalize.css.
-  Normalize.css is an excellent project which works to normalize the
-base browser CSS across browsers and serves as an excellent foundation
-for Typography.js. We include normalize.CSS by default but if you're
-already including it elsewhere in your project, you can disable
-including it here by passing `false`.
-* **overrideStyles**: Imperative API for directly adding to or
-overriding auto-generated styles. It's called with a Vertical
-Rhythm object, the options object, and the algorithmically generated
-styles.
+* **headerFontFamily**:헤더의 font family 스택(`['Helvetica', 'sans-serif']`)을 지정하는 문자열 배열로,
+기본값은 시스템 UI의 글꼴 값을 가집니다.
+* **bodyFontFamily**: 본문에 대한 font family를 지정하는 문자열 배열의 기본값은 `['georgia', 'serif']`입니다.
+* **headerColor**: 헤더의 색상을 설정합니다. 기본값은 `inherit`입니다..
+* **bodyColor**: 본문의 색상을 설정합니다. 기본값은 `hsl(0,0%,0%,0.8)`입니다.
+* **headerWeight**: 헤더의 글꼴 두께를 지정합니다. 기본 값은 `bold`입니다.
+* **bodyWeight**: 본문의 글꼴 두께를 지정합니다. 기본 값은 `normal`입니다.
+* **boldWeight**: "bold"(b, strong, dh, th) 요소의 글꼴 두께를 지정합니다.
+기본 값은 `bold`입니다.
+* **blockMarginBottom**: block 요소의 기본 margin-bottom 값을 지정합니다.
+기본적으로 하나의 "rhythm unit"(base line의 높이)로 설정됩니다.
+* **includeNormalize**: normalize.css를 포함합니다.
+Normalize.css는 브라우저 전체에서 기본 브라우저의 css를 표준하는 데 사용되며,
+Typograthy.css의 기초가 되는 프로젝트입니다.
+normalize.CSS는 기본으로 포함하고 있지만, 이미 프로젝트의 다른 곳에서 포함하고 있다면
+`false`를 전달해 호출하지 않을 수 있습니다.
+* **overrideStyles**: 자동 생성된 스타일을 직접 추가하거나 재정의하기 위한 명령형 API입니다.
+Vertical Rhythm object, options object, algorithmically generated styles에 의해 호출됩니다.
 
 ```javascript
 overrideStyles: ({ adjustFontSizeTo, rhythm }, options, styles) => ({
@@ -294,10 +281,9 @@ overrideStyles: ({ adjustFontSizeTo, rhythm }, options, styles) => ({
   },
 })
 ```
-* **overrideThemeStyles**: This has the same function signature as
-`overrideStyles` but should be used in place of `overrideStyles` when
-using a 3rd-party theme so as to not delete the theme's own
-`overrideStyles` function.
+* **overrideThemeStyles**: `overrideStyles`과 기능이 동일합니다.
+3rd-party themes를 사용할 때 `overrideStyles`를 사용해
+테마 자체의 `overrideStyle`를 삭제하지 않도록 주의해야 합니다.
 
 ```javascript
 overrideThemeStyles: ({ rhythm }, options, styles) => ({
@@ -312,9 +298,8 @@ overrideThemeStyles: ({ rhythm }, options, styles) => ({
 
 - [postcss-typography](https://github.com/BarryThePenguin/postcss-typography)
 
-## Developing Typography.js
-Typography.js is a monorepo facilitated by
-[Lerna](https://github.com/lerna/lerna).
+## Typography.js 개발하기
+Typography.js는 [Lerna](https://github.com/lerna/lerna)를 더 쉽게 사용할 수 있게 해주는 monorepo입니다.
 
 TODO: document constants + compass-vertical-rhythm + using typgraphy.js
 for inline styles.
