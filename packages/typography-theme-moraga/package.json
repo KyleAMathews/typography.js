@@ -1,13 +1,13 @@
 {
   "name": "typography-theme-moraga",
   "description": "A theme for Typography.js",
-  "version": "0.15.10",
+  "version": "0.16.18",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "main": "./dist/index.js",
   "dependencies": {
     "compass-vertical-rhythm": "^1.2.1",
     "gray-percentage": "^2.0.0",
-    "typography-breakpoint-constants": "^0.15.10"
+    "typography-breakpoint-constants": "^0.16.18"
   },
   "keywords": [
     "css",
