@@ -65,7 +65,7 @@ const typography = function(opts: OptionsType) {
     toString() {
       return compileStyles(vr, options, this.toJSON())
     },
-    injectStyles() {
+    injectStyles(prepend = false) {
       if (typeof document !== "undefined") {
         // Replace existing
         if (document.getElementById("typography.js")) {
@@ -75,7 +75,12 @@ const typography = function(opts: OptionsType) {
           const node = document.createElement("style")
           node.id = "typography.js"
           node.innerHTML = this.toString()
-          document.head.appendChild(node)
+          const head = document.head
+          if (prepend && head.firstChild) {
+            head.insertBefore(node, head.firstChild)
+          } else {
+            head.appendChild(node)
+          }
         }
       }
     },
