@@ -119,7 +119,7 @@ describe("typography(options?).injectStyles()", () => {
   })
 
   describe("prepending", () => {
-    it("can add to beginning of head tags", () => {
+    const setup = (styleNode, head) => {
       const sut = typography()
   
       global.document = jasmine.createSpyObj("document", [
@@ -128,41 +128,33 @@ describe("typography(options?).injectStyles()", () => {
         "getElementById",
       ])
   
-      const styleNode = {}
-  
       global.document.getElementById.and.returnValue(null)
       global.document.createElement.and.returnValue(styleNode)
-      global.document.head = {
+      global.document.head = head
+  
+      sut.injectStyles(true)
+    }
+  
+    it("can add to beginning of head tags", () => {
+      const styleNode = {}
+      const head = {
         insertBefore: jasmine.createSpy(),
         firstChild: {}
       }
-  
-      sut.injectStyles(true)
-  
-      expect(global.document.head.insertBefore).toHaveBeenCalledWith(styleNode, global.document.head.firstChild)
+      setup(styleNode, head)
+      expect(head.insertBefore).toHaveBeenCalledWith(styleNode, head.firstChild)
     })
 
     it("uses appendChild if head tags are empty", () => {
-      const sut = typography()
-  
-      global.document = jasmine.createSpyObj("document", [
-        "head",
-        "createElement",
-        "getElementById",
-      ])
-  
       const styleNode = {}
-  
-      global.document.getElementById.and.returnValue(null)
-      global.document.createElement.and.returnValue(styleNode)
-      global.document.head = {
+      const head = {
         appendChild: jasmine.createSpy(),
         firstChild: null
       }
+
+      setup(styleNode, head)
   
-      sut.injectStyles(true)
-  
-      expect(global.document.head.appendChild).toHaveBeenCalledWith(styleNode)
+      expect(head.appendChild).toHaveBeenCalledWith(styleNode)
     })
   })
 })
