@@ -40,7 +40,7 @@
     "build": "lerna run build",
     "flow": "flow",
     "lint": "eslint --ext .js,.jsx --ignore-path .gitignore .",
-    "format": "prettier --write --single-quote  --trailing-comma es5 --no-semi packages/**/src/*.js",
+    "format": "prettier --write packages/**/src/*.js",
     "publish": "npm run build && lerna publish",
     "test": "npm run build && npm run lint && npm run test-api",
     "test-api": "jest",
@@ -51,6 +51,6 @@
   "dependencies": {
     "babel-preset-env": "^1.6.0",
     "babel-preset-react": "^6.24.1",
-    "prettier": "^1.6.1"
+    "prettier": "^1.16.4"
   }
 }
