@@ -1,10 +1,10 @@
 {
   "name": "typography-theme-wordpress-2013",
   "description": "A theme for Typography.js inspired by the typography of the Wordpress 2013 default theme",
-  "version": "0.16.18",
+  "version": "0.16.19",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "typography-breakpoint-constants": "^0.16.18"
+    "typography-breakpoint-constants": "^0.16.19"
   },
   "keywords": [
     "css",
