@@ -1,13 +1,13 @@
 // @flow
 
-import typography from '../packages/typography/src/index'
+import typography from "../packages/typography/src/index"
 
-describe('typography(options?)', () => {
-  it('should be a function', () => {
+describe("typography(options?)", () => {
+  it("should be a function", () => {
     expect(typography).toEqual(jasmine.any(Function))
   })
 
-  it('should return a structure', () => {
+  it("should return a structure", () => {
     const actual = typography()
     expect(actual.options).toEqual(jasmine.any(Object))
     expect(actual.rhythm).toEqual(jasmine.any(Function))
@@ -22,34 +22,34 @@ describe('typography(options?)', () => {
   })
 })
 
-describe('typography(options?).scale()', () => {
-  it('should scale', () => {
+describe("typography(options?).scale()", () => {
+  it("should scale", () => {
     const actual = typography().scale()
-    expect(actual.fontSize).toEqual('1rem')
-    expect(actual.lineHeight).toEqual('1.45rem')
+    expect(actual.fontSize).toEqual("1rem")
+    expect(actual.lineHeight).toEqual("1.45rem")
   })
 
-  it('should accept custom scales', () => {
+  it("should accept custom scales", () => {
     const actual = typography().scale(1.333)
-    expect(actual.fontSize).toEqual('2.51926rem')
-    expect(actual.lineHeight).toEqual('2.9rem')
+    expect(actual.fontSize).toEqual("2.51926rem")
+    expect(actual.lineHeight).toEqual("2.9rem")
   })
 
-  it('should accept custom scales', () => {
+  it("should accept custom scales", () => {
     const actual = typography().scale(2)
-    expect(actual.fontSize).toEqual('4rem')
-    expect(actual.lineHeight).toEqual('4.35rem')
+    expect(actual.fontSize).toEqual("4rem")
+    expect(actual.lineHeight).toEqual("4.35rem")
   })
 })
 
-describe('typography(options?).toJSON()', () => {
-  it('should return CSS as JSON', () => {
+describe("typography(options?).toJSON()", () => {
+  it("should return CSS as JSON", () => {
     expect(typography().toJSON()).toMatchSnapshot()
   })
 })
 
-describe('typography(options?).toString()', () => {
-  it('should return CSS as a string', () => {
+describe("typography(options?).toString()", () => {
+  it("should return CSS as a string", () => {
     expect(
       typography({
         includeNormalize: false,
@@ -58,8 +58,8 @@ describe('typography(options?).toString()', () => {
   })
 })
 
-describe('typography(options?).createStyles()', () => {
-  it('should return CSS as a string', () => {
+describe("typography(options?).createStyles()", () => {
+  it("should return CSS as a string", () => {
     expect(
       typography({
         includeNormalize: false,
@@ -68,21 +68,21 @@ describe('typography(options?).createStyles()', () => {
   })
 })
 
-describe('typography(options?).injectStyles()', () => {
+describe("typography(options?).injectStyles()", () => {
   beforeEach(() => {
     delete global.document
   })
 
-  it('should not fail if document is undefined', () => {
+  it("should not fail if document is undefined", () => {
     expect(() => {
       typography().injectStyles()
     }).not.toThrow()
   })
 
-  it('should set style if typography.js element exists', () => {
+  it("should set style if typography.js element exists", () => {
     const sut = typography()
 
-    global.document = jasmine.createSpyObj('document', ['getElementById'])
+    global.document = jasmine.createSpyObj("document", ["getElementById"])
 
     const styleNode = {}
 
@@ -91,41 +91,41 @@ describe('typography(options?).injectStyles()', () => {
     sut.injectStyles()
 
     expect(styleNode.innerHTML).toEqual(sut.toString())
-    expect(global.document.getElementById).toHaveBeenCalledWith('typography.js')
+    expect(global.document.getElementById).toHaveBeenCalledWith("typography.js")
   })
 
-  it('should create a new style node if typography.js element does not exists', () => {
+  it("should create a new style node if typography.js element does not exists", () => {
     const sut = typography()
 
-    global.document = jasmine.createSpyObj('document', [
-      'head',
-      'createElement',
-      'getElementById',
+    global.document = jasmine.createSpyObj("document", [
+      "head",
+      "createElement",
+      "getElementById",
     ])
 
     const styleNode = {}
 
     global.document.getElementById.and.returnValue(null)
     global.document.createElement.and.returnValue(styleNode)
-    global.document.head.appendChild = jasmine.createSpy('appendChild')
+    global.document.head.prepend = jasmine.createSpy("prepend")
 
     sut.injectStyles()
 
-    expect(styleNode.id).toEqual('typography.js')
+    expect(styleNode.id).toEqual("typography.js")
     expect(styleNode.innerHTML).toEqual(sut.toString())
-    expect(global.document.createElement).toHaveBeenCalledWith('style')
-    expect(global.document.getElementById).toHaveBeenCalledWith('typography.js')
-    expect(global.document.head.appendChild).toHaveBeenCalledWith(styleNode)
+    expect(global.document.createElement).toHaveBeenCalledWith("style")
+    expect(global.document.getElementById).toHaveBeenCalledWith("typography.js")
+    expect(global.document.head.prepend).toHaveBeenCalledWith(styleNode)
   })
 
-  describe('prepending', () => {
+  describe("prepending", () => {
     const setup = (styleNode, head) => {
       const sut = typography()
 
-      global.document = jasmine.createSpyObj('document', [
-        'head',
-        'createElement',
-        'getElementById',
+      global.document = jasmine.createSpyObj("document", [
+        "head",
+        "createElement",
+        "getElementById",
       ])
 
       global.document.getElementById.and.returnValue(null)
@@ -135,26 +135,13 @@ describe('typography(options?).injectStyles()', () => {
       sut.injectStyles(true)
     }
 
-    it('can add to beginning of head tags', () => {
+    it("can add to beginning of head tags", () => {
       const styleNode = {}
       const head = {
-        insertBefore: jasmine.createSpy(),
-        firstChild: {},
+        prepend: jasmine.createSpy(),
       }
       setup(styleNode, head)
-      expect(head.insertBefore).toHaveBeenCalledWith(styleNode, head.firstChild)
-    })
-
-    it('uses appendChild if head tags are empty', () => {
-      const styleNode = {}
-      const head = {
-        appendChild: jasmine.createSpy(),
-        firstChild: null,
-      }
-
-      setup(styleNode, head)
-
-      expect(head.appendChild).toHaveBeenCalledWith(styleNode)
+      expect(head.prepend).toHaveBeenCalledWith(styleNode)
     })
   })
 })
