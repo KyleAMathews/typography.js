@@ -25,7 +25,7 @@ const typography = function(opts: OptionsType) {
       "Fira Sans",
       "Droid Sans",
       "Helvetica Neue",
-      "sans-serif",
+      "sans-serif"
     ],
     bodyFontFamily: ["georgia", "serif"],
     headerColor: "inherit",
@@ -34,7 +34,7 @@ const typography = function(opts: OptionsType) {
     bodyWeight: "normal",
     boldWeight: "bold",
     includeNormalize: true,
-    blockMarginBottom: 1,
+    blockMarginBottom: 1
   }
 
   const options = objectAssign({}, defaults, opts)
@@ -75,10 +75,10 @@ const typography = function(opts: OptionsType) {
           const node = document.createElement("style")
           node.id = "typography.js"
           node.innerHTML = this.toString()
-          document.head.appendChild(node)
+          document.head.prepend(node)
         }
       }
-    },
+    }
   }
 }
 
