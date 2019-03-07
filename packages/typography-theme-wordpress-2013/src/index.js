@@ -1,25 +1,25 @@
 // @flow
-import type { OptionsType } from 'Types'
-import { TABLET_MEDIA_QUERY } from 'typography-breakpoint-constants'
+import type { OptionsType } from "Types"
+import { TABLET_MEDIA_QUERY } from "typography-breakpoint-constants"
 
 const theme: OptionsType = {
-  title: 'Wordpress Theme 2013',
-  baseFontSize: '16px',
+  title: "Wordpress Theme 2013",
+  baseFontSize: "16px",
   baseLineHeight: 1.5,
   googleFonts: [
     {
-      name: 'Bitter',
-      styles: ['700'],
+      name: "Bitter",
+      styles: ["700"],
     },
     {
-      name: 'Source Sans Pro',
-      styles: ['300i', '400', '400i', '700'],
+      name: "Source Sans Pro",
+      styles: ["300i", "400", "400i", "700"],
     },
   ],
-  headerFontFamily: ['Bitter', 'serif'],
-  bodyFontFamily: ['Source Sans Pro', 'sans-serif'],
-  bodyColor: 'hsla(0,0%,0%,0.93)',
-  headerWeight: '700',
+  headerFontFamily: ["Bitter", "serif"],
+  bodyFontFamily: ["Source Sans Pro", "sans-serif"],
+  bodyColor: "hsla(0,0%,0%,0.93)",
+  headerWeight: "700",
   bodyWeight: 400,
   boldWeight: 700,
   overrideStyles: ({ adjustFontSizeTo, scale, rhythm }, options) => ({
@@ -32,32 +32,32 @@ const theme: OptionsType = {
       },
     },
     a: {
-      color: '#bc360a',
-      textDecoration: 'none',
+      color: "#bc360a",
+      textDecoration: "none",
     },
-    'a:hover': {
-      color: '#ea9629',
-      textDecoration: 'underline',
+    "a:hover": {
+      color: "#ea9629",
+      textDecoration: "underline",
     },
-    'ol,ul': {
+    "ol,ul": {
       marginLeft: 0,
       paddingLeft: rhythm(1.5),
     },
-    'li>ul,li>ol': {
+    "li>ul,li>ol": {
       marginLeft: 0,
       paddingLeft: rhythm(1.5),
     },
     blockquote: {
       ...scale(1 / 5),
       fontWeight: 300,
-      fontStyle: 'italic',
+      fontStyle: "italic",
       marginLeft: rhythm(1.5),
       marginRight: rhythm(1.5),
     },
-    'blockquote cite': {
+    "blockquote cite": {
       ...adjustFontSizeTo(options.baseFontSize),
       fontWeight: options.bodyWeight,
-      textTransform: 'uppercase',
+      textTransform: "uppercase",
     },
     h6: {
       marginTop: rhythm(1.25),
@@ -68,7 +68,7 @@ const theme: OptionsType = {
     },
     th: {
       fontWeight: options.boldWeight,
-      textTransform: 'uppercase',
+      textTransform: "uppercase",
     },
     dl: {
       marginLeft: rhythm(3 / 4),
