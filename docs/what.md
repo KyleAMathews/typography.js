@@ -3,7 +3,7 @@
 The goal of Typography.js is to provide a high-level elegant API
 for expressing typographic design intent.
 
-The library then generates styles appropriate to the sytem (the Web or React
+The library then generates styles appropriate to the system (the Web or React
 Native are the two current targets) it's running in.
 
 * **Themes** encapsulate a typography design in a javascript object.
