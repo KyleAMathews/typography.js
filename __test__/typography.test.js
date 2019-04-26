@@ -115,6 +115,42 @@ describe('typography(options?).injectStyles()', () => {
     expect(global.document.getElementById).toHaveBeenCalledWith('typography.js')
     expect(global.document.head.appendChild).toHaveBeenCalledWith(styleNode)
 
-    delete global.document
+  describe("prepending", () => {
+    const setup = (styleNode, head) => {
+      const sut = typography()
+
+      global.document = jasmine.createSpyObj("document", [
+        "head",
+        "createElement",
+        "getElementById",
+      ])
+
+      global.document.getElementById.and.returnValue(null)
+      global.document.createElement.and.returnValue(styleNode)
+      global.document.head = head
+
+      sut.injectStyles(true)
+    }
+
+    it("can add to beginning of head tags", () => {
+      const styleNode = {}
+      const head = {
+        firstChild: {},
+        insertBefore: jasmine.createSpy(),
+      }
+      setup(styleNode, head)
+      expect(head.insertBefore).toHaveBeenCalledWith(styleNode, head.firstChild)
+    })
+
+    it("falls back to appendChild if empty head tags", () => {
+      const styleNode = {}
+      const head = {
+        appendChild: jasmine.createSpy()
+      }
+
+      setup(styleNode, head)
+
+      expect(head.appendChild).toHaveBeenCalledWith(styleNode)
+    })
   })
 })

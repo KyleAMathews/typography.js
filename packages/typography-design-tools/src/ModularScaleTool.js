@@ -1,8 +1,8 @@
-import React from 'react'
-import NumberEditor from './NumberEditor'
-import Select from './Select'
-import SectionTool from './SectionTool'
-import msToRatio from './msToRatio'
+import React from "react"
+import NumberEditor from "./NumberEditor"
+import Select from "./Select"
+import SectionTool from "./SectionTool"
+import msToRatio from "./msToRatio"
 
 class ModularScale extends React.Component {
   render() {

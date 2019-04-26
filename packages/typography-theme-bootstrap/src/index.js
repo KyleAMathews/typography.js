@@ -1,28 +1,28 @@
 // @flow
-import type { OptionsType } from 'Types'
-import gray from 'gray-percentage'
+import type { OptionsType } from "Types"
+import gray from "gray-percentage"
 
 const theme: OptionsType = {
-  title: 'Bootstrap',
-  baseFontSize: '16px',
+  title: "Bootstrap",
+  baseFontSize: "16px",
   baseLineHeight: 1.5,
   bodyFontFamily: [
-    '-apple-system',
-    'BlinkMacSystemFont',
-    'Segoe UI',
-    'Roboto',
-    'Oxygen',
-    'Ubuntu',
-    'Cantarell',
-    'Fira Sans',
-    'Droid Sans',
-    'Helvetica Neue',
-    'sans-serif',
+    "-apple-system",
+    "BlinkMacSystemFont",
+    "Segoe UI",
+    "Roboto",
+    "Oxygen",
+    "Ubuntu",
+    "Cantarell",
+    "Fira Sans",
+    "Droid Sans",
+    "Helvetica Neue",
+    "sans-serif",
   ],
   scaleRatio: 2.25,
   bodyWeight: 400,
   headerWeight: 500,
-  boldWeight: 'bold',
+  boldWeight: "bold",
   overrideStyles: ({ adjustFontSizeTo, scale, rhythm }, options) => ({
     body: {
       color: gray(23, 204),
@@ -41,14 +41,14 @@ const theme: OptionsType = {
       paddingLeft: rhythm(2 / 3),
       paddingRight: rhythm(2 / 3),
     },
-    'blockquote > :last-child': {
+    "blockquote > :last-child": {
       marginBottom: 0,
     },
-    'blockquote cite': {
+    "blockquote cite": {
       ...adjustFontSizeTo(options.baseFontSize),
       color: gray(54, 204),
       fontWeight: options.bodyWeight,
-      fontStyle: 'normal',
+      fontStyle: "normal",
     },
   }),
 }

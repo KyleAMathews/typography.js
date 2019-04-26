@@ -40,6 +40,8 @@ NPM](https://www.npmjs.com/browse/keyword/typography-theme).
 * [React Headroom](https://kyleamathews.github.io/react-headroom/) ([source](https://github.com/KyleAMathews/react-headroom/blob/master/www/utils/typography.js))
 * [Gatsby Blog Starter](http://gatsbyjs.github.io/gatsby-starter-blog/) ([source](https://github.com/gatsbyjs/gatsby-starter-blog/blob/master/src/utils/typography.js))
 * [ollieglass.com](http://ollieglass.com/)
+* [mokkapps.de](https://www.mokkapps.de/) ([source](https://github.com/Mokkapps/website/blob/master/src/utils/typography.js))
+* [privatimkerei-hoffmann.de](https://privatimkerei-hoffmann.de/) ([source](https://github.com/Mokkapps/imkerei-hoffmann-website/blob/master/src/utils/typography.js))
 * [Edit this file to add yours!](https://github.com/KyleAMathews/typography.js/blob/master/README.md)
 
 ## Javascript usage
@@ -215,8 +217,8 @@ import typography from 'utils/typography'
 ## API
 
 ### Configuration
-When creating a new instance of Typography, you can pass in an
-*configuration* object. All configuration keys are optional.
+When creating a new instance of Typography, you can pass in a
+_configuration_ object. All configuration keys are optional.
 
 * **title**: The theme title.
 * **baseFontSize**: The base font size in pixels, defaults to `16px`.
