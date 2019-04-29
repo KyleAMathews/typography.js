@@ -1,5 +1,4 @@
 // @flow
-import objectAssign from "object-assign"
 import verticalRhythm from "compass-vertical-rhythm"
 import ms from "modularscale"
 
@@ -37,7 +36,7 @@ const typography = function(opts: OptionsType) {
     blockMarginBottom: 1,
   }
 
-  const options = objectAssign({}, defaults, opts)
+  const options = { ...defaults, ...opts }
 
   const vr = verticalRhythm(options)
 
@@ -75,7 +74,12 @@ const typography = function(opts: OptionsType) {
           const node = document.createElement("style")
           node.id = "typography.js"
           node.innerHTML = this.toString()
-          document.head.appendChild(node)
+          const head = document.head
+          if (head.firstChild) {
+            head.insertBefore(node, head.firstChild)
+          } else {
+            head.appendChild(node)
+          }
         }
       }
     },
