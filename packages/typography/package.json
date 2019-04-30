@@ -40,7 +40,7 @@
     "watch": "microbundle watch && microbundle --watch --entry src/server.js --output dist/server.js"
   },
   "devDependencies": {
-    "microbundle": "^0.4.4",
+    "microbundle": "^0.11.0",
     "npm-run-all": "^4.1.3"
   }
 }
