@@ -1,5 +1,5 @@
 // @flow
-import objectAssign from 'object-assign'
+import objectAssign from "object-assign"
 import verticalRhythm from "compass-vertical-rhythm"
 import ms from "modularscale"
 
