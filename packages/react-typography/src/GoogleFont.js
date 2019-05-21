@@ -3,7 +3,6 @@ import PropTypes from "prop-types"
 
 const GoogleFont = props => {
   // Create family + styles string
-  const validFontDisplayTypes = ['block', 'swap', 'fallback', 'optional']
   let fontsStr = ""
   if (props.typography.options.googleFonts) {
     const fonts = props.typography.options.googleFonts.map(font => {
@@ -12,19 +11,20 @@ const GoogleFont = props => {
       str += ":"
       str += font.styles.join(",")
 
-      let fontDisplay = 'swap'
-      if (font.display && validFontDisplayTypes.includes(font.display)) {
-        fontDisplay = font.display
-      }
-
-      str += `&display=${fontDisplay}`
-
       return str
     })
 
     fontsStr = fonts.join("|")
 
     if (fontsStr) {
+      let fontDisplay = 'swap'
+      let validFontDisplayTypes = ['block', 'swap', 'fallback', 'optional']
+      if (props.typography.options.fontDisplay && validFontDisplayTypes.includes(props.typography.options.fontDisplay)) {
+        fontDisplay = props.typography.options.fontDisplay
+      }
+
+      fontsStr += `&display=${fontDisplay}`
+
       return (
         <link
           href={`//fonts.googleapis.com/css?family=${fontsStr}`}
