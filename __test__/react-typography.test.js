@@ -29,6 +29,7 @@ describe('GoogleFont', () => {
             styles: [
               '700',
             ],
+            display: 'optional'
           },
         ],
       }),
