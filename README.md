@@ -238,9 +238,8 @@ import Typography from 'typography'
 import funstonTheme from 'typography-theme-funston'
 import 'typeface-open-sans'
 
-const theme = funstonTheme
-theme.headerFontFamily = ['Open Sans']
-theme.bodyFontFamily = ['Open Sans']
+funstonTheme.headerFontFamily = ['Open Sans']
+funstonTheme.bodyFontFamily = ['Open Sans']
 
 const typography = new Typography(funstonTheme)
 typography.injectStyles()
