@@ -211,6 +211,23 @@ import typography from 'utils/typography'
 </html>
 ```
 
+## Using with `create-react-app`
+
+If you use the default create-react-app template, the above React.js
+solution will not work, and the `typography.injectStyles()` solution
+will not enable Google Fonts.. A workaround is to install
+`typography-inject-fonts` and do
+
+```javascript
+import Typography from 'typography'
+import funstonTheme from 'typography-theme-funston'
+import injectFonts from 'typography-inject-fonts'
+
+const typography = new Typography(funstonTheme)
+typography.injectStyles()
+injectFonts(typography)
+```
+
 ## API
 
 ### Configuration
