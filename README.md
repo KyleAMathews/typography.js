@@ -228,6 +228,27 @@ typography.injectStyles()
 injectFonts(typography)
 ```
 
+Alternatively, if you are not dead set on using Google Fonts, you can
+use one of the fonts
+from [typefaces](https://github.com/KyleAMathews/typefaces) more
+easily. For example, install `typeface-open-sans` and then
+
+```javascript
+import Typography from 'typography'
+import funstonTheme from 'typography-theme-funston'
+import 'typeface-open-sans'
+
+const theme = funstonTheme
+theme.headerFontFamily = ['Open Sans']
+theme.bodyFontFamily = ['Open Sans']
+
+const typography = new Typography(funstonTheme)
+typography.injectStyles()
+```
+
+No `injectFonts()` is required, and the fonts installed this way are
+self-hosted.
+
 ## API
 
 ### Configuration
