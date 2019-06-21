@@ -25,7 +25,7 @@ Typography.js, we're only concerned about defining the *relationship*
 between elements and then compiling these relationships into actual
 pixels sizes on the screen. For example in the core typography engine,
 the `h1` size is always `1` scale unit away from the body font size. So
-if the scale *ratio* is `2` and the base font size is `16px` the `h1`
+if the scale *ratio* is `2` (the default value) and the base font size is `16px` the `h1`
 font size will be `32px`.  If you decide to change the scale ratio to
 `2.25`, the h1 is now set to `36px`.  When building a site with
 Typography.js, all sizes should be set using a scale value so all
