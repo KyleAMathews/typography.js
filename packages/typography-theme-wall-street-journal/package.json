@@ -1,0 +1,30 @@
+{
+  "name": "typography-theme-wall-street-journal",
+  "description": "A theme for Typography.js inspired by The Wall Street Journal's typography",
+  "version": "0.16.19",
+  "author": "Ruben Profit <rubentprofit@gmail.com>",
+  "dependencies": {
+    "gray-percentage": "^2.0.0"
+  },
+  "keywords": [
+    "css",
+    "typography",
+    "typography-theme"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/KyleAMathews/typography.js",
+  "bugs": {
+    "url": "https://github.com/KyleAMathews/typography.js/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/KyleAMathews/typography.js.git"
+  },
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "../../node_modules/.bin/babel src --out-dir dist/",
+    "flow": "../../node_modules/.bin/flow",
+    "lint": "../../node_modules/.bin/eslint --ext .js,.jsx --ignore-path .gitignore .",
+    "watch": "../../node_modules/.bin/babel -w src --out-dir dist/"
+  }
+}
