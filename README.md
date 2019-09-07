@@ -155,6 +155,7 @@ const typography = new Typography(funstonTheme)
 * [typography-theme-trajan](https://github.com/guoliim/typography-theme-trajan)
 * [typography-theme-zacklive](https://github.com/ZacharyChim/typography-theme-zacklive)
 * [typography-theme-anonymous](https://github.com/leimonio/typography-theme-anonymous)
+* [typography-theme-domo-arigato](https://github.com/aalaap/typography-theme-domo-arigato) - A theme with Roboto fonts
 * If you publish your own, create a PR to add it here!
 
 ## Plugins
