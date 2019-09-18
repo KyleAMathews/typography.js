@@ -1,6 +1,5 @@
 language: node_js
 node_js:
-  - 'node' # stable version
   - '10'
   - '8'
 before_script:
