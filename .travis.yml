@@ -1,7 +1,8 @@
 language: node_js
 node_js:
+  - 'node' # stable version
+  - '10'
   - '8'
-sudo: false
 before_script:
   './node_modules/.bin/lerna bootstrap'
 script:
