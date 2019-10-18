@@ -1,7 +1,5 @@
-# Typography.js
-A powerful toolkit for building websites with beautiful typography.
 # Typography.js [![Build Status][build-badge]][build-status] [![Coverage Status][coverage-badge]][coverage-status]
-A powerful toolkit for building websites with beautiful design.
+A powerful toolkit for building websites with beautiful typography.
 
 ## Install
 `npm install typography`
