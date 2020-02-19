@@ -118,6 +118,7 @@ const typography = new Typography(funstonTheme)
 
 ### Published Typography.js Themes
 * [typography-theme-alton](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-alton/)
+* [typography-theme-blog](https://github.com/pseuyi/typography-theme-blog)
 * [typography-theme-bootstrap](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-bootstrap/)
 * [typography-theme-de-young](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-de-young/)
 * [typography-theme-doelger](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-doelger/)
