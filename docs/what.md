@@ -19,7 +19,7 @@ that.
 
 #### Pick font sizes from a scale and then set the "scale ratio"
 Pick other font sizes (e.g. for headers) off a scale.  The *scale ratio*
-determines the exact font size that's choosen.  Don't set exact header
+determines the exact font size that's chosen.  Don't set exact header
 sizes. Instead pick where to place them on a scale. Like everything in
 Typography.js, we're only concerned about defining the *relationship*
 between elements and then compiling these relationships into actual
@@ -73,20 +73,20 @@ var styles = StyleSheet.create({
 ```
 
 When the rhythm function is used consistently throughout your app, your
-design will remain consistent and harmonous through all design tweaks
+design will remain consistent and harmonious through all design tweaks
 and changes.
 
 #### Adhere to a vertical rhythm (when possible)
 A vertical rhythm is a similar concept to grids where grids partition
 horizontal space, vertical rhythm partitions vertical space.  As the eye
 scans down a page, it expects there to be harmony, that the space
-between lines, block elements, etc. are consistent and mathmatically
+between lines, block elements, etc. are consistent and mathematically
 related. To ensure this, Typography.js overrides all block element
 margins and sets a margin-bottom of one rhythm [on all block
 elements.](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography/src/utils/createStyles.js#L57)
 This is the "Paragraph Spacing" value in the design tools.
 
-Additionally it tries to maintain the vertical rhythm when choosing
+Additionally, it tries to maintain the vertical rhythm when choosing
 larger/smaller font sizes and line heights. [This is the
 algorithm](https://github.com/KyleAMathews/compass-vertical-rhythm/blob/b0bd20587bf93052a371e649f7ce4f54bcc12317/src/index.coffee#L68).
 Essentially what happens is it'll directly scale the
