@@ -1,4 +1,5 @@
-## What is a declarative typgraphy API?
+## What is a declarative typography API?
+
 Declarative & Imperative are the two basic types of programming.
 
 Imperative is the oldest and still most common way to program. Most
@@ -8,8 +9,8 @@ instructions to the computer on how to do something. The computer is
 treated as "dumb" and takes your instructions and executes them.
 
 In contrast to imperative programming, declarative programming focuses
-on *what* you're trying to achieve without needing to instruct the
-computer on *how* to do it.
+on _what_ you're trying to achieve without needing to instruct the
+computer on _how_ to do it.
 
 HTML and CSS are perfect examples of declarative programming.
 
@@ -20,41 +21,41 @@ other HTML elements, writing it to the screen, etc. etc. All I care
 about is that a particular image shows up on the screen and I trust the
 browser black-box to figure it out for me.
 
-I *declare* my intention to the browser (show this image) and then the
-browser figures out *how* to make it happen.
+I _declare_ my intention to the browser (show this image) and then the
+browser figures out _how_ to make it happen.
 
-In a well-understood problem area, declarative programming can *really*
+In a well-understood problem area, declarative programming can _really_
 simplify APIs.
 
 ### CSS for Typography: is it a declarative or imperative API?
-From most perspectives, CSS provides a declarative API. I say `.a-class
-{ border-radius: 5px }` and magic happens. But what about the case of
+
+From most perspectives, CSS provides a declarative API. I say `.a-class { border-radius: 5px }` and magic happens. But what about the case of
 creating a custom typography theme in CSS?
 
 You start writing rules like:
 
 ```css
 html {
-    font-size: 118.75%;
-    line-height: 1.5em;
+  font-size: 118.75%;
+  line-height: 1.5em;
 }
 body {
-    color: hsl(0,0%,20%);
-    font-family: Alegreya Sans,sans-serif;
-    font-weight: 300;
-    word-wrap: break-word;
-    background: #fffdf8;
+  color: hsl(0, 0%, 20%);
+  font-family: Alegreya Sans, sans-serif;
+  font-weight: 300;
+  word-wrap: break-word;
+  background: #fffdf8;
 }
 h1 {
-    margin: 0;
-    padding: 0;
-    margin-bottom: 1.5rem;
-    color: hsl(0,0%,10%);
-    font-family: Alegreya,Georgia,serif;
-    font-weight: 400;
-    text-rendering: optimizeLegibility;
-    font-size: 2rem;
-    line-height: 2.25rem;
+  margin: 0;
+  padding: 0;
+  margin-bottom: 1.5rem;
+  color: hsl(0, 0%, 10%);
+  font-family: Alegreya, Georgia, serif;
+  font-weight: 400;
+  text-rendering: optimizeLegibility;
+  font-size: 2rem;
+  line-height: 2.25rem;
 }
 // and on and on and on.
 ```
@@ -67,7 +68,7 @@ just want to change your theme in the future?
 
 These are the classic symptoms of writing imperative code at [too low a
 level of an abstraction](http://worrydream.com/LadderOfAbstraction/).
-You feel *weak* and *overwhelmed* instead of *strong* when using the provided APIs
+You feel _weak_ and _overwhelmed_ instead of _strong_ when using the provided APIs.
 
 CSS feels amazing when you write `body { background: red; }` but far
 less so when you want to "lighten the feel of the body text by adding
@@ -79,7 +80,7 @@ we feel powerful and efficient using it. There exists a very simple and
 powerful link between our goal and the APIs/tools we have to accomplish
 that goal.
 
-CSS is designed for manipulating the style of a single (or group) of
+CSS is designed for manipulating the style of a single (or group of)
 elements. So if your goals is to manipulate an element e.g. set the body
 background to red then css is great.
 
@@ -108,15 +109,15 @@ style rules.
 Typography.js is exploration of what is the ideal API to define typography
 design for the web.
 
-New premitives:
+New primitives:
 
- * base font / line height
- * scale ratio
- * rhythm unit
- * header/body font stack
- * Google fonts
- * header/body colors
- * font weights
+- base font / line height
+- scale ratio
+- rhythm unit
+- header/body font stack
+- Google fonts
+- header/body colors
+- font weights
 
 Feed these into black box and spit out styles. Can do this cause
 Typography is ancient and there's deep understanding about how fonts
@@ -125,4 +126,3 @@ should relate to each other etc.
 On top of these we've added ability to distribute "themes" you come up
 with along with "plugins" which provide configurable, specialized
 styles.
-
