@@ -1,4 +1,4 @@
-## What is a declarative typgraphy API?
+## What is a declarative typography API?
 Declarative & Imperative are the two basic types of programming.
 
 Imperative is the oldest and still most common way to program. Most
