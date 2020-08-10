@@ -63,7 +63,7 @@ const typography = new Typography({
 typography.toString()
 
 // Or insert styles directly into the <head> (works well for client-only
-// JS web apps.
+// JS web apps.)
 typography.injectStyles()
 ```
 
