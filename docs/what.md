@@ -80,7 +80,7 @@ and changes.
 A vertical rhythm is a similar concept to grids where grids partition
 horizontal space, vertical rhythm partitions vertical space.  As the eye
 scans down a page, it expects there to be harmony, that the space
-between lines, block elements, etc. are consistent and mathmatically
+between lines, block elements, etc. are consistent and mathematically
 related. To ensure this, Typography.js overrides all block element
 margins and sets a margin-bottom of one rhythm [on all block
 elements.](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography/src/utils/createStyles.js#L57)
