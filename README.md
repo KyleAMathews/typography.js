@@ -45,6 +45,7 @@ NPM](https://www.npmjs.com/browse/keyword/typography-theme).
 * [mokkapps.de](https://www.mokkapps.de/) ([source](https://github.com/Mokkapps/website/blob/master/src/utils/typography.js))
 * [privatimkerei-hoffmann.de](https://privatimkerei-hoffmann.de/) ([source](https://github.com/Mokkapps/imkerei-hoffmann-website/blob/master/src/utils/typography.js))
 * [Rijo Joy](https://rijojoy.surge.sh/)
+* [KMA Badshah](https://kmabadshah.github.io)
 * [Edit this file to add yours!](https://github.com/KyleAMathews/typography.js/blob/master/README.md)
 
 ## Javascript usage
