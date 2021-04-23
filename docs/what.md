@@ -19,7 +19,7 @@ that.
 
 #### Pick font sizes from a scale and then set the "scale ratio"
 Pick other font sizes (e.g. for headers) off a scale.  The *scale ratio*
-determines the exact font size that's choosen.  Don't set exact header
+determines the exact font size that's chosen.  Don't set exact header
 sizes. Instead pick where to place them on a scale. Like everything in
 Typography.js, we're only concerned about defining the *relationship*
 between elements and then compiling these relationships into actual
