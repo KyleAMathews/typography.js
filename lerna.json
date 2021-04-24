@@ -1,4 +1,24 @@
 {
-  "lerna": "2.0.0",
-  "version": "0.16.19"
+  "command": {
+    "create": {
+      "license": "MIT"
+    },
+    "publish": {
+      "allowBranch": "split-server",
+      "bump": "prerelease",
+      "conventionalCommits": true,
+      "message": "chore(release): Publish",
+      "preid": "alpha",
+      "ignoreChanges": [
+        "CHANGELOG.md"
+      ]
+    }
+  },
+  "loglevel": "success",
+  "packages": [
+    "packages/*"
+  ],
+  "version": "independent",
+  "npmClient": "yarn",
+  "useWorkspaces": true
 }

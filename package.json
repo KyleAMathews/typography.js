@@ -18,7 +18,7 @@
     "jest": "19",
     "jest-cli": "19",
     "json2md": "^1.5.8",
-    "lerna": "^2.0.0",
+    "lerna": "^3.2.1",
     "lodash": "^4.17.4",
     "phantom": "^4.0.1",
     "phantomjs-prebuilt": "^2.1.14",
@@ -40,8 +40,10 @@
     "build": "lerna run build",
     "flow": "flow",
     "lint": "eslint --ext .js,.jsx --ignore-path .gitignore .",
-    "format": "prettier --write packages/**/src/*.js",
-    "publish": "npm run build && lerna publish",
+    "format": "prettier --write __test__/** packages/**/src/*.js",
+    "publish": "lerna publish",
+    "publish-canary": "lerna publish --canary --yes",
+    "publish-next": "lerna publish --npm-tag=next --cd-version=prerelease",
     "test": "npm run build && npm run lint && npm run test-api",
     "test-api": "jest",
     "test-ci": "npm run build && npm run test-coverage && codecov",
@@ -51,6 +53,9 @@
   "dependencies": {
     "babel-preset-env": "^1.6.0",
     "babel-preset-react": "^6.24.1",
-    "prettier": "^1.16.4"
-  }
+    "prettier": "^1.6.1"
+  },
+  "workspaces": [
+    "packages/*"
+  ]
 }

@@ -1,6 +1,6 @@
 {
   "name": "typography-design-tools",
-  "version": "0.16.19",
+  "version": "1.0.0-alpha.5",
   "description": "Design tools for Typography.js",
   "main": "./dist/index.js",
   "keywords": [
@@ -27,8 +27,8 @@
     "react-dom": "^15.2.1",
     "react-number-editor": "^4.0.2",
     "react-select": "^1.0.0-beta14",
-    "react-typography": "^0.16.19",
-    "typography": "^0.16.19"
+    "react-typography": "^1.0.0-alpha.4",
+    "typography": "^1.0.0-alpha.4"
   },
   "scripts": {
     "build": "../../node_modules/.bin/babel src --out-dir dist/",

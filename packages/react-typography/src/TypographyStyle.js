@@ -1,11 +1,12 @@
 import React from "react"
 import PropTypes from "prop-types"
+import Typography from "typography/server"
 
 const TypographyStyle = props => (
   <style
     id={"typography.js"}
     dangerouslySetInnerHTML={{
-      __html: props.typography.toString(),
+      __html: new Typography(props.typography.options).toString(),
     }}
   />
 )

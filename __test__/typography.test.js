@@ -1,6 +1,6 @@
 // @flow
 
-import typography from "../packages/typography/src/index"
+import typography from "../packages/typography/src/server"
 
 describe("typography(options?)", () => {
   it("should be a function", () => {
@@ -69,17 +69,13 @@ describe("typography(options?).createStyles()", () => {
 })
 
 describe("typography(options?).injectStyles()", () => {
-  beforeEach(() => {
-    delete global.document
-  })
-
   it("should not fail if document is undefined", () => {
     expect(() => {
       typography().injectStyles()
     }).not.toThrow()
   })
 
-  it("should set style if typography.js element exists", () => {
+  it("should set css if typography.js element exists", () => {
     const sut = typography()
 
     global.document = jasmine.createSpyObj("document", ["getElementById"])
@@ -92,6 +88,8 @@ describe("typography(options?).injectStyles()", () => {
 
     expect(styleNode.innerHTML).toEqual(sut.toString())
     expect(global.document.getElementById).toHaveBeenCalledWith("typography.js")
+
+    delete global.document
   })
 
   it("should create a new style node if typography.js element does not exists", () => {
@@ -107,8 +105,7 @@ describe("typography(options?).injectStyles()", () => {
 
     global.document.getElementById.and.returnValue(null)
     global.document.createElement.and.returnValue(styleNode)
-    global.document.head.insertBefore = jasmine.createSpy("insertBefore")
-    global.document.head.firstChild = {}
+    global.document.head.appendChild = jasmine.createSpy("appendChild")
 
     sut.injectStyles()
 
@@ -116,7 +113,7 @@ describe("typography(options?).injectStyles()", () => {
     expect(styleNode.innerHTML).toEqual(sut.toString())
     expect(global.document.createElement).toHaveBeenCalledWith("style")
     expect(global.document.getElementById).toHaveBeenCalledWith("typography.js")
-    expect(global.document.head.insertBefore).toHaveBeenCalledWith(styleNode, global.document.head.firstChild)
+    expect(global.document.head.appendChild).toHaveBeenCalledWith(styleNode)
   })
 
   describe("prepending", () => {
@@ -149,7 +146,7 @@ describe("typography(options?).injectStyles()", () => {
     it("falls back to appendChild if empty head tags", () => {
       const styleNode = {}
       const head = {
-        appendChild: jasmine.createSpy()
+        appendChild: jasmine.createSpy(),
       }
 
       setup(styleNode, head)

@@ -1,12 +1,12 @@
 {
   "name": "typography-theme-alton",
   "description": "A theme for Typography.js",
-  "version": "0.16.19",
+  "version": "1.0.0-alpha.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "compass-vertical-rhythm": "^1.2.1",
     "gray-percentage": "^2.0.0",
-    "typography-breakpoint-constants": "^0.16.19"
+    "typography-breakpoint-constants": "^1.0.0-alpha.0"
   },
   "keywords": [
     "css",

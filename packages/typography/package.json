@@ -1,7 +1,7 @@
 {
   "name": "typography",
   "description": "Opinionated toolkit for building websites with beautiful typography",
-  "version": "0.16.19",
+  "version": "1.0.0-alpha.4",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "compass-vertical-rhythm": "^1.4.5",
@@ -10,7 +10,7 @@
     "lodash": "^4.13.1",
     "modularscale": "^1.0.2",
     "object-assign": "^4.1.0",
-    "typography-normalize": "^0.16.19"
+    "typography-normalize": "^1.0.0-alpha.0"
   },
   "keywords": [
     "css",
@@ -31,12 +31,16 @@
   "source": "src/index.js",
   "main": "dist/index.js",
   "scripts": {
-    "build": "microbundle",
+    "build": "npm-run-all build-index build-client build-server",
+    "build-client": "microbundle --entry src/client.js --output dist/client.js",
+    "build-server": "microbundle --entry src/server.js --output dist/server.js",
+    "build-index": "microbundle",
     "flow": "../../node_modules/.bin/flow",
     "lint": "../../node_modules/.bin/eslint --ext .js,.jsx --ignore-path ../../.gitignore .",
-    "watch": "microbundle watch"
+    "watch": "microbundle watch && microbundle --watch --entry src/server.js --output dist/server.js"
   },
   "devDependencies": {
-    "microbundle": "^0.4.4"
+    "microbundle": "^0.4.4",
+    "npm-run-all": "^4.1.3"
   }
 }
