@@ -1,7 +1,7 @@
 {
   "name": "typography",
   "description": "Opinionated toolkit for building websites with beautiful typography",
-  "version": "0.16.20",
+  "version": "0.16.21",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "compass-vertical-rhythm": "^1.4.5",
@@ -37,6 +37,6 @@
     "watch": "microbundle watch"
   },
   "devDependencies": {
-    "microbundle": "^0.4.4"
+    "microbundle": "^0.13.0"
   }
 }
