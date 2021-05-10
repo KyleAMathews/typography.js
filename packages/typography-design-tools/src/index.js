@@ -3,7 +3,7 @@ import ReactDOM from "react-dom"
 import DesignTool from "./DesignTool"
 
 let node
-const wrapTypography = typography => {
+const wrapTypography = (typography) => {
   if (typeof window !== "undefined") {
     if (!node) {
       node = document.createElement("div")

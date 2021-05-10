@@ -46,8 +46,8 @@ const Select = ({ options, style = {}, value, onChange }) => {
         ...style,
       }}
       value={value}
-      onChange={e => onChange(e.target.value)}
-      onKeyDown={e => {
+      onChange={(e) => onChange(e.target.value)}
+      onKeyDown={(e) => {
         const valueInt = parseInt(value, 10)
         let change = false
         let newValue

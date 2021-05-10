@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-const TypographyStyle = props => (
+const TypographyStyle = (props) => (
   <style
     id={"typography.js"}
     dangerouslySetInnerHTML={{

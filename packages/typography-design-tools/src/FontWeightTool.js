@@ -7,7 +7,7 @@ const prepareFamilyWeights = (weights = [], filterOutItalics) => {
   let newWeights
 
   // Convert regular/italic to 400 / 400italic
-  newWeights = weights.map(weight => {
+  newWeights = weights.map((weight) => {
     if (weight === "regular") {
       return "400"
     } else if (weight === "italic") {
@@ -21,11 +21,11 @@ const prepareFamilyWeights = (weights = [], filterOutItalics) => {
   if (filterOutItalics) {
     newWeights = _.filter(
       newWeights,
-      weight => parseUnit(weight)[1] !== "italic"
+      (weight) => parseUnit(weight)[1] !== "italic"
     )
   }
 
-  newWeights = _.sortBy(newWeights, weight => parseUnit(weight)[0])
+  newWeights = _.sortBy(newWeights, (weight) => parseUnit(weight)[0])
 
   return newWeights
 }
@@ -48,7 +48,7 @@ class FontWeightTool extends React.Component {
         style={{
           width: "100%",
         }}
-        onChange={value => {
+        onChange={(value) => {
           const newOptions = { ...this.props.options }
           const weights = prepareFamilyWeights(this.props.family.weights, true)
 
@@ -66,7 +66,7 @@ class FontWeightTool extends React.Component {
           // Add weight to Google Fonts array.
           const fontFamily = _.find(
             newOptions.googleFonts,
-            font => font.name === this.props.family.family
+            (font) => font.name === this.props.family.family
           )
           fontFamily.styles.push(newWeight.toString())
 
@@ -78,7 +78,7 @@ class FontWeightTool extends React.Component {
           // Filter out old weight.
           fontFamily.styles = _.filter(
             fontFamily.styles,
-            style =>
+            (style) =>
               parseUnit(style)[0].toString() !== this.props.weight.toString()
           )
 

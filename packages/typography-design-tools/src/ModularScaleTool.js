@@ -15,7 +15,7 @@ class ModularScale extends React.Component {
           max={6}
           step={0.1}
           decimals={2}
-          onValueChange={value => {
+          onValueChange={(value) => {
             const valueFloat = parseFloat(value)
             this.props.onChange(valueFloat)
           }}

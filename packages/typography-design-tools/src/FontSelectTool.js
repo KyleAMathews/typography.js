@@ -50,22 +50,22 @@ const styles = StyleSheet.create({
   },
 })
 
-const options = fontList.map(font => ({
+const options = fontList.map((font) => ({
   name: font.family,
 }))
 
-const pickBoldStyle = name => {
-  const family = _.find(fontList, font => font.family === name)
+const pickBoldStyle = (name) => {
+  const family = _.find(fontList, (font) => font.family === name)
 
   // Pick heaviest weight that's not an italic.
-  let weights = _.map(family.weights, weight => {
+  let weights = _.map(family.weights, (weight) => {
     if (weight === "regular") {
       return 400
     } else {
       return parseInt(weight, 10)
     }
   })
-  weights = _.filter(_.sortBy(weights), weight => _.isFinite(weight))
+  weights = _.filter(_.sortBy(weights), (weight) => _.isFinite(weight))
   if (_.includes(weights, 700)) {
     return 700
   } else {
@@ -83,7 +83,7 @@ function getSuggestions(value) {
 
   return inputLength === 0
     ? []
-    : options.filter(option =>
+    : options.filter((option) =>
         _.includes(option.name.toLowerCase(), inputValue)
       )
 }
@@ -114,9 +114,8 @@ class FontSelectTool extends React.Component {
     }
 
     this.onChange = this.onChange.bind(this)
-    this.onSuggestionsUpdateRequested = this.onSuggestionsUpdateRequested.bind(
-      this
-    )
+    this.onSuggestionsUpdateRequested =
+      this.onSuggestionsUpdateRequested.bind(this)
   }
 
   onChange(event, { newValue }) {
@@ -124,7 +123,7 @@ class FontSelectTool extends React.Component {
       value: newValue,
     })
     const newOptions = { ...this.props.options }
-    const family = _.find(fontList, font => font.family === newValue)
+    const family = _.find(fontList, (font) => font.family === newValue)
 
     if (family) {
       // Choose weight for choosen header font.
@@ -146,7 +145,7 @@ class FontSelectTool extends React.Component {
         // Filter out old font.
         newOptions.googleFonts = _.filter(
           newOptions.googleFonts,
-          font => font.name !== this.props.options.headerFontFamily[0]
+          (font) => font.name !== this.props.options.headerFontFamily[0]
         )
       } else if (this.props.type === "body") {
         // Set body font family.
@@ -167,7 +166,7 @@ class FontSelectTool extends React.Component {
         // Filter out old font.
         newOptions.googleFonts = _.filter(
           newOptions.googleFonts,
-          font => font.name !== this.props.options.bodyFontFamily[0]
+          (font) => font.name !== this.props.options.bodyFontFamily[0]
         )
       }
 

@@ -7,7 +7,7 @@ import createStyles from "./utils/createStyles"
 import compileStyles from "./utils/compileStyles"
 import type { OptionsType } from "Types"
 
-const typography = function(opts: OptionsType) {
+const typography = function (opts: OptionsType) {
   const defaults: OptionsType = {
     baseFontSize: "16px",
     baseLineHeight: 1.45,

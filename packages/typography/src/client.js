@@ -5,7 +5,7 @@ import ms from "modularscale"
 
 import type { OptionsType } from "Types"
 
-const typography = function(opts: OptionsType) {
+const typography = function (opts: OptionsType) {
   const defaults: OptionsType = {
     baseFontSize: "16px",
     baseLineHeight: 1.45,

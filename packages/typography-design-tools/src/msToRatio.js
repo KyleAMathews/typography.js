@@ -20,7 +20,7 @@ const ratios = {
   "double octave": 4,
 }
 
-module.exports = function(ratio) {
+module.exports = function (ratio) {
   let r
 
   if (ratio == null) {
