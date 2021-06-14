@@ -7,7 +7,7 @@ A powerful toolkit for building websites with beautiful design.
 `npm install typography`
 
 ## Demo/playground
-http://kyleamathews.github.io/typography.js
+https://kyleamathews.github.io/typography.js
 
 ## Why
 The goal of Typography.js is to provide a high-level elegant API for
