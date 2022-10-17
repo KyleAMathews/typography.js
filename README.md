@@ -156,6 +156,7 @@ const typography = new Typography(funstonTheme)
 * [typography-theme-domo-arigato](https://github.com/aalaap/typography-theme-domo-arigato) - A theme with Roboto fonts
 * [typography-theme-otis](https://github.com/devbewill/typography-theme-otis)
 * [typography-theme-quora](https://github.com/mbao01/typography-theme-quora) - theme based on Quora
+* [typography-theme-vue](https://github.com/Shen-Yu/typography-theme-vue) - inspired by Vue official docs.
 * If you publish your own, create a PR to add it here!
 
 ## Plugins
