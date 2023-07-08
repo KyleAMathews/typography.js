@@ -43,7 +43,7 @@ const genericFontFamilies = [
   "-apple-system",
 ]
 const wrapFontFamily = fontFamily =>
-  genericFontFamilies.indexOf(fontFamily) !== -1
+  genericFontFamilies.indexOf(fontFamily) !== -1 || fontFamily.startsWith('var(')
     ? fontFamily
     : `'${fontFamily}'`
 
