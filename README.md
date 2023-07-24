@@ -331,6 +331,7 @@ overrideThemeStyles: ({ rhythm }, options, styles) => ({
 ## Related
 
 - [postcss-typography](https://github.com/BarryThePenguin/postcss-typography)
+- [tailwindcss-typography-js](https://github.com/manishrc/tailwindcss-typography-js)
 
 ## Developing Typography.js
 Typography.js is a monorepo facilitated by
