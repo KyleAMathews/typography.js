@@ -114,6 +114,8 @@ funstonTheme.overrideThemeStyles = ({ rhythm }, options) => ({
 const typography = new Typography(funstonTheme)
 ```
 
+`overrideThemeStyles` is a function that returns an object where keys are CSS selectors, and values are CSSOM rule sets.
+
 ### Published Typography.js Themes
 * [typography-theme-alton](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-alton/)
 * [typography-theme-bootstrap](https://github.com/KyleAMathews/typography.js/blob/master/packages/typography-theme-bootstrap/)
