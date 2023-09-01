@@ -17,6 +17,14 @@ const GoogleFont = (props) => {
     fontsStr = fonts.join("|")
 
     if (fontsStr) {
+      let fontDisplay = 'swap'
+      let validFontDisplayTypes = ['block', 'swap', 'fallback', 'optional']
+      if (props.typography.options.fontDisplay && validFontDisplayTypes.includes(props.typography.options.fontDisplay)) {
+        fontDisplay = props.typography.options.fontDisplay
+      }
+
+      fontsStr += `&display=${fontDisplay}`
+
       return (
         <link
           href={`//fonts.googleapis.com/css?family=${fontsStr}`}

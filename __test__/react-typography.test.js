@@ -23,6 +23,7 @@ describe('GoogleFont', () => {
   it('should render with googleFonts options', () => {
     const component = renderer.create(React.createElement(GoogleFont, {
       typography: typography({
+        fontDisplay: 'optional',
         googleFonts: [
           {
             name: 'Montserrat',

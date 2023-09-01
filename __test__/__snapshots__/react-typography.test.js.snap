@@ -2,7 +2,7 @@
 
 exports[`GoogleFont should render with googleFonts options 1`] = `
 <link
-  href="//fonts.googleapis.com/css?family=Montserrat:700"
+  href="//fonts.googleapis.com/css?family=Montserrat:700&display=optional"
   rel="stylesheet"
   type="text/css"
 />
