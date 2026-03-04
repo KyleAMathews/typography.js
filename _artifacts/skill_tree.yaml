@@ -1,0 +1,75 @@
+# _artifacts/skill_tree.yaml
+library:
+  name: typography
+  version: '0.16.24'
+  repository: 'https://github.com/KyleAMathews/typography.js'
+  description: 'Opinionated toolkit for building websites with beautiful typography using vertical rhythm and modular scale'
+generated_from:
+  domain_map: '_artifacts/domain_map.yaml'
+  skill_spec: '_artifacts/skill_spec.md'
+generated_at: '2026-03-03'
+
+skills:
+  - name: Typography.js Core Concepts
+    slug: typography-core
+    type: core
+    domain: concepts
+    path: packages/typography/skills/typography-core/SKILL.md
+    package: packages/typography
+    description: >
+      Core mental model for typography.js: vertical rhythm math (baseFontSize ×
+      baseLineHeight = rhythm unit), modular scale (scaleRatio drives h1-h6 sizing),
+      configuration-driven CSS generation, theme composition (plain objects conforming
+      to OptionsType), plugin pipeline (lodash.merge ordering, overrideStyles last).
+      Typography() constructor, rhythm(), scale(), adjustFontSizeTo(), linesForFontSize(),
+      establishBaseline(). Enough depth to answer any conceptual question.
+    sources:
+      - 'KyleAMathews/typography.js:packages/typography/src/index.js'
+      - 'KyleAMathews/typography.js:packages/typography/src/utils/createStyles.js'
+      - 'KyleAMathews/typography.js:packages/typography/src/utils/compileStyles.js'
+      - 'KyleAMathews/typography.js:packages/typography/src/Types.js'
+      - 'KyleAMathews/typography.js:README.md'
+
+  - name: Typography.js Setup & Installation
+    slug: typography-setup
+    type: lifecycle
+    domain: setup
+    path: packages/typography/skills/typography-setup/SKILL.md
+    package: packages/typography
+    description: >
+      Getting started with typography.js: installing typography, react-typography,
+      and theme packages via npm/pnpm/yarn. Creating a Typography() instance.
+      Client-side injection with injectStyles(). Server-side rendering with
+      TypographyStyle and GoogleFont React components in <head>. Minimum viable
+      setup for both client and SSR workflows.
+    requires: []
+    sources:
+      - 'KyleAMathews/typography.js:README.md'
+      - 'KyleAMathews/typography.js:packages/typography/src/index.js'
+      - 'KyleAMathews/typography.js:packages/react-typography/src/index.js'
+
+  - name: Typography.js Usage & API Guide
+    slug: typography-core/usage
+    type: sub-skill
+    domain: usage
+    path: packages/typography/skills/typography-core/usage/SKILL.md
+    package: packages/typography
+    description: >
+      Complete API guide for typography.js: OptionsType configuration (baseFontSize,
+      baseLineHeight, scaleRatio, headerFontFamily, bodyFontFamily, googleFonts,
+      headerColor, bodyColor, headerWeight, bodyWeight, boldWeight, blockMarginBottom,
+      includeNormalize), rhythm() spacing, scale() heading sizes, toString()/toJSON()/
+      injectStyles() CSS output, themes (using, customizing, overrideThemeStyles),
+      plugins (using typography-plugin-code, creating custom plugins, overrideStyles),
+      CSS variable support via var(), responsive typography with breakpoint constants
+      and media queries, React TypographyStyle and GoogleFont components.
+    requires:
+      - typography-core
+    sources:
+      - 'KyleAMathews/typography.js:packages/typography/src/index.js'
+      - 'KyleAMathews/typography.js:packages/typography/src/Types.js'
+      - 'KyleAMathews/typography.js:packages/typography/src/utils/createStyles.js'
+      - 'KyleAMathews/typography.js:packages/typography/src/utils/compileStyles.js'
+      - 'KyleAMathews/typography.js:packages/react-typography/src/index.js'
+      - 'KyleAMathews/typography.js:packages/typography-plugin-code/src/index.js'
+      - 'KyleAMathews/typography.js:packages/typography-breakpoint-constants/src/index.js'

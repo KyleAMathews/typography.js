@@ -1,0 +1,69 @@
+## Typography.js Domain Map
+## Library: typography.js
+## Repo: https://github.com/KyleAMathews/typography.js
+## Docs: https://github.com/KyleAMathews/typography.js#readme
+
+library:
+  name: typography.js
+  description: >
+    A toolkit for building websites with beautiful typographic design.
+    Configure a small set of values (base font size, line height, scale ratio)
+    and the engine generates all CSS using vertical rhythm and modular scale math.
+  repo: https://github.com/KyleAMathews/typography.js
+  docs: https://github.com/KyleAMathews/typography.js#readme
+  packages:
+    - name: typography
+      path: packages/typography
+      role: Core engine — configuration, vertical rhythm, modular scale, CSS generation, themes, plugins
+    - name: react-typography
+      path: packages/react-typography
+      role: React SSR helpers — TypographyStyle and GoogleFont components
+
+domains:
+
+  - id: setup
+    name: Setup & Installation
+    description: >
+      Installing typography.js packages, creating an instance,
+      and getting styles into your project (client-side injection or SSR).
+    concepts:
+      - install: "npm/yarn/pnpm install of typography and optional theme/plugin packages"
+      - create-instance: "Typography(options) constructor"
+      - inject-client: "injectStyles() for client-side usage"
+      - react-ssr: "TypographyStyle and GoogleFont components for server rendering"
+    packages: [typography, react-typography]
+
+  - id: concepts
+    name: Core Concepts
+    description: >
+      The mental model behind typography.js: how a few configuration values
+      produce a complete typographic system through vertical rhythm and
+      modular scale mathematics.
+    concepts:
+      - vertical-rhythm: "All spacing derived from baseFontSize × baseLineHeight"
+      - rhythm-unit: "The fundamental spacing unit — one line height"
+      - modular-scale: "Header sizes derived from scaleRatio, not hardcoded"
+      - configuration-driven: "Declare intent via options; engine derives all CSS"
+      - theme-composition: "Themes are plain objects — use, customize, or override"
+      - plugin-pipeline: "Plugins add styles; overrideStyles runs last for final control"
+    packages: [typography]
+
+  - id: usage
+    name: Usage & API
+    description: >
+      Practical guidance on the full API surface: configuration options,
+      rhythm/scale utilities, themes, plugins, CSS output methods,
+      style overrides, responsive patterns, and React integration.
+    concepts:
+      - options: "OptionsType — baseFontSize, baseLineHeight, scaleRatio, font families, colors, weights"
+      - rhythm-function: "rhythm(n) — spacing as multiples of the rhythm unit"
+      - scale-function: "scale(n) — font-size and line-height at a scale step"
+      - themes: "Pre-built theme packages, customization, overrideThemeStyles"
+      - plugins: "Plugin interface, typography-plugin-code, custom plugins"
+      - css-output: "toString(), toJSON(), injectStyles()"
+      - override-styles: "overrideStyles for custom CSS after themes and plugins"
+      - google-fonts: "googleFonts option for automatic font loading"
+      - css-variables: "var(--custom-property) support in font families"
+      - responsive: "Breakpoint constants and media queries from typography-breakpoint-constants"
+      - react-components: "TypographyStyle and GoogleFont for SSR"
+    packages: [typography, react-typography]

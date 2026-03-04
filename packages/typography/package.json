@@ -30,6 +30,16 @@
   },
   "source": "src/index.js",
   "main": "dist/index.js",
+  "bin": {
+    "intent": "./bin/intent.mjs"
+  },
+  "files": [
+    "dist",
+    "src",
+    "skills",
+    "bin",
+    "!skills/_artifacts"
+  ],
   "scripts": {
     "build": "microbundle",
     "flow": "../../node_modules/.bin/flow",
@@ -37,6 +47,7 @@
     "watch": "microbundle watch"
   },
   "devDependencies": {
+    "@tanstack/intent": "^0.0.6",
     "microbundle": "^0.13.0"
   }
 }
