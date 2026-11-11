@@ -9,6 +9,8 @@ import isArray from "lodash/isArray"
 import merge from "lodash/merge"
 import reduce from "lodash/reduce"
 
+import { baseFont, fontFamilyList } from "./fontFamily"
+
 import type { OptionsType } from "Types"
 
 const setStyles = (
@@ -30,32 +32,13 @@ const setStyles = (
   return styles
 }
 
-// Wrap font names in quotes, unless the font name is actually a keyword.
-// See https://stackoverflow.com/a/13752149 and https://www.w3.org/TR/CSS2/fonts.html#font-family-prop
-const genericFontFamilies = [
-  "inherit",
-  "default",
-  "serif",
-  "sans-serif",
-  "monospace",
-  "fantasy",
-  "cursive",
-  "-apple-system",
-]
-const wrapFontFamily = fontFamily =>
-  genericFontFamilies.indexOf(fontFamily) !== -1 || fontFamily.startsWith('var(')
-    ? fontFamily
-    : `'${fontFamily}'`
-
 export default (vr: any, options: OptionsType) => {
   let styles = {}
   const { fontSize, lineHeight } = vr.establishBaseline()
 
   // Base HTML styles.
   styles = setStyles(styles, "html", {
-    font: `${fontSize}/${lineHeight} ${options.bodyFontFamily
-      .map(wrapFontFamily)
-      .join(",")}`,
+    ...baseFont(fontSize, lineHeight, options.bodyFontFamily),
     boxSizing: "border-box",
     overflowY: "scroll",
   })
@@ -68,7 +51,7 @@ export default (vr: any, options: OptionsType) => {
   // Base body styles.
   styles = setStyles(styles, "body", {
     color: options.bodyColor,
-    fontFamily: options.bodyFontFamily.map(wrapFontFamily).join(","),
+    fontFamily: fontFamilyList(options.bodyFontFamily),
     fontWeight: options.bodyWeight,
     wordWrap: "break-word",
     fontKerning: "normal",
@@ -240,7 +223,7 @@ export default (vr: any, options: OptionsType) => {
   // Create styles for headers.
   styles = setStyles(styles, ["h1", "h2", "h3", "h4", "h5", "h6"], {
     color: options.headerColor,
-    fontFamily: options.headerFontFamily.map(wrapFontFamily).join(","),
+    fontFamily: fontFamilyList(options.headerFontFamily),
     fontWeight: options.headerWeight,
     textRendering: "optimizeLegibility",
   })

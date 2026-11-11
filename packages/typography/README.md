@@ -209,11 +209,21 @@ When creating a new instance of Typography, you can pass in an
 *configuration* object. All configuration keys are optional.
 
 * **title**: The theme title.
-* **baseFontSize**: The base font size in pixels, defaults to `16px`.
-* **baseLineHeight**: The base line height using the css unitless number, defaults to `1.45`.
+* **baseFontSize**: A positive finite pixel length, such as `16px` or `16.5px`.
+  Defaults to `16px`; fractional pixels are preserved.
+* **baseLineHeight**: A positive finite unitless number, or a pixel length such
+  as `"24px"`, defaults to `1.45`.
+* **headerLineHeight**: A positive finite unitless number for `h1`–`h6`, defaults
+  to `1.1`. This multiplier is independent of the scale helper’s rounded line height.
 * **scaleRatio**: The "scale ratio" for the theme. This value is the ratio
   between the `h1` font size and the `baseFontSize`. So if the scale ratio is `2`
   and the `baseFontSize` is `16px` then the `h1` font size is `32px`.
+  The ratio must be positive and finite; ratios below one are supported.
+  It may also be one of these named ratios, spelled exactly: `minor second`,
+  `major second`, `minor third`, `major third`, `diminished fourth`,
+  `perfect fifth`, `minor sixth`, `golden`, `phi`, `major sixth`,
+  `minor seventh`, `major seventh`, `octave`, `major tenth`,
+  `major eleventh`, `major twelfth`, `double octave`. Any other value throws.
 ```javascript
 {
   scaleRatio: 2,
@@ -244,6 +254,27 @@ googleFonts: [
 system UI font stack.
 * **bodyFontFamily**: An array of strings specifying the font family
   stack for the body, defaults to `['georgia', 'serif']`.
+
+  Each entry of either stack is one font family. Write a family name as
+  plain text, such as `"Font's Name"`: typography.js quotes and escapes
+  it for you. The quoted name stays valid CSS and cannot close a `<style>`
+  element. These entries are kept as CSS instead:
+  * generic families from [CSS Fonts 4](https://www.w3.org/TR/css-fonts-4/#generic-font-families)
+    (`serif`, `sans-serif`, `monospace`, `cursive`, `fantasy`,
+    `system-ui`, `math`, `ui-serif`, `ui-sans-serif`, `ui-monospace`,
+    `ui-rounded`), in any letter case. The newer functional form, such as
+    `generic(kai)`, is treated as a family name until browsers support it.
+  * a CSS variable, such as `var(--brand-font)` or
+    `var(--brand-font, serif)`, passed through unchanged except that a `<`
+    is escaped. The entry must be exactly the `var(...)`: with a space or a
+    comment around it, it is a family name
+  * `-apple-system`
+  * `inherit`, `initial`, `unset`, `revert`, or `revert-layer`, only
+    when it is the whole stack (`['inherit']`); in a longer stack it is a
+    family name, as is `default`
+
+  An empty stack, or an entry that is not a string, throws a `TypeError`
+  that names every invalid option.
 * **headerColor**: A css color string to be set on headers. Defaults
   to `inherit`.
 * **bodyColor**: A css color string to be set for body text. Defaults
@@ -299,6 +330,20 @@ overrideThemeStyles: ({ rhythm }, options, styles) => ({
 })
 ```
 
+### Numerical helpers
+
+`typography.scale(position = 0)` returns a font size and a rhythm-adjusted line
+height. The font size is `baseFontSize × scaleRatio ** position`. Positions may
+be negative or fractional: with a `16px` base and ratio `2`, `scale(-1)` gives
+an `8px` font size, returned as `0.5rem` with the default rhythm unit.
+
+`typography.rhythm(lines = 1)` returns spacing based on the base line height,
+subject to rhythm-unit conversion and rounding. Counts may be negative,
+fractional, or zero; with the default settings, `rhythm(-0.25)` is `-0.3625rem`.
+
+Invalid numerical configuration, nonfinite positions or counts, and calculations
+that produce nonfinite or malformed CSS lengths throw an error.
+
 ## Related
 
 - [postcss-typography](https://github.com/BarryThePenguin/postcss-typography)
@@ -312,15 +357,13 @@ for inline styles.
 
 <!-- Definitions -->
 
-[build-badge]: https://img.shields.io/travis/KyleAMathews/typography.js.svg
+[build-badge]: https://github.com/KyleAMathews/typography.js/actions/workflows/ci.yml/badge.svg
 
-[build-status]: https://travis-ci.org/KyleAMathews/typography.js
+[build-status]: https://github.com/KyleAMathews/typography.js/actions/workflows/ci.yml
 
 [coverage-badge]: https://img.shields.io/codecov/c/github/KyleAMathews/typography.js.svg
 
 [coverage-status]: https://codecov.io/github/KyleAMathews/typography.js
-=======
-
 ## Backers
 
 Support us with a monthly donation and help us continue our activities. [[Become a backer](https://opencollective.com/typographyjs#backer)]

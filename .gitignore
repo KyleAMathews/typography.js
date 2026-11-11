@@ -34,3 +34,6 @@ examples/bundle.js
 www/public
 packages/**/package-lock.json
 packages/**/yarn.lock
+
+# @tanstack/oracles gap check output
+.oracle-gaps/

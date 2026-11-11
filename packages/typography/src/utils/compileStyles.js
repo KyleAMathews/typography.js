@@ -11,14 +11,14 @@ const compileStyles = styles =>
   reduce(
     styles,
     (stylesStr, ruleSet, selector) => {
-      stylesStr += `${selector}{` // eslint-disable-line
+      stylesStr += `${selector}{`
       each(ruleSet, (value, property) => {
         if (isObject(value)) {
           const newObject = {}
           newObject[property] = value
-          stylesStr += compileStyles(newObject) // eslint-disable-line
+          stylesStr += compileStyles(newObject)
         } else {
-          let newStyle = `${decamelize(property, "-")}:${value};` // eslint-disable-line
+          let newStyle = `${decamelize(property, "-")}:${value};`
           // If the property is prefixed, add an additional dash at the beginning.
           const prefixes = ["Webkit", "ms", "Moz", "O"]
           prefixes.forEach(prefix => {
@@ -29,7 +29,7 @@ const compileStyles = styles =>
           stylesStr += newStyle
         }
       })
-      stylesStr += "}" // eslint-disable-line
+      stylesStr += "}"
       return stylesStr
     },
     ""

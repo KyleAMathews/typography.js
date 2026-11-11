@@ -1,0 +1,15 @@
+packages:
+  - "packages/*"
+  - "tools/*"
+
+# Link local packages to each other, as `lerna bootstrap` did.
+linkWorkspacePackages: true
+
+# Dependency build scripts. None is needed: phantomjs-prebuilt only downloads a
+# binary that no script here uses, fsevents@1 is an optional macOS watcher, and
+# execSync@1 compiles a native helper that nothing calls.
+allowBuilds:
+  execSync: false
+  fsevents: false
+  phantomjs-prebuilt: false
+

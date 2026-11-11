@@ -1,0 +1,8 @@
+{
+  "id": "invalid-root-line-height",
+  "source": "packages/typography/src/utils/createStyles.js",
+  "find": "...baseFont(fontSize, lineHeight, options.bodyFontFamily)",
+  "replace": "...baseFont(fontSize, \"Infinity\", options.bodyFontFamily)",
+  "intent": "Keep the root font size but emit a nonfinite root line-height; N4 root validation must reject it.",
+  "author": "Codex; self-generated from independent review C2/M1 and its accepted corrupted traces"
+}

@@ -1,0 +1,58 @@
+[
+  {
+    "id": "quote-class-no-less-than",
+    "source": "packages/typography/src/utils/fontFamily.js",
+    "find": "/['\\\\<\\n\\r\\f]/g",
+    "replace": "/['\\\\\\n\\r\\f]/g",
+    "intent": "names stop escaping \"<\" (before review R10)",
+    "author": "Claude Code session (font-family oracle author), after second review S2"
+  },
+  {
+    "id": "quote-class-no-apostrophe",
+    "source": "packages/typography/src/utils/fontFamily.js",
+    "find": "/['\\\\<\\n\\r\\f]/g",
+    "replace": "/[\\\\<\\n\\r\\f]/g",
+    "intent": "names stop escaping the quote character",
+    "author": "Claude Code session (font-family oracle author), after second review S2"
+  },
+  {
+    "id": "quote-class-no-backslash",
+    "source": "packages/typography/src/utils/fontFamily.js",
+    "find": "/['\\\\<\\n\\r\\f]/g",
+    "replace": "/['<\\n\\r\\f]/g",
+    "intent": "names stop escaping the backslash",
+    "author": "Claude Code session (font-family oracle author), after second review S2"
+  },
+  {
+    "id": "quote-class-no-lf",
+    "source": "packages/typography/src/utils/fontFamily.js",
+    "find": "/['\\\\<\\n\\r\\f]/g",
+    "replace": "/['\\\\<\\r\\f]/g",
+    "intent": "LF is no longer escaped",
+    "author": "Claude Code session (font-family oracle author), after second review S2"
+  },
+  {
+    "id": "quote-class-no-cr",
+    "source": "packages/typography/src/utils/fontFamily.js",
+    "find": "/['\\\\<\\n\\r\\f]/g",
+    "replace": "/['\\\\<\\n\\f]/g",
+    "intent": "CR is no longer escaped",
+    "author": "Claude Code session (font-family oracle author), after second review S2"
+  },
+  {
+    "id": "quote-class-no-ff",
+    "source": "packages/typography/src/utils/fontFamily.js",
+    "find": "/['\\\\<\\n\\r\\f]/g",
+    "replace": "/['\\\\<\\n\\r]/g",
+    "intent": "FF is no longer escaped",
+    "author": "Claude Code session (font-family oracle author), after second review S2"
+  },
+  {
+    "id": "var-less-than-raw",
+    "source": "packages/typography/src/utils/fontFamily.js",
+    "find": "if (isVarReference(entry)) return entry.replace(/</g, \"\\\\3c \")",
+    "replace": "if (isVarReference(entry)) return entry",
+    "intent": "var() passes \"<\" through (before second review S1)",
+    "author": "Claude Code session (font-family oracle author), after second review S2"
+  }
+]

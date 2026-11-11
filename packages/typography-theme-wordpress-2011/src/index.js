@@ -16,7 +16,7 @@ const theme: OptionsType = {
     "Apple Color Emoji",
     "Segoe UI Emoji",
     "Segoe UI Symbol",
-  ], // eslint-disable-line
+  ],
   bodyFontFamily: [
     "Helvetica Neue",
     "Helvetica",
@@ -27,7 +27,7 @@ const theme: OptionsType = {
     "Apple Color Emoji",
     "Segoe UI Emoji",
     "Segoe UI Symbol",
-  ], // eslint-disable-line
+  ],
   headerColor: "hsla(0,0%,0%,0.87)",
   bodyColor: "hsla(0,0%,0%,0.78)",
   headerWeight: "bold",

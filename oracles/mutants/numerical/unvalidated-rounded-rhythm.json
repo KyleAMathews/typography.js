@@ -1,0 +1,8 @@
+{
+  "id": "unvalidated-rounded-rhythm",
+  "source": "packages/typography/src/index.js",
+  "find": "checkNumber(\"rhythm result\", rem * baseFont)",
+  "replace": ";",
+  "intent": "Allow rounded rem output to overflow its physical base; N4 must reject the final serialized-result boundary.",
+  "author": "Codex; self-generated from mechanics follow-up N3 and unchanged-production RED"
+}
