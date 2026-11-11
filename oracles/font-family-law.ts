@@ -563,7 +563,7 @@ export const calibrations: Array<Calibration<History, History>> = [
       law: L5,
       corrupt: (trace, plan) =>
         !isValidStack(plan.body) && !isValidStack(plan.header)
-          ? replace(trace, 'typography()', { threw: true, name: 'TypeError', message: 'typography: bodyFontFamily must be a non-empty array of strings' })
+          ? replace(trace, 'typography()', { threw: true, name: 'TypeError', message: 'typography: a font stack must be a non-empty array of strings (invalid: bodyFontFamily)' })
           : undefined,
     },
     {

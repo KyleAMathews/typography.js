@@ -113,7 +113,9 @@ export const checkFontStacks = (options: Object) => {
   )
   if (invalid.length) {
     throw new TypeError(
-      `typography: ${invalid.join(" and ")} must be non-empty arrays of strings`
+      `typography: a font stack must be a non-empty array of strings (invalid: ${invalid.join(
+        ", "
+      )})`
     )
   }
 }
