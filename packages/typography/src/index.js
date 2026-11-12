@@ -1,6 +1,5 @@
 // @flow
 import objectAssign from "object-assign"
-import verticalRhythm from "compass-vertical-rhythm"
 
 import createStyles from "./utils/createStyles"
 import compileStyles from "./utils/compileStyles"
@@ -18,15 +17,31 @@ const checkNumber = (name: string, value: any, positive: boolean = false) => {
   return value
 }
 
-const checkLength = (name: string, value: any) => {
-  if (
-    typeof value !== "string" ||
-    !/^[+-]?(?:\d*\.\d+|\d+)(?:e[+-]?\d+)?(?:px|rem|em|ex|%|in|cm|mm|q|pt|pc)$/i.test(
-      value
-    )
-  ) {
-    throw new RangeError(`Invalid CSS length for ${name}`)
-  }
+// A CSS length's number (exponent allowed, CSS Syntax 3) and its unit.
+const parseLength = (name: string, value: any) => {
+  const match =
+    typeof value === "string" &&
+    /^([+-]?(?:\d*\.\d+|\d+)(?:e[+-]?\d+)?)([a-z%]*)$/i.exec(value)
+  if (!match) throw new RangeError(`Invalid CSS length for ${name}`)
+  return [Number(match[1]), match[2].toLowerCase()]
+}
+
+// CSS Values 4 5.2: absolute lengths in px.
+const absolutePx = {
+  px: 1,
+  in: 96,
+  pt: 96 / 72,
+  pc: 16,
+  cm: 96 / 2.54,
+  mm: 96 / 25.4,
+  q: 96 / 101.6,
+}
+
+// A positive finite pixel length, such as "16px".
+const pixelLength = (name: string, value: any) => {
+  const [number, unit] = parseLength(name, value)
+  if (unit !== "px") throw new RangeError(`Invalid CSS length for ${name}`)
+  return checkNumber(name, number, true)
 }
 
 // modularscale's named ratios, which `scaleRatio` accepted through v0.16.
@@ -85,61 +100,106 @@ const typography = function (opts: OptionsType) {
     blockMarginBottom: 1,
   }
 
-  const options = objectAssign({}, defaults, opts)
-  if (
-    typeof options.baseFontSize !== "string" ||
-    !/^[+]?(?:\d*\.\d+|\d+)(?:e[+-]?\d+)?px$/i.test(options.baseFontSize)
-  ) {
-    throw new TypeError("baseFontSize must be a positive finite pixel length")
-  }
-  const baseFont = checkNumber(
-    "baseFontSize",
-    parseFloat(options.baseFontSize),
-    true
-  )
+  // An option set to undefined is omitted: it takes the default (engineer
+  // decision 2026-11-12).
+  const given = {}
+  Object.keys(opts || {}).forEach(key => {
+    if (opts[key] !== undefined) given[key] = opts[key]
+  })
+  const options = objectAssign({}, defaults, given)
+  const baseFont = pixelLength("baseFontSize", options.baseFontSize)
   const scaleRatio = checkNumber("scaleRatio", ratioOf(options.scaleRatio), true)
   // A unitless multiple of the base, or a pixel length (accepted through v0.16).
-  const lineHeightPx =
-    typeof options.baseLineHeight === "string" &&
-    /^[+]?(?:\d*\.\d+|\d+)(?:e[+-]?\d+)?px$/i.test(options.baseLineHeight)
-      ? checkNumber(
-          "baseLineHeight",
-          parseFloat(options.baseLineHeight),
-          true
-        )
-      : baseFont * checkNumber("baseLineHeight", options.baseLineHeight, true)
+  // The product must be usable too: 16 × 1e308 is not.
+  const lineHeightPx = checkNumber(
+    "baseLineHeight",
+    typeof options.baseLineHeight === "string"
+      ? pixelLength("baseLineHeight", options.baseLineHeight)
+      : baseFont * checkNumber("baseLineHeight", options.baseLineHeight),
+    true
+  )
   checkNumber("headerLineHeight", options.headerLineHeight, true)
   checkFontStacks(options)
 
-  // compass-vertical-rhythm gets the line height in pixels: it reads a
-  // unitless 1e-7 as a length with the unit "e-7". html still carries the
-  // line height as given, so a unitless one stays unitless.
-  const vr = verticalRhythm(
-    objectAssign({}, options, { baseLineHeight: `${lineHeightPx}px` })
-  )
-  const establishBaseline = vr.establishBaseline
-  vr.establishBaseline = () =>
-    objectAssign(establishBaseline(), {
-      lineHeight: String(options.baseLineHeight),
-    })
-  const remRhythm =
-    options.rhythmUnit === undefined || options.rhythmUnit === "rem"
-  const rhythm = vr.rhythm
-  vr.rhythm = (lines: number = 1, ...args: any[]) => {
+  // The vertical rhythm helpers (compass-vertical-rhythm 1.4.5's API, inlined).
+  // Lengths convert by CSS Values 4: rem is the base; em and % are the parent
+  // size; ex is 0.5em (6.1.1, the x-height fallback); absolute units are exact.
+  const pxPer = (unit: string, parent: number) =>
+    unit === "rem"
+      ? baseFont
+      : unit === "em"
+      ? parent
+      : unit === "%"
+      ? parent / 100
+      : unit === "ex"
+      ? parent / 2
+      : absolutePx[unit]
+  const rhythmUnit =
+    options.rhythmUnit === undefined ? "rem" : String(options.rhythmUnit).toLowerCase()
+  if (rhythmUnit === "%" || pxPer(rhythmUnit, 1) === undefined) {
+    throw new RangeError("Invalid CSS unit for rhythmUnit")
+  }
+  const toPixels = (name: string, length: any, parent: number) => {
+    const [number, unit] = parseLength(name, length)
+    const factor = pxPer(unit, parent)
+    if (factor === undefined) throw new RangeError(`Invalid CSS length for ${name}`)
+    return checkNumber(name, number * factor)
+  }
+  // px in the rhythm unit, relative to a font size, to 5 decimals. Rhythm in
+  // px is floored (whole pixels, as compass-vertical-rhythm wrote it).
+  const inUnit = (name: string, px: number, fontSize: number, floor: boolean) => {
+    if (rhythmUnit === "px") return `${floor ? Math.floor(px) : px}px`
+    const factor = pxPer(rhythmUnit, fontSize)
+    const value = parseFloat((px / factor).toFixed(5))
+    // Rounding can cross the representability limit.
+    checkNumber(name, value * factor)
+    return `${value}${rhythmUnit}`
+  }
+  const vr = {}
+
+  // The lines a font size needs: whole lines, or half lines by default, with
+  // at least minLinePadding (default 2px) above and below the text.
+  vr.linesForFontSize = (fontSize: any) => {
+    const px = toPixels("linesForFontSize font size", fontSize, baseFont)
+    const padding = toPixels(
+      "minLinePadding",
+      options.minLinePadding == null ? "2px" : options.minLinePadding,
+      baseFont
+    )
+    const step = options.roundToNearestHalfLine === false ? 1 : 0.5
+    const lines = Math.ceil(px / lineHeightPx / step) * step
+    return lines * lineHeightPx - px < 2 * padding ? lines + step : lines
+  }
+  vr.establishBaseline = () => ({
+    fontSize: `${(baseFont / 16) * 100}%`,
+    // As given: a unitless line height stays unitless.
+    lineHeight: String(options.baseLineHeight),
+  })
+  vr.rhythm = (lines: number = 1, fontSize: any, offset: any) => {
     checkNumber("rhythm lines", lines)
-    if (remRhythm) {
-      // Avoid the dependency's exponent-as-unit parsing for small pixel bases.
-      const offset = args[1] == null ? 0 : args[1]
-      const rem = parseFloat(
-        ((lineHeightPx * lines - offset) / baseFont).toFixed(5)
-      )
-      // Rounding the coefficient can cross the physical representability limit.
-      checkNumber("rhythm result", rem * baseFont)
-      return `${rem}rem`
+    const context = toPixels(
+      "rhythm font size",
+      fontSize == null ? options.baseFontSize : fontSize,
+      baseFont
+    )
+    const px = lineHeightPx * lines - (offset == null ? 0 : offset)
+    return inUnit("rhythm result", checkNumber("rhythm result", px), context, true)
+  }
+  vr.adjustFontSizeTo = (fontSize: any, lines: any, fromSize: any) => {
+    const parent = toPixels(
+      "adjustFontSizeTo fromSize",
+      fromSize == null ? options.baseFontSize : fromSize,
+      baseFont
+    )
+    const px = toPixels("adjustFontSizeTo font size", fontSize, parent)
+    return {
+      fontSize: inUnit("adjustFontSizeTo font size", px, parent, false),
+      // Relative to the element's own, new font size.
+      lineHeight: vr.rhythm(
+        lines == null || lines === "auto" ? vr.linesForFontSize(`${px}px`) : lines,
+        `${px}px`
+      ),
     }
-    const result = rhythm(lines, ...args)
-    checkLength("rhythm result", result)
-    return result
   }
 
   // Add this function to the vertical rhythm object so it'll be passed around
@@ -154,16 +214,7 @@ const typography = function (opts: OptionsType) {
       "scale result",
       Math.pow(scaleRatio, value) * baseFont
     )
-    // In rem, the line height comes from the rhythm above: the dependency's
-    // own rhythm misreads a length it writes with an exponent ("1e+22px").
-    const result = remRhythm
-      ? {
-        fontSize: `${parseFloat((size / baseFont).toFixed(5))}rem`,
-        lineHeight: vr.rhythm(vr.linesForFontSize(`${size}px`)),
-      }
-      : vr.adjustFontSizeTo(`${size}px`)
-    checkLength("scale lineHeight", result.lineHeight)
-    return result
+    return vr.adjustFontSizeTo(`${size}px`)
   }
 
   return {

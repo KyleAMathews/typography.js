@@ -76,9 +76,9 @@ const quote = (name: string) =>
 const isLoneCssWide = (stack: Array<string>) =>
   stack.length === 1 && cssWideKeywords.indexOf(asciiLower(stack[0])) !== -1
 
-const item = (entry: string, stack: Array<string>) => {
+const item = (entry: string) => {
   const word = asciiLower(entry)
-  if (isLoneCssWide(stack) || genericFamilies.indexOf(word) !== -1) return word
+  if (genericFamilies.indexOf(word) !== -1) return word
   // A vendor keyword (WebKit), and a valid unquoted family name.
   if (entry === "-apple-system") return entry
   // Passed through, but a "<" is escaped so the stylesheet cannot close its
@@ -88,7 +88,7 @@ const item = (entry: string, stack: Array<string>) => {
 }
 
 export const fontFamilyList = (stack: Array<string>) =>
-  stack.map(entry => item(entry, stack)).join(",")
+  isLoneCssWide(stack) ? asciiLower(stack[0]) : stack.map(item).join(",")
 
 // The `html` base font. A lone CSS-wide keyword cannot sit inside the `font`
 // shorthand, so it gets longhands.

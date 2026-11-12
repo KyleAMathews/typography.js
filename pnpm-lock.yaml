@@ -120,9 +120,6 @@ importers:
 
   packages/typography:
     dependencies:
-      compass-vertical-rhythm:
-        specifier: ^1.4.5
-        version: 1.4.5
       decamelize:
         specifier: ^1.2.0
         version: 1.2.0

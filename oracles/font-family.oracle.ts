@@ -54,7 +54,8 @@ the base size and line height that a plain stack gives (CSS Values 4 §2.1;
 CSS 2.1 §15.3; maintainer decision 2026-11-11).
 L5. An empty stack, or one with a non-string entry, makes `typography()` throw
 an error that names every invalid option (CSS Fonts 4 §2.1: one or more families;
-maintainer decision 2026-11-11). Every other stack returns.
+maintainer decision 2026-11-11). An undefined stack is an omitted one: the
+README default (maintainer decision 2026-11-12). Every other stack returns.
 
 The model reads the plan alone: it classifies each entry by the rules above
 and predicts the list of items a browser should read. The check reads
@@ -86,16 +87,17 @@ import {
   historyArbitrary,
   model,
   reached,
+  resolve,
   thrown,
 } from './font-family-law'
-import type { Expected, History } from './font-family-law'
+import type { Expected, History, Plan } from './font-family-law'
 
 // ---------------------------------------------------------------------------
 // The driver: the real entry point, and only public results. The grammar,
 // model, and check are in font-family-law.ts.
 // ---------------------------------------------------------------------------
 
-function driver(plan: History, observe: (checkpoint: string, value: unknown) => void) {
+function driver(plan: Plan, observe: (checkpoint: string, value: unknown) => void) {
   // The reference: the same call with a plain stack. Its `html` base size and
   // line height are what the stack must not change (L4).
   try {
@@ -107,7 +109,8 @@ function driver(plan: History, observe: (checkpoint: string, value: unknown) => 
 
   let t: ReturnType<typeof typography>
   try {
-    t = typography({ bodyFontFamily: plan.body, headerFontFamily: plan.header })
+    // As the caller gave them: an omitted stack is passed as undefined.
+    t = typography({ bodyFontFamily: plan.given.body, headerFontFamily: plan.given.header })
   } catch (e) {
     observe('typography()', thrown(e))
     return
@@ -133,7 +136,7 @@ function driver(plan: History, observe: (checkpoint: string, value: unknown) => 
   for (let level = 1; level <= 6; level++) observe(`h${level}.fontFamily`, json[`h${level}`].fontFamily)
 }
 
-oracleProperty<History, Expected>({
+oracleProperty<History, Expected, Plan>({
   id: 'typography-font-family',
   owns: ['packages/typography/src/utils/fontFamily.js'],
   law: {
@@ -149,6 +152,7 @@ oracleProperty<History, Expected>({
     constructed: constructedHistories(),
     fixed: FIXED_HISTORIES,
   },
+  resolve,
   model,
   driver,
   check,

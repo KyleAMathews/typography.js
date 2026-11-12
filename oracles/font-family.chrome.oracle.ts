@@ -47,9 +47,10 @@ import {
   historyArbitrary,
   model,
   reached,
+  resolve,
   thrown,
 } from './font-family-law'
-import type { Expected, History } from './font-family-law'
+import type { Expected, History, Plan } from './font-family-law'
 
 // One browser and one page for the whole file; each history replaces the
 // stylesheet under test. Chrome must be installed: a missing browser fails
@@ -91,7 +92,7 @@ function readInChrome(css: string): Read {
   }
 }
 
-async function driver(plan: History, observe: (checkpoint: string, value: unknown) => void) {
+async function driver(plan: Plan, observe: (checkpoint: string, value: unknown) => void) {
   // The reference: the same call with a plain stack (see the Node driver).
   try {
     const reference = typography({ bodyFontFamily: ['serif'], headerFontFamily: ['serif'] }).toString()
@@ -102,7 +103,8 @@ async function driver(plan: History, observe: (checkpoint: string, value: unknow
 
   let t: ReturnType<typeof typography>
   try {
-    t = typography({ bodyFontFamily: plan.body, headerFontFamily: plan.header })
+    // As the caller gave them: an omitted stack is passed as undefined.
+    t = typography({ bodyFontFamily: plan.given.body, headerFontFamily: plan.given.header })
   } catch (e) {
     observe('typography()', thrown(e))
     return
@@ -123,7 +125,7 @@ async function driver(plan: History, observe: (checkpoint: string, value: unknow
   read.headers.forEach((family, k) => observe(`h${k + 1}.fontFamily`, family))
 }
 
-oracleProperty<History, Expected>({
+oracleProperty<History, Expected, Plan>({
   id: 'typography-font-family-chrome',
   owns: ['packages/typography/src/utils/fontFamily.js'],
   law: {
@@ -140,6 +142,7 @@ oracleProperty<History, Expected>({
     constructed: constructedHistories(),
     fixed: FIXED_HISTORIES,
   },
+  resolve,
   model,
   driver,
   check,

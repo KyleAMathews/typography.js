@@ -119,3 +119,43 @@ now spelled `remRhythm`. No new law-relevant gap remains open on the new
 lines, except the positive-flag mutant on the px branch, the same class as
 the base-size and ratio flag gaps. Final `pnpm test-ci`: Jest 58/58 with 44
 snapshots, oracles 205/205.
+
+## Second prep-pr review (2026-11-12)
+
+A fresh `/code-review high` of PR #313 (head 4ff9705) gave 10 findings
+(ledger `/tmp/typography-review2-eval/ledger.md`). The engineer decided L1,
+L2, and L3 (`oracles/SKETCHES.md` S3).
+
+- **RED on 4ff9705 (13 failing tests) from the extended oracles:**
+  - N4 over every font size and line height in `toJSON()`: `table` at bases
+    from about 5e20px gives `1.45e+22e+22px` (R1).
+  - The owed `scale()` result in em and px: `scale(80)` throws (R3).
+  - The Q2 error message: `16 × 1e308` names "rhythm result" (R4).
+  - The explicit-undefined dimension: valid input threw (L1).
+  - Stylesheet N6: `code` gets `0e-7px` at a 1e-7px base (L2).
+  - N7: compass writes lengths it cannot read, for example an offset of
+    5e-324 (L3).
+  - Invalid `rhythmUnit` values returned instead of throwing.
+- **Production:** compass-vertical-rhythm is inlined into `index.js`
+  (`linesForFontSize`, `rhythm`, `adjustFontSizeTo`, `establishBaseline`),
+  with one length parser and one CSS Values 4 px-per-unit table. The
+  dependency is removed from `typography`. Its test suite is ported to
+  `__test__/vertical-rhythm.test.js` (17 tests). One fixture changes on
+  purpose: an em line height is relative to the element's own size.
+- **Chrome probe** (`/tmp/typography-review2-eval/probe/em-line-height.mjs`):
+  v0.16's em line heights render 45.6px, 72px, and 43.2px where the rhythm
+  owes 28.8px. The new values render 28.8px.
+- **No breaking changes:** the README examples pass. The 44 theme snapshots
+  are byte-identical. Over 384 configurations, every rem and px result is
+  identical to v0.16, and the only differences are em-mode adjusted line
+  heights (`/tmp/typography-review2-eval/readme-check.cjs`).
+- **Gap check** (`index.js` and `createStyles.js`, numeric config, seed
+  64491): 310 mutants, 172 killed, 138 gaps. Every mutant in the new helper
+  code is killed. The first run left 3 in `linesForFontSize`: minLinePadding,
+  roundToNearestHalfLine, and the `<` boundary. They were closed by modeling
+  Compass's `lines-for-font-size` exactly, with an exact-boundary history.
+  The open gaps are older: theme defaults, `createStyles` rules that no
+  numeric law owns, `injectStyles`, and the `checkFontStacks` call (judged
+  only by the font-family oracle).
+- **Final `pnpm test-ci`:** Jest 75/75 (44 snapshots), oracles 229/229
+  including Chrome. Font-family gap check: 116/116.

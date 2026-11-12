@@ -33,7 +33,11 @@ export const NO_THROW = 'L5 every other stack returns'
 // ---------------------------------------------------------------------------
 
 export type Entry = string | number | boolean | null | undefined
-export type History = { body: Array<Entry>; header: Array<Entry> }
+// An undefined stack is an omitted one: the README default (engineer
+// decision 2026-11-12, review R5).
+export type History = { body: Array<Entry> | undefined; header: Array<Entry> | undefined }
+// The plan: each stack as typography.js must use it, and the stacks as given.
+export type Plan = { body: Array<Entry>; header: Array<Entry>; given: History }
 
 const isAsciiLetter = (c: string) => /[A-Za-z]/.test(c)
 
@@ -132,8 +136,18 @@ export function historyArbitrary(): fc.Arbitrary<History> {
   const stack = fc.oneof(
     { weight: 8, arbitrary: fc.array(validEntry, { minLength: 1, maxLength: MAX_STACK }) },
     { weight: 1, arbitrary: fc.array(fc.oneof(validEntry, nonString), { maxLength: MAX_STACK }) },
+    { weight: 1, arbitrary: fc.constant(undefined) },
   )
   return fc.record({ body: stack, header: stack })
+}
+
+/** README, Configuration: an omitted stack is the default one. */
+export function resolve(history: History): Plan {
+  return {
+    body: history.body ?? README_DEFAULTS.body,
+    header: history.header ?? README_DEFAULTS.header,
+    given: history,
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -179,7 +193,7 @@ export function expectedItem(entry: string, stackLength: number): FamilyItem {
   return { name: representable(entry) }
 }
 
-export function model(plan: History): Expected {
+export function model(plan: Plan): Expected {
   const invalid = (
     [
       ['bodyFontFamily', plan.body],
@@ -256,7 +270,7 @@ function compareList(
   return undefined
 }
 
-export function check(plan: History, observations: ReadonlyArray<Observation>, expected: Expected): Verdict {
+export function check(plan: Plan, observations: ReadonlyArray<Observation>, expected: Expected): Verdict {
   const reference = valueAt(observations, 'reference') as { message?: string } | undefined
   if (reference) return violation('reference', `typography() threw on the plain stack ['serif']: ${reference.message}`, NO_THROW)
   const call = valueAt(observations, 'typography()') as { threw: boolean; message?: string } | undefined
@@ -351,10 +365,12 @@ export const STATES = {
   emptyStack: 'an empty stack',
   nonString: 'a non-string entry',
   bothInvalid: 'both stacks invalid',
+  omitted: 'an omitted (undefined) stack',
 } as const
 
-export function reached(plan: History): Array<string> {
+export function reached(plan: Plan): Array<string> {
   const states = new Set<string>()
+  if (plan.given.body === undefined || plan.given.header === undefined) states.add(STATES.omitted)
   const bodyOk = isValidStack(plan.body)
   const headerOk = isValidStack(plan.header)
   for (const s of [plan.body, plan.header]) {
@@ -397,7 +413,7 @@ export function reached(plan: History): Array<string> {
 
 // Constructed histories put one entry in front of a valid body stack, keeping
 // the generated rest of it, and keep the header valid.
-export const strings = (s: Array<Entry>) => s.filter((e): e is string => typeof e === 'string')
+export const strings = (s: Array<Entry> | undefined) => (s ?? []).filter((e): e is string => typeof e === 'string')
 const validHeader = (h: History) => (strings(h.header).length ? strings(h.header) : ['serif'])
 const withBodyEntry = (entry: string) => (h: History): History => ({
   body: [entry, ...strings(h.body)].slice(0, MAX_STACK).length >= 2
@@ -408,7 +424,7 @@ const withBodyEntry = (entry: string) => (h: History): History => ({
 
 // The default stacks (README, Configuration) and every shipped theme's
 // stacks: the known valid examples the grammar must reconstruct (ORC-004).
-export const README_DEFAULTS: History = {
+export const README_DEFAULTS: { body: Array<string>; header: Array<string> } = {
   body: ['georgia', 'serif'],
   header: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', 'sans-serif'],
 }
@@ -451,12 +467,15 @@ export function constructedHistories(): Array<ConstructedHistory<History>> {
       { name: '-apple-system', enters: [STATES.appleSystem], build: withBodyEntry('-apple-system') },
       { name: 'an empty body stack', enters: [STATES.emptyStack], build: (h) => ({ body: [], header: validHeader(h) }) },
       { name: 'a number in the header stack', enters: [STATES.nonString], build: (h) => ({ body: ['serif'], header: [...strings(h.header).slice(0, MAX_STACK - 1), 42] }) },
+      { name: 'an omitted body stack', enters: [STATES.omitted], build: (h) => ({ body: undefined, header: h.header }) },
       { name: 'both stacks invalid', enters: [STATES.bothInvalid, STATES.emptyStack, STATES.nonString], build: () => ({ body: [], header: [null, 'serif'] }) },
   ]
 }
 
 export const FIXED_HISTORIES: Array<FixedHistory<History>> = [
       { name: 'README defaults', history: README_DEFAULTS },
+      { name: 'R5: both stacks undefined', history: { body: undefined, header: undefined } },
+      { name: 'R5: an undefined header beside an invalid body', history: { body: [], header: undefined } },
       // The var() recognizer's parts, one witness each (design grammar card).
       {
         name: 'var() parts',
@@ -487,12 +506,12 @@ export const FIXED_HISTORIES: Array<FixedHistory<History>> = [
 
 export const LAW = {
   statement:
-    'For every bodyFontFamily and headerFontFamily stack: an empty stack or a non-string entry makes typography() throw an error naming every invalid option, and every other stack returns (L5). options keeps the entries as given (L0). Each entry reaches body, html, and h1–h6 font-family as one list item that a CSS reader reads as: the same family name, with NUL and lone surrogates as U+FFFD, and with no "<" in the stylesheet (L1); the generic family, for a CSS Fonts 4 generic keyword in any ASCII case, while a generic(...) entry is a family name (L2); the entry unchanged except that each "<" becomes the escape \\3c, for an entry that is exactly one well-formed var() (L3); a family name, for a CSS-wide word or default in a stack of two or more, and the keyword, for a CSS-wide word alone (L4); -apple-system stays an unquoted identifier (L1). The list is valid CSS, html carries the body list, and html keeps the base size and line height of a plain stack.',
+    'For every bodyFontFamily and headerFontFamily stack: an empty stack or a non-string entry makes typography() throw an error naming every invalid option, an undefined stack is the README default, and every other stack returns (L5). options keeps the entries as given (L0). Each entry reaches body, html, and h1–h6 font-family as one list item that a CSS reader reads as: the same family name, with NUL and lone surrogates as U+FFFD, and with no "<" in the stylesheet (L1); the generic family, for a CSS Fonts 4 generic keyword in any ASCII case, while a generic(...) entry is a family name (L2); the entry unchanged except that each "<" becomes the escape \\3c, for an entry that is exactly one well-formed var() (L3); a family name, for a CSS-wide word or default in a stack of two or more, and the keyword, for a CSS-wide word alone (L4); -apple-system stays an unquoted identifier (L1). The list is valid CSS, html carries the body list, and html keeps the base size and line height of a plain stack.',
   authority:
     'README, Configuration (bodyFontFamily, headerFontFamily: "an array of strings specifying the font family stack"). CSS Fonts 4 (W3C WD 4 Nov 2026) §2.1, §2.1.1, §2.1.2. CSS Syntax 3 (W3C CRD 1 Oct 2026) §3.3, §4.3, §4.3.5, §4.3.7. CSS Values 4 (W3C WD 12 Mar 2024) §2.1, §4.1, §9. CSS 2.1 §15.3. #307 (var() support). Maintainer decisions 2026-11-11 (oracles/SKETCHES.md S1, Decisions and Law delta): follow the spec; lone CSS-wide keyword is the keyword with html longhands; empty or non-string stacks are errors naming every invalid option; generic(...) is a family name until browsers implement it; no entry puts "<" in the stylesheet (var() included); an entry with text around var() is a family name.',
 }
 
-export const calibrations: Array<Calibration<History, History>> = [
+export const calibrations: Array<Calibration<History, Plan>> = [
     {
       // The code before the fix: names in single quotes, nothing escaped.
       name: 'names quoted without escaping',

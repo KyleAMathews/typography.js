@@ -213,3 +213,13 @@ branch. Ledger: `/tmp/typography-prep-eval/ledger.md`. Font-family items:
 - **B2, B3 (applied):** the law module imports `asciiLower` and the keyword
   lists from the reader, and its aliases are gone. Oracle code only.
   130/130, and the gap check is unchanged at 117/117.
+
+## Second prep-pr review (2026-11-12)
+
+- **L5 delta (R5):** an undefined stack is the README default. The grammar
+  now generates undefined stacks, `resolve` gives the plan the default, and
+  both drivers pass the caller's `undefined` through. RED on 4ff9705: the
+  fixed seed (`{ body: undefined, header: [""] }`) and `R5: both stacks
+  undefined` threw. GREEN: 67/67 per driver.
+- **R10 cleanup:** the lone CSS-wide check runs once per stack in
+  `fontFamilyList`. Gap check: 116 mutants, 116 killed, 0 gaps.

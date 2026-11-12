@@ -123,12 +123,14 @@ class DesignTool extends React.Component {
         this.props.typography.options.overrideThemeStyles
 
       // typography throws on invalid options, such as a field that is empty
-      // while it is edited. Keep the styles injected last until it is valid.
+      // while it is edited. Keep the styles injected last until it is valid,
+      // and report the error: a theme or plugin bug throws here too.
       let newTypography
       try {
         newTypography = new Typography(activeTheme)
         newTypography.injectStyles()
       } catch (e) {
+        console.warn("typography-design-tools: styles not updated:", e)
         newTypography = null
       }
 

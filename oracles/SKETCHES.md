@@ -226,6 +226,14 @@ The engineer agreed to these on 2026-11-11 ("agreed").
   `CSS.supports('font-family', 'generic(kai)')`. Chrome 157 says `false`. When a
   browser says `true`, revisit the R1 delta.
 
+### Law delta, 2026-11-12 (second prep-pr review, R5)
+
+- **L5, an omitted stack.** Old: an undefined stack was not an array, which
+  was outside the domain, and it threw. New: an undefined stack is an omitted
+  one, so it is the README default stack. Engineer: "falling back to defaults
+  works" (it applies to every option, see S3). An empty stack and a
+  non-string entry still throw.
+
 ---
 
 ## S2. Every shipped theme's stacks end in a matching generic (theme content): not an oracle
@@ -569,3 +577,33 @@ length its own `rhythm` writes past 1e21 or below 1e-6, came out wrong:
 
 Production: compass gets the line height in pixels, and in rem mode `scale()`
 takes its line height from typography's own rem rhythm.
+
+**Second prep-pr review (2026-11-12): the engineer's decisions.**
+- **L1, explicit undefined: "falling back to defaults works".** An option set
+  to `undefined` is omitted, so it takes its default. That includes the font
+  stacks: an undefined stack is the README default (S1 L5 delta). `null`
+  stays invalid under Q2.
+- **L2, N6 for adjustFontSizeTo: "a".** With lines `auto`, the line height of
+  `adjustFontSizeTo`, and of every rule typography writes outside h1–h6
+  (N5 owns those), covers the font size. Explicit lines may give less:
+  compass's own fixture allows it.
+- **L3, N7, helper units: "a".** Then, on the authority: "spec is always
+  the law (and browsers) so if compass is causing bugs we need to fix it
+  (perhaps by vendoring)". The API, 5-decimal rounding, the px floor, and
+  the auto line count stay compass-vertical-rhythm 1.4.5's, now inlined
+  (the dependency is dropped and its test suite is ported to Jest).
+  Conversions follow CSS Values 4:
+  - rem is the base; em and % are the parent size; ex is 0.5em (§6.1.1);
+    absolute units are exact (§5.2);
+  - an em line height is relative to the element's own size. Chrome
+    confirms it: compass's `2.4em` rendered 45.6px where the rhythm owes
+    28.8px.
+  - A `rhythmUnit` that does not convert from px (`%`, `vw`, a non-string)
+    is invalid configuration and throws (Q2).
+- **Q2 enforcement (review R4):** an invalid option's error names it, and an
+  overflowing or underflowing line-height product is invalid `baseLineHeight`.
+- **"No breaking changes" (2026-11-12):** the README and the existing tests
+  must not break. The README examples pass. The 44 theme snapshots are
+  byte-identical. Every rem and px output matches v0.16 over a parity sweep.
+  The only changed outputs are em-mode adjusted line heights, which are the
+  spec fix above.

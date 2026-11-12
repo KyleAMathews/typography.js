@@ -4,7 +4,6 @@
   "version": "0.16.24",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "compass-vertical-rhythm": "^1.4.5",
     "decamelize": "^1.2.0",
     "gray-percentage": "^2.0.0",
     "lodash": "^4.13.1",

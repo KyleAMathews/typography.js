@@ -235,7 +235,8 @@ injectFonts(typography)
 
 ### Configuration
 When creating a new instance of Typography, you can pass in a
-_configuration_ object. All configuration keys are optional.
+_configuration_ object. All configuration keys are optional, and a key set to
+`undefined` takes its default.
 
 * **title**: The theme title.
 * **baseFontSize**: A positive finite pixel length, such as `16px` or `16.5px`.
@@ -369,6 +370,15 @@ an `8px` font size, returned as `0.5rem` with the default rhythm unit.
 `typography.rhythm(lines = 1)` returns spacing based on the base line height,
 subject to rhythm-unit conversion and rounding. Counts may be negative,
 fractional, or zero; with the default settings, `rhythm(-0.25)` is `-0.3625rem`.
+
+`typography.adjustFontSizeTo(size, lines = 'auto', fromSize = baseFontSize)`
+returns a font size and a line height of whole (by default, half) lines. With
+`'auto'`, the line height covers the font size with at least `minLinePadding`
+(default `2px`) above and below; set `roundToNearestHalfLine: false` for whole
+lines. Results are in `rhythmUnit` (default `rem`; also `em`, `ex`, `px`, or an
+absolute unit such as `pt`). Lengths convert as in CSS: `em` and `%` are
+relative to `fromSize`, `ex` is `0.5em`, and an `em` line height is relative to
+the new font size.
 
 Invalid numerical configuration, nonfinite positions or counts, and calculations
 that produce nonfinite or malformed CSS lengths throw an error.
