@@ -275,7 +275,10 @@ const THEMES = readdirSync('packages').filter((p) => p.startsWith('typography-th
 const themes = new Map<string, Record<string, unknown>>(
   await Promise.all(THEMES.map(async (name) => [name, (await import(`../packages/${name}/src/index.js`)).default] as [string, Record<string, unknown>])),
 )
-type ValidityHistory = { theme: string | undefined; codePlugin: boolean }
+// blockMarginBottom goes into calc() in the margins: each valid form must
+// make CSS that Chrome keeps (review X6).
+const BLOCK_MARGINS = [undefined, 2, '0.5', '1.5rem', '20px', '5%', '-0.5rem', 'calc(1rem + 2px)', 'var(--m)'] as const
+type ValidityHistory = { theme: string | undefined; codePlugin: boolean; blockMarginBottom: (typeof BLOCK_MARGINS)[number] }
 
 // A property name in CSS, read independently: kebab case; Webkit, Moz, O
 // gain their dash from the capital, ms gets one.
@@ -322,7 +325,7 @@ async function validityDriver(plan: ValidityHistory, observe: (checkpoint: strin
   const plugins = [...((theme.plugins as Array<unknown>) ?? []), ...(plan.codePlugin ? [codePlugin()] : [])]
   let json: Record<string, unknown>
   try {
-    json = typography({ ...theme, plugins }).toJSON() as Record<string, unknown>
+    json = typography({ ...theme, plugins, ...(plan.blockMarginBottom === undefined ? {} : { blockMarginBottom: plan.blockMarginBottom }) }).toJSON() as Record<string, unknown>
   } catch (error) {
     observe('Chrome rejects', [`typography() or toJSON() threw: ${String(error)}`])
     return
@@ -373,24 +376,30 @@ oracleProperty<ValidityHistory, { rejects: Array<string> }>({
     'packages/typography-theme-wordpress-kubrick/src/index.js',
   ],
   law: {
-    statement: `${Q4B}: for the defaults, every theme, and the code plugin, Chrome's CSS.supports(property, value) holds for each toJSON() declaration, and each selector list and @media prelude parses; -moz-, -ms-, and -o- declarations are other engines'.`,
+    statement: `${Q4B}: for the defaults, every theme, the code plugin, and each valid blockMarginBottom form, Chrome's CSS.supports(property, value) holds for each toJSON() declaration, and each selector list and @media prelude parses; -moz-, -ms-, and -o- declarations are other engines'.`,
     authority: 'CSS Syntax 3; each property\'s specification as Chrome implements it; engineer decisions 2026-11-12 (Q4b: valid CSS for every declaration typography.js writes).',
-    limits: 'Chrome only. normalize.css is not judged. Themes with their own options as shipped.',
+    limits: 'Chrome only. normalize.css is not judged. Themes with their own options as shipped; the blockMarginBottom forms with the default options only.',
   },
   histories: {
-    arbitrary: fc.record({ theme: fc.constantFrom<string | undefined>(undefined, ...THEMES), codePlugin: fc.boolean() }),
+    // Themes as shipped (some, such as lawton, read their own numeric
+    // blockMarginBottom); the margin forms with the default options.
+    arbitrary: fc.oneof(
+      fc.record({ theme: fc.constantFrom<string | undefined>(...THEMES), codePlugin: fc.boolean(), blockMarginBottom: fc.constant(undefined) }),
+      fc.record({ theme: fc.constant(undefined), codePlugin: fc.boolean(), blockMarginBottom: fc.constantFrom(...BLOCK_MARGINS) }),
+    ),
     runs: 10,
     fixedSeeds: [20261112],
-    states: ['the defaults', 'a theme', 'the code plugin'],
+    states: ['the defaults', 'a theme', 'the code plugin', 'a CSS length block margin'],
     constructed: [
-      { name: 'the defaults', enters: ['the defaults'], build: () => ({ theme: undefined, codePlugin: false }) },
-      { name: 'a theme with the code plugin', enters: ['a theme', 'the code plugin'], build: () => ({ theme: THEMES[0], codePlugin: true }) },
+      { name: 'the defaults', enters: ['the defaults'], build: () => ({ theme: undefined, codePlugin: false, blockMarginBottom: undefined }) },
+      { name: 'a theme with the code plugin', enters: ['a theme', 'the code plugin'], build: () => ({ theme: THEMES[0], codePlugin: true, blockMarginBottom: undefined }) },
+      { name: 'a calc() block margin with the code plugin', enters: ['the defaults', 'the code plugin', 'a CSS length block margin'], build: () => ({ theme: undefined, codePlugin: true, blockMarginBottom: 'calc(1rem + 2px)' }) },
     ],
     // Every theme, every run.
-    fixed: [{ name: 'the defaults with the code plugin', history: { theme: undefined, codePlugin: true } }, ...THEMES.map((theme) => ({ name: theme, history: { theme, codePlugin: false } }))],
+    fixed: [{ name: 'the defaults with the code plugin', history: { theme: undefined, codePlugin: true, blockMarginBottom: undefined } }, ...THEMES.map((theme) => ({ name: theme, history: { theme, codePlugin: false, blockMarginBottom: undefined } }))],
   },
   model: () => ({ rejects: [] }),
-  reached: (plan) => [plan.theme === undefined ? 'the defaults' : 'a theme', ...(plan.codePlugin ? ['the code plugin'] : [])],
+  reached: (plan) => [plan.theme === undefined ? 'the defaults' : 'a theme', ...(plan.codePlugin ? ['the code plugin'] : []), ...(typeof plan.blockMarginBottom === 'string' && /[a-z%(]/.test(plan.blockMarginBottom) ? ['a CSS length block margin'] : [])],
   driver: validityDriver,
   check: (_plan, trace, expected) => {
     const rejects = valueAt(trace, 'Chrome rejects')

@@ -16,6 +16,8 @@ export const ws = "[ \\t\\n\\r\\f]"
 export const number = "[+-]?(?:\\d*\\.\\d+|\\d+)(?:e[+-]?\\d+)?"
 const edgeSpace = new RegExp(`^${ws}+|${ws}+$`, "g")
 export const trimSpace = (text: string) => text.replace(edgeSpace, "")
+// A number and its unit, which may be empty, with white space around them.
+export const dimension = new RegExp(`^${ws}*(${number})([a-z%]*)${ws}*$`, "i")
 // A trailing !important (CSS Cascade 5 6.1), and the white space before it.
 const important = new RegExp(`${ws}*!${ws}*important${ws}*$`, "i")
 export const withoutImportant = (text: string) => text.replace(important, "")
@@ -27,6 +29,10 @@ const string = `"(?:\\\\[^]|[^"\\\\\\n\\r\\f])*"|'(?:\\\\[^]|[^'\\\\\\n\\r\\f])*
 export const blank = `(?:${ws}|${comment})`
 // A character of a name (4.3.9). NUL reads as U+FFFD, a name character (3.3).
 export const nameChar = `(?:[-\\w\\u0000\\u0080-\\uFFFF]|${escape})`
+// A property name: one identifier (4.3.11), or a custom property's "--" and
+// name characters (CSS Variables 1 2).
+const identifier = new RegExp(`^(?:--${nameChar}+|-?(?:[a-zA-Z_\\u0080-\\uFFFF]|${escape})${nameChar}*)$`)
+export const isPropertyName = (name: string) => identifier.test(name)
 // `var(--name` then "," or ")" (CSS Variables 1 3), and `env(name` likewise.
 export const varHead = new RegExp(`^var\\(${blank}*--${nameChar}+${blank}*[,)]`, "i")
 const envHead = new RegExp(`^env\\(${blank}*[a-z-]${nameChar}*${blank}*[,)]`, "i")
@@ -277,10 +283,10 @@ const mathType = (text: string): MathType => {
   return k === tokens.length ? type : undefined
 }
 
-// A math function whose type line-height accepts (on text that is a
-// declaration value: its brackets balance): a number, a length, or a
-// percentage (CSS Inline 3), or one the browser types.
-export const isMathFunction = (text: string) => {
+// A math function of a length (a percentage is one), or of a number unless
+// lengthOnly, or one the browser types. Call it on a declaration value: its
+// brackets balance.
+export const isMathFunction = (text: string, lengthOnly: boolean) => {
   const type = mathType(text)
-  return type === "any" || (!!type && (sameType(type, NUMBER) || sameType(type, { length: 1 })))
+  return type === "any" || (!!type && ((!lengthOnly && sameType(type, NUMBER)) || sameType(type, { length: 1 })))
 }

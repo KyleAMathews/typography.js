@@ -276,8 +276,11 @@ system UI font stack.
   * a CSS variable, such as `var(--brand-font)` or
     `var(--brand-font, serif)`, passed through unchanged except that a `<`
     is escaped. An entry that starts with `var(` may continue as a list, as
-    in `'var(--brand-font), Georgia, serif'`. Text before the `var(`, or
-    text that is not a valid list item, makes the entry a family name
+    in `'var(--brand-font), Georgia, serif'`. The entry is written as
+    given, because CSS reads it only after substitution. Text before the
+    `var(`, or text that CSS cannot read as part of one declaration (an open
+    string, comment, or bracket, a top-level `{}`, `;`, or `!`, or a lone
+    backslash at the end), makes the entry a family name
   * `-apple-system`
   * `inherit`, `initial`, `unset`, `revert`, or `revert-layer`, only
     when it is the whole stack (`['inherit']`); in a longer stack it is a
@@ -297,8 +300,9 @@ to `hsl(0,0%,0%,0.8)`.
   elements. Defaults to `bold`.
 * **blockMarginBottom**: Specify the default margin-bottom for block
   elements, in rhythm units (a number or numeric string), or as a CSS length
-  string such as `"1.5rem"`. Defaults to one "rhythm unit" (i.e. the height of
-  the base line height).
+  string such as `"1.5rem"` or `"calc(1rem + 2px)"`. Any other string, such
+  as `"auto"`, throws, because the margins use it in `calc()`. Defaults to
+  one "rhythm unit" (i.e. the height of the base line height).
 * **includeNormalize**: Include normalize.css.
   Normalize.css is an excellent project which works to normalize the
 base browser CSS across browsers and serves as an excellent foundation

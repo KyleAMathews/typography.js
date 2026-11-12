@@ -231,3 +231,32 @@ verdict and evidence for each, is `/tmp/typography-review6-eval/ledger.md`.
   rules' design values (grays, borders, the code size) and the theme's data,
   which the snapshots pin (decision Q4b). A calibration that only corrupted
   `code`'s line height now corrupts the first line height outside h1–h6.
+
+## Review round 7 (2026-11-12)
+
+A seventh `/code-review high` (head 573b24d) gave X1–X10 (ledger
+`/tmp/typography-review7-eval/ledger.md`).
+
+- **RED on 573b24d:** `blockMarginBottom: 'auto'` wrote `calc(auto - 1px)`
+  (stylesheet); `rhythm(0, '-5e-324px')` and `adjustFontSizeTo(…, '-16px'
+  fromSize)` returned lengths (helpers); a root of
+  `6.2500000000072106e-10%` (numeric); with the code plugin, a negative
+  block margin wrote `pre { padding: -0.5rem }` (Chrome witness). The probe
+  also reproduced property names with `</style>` and `;}`, selectors with an
+  open comment, string, or bracket, an empty custom property that threw, and
+  plugins as a string or an object.
+- **Fixes:** property names must be one identifier; selectors must be whole
+  text; every font size, context, and fromSize must be nonnegative; the root
+  percentage has 15 significant digits; `plugins` must be a list of
+  functions and each override a function (TypeError); `blockMarginBottom` is
+  rhythm units or a CSS length (RangeError); an empty value is allowed for a
+  custom property; the code plugin pads with 0 for a negative block margin.
+- **X4** restates law V6 (pass through raw); the README now says so. **X7**
+  is declined: the stylesheet oracle checks that the plugin's padding is the
+  core's block margin.
+- **Gap check** (`css.js`, `index.js`, `verticalRhythm.js`,
+  `compileStyles.js`, the code plugin): 698 mutants, 671 killed. Of the 27
+  open, 25 are the code plugin's design values (Q4b) and one is the
+  `appendChild` branch (a v0.16 test). Three more were closed with
+  constructed histories (NaN alone, NaN on a custom property, a selector
+  with a top-level block), and one unused default argument was removed.

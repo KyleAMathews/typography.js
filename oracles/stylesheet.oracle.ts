@@ -31,9 +31,11 @@ with its leading dash, a custom property as written, and each value as given.
 A `null` value is no declaration. normalize.css comes first exactly when
 `includeNormalize` is not false. A value or selector that is not safe CSS
 (`<`; a stray `}`, `;`, or `!`, where a trailing `!important` is CSS; an open
-string; a nonfinite number; anything but a string or number) makes
-`toString()` throw a RangeError naming the selector and the property
-(engineer decisions 2026-11-12, Q4a).
+string, comment, or bracket; a lone backslash; a nonfinite number; anything
+but a string or number), or a property name that is not one CSS identifier,
+makes `toString()` throw a RangeError naming the selector and the property
+(engineer decisions 2026-11-12, Q4a; reviews X1, X2). An empty value is a
+custom property's only (CSS Variables 1 §2, review X8).
 S5. `headerColor` and `headerWeight` reach h1–h6, `bodyColor` and
 `bodyWeight` reach body, and `boldWeight` reaches b, strong, dt, and th, as
 given (README, Configuration). Spacing is in rhythm units: every block
@@ -42,11 +44,17 @@ rhythm units, a CSS length is used as is), blockquote side margins and list
 indents are one rhythm, list items and their nested lists half the block
 margin, and table cells two thirds (sides) and one half (top) of a rhythm
 (engineer decision 2026-11-12, Q4b). The code plugin's `pre` padding is the
-block margin too.
+block margin too, or 0 when the block margin is negative (a negative
+padding is not CSS; the browser keeps the reset's 0). A `blockMarginBottom` string that is not a CSS length,
+which the margins put in calc(), makes typography() throw a RangeError
+naming it (review X6: `'auto'` wrote `calc(auto - 1px)`).
 S6. Plugins run in order, then `overrideStyles`, then `overrideThemeStyles`
 (README). Each layer is deep-merged over the styles before it: its value for
 a rule and property replaces the earlier one, a `null` removes it, and
-everything it does not name stays.
+everything it does not name stays. `plugins` that are not a list of
+functions, or an override that is not a function, make typography() throw a
+TypeError naming the option (review X5: v0.16 ignored them, an ignored input
+being a bug by the engineer's rule).
 
 The model reads the plan alone. It layers the generated style objects and
 the options to predict each named declaration. Spacing is checked against
@@ -93,19 +101,29 @@ type History = {
   codePlugin: boolean
   overrideStyles: Array<Entry> | undefined
   overrideThemeStyles: Array<Entry> | undefined
+  // A plugins or override option that is not a list of functions or a
+  // function (review X5): named here, built in the driver.
+  malformed: { option: 'plugins' | 'overrideStyles' | 'overrideThemeStyles'; as: Malformed } | undefined
 }
+type Malformed = 'a string' | 'null' | 'an object' | 'a list with a string'
 
 const MEDIA = '@media (max-width:480px)'
 // Safe CSS values, including a string that holds ";" and "}", and a trailing
 // !important. Unsafe ones break the rule, the stylesheet, or the <style>.
-// 'a {b}' is safe for a custom property only (review W5); '\\(a' holds an
+// 'a {b}' and '' are safe for a custom property only (reviews W5, X8); '\\(a' holds an
 // escaped "(" that opens no block.
-const SAFE_VALUES: Array<Value> = ['red', '#123456', '1.5rem', 0, 12, 'calc(1em + 2px)', 'var(--x)', "'a;b}'", 'url(a.png)', 'red !important', 'inherit', 'var(--x, {a})', 'a {b}', '\\(a']
+const SAFE_VALUES: Array<Value> = ['red', '#123456', '1.5rem', 0, 12, 'calc(1em + 2px)', 'var(--x)', "'a;b}'", 'url(a.png)', 'red !important', 'inherit', 'var(--x, {a})', 'a {b}', '\\(a', '']
 // 'a\\': a lone backslash at the end escapes the ";" after it (review W1).
-const UNSAFE_VALUES: Array<Value> = ['red</style>', 'red}', 'a;b', 'red !importan', "'open", NaN, true, '!important', 'a\\']
+const UNSAFE_VALUES: Array<Value> = ['red</style>', 'red}', 'a;b', 'red !importan', "'open", NaN, true, '!important', 'a\\', 'a /* b']
+// Names that are not one CSS identifier break the rule or the <style>
+// (review X1).
+const UNSAFE_PROPERTIES = ['</style>', 'color;}body{background', '--x}', 'a b']
 const PROPERTIES = ['color', 'marginTop', 'fontSize', 'WebkitFontSmoothing', 'MozOsxFontSmoothing', 'msTextSizeAdjust', 'OTransition', '--brandColor', '--x-y']
-const SELECTORS = ['h1', 'p', 'body', '.post', ':root', 'a:hover', 'ul li', 'h2,h3', 'blockquote']
-const UNSAFE_SELECTORS = ['h1</style>', 'p{', 'p;']
+const SELECTORS = ['h1', 'p', 'body', '.post', ':root', 'a:hover', 'ul li', 'h2,h3', 'blockquote', 'a[title="{;}"]', 'p:not(.x)']
+// A selector with an open comment, string, or bracket, or a lone backslash,
+// swallows the rules after it (review X2); one with "{" inside a string does
+// not.
+const UNSAFE_SELECTORS = ['h1</style>', 'p{', 'p;', 'a /*', 'a\\', 'a[title="x]', 'p:not(a', 'p {x}']
 
 const value = fc.oneof(
   { weight: 8, arbitrary: fc.constantFrom(...SAFE_VALUES) },
@@ -115,7 +133,7 @@ const value = fc.oneof(
 const entry = fc.record({
   media: fc.boolean(),
   selector: fc.oneof({ weight: 12, arbitrary: fc.constantFrom(...SELECTORS) }, { weight: 1, arbitrary: fc.constantFrom(...UNSAFE_SELECTORS) }),
-  property: fc.constantFrom(...PROPERTIES),
+  property: fc.oneof({ weight: 12, arbitrary: fc.constantFrom(...PROPERTIES) }, { weight: 1, arbitrary: fc.constantFrom(...UNSAFE_PROPERTIES) }),
   value,
 })
 const layer = fc.array(entry, { maxLength: 5 })
@@ -131,14 +149,28 @@ const arbitrary: fc.Arbitrary<History> = fc.record({
     headerWeight: weight,
     bodyWeight: weight,
     boldWeight: weight,
-    // null is one rhythm, as v0.16 read it.
-    blockMarginBottom: fc.constantFrom<Value>(undefined, null, 0.5, 1, 2, '1', '1.5rem', '20px'),
+    // null is one rhythm, as v0.16 read it. A string is a CSS length, which
+    // calc() takes (review X6); any other string throws.
+    blockMarginBottom: fc.oneof(
+      { weight: 6, arbitrary: fc.constantFrom<Value>(undefined, null, 0.5, 1, 2, -1, '1', '1.5rem', '20px', '5%', '-0.5rem', 'calc(1rem + 2px)', 'var(--m)') },
+      { weight: 1, arbitrary: fc.constantFrom<Value>('auto', '1rem !important', 'red', 'calc(1)', '1rem;', 'x') },
+    ),
     includeNormalize: fc.constantFrom(undefined, true, false),
   }),
   plugins: fc.array(layer, { maxLength: 2 }),
   codePlugin: fc.boolean(),
   overrideStyles: fc.option(layer, { nil: undefined }),
   overrideThemeStyles: fc.option(layer, { nil: undefined }),
+  malformed: fc.oneof(
+    { weight: 12, arbitrary: fc.constant(undefined) },
+    {
+      weight: 1,
+      arbitrary: fc.record({
+        option: fc.constantFrom('plugins' as const, 'overrideStyles' as const, 'overrideThemeStyles' as const),
+        as: fc.constantFrom<Malformed>('a string', 'null', 'an object', 'a list with a string'),
+      }),
+    },
+  ),
 })
 
 const toObject = (entries: Array<Entry>) => {
@@ -160,7 +192,7 @@ const isSafeText = (v: string, custom: boolean) => {
   if (v.includes('<')) return false
   // A trailing !important is CSS, but only after a value.
   const body = v.replace(/\s*!\s*important\s*$/i, '')
-  if (body.trim() === '') return false
+  if (body.trim() === '') return custom
   let quote: string | undefined
   let depth = 0
   for (let k = 0; k < body.length; k++) {
@@ -170,7 +202,12 @@ const isSafeText = (v: string, custom: boolean) => {
       else if (c === quote) quote = undefined
       continue
     }
-    if (c === '\\') {
+    if (c === '/' && body[k + 1] === '*') {
+      // A comment ends at its first "*/".
+      const end = body.indexOf('*/', k + 2)
+      if (end < 0) return false
+      k = end + 1
+    } else if (c === '\\') {
       // An escape: a backslash, then a character other than a line break.
       if (k + 1 >= body.length || /[\n\r\f]/.test(body[k + 1])) return false
       k++
@@ -186,7 +223,11 @@ const isSafeText = (v: string, custom: boolean) => {
 }
 const isSafeValue = (v: Value, property: string) =>
   v === null || v === undefined || (typeof v === 'number' && Number.isFinite(v)) || (typeof v === 'string' && isSafeText(v, property.startsWith('--')))
-const isSafeSelector = (s: string) => !/[<{};]/.test(s)
+// A selector (or @media prelude) is safe text with something in it.
+const isSafeSelector = (s: string) => s.trim() !== '' && isSafeText(s, false)
+// A property name is one CSS identifier: a custom property's "--" and name
+// characters, or a camel- or kebab-case name.
+const isSafeProperty = (p: string) => /^--[-\w]+$/.test(p) || /^-?[A-Za-z][-A-Za-z0-9]*$/.test(p)
 
 // Keys: scope ("" or MEDIA), selector, property.
 type Key = string
@@ -207,11 +248,22 @@ const DEFAULTS: Record<keyof History['options'], Value> = {
 }
 const isNumeric = (v: Value) => typeof v === 'number' || (typeof v === 'string' && /^\s*[+-]?(\d*\.\d+|\d+)(e[+-]?\d+)?\s*$/i.test(v))
 
+// The generated blockMarginBottom strings that are CSS lengths calc() takes
+// (the Chrome witness checks the calc() they make); the others are not.
+const MARGIN_LENGTHS = ['1.5rem', '20px', '5%', '-0.5rem', 'calc(1rem + 2px)', 'var(--m)']
+
 /** What each named declaration must be: a literal, a rhythm count, or a block-margin form. */
-type Owed = { literal: Value } | { rhythm: number } | { block: 'whole' | 'half' | 'less1px' } | { cellBottom: true }
-function model(plan: History): { throws: true } | { owed: Map<Key, Owed>; normalize: boolean } {
+type Owed = { literal: Value } | { rhythm: number } | { block: 'whole' | 'half' | 'less1px' | 'padding' } | { cellBottom: true }
+type Expected = { rejects: 'TypeError' | 'RangeError'; option: string } | { throws: true } | { owed: Map<Key, Owed>; normalize: boolean }
+function model(plan: History): Expected {
   const owed = new Map<Key, Owed>()
   const o = plan.options
+  // typography() rejects plugins that are not a list of functions and an
+  // override that is not a function (review X5: v0.16 ignored them), and a
+  // blockMarginBottom string that is not a CSS length (X6).
+  if (plan.malformed) return { rejects: 'TypeError', option: plan.malformed.option }
+  if (typeof o.blockMarginBottom === 'string' && !isNumeric(o.blockMarginBottom) && !MARGIN_LENGTHS.includes(o.blockMarginBottom))
+    return { rejects: 'RangeError', option: 'blockMarginBottom' }
   // undefined is the default (decision L1); null removes the declaration (Q4a).
   const given = (k: keyof History['options']) => (o[k] === undefined ? DEFAULTS[k] : o[k])
   const set = (selectors: Array<string>, property: string, v: Owed) => selectors.forEach((s) => owed.set(key('', s, property), v))
@@ -234,7 +286,9 @@ function model(plan: History): { throws: true } | { owed: Map<Key, Owed>; normal
   set(['td,th'], 'paddingTop', { rhythm: 1 / 2 })
   set(['td,th'], 'paddingBottom', { cellBottom: true })
   // S9: the code plugin runs first among the plugins.
-  if (plan.codePlugin) set(['pre'], 'padding', { block: 'whole' })
+  // A negative padding is not CSS, and the browser keeps the reset's 0: a
+  // negative block margin pads with 0 (Q4b; the Chrome witness found it).
+  if (plan.codePlugin) set(['pre'], 'padding', { block: 'padding' })
   // S6: then each layer, in order, over what is there.
   for (const layer of [...plan.plugins, ...(plan.overrideStyles ? [plan.overrideStyles] : []), ...(plan.overrideThemeStyles ? [plan.overrideThemeStyles] : [])])
     for (const e of layer) if (e.value !== undefined) owed.set(key(e.media ? MEDIA : '', e.selector, e.property), { literal: e.value })
@@ -244,7 +298,7 @@ function model(plan: History): { throws: true } | { owed: Map<Key, Owed>; normal
   const layers = [...plan.plugins, ...(plan.overrideStyles ? [plan.overrideStyles] : []), ...(plan.overrideThemeStyles ? [plan.overrideThemeStyles] : [])]
   const unsafe =
     layers.some((l) => l.some((e) => !isSafeSelector(e.selector))) ||
-    [...owed].some(([k, v]) => 'literal' in v && v.literal !== null && !isSafeValue(v.literal, JSON.parse(k)[2]))
+    [...owed].some(([k, v]) => 'literal' in v && v.literal !== null && (!isSafeProperty(JSON.parse(k)[2]) || !isSafeValue(v.literal, JSON.parse(k)[2])))
   if (unsafe) return { throws: true }
   return { owed, normalize: o.includeNormalize !== false }
 }
@@ -257,12 +311,21 @@ function driver(plan: History, observe: (checkpoint: string, value: unknown) => 
   const fixed = (entries: Array<Entry>) => () => toObject(entries)
   const options = Object.fromEntries(Object.entries(plan.options).filter(([, v]) => v !== undefined))
   let t: ReturnType<typeof typography>
+  const malformed = plan.malformed && {
+    [plan.malformed.option]: {
+      'a string': 'x',
+      null: null,
+      'an object': plan.malformed.option === 'plugins' ? { a: () => ({}) } : {},
+      'a list with a string': plan.malformed.option === 'plugins' ? ['x'] : [() => ({})],
+    }[plan.malformed.as],
+  }
   try {
     t = typography({
       ...options,
       plugins: [...(plan.codePlugin ? [codePlugin()] : []), ...plan.plugins.map(fixed)],
       ...(plan.overrideStyles ? { overrideStyles: fixed(plan.overrideStyles) } : {}),
       ...(plan.overrideThemeStyles ? { overrideThemeStyles: fixed(plan.overrideThemeStyles) } : {}),
+      ...malformed,
     })
   } catch (error) {
     observe('typography()', error)
@@ -312,8 +375,14 @@ const expectedRules = (json: Record<string, unknown>): Array<Rule> =>
 
 const valueAt = (trace: ReadonlyArray<Observation>, checkpoint: string) => trace.find((o) => o.checkpoint === checkpoint)?.value
 
-function check(plan: History, trace: ReadonlyArray<Observation>, expected: ReturnType<typeof model>) {
+function check(plan: History, trace: ReadonlyArray<Observation>, expected: Expected) {
   const construction = valueAt(trace, 'typography()') ?? valueAt(trace, 'toJSON() error')
+  if ('rejects' in expected) {
+    const thrown = valueAt(trace, 'typography()')
+    return thrown instanceof Error && thrown.name === expected.rejects && thrown.message.includes(expected.option)
+      ? pass
+      : violation('typography()', `typography() did not throw a ${expected.rejects} naming ${expected.option}`, expected.option === 'blockMarginBottom' ? S5 : S6, { actual: thrown ?? 'no error' })
+  }
   if (construction) return violation('typography()', 'typography() or toJSON() threw on valid options', S5, { actual: construction })
   const error = valueAt(trace, 'toString() error')
   if ('throws' in expected) {
@@ -358,6 +427,8 @@ function check(plan: History, trace: ReadonlyArray<Observation>, expected: Retur
         ? rhythmOf(owed.rhythm)
         : 'cellBottom' in owed
         ? `calc(${r.half} - 1px)`
+        : owed.block === 'padding'
+        ? (r.block.startsWith('-') ? '0' : r.block)
         : owed.block === 'whole'
         ? r.block
         : owed.block === 'half'
@@ -382,7 +453,7 @@ oracleProperty<History, ReturnType<typeof model>>({
     'packages/typography-plugin-code/src/index.js',
   ],
   law: {
-    statement: `${S4}: rule by rule, kebab-case names, vendor prefixes, custom properties as written, values as given, null dropped, normalize first unless includeNormalize is false, createStyles() the same text (v0.16); an unsafe value or selector throws a RangeError. ${S5}: typography().options holds each given option or its README default; headerColor/headerWeight on h1–h6, bodyColor/bodyWeight on body, boldWeight on b/strong/dt/th; block margins, list indents, blockquote margins, and cell padding in rhythm units; the code plugin's pre padding is the block margin. ${S6}: plugins, then overrideStyles, then overrideThemeStyles, each deep-merged, null removing.`,
+    statement: `${S4}: rule by rule, kebab-case names, vendor prefixes, custom properties as written, values as given, null dropped, normalize first unless includeNormalize is false, createStyles() the same text (v0.16); an unsafe value, selector, or property name throws a RangeError (an empty value is a custom property's only). ${S5}: typography().options holds each given option or its README default; headerColor/headerWeight on h1–h6, bodyColor/bodyWeight on body, boldWeight on b/strong/dt/th; block margins, list indents, blockquote margins, and cell padding in rhythm units; the code plugin's pre padding is the block margin; a blockMarginBottom string that is not a CSS length throws a RangeError naming it. ${S6}: plugins, then overrideStyles, then overrideThemeStyles, each deep-merged, null removing; plugins that are not a list of functions, or an override that is not a function, throw a TypeError naming the option.`,
     authority: 'README (Configuration; Themes & Plugins; overrideStyles; overrideThemeStyles); CSS Variables 1 §2 (custom property names are case-sensitive); CSS Syntax 3 §5 and §8.2; engineer decisions 2026-11-12 (Q4a, Q4b; coverage in this PR).',
     limits: 'Design values of the default rules are pinned by snapshots. Up to 2 plugins, 5 entries per layer, selectors and properties from fixed lists, one @media scope. Property names with two capitals in a row are not generated. Browser acceptance of each declaration is the Chrome witness.',
   },
@@ -390,7 +461,7 @@ oracleProperty<History, ReturnType<typeof model>>({
     arbitrary,
     runs: 100,
     fixedSeeds: [20261112],
-    states: ['an unsafe value', 'an unsafe selector', 'a null value', 'a custom property', 'a vendor prefix', 'a media rule', 'an override over an option', 'the code plugin', 'normalize off', 'a numeric-string block margin'],
+    states: ['an unsafe value', 'an unsafe selector', 'a null value', 'a custom property', 'a vendor prefix', 'a media rule', 'an override over an option', 'the code plugin', 'normalize off', 'a numeric-string block margin', 'an unsafe property', 'an empty value', 'a malformed plugin option', 'an invalid block margin'],
     constructed: [
       { name: 'an unsafe value', enters: ['an unsafe value'], build: (h) => ({ ...h, overrideStyles: [{ media: false, selector: 'body', property: 'color', value: 'red</style>' }], overrideThemeStyles: undefined }) },
       { name: 'an unsafe selector', enters: ['an unsafe selector'], build: (h) => ({ ...h, overrideStyles: [{ media: false, selector: 'p{', property: 'color', value: 'red' }], overrideThemeStyles: undefined }) },
@@ -399,9 +470,18 @@ oracleProperty<History, ReturnType<typeof model>>({
       { name: 'a vendor prefix in a media rule', enters: ['a vendor prefix', 'a media rule'], build: (h) => ({ ...h, overrideStyles: [{ media: true, selector: 'p', property: 'msTextSizeAdjust', value: 'red' }], overrideThemeStyles: undefined }) },
       { name: 'the code plugin with a numeric-string margin', enters: ['the code plugin', 'a numeric-string block margin'], build: (h) => ({ ...h, codePlugin: true, options: { ...h.options, blockMarginBottom: '1' } }) },
       { name: 'normalize off', enters: ['normalize off'], build: (h) => ({ ...h, options: { ...h.options, includeNormalize: false } }) },
+      { name: 'an unsafe property name (X1)', enters: ['an unsafe property'], build: (h) => ({ ...h, malformed: undefined, overrideStyles: [{ media: false, selector: 'p', property: '</style>', value: 'red' }], overrideThemeStyles: undefined }) },
+      { name: 'a selector with an open comment (X2)', enters: ['an unsafe selector'], build: (h) => ({ ...h, malformed: undefined, overrideStyles: [{ media: false, selector: 'a /*', property: 'color', value: 'red' }], overrideThemeStyles: undefined }) },
+      { name: 'an empty custom property (X8)', enters: ['a custom property', 'an empty value'], build: (h) => ({ ...h, malformed: undefined, overrideStyles: [{ media: false, selector: ':root', property: '--x-y', value: '' }], overrideThemeStyles: undefined }) },
+      // Gap check (round 7): NaN alone, on a property and on a custom property.
+      { name: 'NaN alone', enters: ['an unsafe value'], build: (h) => ({ ...h, malformed: undefined, overrideStyles: [{ media: false, selector: 'p', property: 'color', value: NaN }], overrideThemeStyles: undefined }) },
+      { name: 'NaN on a custom property', enters: ['an unsafe value', 'a custom property'], build: (h) => ({ ...h, malformed: undefined, overrideStyles: [{ media: false, selector: ':root', property: '--x-y', value: NaN }], overrideThemeStyles: undefined }) },
+      { name: 'a selector with a top-level {} block', enters: ['an unsafe selector'], build: (h) => ({ ...h, malformed: undefined, overrideStyles: [{ media: false, selector: 'p {x}', property: 'color', value: 'red' }], overrideThemeStyles: undefined }) },
+      { name: 'plugins as a string (X5)', enters: ['a malformed plugin option'], build: (h) => ({ ...h, malformed: { option: 'plugins', as: 'a string' } }) },
+      { name: 'blockMarginBottom auto (X6)', enters: ['an invalid block margin'], build: (h) => ({ ...h, malformed: undefined, options: { ...h.options, blockMarginBottom: 'auto' } }) },
     ],
     fixed: [
-      { name: 'S6: overrideThemeStyles after overrideStyles', history: { options: { headerColor: undefined, bodyColor: undefined, headerWeight: undefined, bodyWeight: undefined, boldWeight: undefined, blockMarginBottom: undefined, includeNormalize: undefined }, plugins: [[{ media: false, selector: 'h1', property: 'color', value: 'red' }]], codePlugin: false, overrideStyles: [{ media: false, selector: 'h1', property: 'color', value: '#123456' }], overrideThemeStyles: [{ media: false, selector: 'h1', property: 'color', value: 'inherit' }] } },
+      { name: 'S6: overrideThemeStyles after overrideStyles', history: { options: { headerColor: undefined, bodyColor: undefined, headerWeight: undefined, bodyWeight: undefined, boldWeight: undefined, blockMarginBottom: undefined, includeNormalize: undefined }, plugins: [[{ media: false, selector: 'h1', property: 'color', value: 'red' }]], codePlugin: false, overrideStyles: [{ media: false, selector: 'h1', property: 'color', value: '#123456' }], overrideThemeStyles: [{ media: false, selector: 'h1', property: 'color', value: 'inherit' }], malformed: undefined } },
     ],
   },
   model,
@@ -416,6 +496,10 @@ oracleProperty<History, ReturnType<typeof model>>({
     if (all.some((e) => e.media)) states.add('a media rule')
     if (all.some((e) => !e.media && ((HEADINGS.includes(e.selector) && e.property === 'color') || (e.selector === 'body' && e.property === 'color')))) states.add('an override over an option')
     if (plan.codePlugin) states.add('the code plugin')
+    if (all.some((e) => !isSafeProperty(e.property))) states.add('an unsafe property')
+    if (all.some((e) => e.value === '')) states.add('an empty value')
+    if (plan.malformed) states.add('a malformed plugin option')
+    if (typeof plan.options.blockMarginBottom === 'string' && !isNumeric(plan.options.blockMarginBottom) && !MARGIN_LENGTHS.includes(plan.options.blockMarginBottom)) states.add('an invalid block margin')
     if (plan.options.includeNormalize === false) states.add('normalize off')
     if (typeof plan.options.blockMarginBottom === 'string' && isNumeric(plan.options.blockMarginBottom)) states.add('a numeric-string block margin')
     return [...states]

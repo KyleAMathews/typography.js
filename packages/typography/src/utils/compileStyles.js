@@ -5,7 +5,7 @@ import each from "lodash/forEach"
 import reduce from "lodash/reduce"
 import isObject from "lodash/isObject"
 
-import { isDeclarationValue, trimSpace, withoutImportant } from "./css"
+import { isDeclarationValue, isPropertyName, trimSpace, withoutImportant } from "./css"
 import type { OptionsType } from "Types"
 
 // A property name in CSS: kebab case, with a leading dash for a vendor
@@ -17,20 +17,20 @@ const cssName = (property: string) => {
   return /^(?:Webkit|Moz|ms|O)[A-Z]/.test(property) ? `-${name}` : name
 }
 
-// A value CSS reads as one declaration's value, in a stylesheet that a <style>
-// element can hold: no "<", and nothing that ends the declaration early (a
-// stray "}", ";", or "!", an open string or block, a lone backslash) or drops
-// it (a top-level {} block outside a custom property). A trailing !important
-// is CSS.
+// Text a <style> element can hold that CSS reads whole: no "<", and nothing
+// that ends it early (a stray "}", ";", or "!", an open string, comment, or
+// block, a lone backslash) or drops it (a top-level {} block outside a custom
+// property).
+const isWhole = (text: string, custom: boolean) =>
+  text.indexOf("<") === -1 && isDeclarationValue(text, custom)
+
+// A declaration's value; a trailing !important is CSS. An empty value is a
+// custom property's only (CSS Variables 1 2).
 const cssValue = (selector: string, property: string, value: mixed) => {
   if (typeof value === "number" && Number.isFinite(value)) return String(value)
+  const custom = property.slice(0, 2) === "--"
   const body = typeof value === "string" ? trimSpace(withoutImportant(value)) : ""
-  if (
-    typeof value !== "string" ||
-    !body ||
-    value.indexOf("<") !== -1 ||
-    !isDeclarationValue(body, property.slice(0, 2) === "--")
-  ) {
+  if (typeof value !== "string" || (!body && !custom) || !isWhole(body, custom)) {
     throw new RangeError(`Invalid CSS value for ${selector} ${property}`)
   }
   return value
@@ -40,7 +40,7 @@ const compileStyles = styles =>
   reduce(
     styles,
     (stylesStr, ruleSet, selector) => {
-      if (/[<{};]/.test(selector)) {
+      if (!trimSpace(selector) || !isWhole(selector, false)) {
         throw new RangeError(`Invalid CSS selector ${selector}`)
       }
       stylesStr += `${selector}{`
@@ -50,7 +50,11 @@ const compileStyles = styles =>
         if (isObject(value)) {
           stylesStr += compileStyles({ [property]: value })
         } else {
-          stylesStr += `${cssName(property)}:${cssValue(selector, property, value)};`
+          const name = cssName(property)
+          if (!isPropertyName(name)) {
+            throw new RangeError(`Invalid CSS property for ${selector} ${property}`)
+          }
+          stylesStr += `${name}:${cssValue(selector, property, value)};`
         }
       })
       stylesStr += "}"

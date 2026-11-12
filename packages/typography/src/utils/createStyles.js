@@ -3,7 +3,6 @@ import gray from "gray-percentage"
 import set from "lodash/set"
 import each from "lodash/forEach"
 import isString from "lodash/isString"
-import isFunction from "lodash/isFunction"
 import isArray from "lodash/isArray"
 import merge from "lodash/merge"
 import reduce from "lodash/reduce"
@@ -252,12 +251,12 @@ export default (vr: any, options: OptionsType) => {
   )
 
   // Call overrideStyles function on options (if set).
-  if (isFunction(options.overrideStyles)) {
+  if (options.overrideStyles) {
     styles = merge(styles, options.overrideStyles(vr, options, styles))
   }
 
   // Call overrideThemeStyles function on options (if set).
-  if (isFunction(options.overrideThemeStyles)) {
+  if (options.overrideThemeStyles) {
     styles = merge(styles, options.overrideThemeStyles(vr, options, styles))
   }
 

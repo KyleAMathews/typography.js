@@ -22,8 +22,6 @@ const genericFamilies = [
 // names: browsers do not implement them yet, and Chrome drops a whole
 // declaration that holds one.
 
-
-
 // An entry that starts with a well-formed var() and is a <declaration-value>
 // (no bad string or url, nothing left open, no top-level ";" or "!"). CSS
 // reads it only after substitution, so it passes through as written, as #307

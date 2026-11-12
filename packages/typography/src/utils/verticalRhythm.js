@@ -7,14 +7,13 @@
 // rejected: only the browser knows the font's x-height. Results are in the rhythm unit, to 5
 // decimals. Rhythm in px is floored to whole pixels.
 
+import { dimension, number, ws } from "./css"
+
 const invalid = (name: string, what: string = "numerical value") =>
   new RangeError(`Invalid ${what} for ${name}`)
 
-import { number, ws } from "./css"
-
 // A CSS number, with white space around it ignored, as CSS ignores it.
 const cssNumber = new RegExp(`^${ws}*${number}${ws}*$`, "i")
-const cssLength = new RegExp(`^${ws}*(${number})([a-z%]*)${ws}*$`, "i")
 
 // A finite number, or a string that is one CSS number ("1.5"), as v0.16 read.
 export const toNumber = (name: string, value: any, positive: boolean = false) => {
@@ -37,7 +36,7 @@ export const isNumeric = (value: any) =>
 // CSS length, 5.1).
 const parseLength = (name: string, value: any) => {
   if (typeof value === "number") return [toNumber(name, value), "px"]
-  const match = typeof value === "string" && cssLength.exec(value)
+  const match = typeof value === "string" && dimension.exec(value)
   if (!match) throw invalid(name, "CSS length")
   return [Number(match[1]), match[2].toLowerCase() || "px"]
 }
@@ -85,6 +84,12 @@ export default function verticalRhythm(options: Object) {
   const pxPerUnit = (unit: string, parent: number) => pxPer(unit, base, parent)
   const toPixels = (name: string, length: any, parent: number) =>
     lengthPx(name, length, base, parent)
+  // A font size in px: a negative one is not CSS.
+  const sizePx = (name: string, length: any, parent: number) => {
+    const px = toPixels(name, length, parent)
+    if (px < 0) throw invalid(name)
+    return px
+  }
 
   // A number is a multiple of the base; a length is read at html, whose font
   // size is the base. 16 × 1e308 is not a usable line height.
@@ -134,16 +139,14 @@ export default function verticalRhythm(options: Object) {
 
   // The fewest lines (half lines by default) that hold the font size, plus
   // one more when the space left is under twice minLinePadding.
-  // A negative font size is not CSS.
   const linesForFontSize = (fontSize: any) => {
-    const px = toPixels("linesForFontSize font size", fontSize, base)
-    if (px < 0) throw invalid("linesForFontSize font size")
+    const px = sizePx("linesForFontSize font size", fontSize, base)
     const lines = Math.ceil(px / linePx / step) * step
     return lines * linePx - px < 2 * paddingPx ? lines + step : lines
   }
   const rhythm = (lines: any, fontSize: any, offset: any) => {
     const count = lines == null ? 1 : toNumber("rhythm lines", lines)
-    const context = toPixels(
+    const context = sizePx(
       "rhythm font size",
       fontSize == null ? base : fontSize,
       base
@@ -156,15 +159,14 @@ export default function verticalRhythm(options: Object) {
       true
     )
   }
-  // Nor is a negative line height.
+  // A negative line count is not CSS either.
   const adjustFontSizeTo = (fontSize: any, lines: any, fromSize: any) => {
-    const parent = toPixels(
+    const parent = sizePx(
       "adjustFontSizeTo fromSize",
       fromSize == null ? base : fromSize,
       base
     )
-    const px = toPixels("adjustFontSizeTo font size", fontSize, parent)
-    if (px < 0) throw invalid("adjustFontSizeTo font size")
+    const px = sizePx("adjustFontSizeTo font size", fontSize, parent)
     const count =
       lines == null || lines === "auto"
         ? linesForFontSize(`${px}px`)
@@ -177,7 +179,8 @@ export default function verticalRhythm(options: Object) {
     }
   }
   const establishBaseline = () => ({
-    fontSize: `${(base / 16) * 100}%`,
+    // 15 significant digits: "115%", not floating-point "114.99999999999999%".
+    fontSize: `${parseFloat(((base / 16) * 100).toPrecision(15))}%`,
     // As given: a unitless line height stays unitless.
     lineHeight: String(baseLineHeight),
   })

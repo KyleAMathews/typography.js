@@ -10,8 +10,8 @@ import {
   hasSubstitution,
   isDeclarationValue,
   isMathFunction,
+  dimension,
   lengthUnit,
-  number,
   trimSpace,
   withoutImportant,
 } from "./utils/css"
@@ -44,24 +44,36 @@ const ratioOf = (ratio: any) =>
     ? namedRatios[ratio]
     : ratio
 
+// A CSS length (a percentage is one) or a math function of one (of a
+// number too, unless lengthOnly), or a value whose var() or env() reference,
+// or a function the browser types, CSS decides.
+const isLengthText = (text: string, lengthOnly: boolean) => {
+  const length = dimension.exec(text)
+  return (
+    (!!length && lengthUnit.test(length[2])) ||
+    ((isMathFunction(text, lengthOnly) || hasSubstitution(text)) &&
+      text.indexOf("<") === -1 &&
+      isDeclarationValue(text))
+  )
+}
 // headerLineHeight is written as given, so it may be any CSS line-height
 // (CSS Inline 3), with or without !important: a number or length of 0 or
 // more, normal, a CSS-wide keyword, a math function, or a value with var() or env().
-const lineHeightLength = new RegExp(`^(${number})([a-z%]+)$`, "i")
 const isLineHeight = (value: any) => {
   if (isNumeric(value)) return toNumber("headerLineHeight", value) >= 0
   if (typeof value !== "string") return false
   const text = trimSpace(withoutImportant(value))
-  const length = lineHeightLength.exec(text)
+  const length = dimension.exec(text)
   return (
     (isNumeric(text) && toNumber("headerLineHeight", text) >= 0) ||
     ["normal", ...cssWideKeywords].indexOf(asciiLower(text)) !== -1 ||
-    (!!length && Number(length[1]) >= 0 && lengthUnit.test(length[2])) ||
-    // With a var() or env() reference, or a function the browser types, CSS
-    // decides.
-    ((isMathFunction(text) || hasSubstitution(text)) && text.indexOf("<") === -1 && isDeclarationValue(text))
+    ((!length || Number(length[1]) >= 0) && isLengthText(text, false))
   )
 }
+// blockMarginBottom: rhythm units (a number or numeric string, or null for
+// one, as v0.16 read it), or a CSS length that the margins put in calc().
+const isBlockMargin = (value: any) =>
+  value === null || isNumeric(value) || (typeof value === "string" && isLengthText(trimSpace(value), true))
 
 const typography = function (opts: OptionsType) {
   const defaults: OptionsType = {
@@ -106,6 +118,23 @@ const typography = function (opts: OptionsType) {
     throw new RangeError("Invalid CSS line-height for headerLineHeight")
   }
   checkFontStacks(options)
+  // v0.16 ignored plugins that were not a list, and overrides that were not
+  // functions: each is a mistake to report.
+  if (
+    options.plugins !== undefined &&
+    !(Array.isArray(options.plugins) && options.plugins.every(p => typeof p === "function"))
+  ) {
+    throw new TypeError("Invalid plugins: a list of functions")
+  }
+  const overrides = ["overrideStyles", "overrideThemeStyles"]
+  overrides.forEach(name => {
+    if (options[name] !== undefined && typeof options[name] !== "function") {
+      throw new TypeError(`Invalid ${name}: a function`)
+    }
+  })
+  if (!isBlockMargin(options.blockMarginBottom)) {
+    throw new RangeError("Invalid CSS length for blockMarginBottom")
+  }
 
   // Add this function to the vertical rhythm object so it'll be passed around
   // as well and be available. A null position is position 0, as in v0.16.

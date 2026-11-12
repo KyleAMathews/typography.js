@@ -853,6 +853,12 @@ oracleProperty<History, ReturnType<typeof expectedMeasurements>, Plan>({
         "N4 valid numerical CSS"
       )
     const root = rootPixels(html)
+    // N4 (review X9): the root size is the base as a percentage, written
+    // without floating-point noise: at most 15 significant digits
+    // ("115%", not "114.99999999999999%").
+    const rootText = String(html.fontSize ?? (typeof html.font === "string" ? html.font.split("/")[0].trim().split(/\s+/).at(-1) : ""))
+    if (rootText.replace(/e.*$/i, "").replace(/[^0-9]/g, "").replace(/^0+/, "").length > 15)
+      return violation("root", "the root font size carries floating-point noise", "N4 valid numerical CSS", { actual: rootText })
     const bad = invalidDeclaredLength(
       (observation(trace, "styles")?.value ?? []) as Array<
         [string, string, unknown]
@@ -2367,7 +2373,7 @@ const helperArbitrary = fc.record({
     fc.record({
       kind: fc.constant("rhythm" as const),
       lines: fc.oneof(fc.double({ min: -4, max: 4, noNaN: true }), fc.constant(null)),
-      context: fc.option(lengthArbitrary, { nil: undefined }),
+      context: fc.option(sizeArbitrary, { nil: undefined }),
       offset: fc.option(fc.double({ min: -8, max: 8, noNaN: true }), { nil: undefined }),
     }),
     fc.record({ kind: fc.constant("lines" as const), size: sizeArbitrary }),
@@ -2380,7 +2386,7 @@ const helperArbitrary = fc.record({
         fc.constant(null),
         fc.double({ min: -4, max: 4, noNaN: true })
       ),
-      from: fc.option(lengthArbitrary, { nil: undefined }),
+      from: fc.option(sizeArbitrary, { nil: undefined }),
     })
   ),
 })
@@ -2437,6 +2443,9 @@ function expectedHelper(plan: HelperHistory): HelperExpected {
   // An ex length throws (review V7), and the error names the call.
   const lengths = plan.call.kind === "rhythm" ? [plan.call.context] : plan.call.kind === "lines" ? [plan.call.size] : [plan.call.size, plan.call.from]
   if (lengths.some((l) => l?.unit === "ex")) return { throws: true }
+  // N4: a negative font size, context or fromSize included, is invalid CSS
+  // (review X3). "-0px" is written "0px".
+  if (lengths.some((l) => l !== undefined && l.n + 0 < 0)) return { throws: true }
   if (plan.call.kind === "rhythm") {
     const own = parentPx(plan.call.context)
     // null lines are the default, one line (compass, review T8).
@@ -2515,8 +2524,14 @@ oracleProperty<HelperHistory, HelperExpected>({
       "null lines",
       "lines for a font size",
       "lines for a negative size",
+      "a negative context",
     ],
     constructed: [
+      {
+        name: "a negative fromSize (X3)",
+        enters: ["a negative context", "auto lines"],
+        build: (h) => ({ ...h, call: { kind: "adjust", size: { n: 20, unit: "px" }, lines: "auto", from: { n: -16, unit: "px" } } }),
+      },
       {
         name: "lines for a negative size (W8)",
         enters: ["lines for a font size", "lines for a negative size"],
@@ -2709,6 +2724,7 @@ oracleProperty<HelperHistory, HelperExpected>({
   reached: (plan) => {
     const states: string[] = []
     const call = plan.call
+    if (((call.kind === "rhythm" ? call.context : call.kind === "adjust" ? call.from : undefined)?.n ?? 0) < 0) states.push("a negative context")
     if (call.kind === "lines") {
       states.push("lines for a font size")
       if (call.size.n < 0) states.push("lines for a negative size")

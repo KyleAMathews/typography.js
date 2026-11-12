@@ -39,7 +39,8 @@ const CodePlugin =
         lineHeight: 1.42,
         overflow: "auto",
         wordWrap: "normal", // So code will scroll on Safari.
-        padding: blockMarginBottom,
+        // A negative padding is not CSS; the reset's 0 is what browsers keep.
+        padding: /^-/.test(String(blockMarginBottom)) ? 0 : blockMarginBottom,
       },
       "pre code": {
         background: "none",
