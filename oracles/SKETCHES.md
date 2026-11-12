@@ -234,6 +234,16 @@ The engineer agreed to these on 2026-11-11 ("agreed").
   works" (it applies to every option, see S3). An empty stack and a
   non-string entry still throw.
 
+### Law delta, 2026-11-12 (third prep-pr review: no breaking changes)
+
+- **L3, a var() list.** Old: an entry is a `var()` only when it is exactly
+  one `var(...)`. New: an entry that starts with a well-formed `var()` and
+  continues as a font-family list is passed through. Its items are the
+  entry's (#307 passed `'var(--sans), sans-serif'` raw). The test reads the
+  entry as it sits in the stylesheet, with more list after it, so a string or
+  comment left open at its end makes it a name. Text before `var(` still
+  makes it a name, as in v0.16. A `<`, raw or written `\<`, becomes `\3c `.
+
 ---
 
 ## S2. Every shipped theme's stacks end in a matching generic (theme content): not an oracle
@@ -604,6 +614,31 @@ takes its line height from typography's own rem rhythm.
   overflowing or underflowing line-height product is invalid `baseLineHeight`.
 - **"No breaking changes" (2026-11-12):** the README and the existing tests
   must not break. The README examples pass. The 44 theme snapshots are
-  byte-identical. Every rem and px output matches v0.16 over a parity sweep.
-  The only changed outputs are em-mode adjusted line heights, which are the
-  spec fix above.
+  byte-identical. Over a parity sweep, every rem output matches v0.16. em-mode
+  adjusted line heights change (the spec fix above). After the third review,
+  px-mode font sizes are rounded to 5 decimals, which changes them by at most
+  5e-6px (T4).
+
+**Third prep-pr review (2026-11-12): restorations and decisions.**
+- **No breaking changes, restored** (engineer's choice of three; unknown
+  scaleRatio names keep throwing):
+  - A `var()` entry may continue as a font-family list
+    (`'var(--sans), sans-serif'`, as #307 passed it). S1 L3 delta.
+  - Numeric strings for numbers (`scaleRatio: '2'`, `baseLineHeight: '1.5'`,
+    `headerLineHeight: '1.2'`, and helper arguments). A base line height may
+    be any CSS length that converts to px (`'1.5em'`, `'150%'`). A heading
+    line height may be a length, which is kept as given (N5).
+  - `null` for `rhythm` lines and the `scale` position means the default.
+- **Review findings under adopted laws:** an escaped `\<` stays one character
+  (T1); a unitless `0` is a length (T2); a negative font size or line count
+  in `adjustFontSizeTo` throws (T3, N4); px results round to 5 decimals (T4);
+  `roundToNearestHalfLine` is read for truthiness (T5); `rhythmUnit` must be
+  a string unit that converts from px (T7, Q2); compass's options are read
+  once, at construction (T9).
+- **T6 (engineer: "line height in px"):** an em or ex length relative to a
+  zero (or underflowing) size cannot hold the value, so it is written in px.
+  This keeps A7's owed results for em.
+- **T10 (engineer: switch the themes):** the themes used compass only for
+  `establishBaseline()`, which gives two values. They now write those values
+  directly. compass-vertical-rhythm is gone from every package, and the 44
+  theme snapshots are byte-identical.

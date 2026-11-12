@@ -30,7 +30,7 @@ are family names until browsers implement them: Chrome 157 drops a whole
 declaration that holds one unquoted. The
 *CSS-wide words* (`inherit`, `initial`, `unset`, `revert`, `revert-layer`) are
 keywords only when they are the whole stack. An entry that is exactly one
-well-formed `var()` is passed through, with each `<` escaped. Everything else is a *family name*, including `default` and a
+well-formed `var()`, alone or starting a list, is passed through, with each `<` escaped. Everything else is a *family name*, including `default` and a
 CSS-wide word inside a longer stack, and it must come back as exactly that
 string.
 
@@ -44,10 +44,11 @@ valid CSS, and `html` carries the same list as `body`.
 L2. For every keyword in the table, in any case, the item reads back as that
 generic family (CSS Fonts 4 §2.1.2; CSS Values 4 §4.1). Every `generic(...)`
 entry reads back as a family name (maintainer decision 2026-11-11).
-L3. For every entry that is exactly one well-formed `var(--name[, fallback])`,
-in any case, the item is the entry unchanged, except that each `<` becomes
-`\3c ` (#307; maintainer decision 2026-11-11). Text around the `var()`, such
-as a comment or a space, makes the entry a family name.
+L3. For every entry that starts with a well-formed `var(--name[, fallback])`,
+in any case, and continues as a font-family list (`var(--a), 'Lato', serif`),
+the items are the entry's, unchanged except that each `<` (raw or `\<`)
+becomes `\3c ` (#307; maintainer decisions 2026-11-11 and 2026-11-12). Text
+before the `var(`, or a tail that is not a list item, makes it a family name.
 L4. A CSS-wide word or `default` in a stack of two or more reads back as a
 family name. A CSS-wide word alone is that keyword, and then `html` still has
 the base size and line height that a plain stack gives (CSS Values 4 §2.1;

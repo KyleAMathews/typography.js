@@ -2,7 +2,6 @@
 import gray from "gray-percentage"
 import type { OptionsType } from "Types"
 import { MOBILE_MEDIA_QUERY } from "typography-breakpoint-constants"
-import verticalRhythm from "compass-vertical-rhythm"
 
 const theme: OptionsType = {
   title: "Ocean Beach",
@@ -27,10 +26,12 @@ const theme: OptionsType = {
   boldWeight: 700,
   overrideStyles: ({ adjustFontSizeTo, scale, rhythm }, options) => {
     const linkColor = "#950451"
-    const vr = verticalRhythm({
-      baseFontSize: "17px",
-      baseLineHeight: "28px",
-    })
+    // The mobile baseline: a 17px base (a percentage of the browser's
+    // 16px) and its line height.
+    const mobileBaseline = {
+      fontSize: `${(17 / 16) * 100}%`,
+      lineHeight: "28px",
+    }
     return {
       a: {
         color: linkColor,
@@ -75,7 +76,7 @@ const theme: OptionsType = {
       },
       [MOBILE_MEDIA_QUERY]: {
         html: {
-          ...vr.establishBaseline(),
+          ...mobileBaseline,
         },
         blockquote: {
           borderLeft: `${rhythm(3 / 16)} solid ${linkColor}`,

@@ -223,3 +223,20 @@ branch. Ledger: `/tmp/typography-prep-eval/ledger.md`. Font-family items:
   undefined` threw. GREEN: 67/67 per driver.
 - **R10 cleanup:** the lone CSS-wide check runs once per stack in
   `fontFamilyList`. Gap check: 116 mutants, 116 killed, 0 gaps.
+
+## Third prep-pr review (2026-11-12)
+
+- **L3 delta (restored #307 behavior):** a `var()` entry may continue as a
+  font-family list. The grammar gained `VAR_TAILS` (continuations, plus tails
+  that make a name: a CSS-wide word, `default`, `generic()`, an empty item, a
+  number, a function, a mixed item, an open block or string). The model reads
+  the entry in context (followed by `, serif`). RED on 60984de: the #307
+  witness and generated lists were quoted.
+- **T1:** a `<` written as `\<` is escaped as one character. RED on 60984de:
+  `var(--f, '\<')` changed its fallback.
+- **A sibling the random seed found:** the comment patterns could span past
+  the first `*/`. `var(/**/x/**/--f)` passed through, so a browser dropped the
+  whole body list. RED on 60984de; fixed with the exact comment pattern.
+- **Gap check:** 153 mutants, 153 killed, 0 gaps. Two authored mutants were
+  retargeted after the rewrite. Two conditions that no legal history can
+  observe were removed.

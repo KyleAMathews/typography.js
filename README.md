@@ -241,10 +241,12 @@ _configuration_ object. All configuration keys are optional, and a key set to
 * **title**: The theme title.
 * **baseFontSize**: A positive finite pixel length, such as `16px` or `16.5px`.
   Defaults to `16px`; fractional pixels are preserved.
-* **baseLineHeight**: A positive finite unitless number, or a pixel length such
-  as `"24px"`, defaults to `1.45`.
-* **headerLineHeight**: A positive finite unitless number for `h1`–`h6`, defaults
-  to `1.1`. This multiplier is independent of the scale helper’s rounded line height.
+* **baseLineHeight**: A positive finite number (or a numeric string such as
+  `"1.5"`), or a CSS length such as `"24px"`, `"1.5em"`, or `"150%"`. Defaults
+  to `1.45`.
+* **headerLineHeight**: The line height of `h1`–`h6`: a positive finite number
+  (or numeric string), or a CSS length such as `"1.2em"`, used as given.
+  Defaults to `1.1`. It is independent of the scale helper’s rounded line height.
 * **scaleRatio**: The "scale ratio" for the theme. This value is the ratio
   between the `h1` font size and the `baseFontSize`. So if the scale ratio is `2`
   and the `baseFontSize` is `16px` then the `h1` font size is `32px`.
@@ -296,8 +298,9 @@ system UI font stack.
     `generic(kai)`, is treated as a family name until browsers support it.
   * a CSS variable, such as `var(--brand-font)` or
     `var(--brand-font, serif)`, passed through unchanged except that a `<`
-    is escaped. The entry must be exactly the `var(...)`: with a space or a
-    comment around it, it is a family name
+    is escaped. An entry that starts with `var(` may continue as a list, as
+    in `'var(--brand-font), Georgia, serif'`. Text before the `var(`, or
+    text that is not a valid list item, makes the entry a family name
   * `-apple-system`
   * `inherit`, `initial`, `unset`, `revert`, or `revert-layer`, only
     when it is the whole stack (`['inherit']`); in a longer stack it is a
@@ -378,7 +381,9 @@ returns a font size and a line height of whole (by default, half) lines. With
 lines. Results are in `rhythmUnit` (default `rem`; also `em`, `ex`, `px`, or an
 absolute unit such as `pt`). Lengths convert as in CSS: `em` and `%` are
 relative to `fromSize`, `ex` is `0.5em`, and an `em` line height is relative to
-the new font size.
+the new font size (in `px` when that size is zero). `null` arguments take their
+defaults, numbers may be numeric strings, and a negative font size or line
+count throws.
 
 Invalid numerical configuration, nonfinite positions or counts, and calculations
 that produce nonfinite or malformed CSS lengths throw an error.

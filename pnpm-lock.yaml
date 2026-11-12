@@ -42,9 +42,6 @@ importers:
       babel-preset-stage-0:
         specifier: ^6.24.1
         version: 6.24.1
-      compass-vertical-rhythm:
-        specifier: ^1.3.1
-        version: 1.4.5
       eslint:
         specifier: ^3.19.0
         version: 3.19.0
@@ -198,9 +195,6 @@ importers:
 
   packages/typography-theme-alton:
     dependencies:
-      compass-vertical-rhythm:
-        specifier: ^1.2.1
-        version: 1.4.5
       gray-percentage:
         specifier: ^2.0.0
         version: 2.0.0
@@ -216,9 +210,6 @@ importers:
 
   packages/typography-theme-de-young:
     dependencies:
-      compass-vertical-rhythm:
-        specifier: ^1.2.1
-        version: 1.4.5
       gray-percentage:
         specifier: ^2.0.0
         version: 2.0.0
@@ -237,9 +228,6 @@ importers:
 
   packages/typography-theme-elk-glen:
     dependencies:
-      compass-vertical-rhythm:
-        specifier: ^1.2.1
-        version: 1.4.5
       gray-percentage:
         specifier: ^2.0.0
         version: 2.0.0
@@ -273,9 +261,6 @@ importers:
 
   packages/typography-theme-grand-view:
     dependencies:
-      compass-vertical-rhythm:
-        specifier: ^1.2.1
-        version: 1.4.5
       gray-percentage:
         specifier: ^2.0.0
         version: 2.0.0
@@ -312,9 +297,6 @@ importers:
 
   packages/typography-theme-lawton:
     dependencies:
-      compass-vertical-rhythm:
-        specifier: ^1.2.1
-        version: 1.4.5
       gray-percentage:
         specifier: ^2.0.0
         version: 2.0.0
@@ -335,9 +317,6 @@ importers:
 
   packages/typography-theme-moraga:
     dependencies:
-      compass-vertical-rhythm:
-        specifier: ^1.2.1
-        version: 1.4.5
       gray-percentage:
         specifier: ^2.0.0
         version: 2.0.0
@@ -358,9 +337,6 @@ importers:
 
   packages/typography-theme-parnassus:
     dependencies:
-      compass-vertical-rhythm:
-        specifier: ^1.2.1
-        version: 1.4.5
       gray-percentage:
         specifier: ^2.0.0
         version: 2.0.0
@@ -370,9 +346,6 @@ importers:
 
   packages/typography-theme-st-annes:
     dependencies:
-      compass-vertical-rhythm:
-        specifier: ^1.2.1
-        version: 1.4.5
       gray-percentage:
         specifier: ^2.0.0
         version: 2.0.0
@@ -393,9 +366,6 @@ importers:
 
   packages/typography-theme-stow-lake:
     dependencies:
-      compass-vertical-rhythm:
-        specifier: ^1.2.1
-        version: 1.4.5
       gray-percentage:
         specifier: ^2.0.0
         version: 2.0.0
@@ -2164,9 +2134,6 @@ packages:
   compare-func@1.3.2:
     resolution: {integrity: sha512-k6Qzw6O4v6q/F0vL+rn95LwQoWtqJv6+dtbVPw/jC0zKGphAdq++3Q1ZVm25XbqOQ7kFXlBbJoycmsaFPDop3Q==}
 
-  compass-vertical-rhythm@1.4.5:
-    resolution: {integrity: sha512-bJo3IYX7xmmZCDYjrT2XolaiNjGZ4E2JvUGxpdU0ecbH4ZLK786wvc8aHKVrGrKct9JlkmJbUi8YLrQWvOc+uA==}
-
   concat-map@0.0.1:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
 
@@ -2179,9 +2146,6 @@ packages:
 
   console-control-strings@1.1.0:
     resolution: {integrity: sha512-ty/fTekppD2fIwRvnZAVdeOiGd1c7YXEixbgJTNzqcxJWKQnjJ/V1bNEEE6hygpM3WjwHFUVK6HTjWSzV4a8sQ==}
-
-  console-polyfill@0.1.2:
-    resolution: {integrity: sha512-oHLGQmf0q2yuuqfTXuzAB5UMqgPH1cHdwLkjfCqRTG2eupc52jbXT1OtOlREv+yXmXRi3wqywAevz3qMSk90Hg==}
 
   content-type-parser@1.0.2:
     resolution: {integrity: sha512-lM4l4CnMEwOLHAHr/P6MEZwZFPJFtAAKgL6pogbXmVZggIqXhdB6RbBtPOTsw2FcXwYhehRGERJmRrjOiIB8pQ==}
@@ -2250,9 +2214,6 @@ packages:
   conventional-recommended-bump@1.2.1:
     resolution: {integrity: sha512-oJjG6DkRgtnr/t/VrPdzmf4XZv8c4xKVJrVT4zrSHd92KEL+EYxSbYoKq8lQ7U5yLMw7130wrcQTLRjM/T+d4w==}
     hasBin: true
-
-  convert-css-length@1.0.2:
-    resolution: {integrity: sha512-ecV7j3hXyXN1X2XfJBzhMR0o1Obv0v3nHmn0UiS3ACENrzbxE/EknkiunS/fCwQva0U62X1GChi8GaPh4oTlLg==}
 
   convert-source-map@1.5.0:
     resolution: {integrity: sha512-6q8sJj3dAkO4VXQNpkykQf5ZWMZPHi1xxTYE8BlbbIgQ8Gx8iHzRqaytIuuR4HRSH5Yz0EdrwdRgOHHrJ0xZqQ==}
@@ -7732,12 +7693,6 @@ snapshots:
       array-ify: 1.0.0
       dot-prop: 3.0.0
 
-  compass-vertical-rhythm@1.4.5:
-    dependencies:
-      convert-css-length: 1.0.2
-      object-assign: 4.1.1
-      parse-unit: 1.0.1
-
   concat-map@0.0.1: {}
 
   concat-stream@1.6.2:
@@ -7752,8 +7707,6 @@ snapshots:
       source-map: 0.6.1
 
   console-control-strings@1.1.0: {}
-
-  console-polyfill@0.1.2: {}
 
   content-type-parser@1.0.2: {}
 
@@ -7872,11 +7825,6 @@ snapshots:
       git-semver-tags: 1.3.6
       meow: 3.7.0
       object-assign: 4.1.1
-
-  convert-css-length@1.0.2:
-    dependencies:
-      console-polyfill: 0.1.2
-      parse-unit: 1.0.1
 
   convert-source-map@1.5.0: {}
 

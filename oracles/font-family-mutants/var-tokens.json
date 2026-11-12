@@ -34,8 +34,8 @@
   {
     "id": "var-head-no-comments",
     "source": "packages/typography/src/utils/fontFamily.js",
-    "find": "const varHead = /^var\\((?:[ \\t\\n\\r\\f]|\\/\\*[^]*?\\*\\/)*--(?:[-\\w\\u0080-\\uFFFF]|\\\\(?:[0-9a-fA-F]{1,6}[ \\t\\n\\r\\f]?|[^\\n\\r\\f0-9a-fA-F]))+(?:[ \\t\\n\\r\\f]|\\/\\*[^]*?\\*\\/)*[,)]/i",
-    "replace": "const varHead = /^var\\([ \\t\\n\\r\\f]*--(?:[-\\w\\u0080-\\uFFFF]|\\\\(?:[0-9a-fA-F]{1,6}[ \\t\\n\\r\\f]?|[^\\n\\r\\f0-9a-fA-F]))+(?:[ \\t\\n\\r\\f]|\\/\\*[^]*?\\*\\/)*[,)]/i",
+    "find": "const varHead = /^var\\((?:[ \\t\\n\\r\\f]|\\/\\*(?:[^*]|\\*+[^*/])*\\*+\\/)*--(?:[-\\w\\u0080-\\uFFFF]|\\\\(?:[0-9a-fA-F]{1,6}[ \\t\\n\\r\\f]?|[^\\n\\r\\f0-9a-fA-F]))+(?:[ \\t\\n\\r\\f]|\\/\\*(?:[^*]|\\*+[^*/])*\\*+\\/)*[,)]/i",
+    "replace": "const varHead = /^var\\([ \\t\\n\\r\\f]*--(?:[-\\w\\u0080-\\uFFFF]|\\\\(?:[0-9a-fA-F]{1,6}[ \\t\\n\\r\\f]?|[^\\n\\r\\f0-9a-fA-F]))+(?:[ \\t\\n\\r\\f]|\\/\\*(?:[^*]|\\*+[^*/])*\\*+\\/)*[,)]/i",
     "intent": "a comment before the custom property name makes the entry a name",
     "author": "Claude Code session (font-family oracle author), prep-pr review A1/A2"
   }

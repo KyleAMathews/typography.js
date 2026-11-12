@@ -1,7 +1,6 @@
 // @flow
 import gray from "gray-percentage"
 import type { OptionsType } from "Types"
-import verticalRhythm from "compass-vertical-rhythm"
 import { MOBILE_MEDIA_QUERY } from "typography-breakpoint-constants"
 
 const theme: OptionsType = {
@@ -27,15 +26,17 @@ const theme: OptionsType = {
   boldWeight: 700,
   blockMarginBottom: 2 / 3,
   overrideStyles: ({ rhythm }, { blockMarginBottom }) => {
-    const vr = verticalRhythm({
-      baseFontSize: "12.8px",
-      baseLineHeight: "19.2px",
-    })
+    // The mobile baseline: a 12.8px base (a percentage of the browser's
+    // 16px) and its line height.
+    const mobileBaseline = {
+      fontSize: `${(12.8 / 16) * 100}%`,
+      lineHeight: "19.2px",
+    }
 
     const styles = {
       [MOBILE_MEDIA_QUERY]: {
         html: {
-          ...vr.establishBaseline(),
+          ...mobileBaseline,
         },
       },
       blockquote: {

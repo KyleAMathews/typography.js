@@ -31,7 +31,8 @@ const asciiLower = (s: string) =>
 // <declaration-value> (CSS Syntax 3 §4.3, §8.2; CSS Variables 1 §3).
 // The head: `var(`, then a custom property name, with white space or
 // comments around it, then "," or ")".
-const varHead = /^var\((?:[ \t\n\r\f]|\/\*[^]*?\*\/)*--(?:[-\w\u0080-\uFFFF]|\\(?:[0-9a-fA-F]{1,6}[ \t\n\r\f]?|[^\n\r\f0-9a-fA-F]))+(?:[ \t\n\r\f]|\/\*[^]*?\*\/)*[,)]/i
+// A comment ends at the first "*/" (CSS Syntax 3 4.3.2).
+const varHead = /^var\((?:[ \t\n\r\f]|\/\*(?:[^*]|\*+[^*/])*\*+\/)*--(?:[-\w\u0080-\uFFFF]|\\(?:[0-9a-fA-F]{1,6}[ \t\n\r\f]?|[^\n\r\f0-9a-fA-F]))+(?:[ \t\n\r\f]|\/\*(?:[^*]|\*+[^*/])*\*+\/)*[,)]/i
 // The contents, token by token as CSS reads them. In order: a comment; an
 // unterminated comment; an escape; a string; `url(` with a quoted argument (an
 // ordinary function, through its string); an unquoted url token; any other
@@ -42,25 +43,77 @@ const varToken = /\/\*[^]*?\*\/|\/\*|\\[^\n\r\f]|"(?:\\[^]|[^"\\\n\r\f])*"|'(?:\
 const closerOf = { "(": ")", "[": "]", "{": "}" }
 const broken = { "/*": true, '"': true, "'": true }
 
-// The parentheses close at the end, with no bad string, bad url, unterminated
-// comment, unmatched closer, or top-level ";" or "!" on the way.
-const isVarReference = (entry: string) => {
-  if (!varHead.test(entry)) return false
-  const closers = [")"]
-  varToken.lastIndex = 4
-  for (let token = varToken.exec(entry); token; token = varToken.exec(entry)) {
-    const text = token[0]
-    if (broken[text] || /^url\($/i.test(text)) return false
-    if (/^url\(/i.test(text)) {
+// One var(--name[, fallback]): its parentheses close at the end, with no bad
+// string, bad url, unterminated comment, unmatched closer, or ";" or "!" at
+// the fallback's top level.
+const isVarReference = (item: string) => varHead.test(item) && listItems(item, 4, [")"], true) !== undefined
+// The top-level, comma-separated items of `text` from `start`, inside the
+// open blocks `closers`; undefined when CSS would not read it as a list, or,
+// with `whole`, when the blocks close before the end.
+const listItems = (
+  text: string,
+  start: number,
+  closers: Array<string>,
+  whole: boolean = false
+) => {
+  const items = [""]
+  varToken.lastIndex = start
+  for (let token = varToken.exec(text); token; token = varToken.exec(text)) {
+    const t = token[0]
+    if (broken[t] || /^url\($/i.test(t)) return undefined
+    if (closers.length <= 1 && (t === ";" || t === "!")) return undefined
+    if (closers.length === 0 && t === ",") {
+      items.push("")
+      continue
+    }
+    if (/^url\(/i.test(t)) {
       // A quoted url() stays open after its string; an unquoted one is whole.
-      if (text[text.length - 1] !== ")") closers.push(")")
-    } else if (closerOf[text]) closers.push(closerOf[text])
-    else if (text === ")" || text === "]" || text === "}") {
-      if (closers.pop() !== text) return false
-      if (closers.length === 0) return varToken.lastIndex === entry.length
-    } else if (closers.length === 1 && (text === ";" || text === "!")) return false
+      if (t[t.length - 1] !== ")") closers.push(")")
+    } else if (closerOf[t]) closers.push(closerOf[t])
+    else if (t === ")" || t === "]" || t === "}") {
+      if (closers.pop() !== t) return undefined
+      if (whole && closers.length === 0)
+        return varToken.lastIndex === text.length ? items : undefined
+    }
+    items[items.length - 1] += t
+  }
+  // An open block at the end sits inside a var() item, which isVarReference
+  // rejects as a whole.
+  return whole ? undefined : items
+}
+
+// White space and comments around a list item.
+const trim = (item: string) =>
+  item.replace(
+    /^(?:[ \t\n\r\f]|\/\*(?:[^*]|\*+[^*/])*\*+\/)+|(?:[ \t\n\r\f]|\/\*(?:[^*]|\*+[^*/])*\*+\/)+$/g,
+    ""
+  )
+const string = /^(?:"(?:\\[^]|[^"\\\n\r\f])*"|'(?:\\[^]|[^'\\\n\r\f])*')$/
+const word = /(?:[ \t\n\r\f]|\/\*(?:[^*]|\*+[^*/])*\*+\/)+|(?:--|-?(?:[a-zA-Z_\u0080-\uFFFF]|\\(?:[0-9a-fA-F]{1,6}[ \t\n\r\f]?|[^\n\r\f0-9a-fA-F])))(?:[-\w\u0080-\uFFFF]|\\(?:[0-9a-fA-F]{1,6}[ \t\n\r\f]?|[^\n\r\f0-9a-fA-F]))*/y
+// A family name of identifiers, none a CSS-wide word or "default"
+// (CSS Fonts 4 2.1: <custom-ident>+).
+const isIdentifiers = (item: string) => {
+  word.lastIndex = 0
+  for (let match = word.exec(item); match; match = word.exec(item)) {
+    const w = asciiLower(match[0])
+    if (w === "default" || cssWideKeywords.indexOf(w) !== -1) return false
+    if (word.lastIndex === item.length) return true
   }
   return false
+}
+// An entry that starts with a var() and may continue as a font-family list,
+// as #307 allowed: "var(--sans), 'Lato', sans-serif". Each later item is a
+// var(), a string, or a family name.
+const isVarList = (entry: string) => {
+  const items = /^var\(/i.test(entry) && listItems(entry, 0, [])
+  return (
+    !!items &&
+    items.every(raw => {
+      const item = trim(raw)
+      // The first item starts with "var(", so it can only be a var().
+      return isVarReference(item) || string.test(item) || isIdentifiers(item)
+    })
+  )
 }
 
 // A family name as a CSS string (CSS Syntax 3 §4.3.5). Only what a string
@@ -82,8 +135,13 @@ const item = (entry: string) => {
   // A vendor keyword (WebKit), and a valid unquoted family name.
   if (entry === "-apple-system") return entry
   // Passed through, but a "<" is escaped so the stylesheet cannot close its
-  // <style> element. Inside a quoted fallback the escape is the same string.
-  if (isVarReference(entry)) return entry.replace(/</g, "\\3c ")
+  // <style> element. Inside a string or an identifier the escape reads the same.
+  // A "<" written raw or as "\<" becomes "\3c " (an escaped backslash
+  // before it stays).
+  const escaped = entry.replace(/(\\*)</g, (_, slashes) =>
+    slashes.length % 2 === 1 ? `${slashes.slice(1)}\\3c ` : `${slashes}\\3c `
+  )
+  if (isVarList(escaped)) return escaped
   return quote(entry)
 }
 

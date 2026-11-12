@@ -2,7 +2,6 @@
 import gray from "gray-percentage"
 import type { OptionsType } from "Types"
 import { MOBILE_MEDIA_QUERY } from "typography-breakpoint-constants"
-import verticalRhythm from "compass-vertical-rhythm"
 
 const theme: OptionsType = {
   title: "Twin Peaks",
@@ -27,10 +26,12 @@ const theme: OptionsType = {
   boldWeight: 600,
   overrideStyles: ({ adjustFontSizeTo, scale, rhythm }, options) => {
     const linkColor = "#ff5700"
-    const vr = verticalRhythm({
-      baseFontSize: "19px",
-      baseLineHeight: "29.85px",
-    })
+    // The mobile baseline: a 19px base (a percentage of the browser's
+    // 16px) and its line height.
+    const mobileBaseline = {
+      fontSize: `${(19 / 16) * 100}%`,
+      lineHeight: "29.85px",
+    }
     return {
       a: {
         color: linkColor,
@@ -79,7 +80,7 @@ const theme: OptionsType = {
       },
       [MOBILE_MEDIA_QUERY]: {
         html: {
-          ...vr.establishBaseline(),
+          ...mobileBaseline,
         },
         blockquote: {
           borderLeft: `${rhythm(3 / 16)} solid ${linkColor}`,

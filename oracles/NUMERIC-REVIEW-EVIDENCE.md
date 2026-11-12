@@ -159,3 +159,35 @@ L2, and L3 (`oracles/SKETCHES.md` S3).
   only by the font-family oracle).
 - **Final `pnpm test-ci`:** Jest 75/75 (44 snapshots), oracles 229/229
   including Chrome. Font-family gap check: 116/116.
+
+## Third prep-pr review (2026-11-12)
+
+A third `/code-review high` (head 60984de) gave 10 findings (T1–T10, ledger
+`/tmp/typography-review3-eval/ledger.md`). The engineer also restored three
+v0.16 behaviors (S3 decisions).
+
+- **Production:** the helpers move to `packages/typography/src/utils/verticalRhythm.js`
+  (now owned by every numeric property). It has one number reader (numeric
+  strings allowed), one length reader (a unitless 0 is a length), and one
+  CSS Values 4 table. It reads compass's options once and throws for negative
+  sizes and line counts. An em or ex length relative to a zero size is
+  written in px (T6). `null` arguments are defaults. The themes no longer
+  import compass-vertical-rhythm, and no package depends on it.
+- **RED on 60984de**, by fixed or generated history:
+  - T2: a unitless zero padding threw.
+  - T4: an unrounded px font size (`18.700000000000003px`).
+  - T5: falsy rounding gave half lines.
+  - T6: an owed em `scale(-1024)` threw (random seed).
+  - T7: `rhythmUnit: ['rem']` was accepted.
+  - T8: `rhythm(null)` threw.
+  - The numeric strings, length line heights, and em/px heading line
+    heights threw.
+- **Gap check** (`index.js`, `verticalRhythm.js`, `createStyles.js`): 369
+  mutants, 232 killed, 137 gaps. None of them is in `verticalRhythm.js`. The
+  open gaps are the older defaults, `createStyles`, and `injectStyles` set.
+- **Precision:** a random seed found that T4's px rounding exceeded the
+  extreme oracle's base-scaled tolerance. It now allows 5e-6px of rounding.
+- **Parity with v0.16:** rem output is identical. em-mode adjusted line
+  heights change (spec). px font sizes change by at most 5e-6px (T4).
+- **Final `pnpm test-ci`:** Jest 75/75 (44 snapshots), oracles 239/239
+  including Chrome.

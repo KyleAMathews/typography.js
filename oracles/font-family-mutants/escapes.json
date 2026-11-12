@@ -50,8 +50,8 @@
   {
     "id": "var-less-than-raw",
     "source": "packages/typography/src/utils/fontFamily.js",
-    "find": "if (isVarReference(entry)) return entry.replace(/</g, \"\\\\3c \")",
-    "replace": "if (isVarReference(entry)) return entry",
+    "find": "  const escaped = entry.replace(/(\\\\*)</g, (_, slashes) =>\n    slashes.length % 2 === 1 ? `${slashes.slice(1)}\\\\3c ` : `${slashes}\\\\3c `\n  )",
+    "replace": "  const escaped = entry",
     "intent": "var() passes \"<\" through (before second review S1)",
     "author": "Claude Code session (font-family oracle author), after second review S2"
   }
