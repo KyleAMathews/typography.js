@@ -1,4 +1,14 @@
 // @flow
+import {
+  asciiLower,
+  blank,
+  identStart,
+  listItems,
+  nameChar,
+  stringToken,
+  trim,
+} from "./css"
+
 // Font stacks to CSS. Each entry of `bodyFontFamily` and `headerFontFamily`
 // becomes one item of a `font-family` list, following CSS Fonts 4 §2.1.
 
@@ -23,81 +33,27 @@ const genericFamilies = [
 // CSS Values 4 §2.1: valid only as a whole property value.
 const cssWideKeywords = ["inherit", "initial", "unset", "revert", "revert-layer"]
 
-// Keywords are ASCII case-insensitive (CSS Values 4 §4.1).
-const asciiLower = (s: string) =>
-  s.replace(/[A-Z]/g, c => String.fromCharCode(c.charCodeAt(0) + 32))
-
 // `var(--name)` or `var(--name, fallback)`, where the fallback is a CSS
 // <declaration-value> (CSS Syntax 3 §4.3, §8.2; CSS Variables 1 §3).
 // The head: `var(`, then a custom property name, with white space or
 // comments around it, then "," or ")".
-// A comment ends at the first "*/" (CSS Syntax 3 4.3.2).
-const varHead = /^var\((?:[ \t\n\r\f]|\/\*(?:[^*]|\*+[^*/])*\*+\/)*--(?:[-\w\u0080-\uFFFF]|\\(?:[0-9a-fA-F]{1,6}[ \t\n\r\f]?|[^\n\r\f0-9a-fA-F]))+(?:[ \t\n\r\f]|\/\*(?:[^*]|\*+[^*/])*\*+\/)*[,)]/i
-// The contents, token by token as CSS reads them. In order: a comment; an
-// unterminated comment; an escape; a string; `url(` with a quoted argument (an
-// ordinary function, through its string); an unquoted url token; any other
-// `url(` (a bad url); a run of name characters (so "xurl(" is not a url); any
-// other character. A lone quote is a string that a line break or the end cut
-// off.
-const varToken = /\/\*[^]*?\*\/|\/\*|\\[^\n\r\f]|"(?:\\[^]|[^"\\\n\r\f])*"|'(?:\\[^]|[^'\\\n\r\f])*'|url\([ \t\n\r\f]*(?:"(?:\\[^]|[^"\\\n\r\f])*"|'(?:\\[^]|[^'\\\n\r\f])*')|url\([ \t\n\r\f]*(?:[^"'()\\ \t\n\r\f\u0000-\u0008\u000b\u000e-\u001f\u007f]|\\[^\n\r\f])*[ \t\n\r\f]*\)|url\(|[-\w\u0080-\uFFFF]+|[^]/iy
-const closerOf = { "(": ")", "[": "]", "{": "}" }
-const broken = { "/*": true, '"': true, "'": true }
+const varHead = new RegExp(`^var\\(${blank}*--${nameChar}+${blank}*[,)]`, "i")
 
 // One var(--name[, fallback]): its parentheses close at the end, with no bad
 // string, bad url, unterminated comment, unmatched closer, or ";" or "!" at
 // the fallback's top level.
-const isVarReference = (item: string) => varHead.test(item) && listItems(item, 4, [")"], true) !== undefined
-// The top-level, comma-separated items of `text` from `start`, inside the
-// open blocks `closers`; undefined when CSS would not read it as a list, or,
-// with `whole`, when the blocks close before the end.
-const listItems = (
-  text: string,
-  start: number,
-  closers: Array<string>,
-  whole: boolean = false
-) => {
-  const items = [""]
-  varToken.lastIndex = start
-  for (let token = varToken.exec(text); token; token = varToken.exec(text)) {
-    const t = token[0]
-    if (broken[t] || /^url\($/i.test(t)) return undefined
-    if (closers.length <= 1 && (t === ";" || t === "!")) return undefined
-    if (closers.length === 0 && t === ",") {
-      items.push("")
-      continue
-    }
-    if (/^url\(/i.test(t)) {
-      // A quoted url() stays open after its string; an unquoted one is whole.
-      if (t[t.length - 1] !== ")") closers.push(")")
-    } else if (closerOf[t]) closers.push(closerOf[t])
-    else if (t === ")" || t === "]" || t === "}") {
-      if (closers.pop() !== t) return undefined
-      if (whole && closers.length === 0)
-        return varToken.lastIndex === text.length ? items : undefined
-    }
-    items[items.length - 1] += t
-  }
-  // An open block at the end sits inside a var() item, which isVarReference
-  // rejects as a whole.
-  return whole ? undefined : items
-}
+const isVarReference = (item: string) =>
+  varHead.test(item) && listItems(item, 4, [")"], true) !== undefined
 
-// White space and comments around a list item.
-const trim = (item: string) =>
-  item.replace(
-    /^(?:[ \t\n\r\f]|\/\*(?:[^*]|\*+[^*/])*\*+\/)+|(?:[ \t\n\r\f]|\/\*(?:[^*]|\*+[^*/])*\*+\/)+$/g,
-    ""
-  )
-const string = /^(?:"(?:\\[^]|[^"\\\n\r\f])*"|'(?:\\[^]|[^'\\\n\r\f])*')$/
-const word = /(?:[ \t\n\r\f]|\/\*(?:[^*]|\*+[^*/])*\*+\/)+|(?:--|-?(?:[a-zA-Z_\u0080-\uFFFF]|\\(?:[0-9a-fA-F]{1,6}[ \t\n\r\f]?|[^\n\r\f0-9a-fA-F])))(?:[-\w\u0080-\uFFFF]|\\(?:[0-9a-fA-F]{1,6}[ \t\n\r\f]?|[^\n\r\f0-9a-fA-F]))*/y
+const identifier = new RegExp(`${blank}+|${identStart}${nameChar}*`, "y")
 // A family name of identifiers, none a CSS-wide word or "default"
 // (CSS Fonts 4 2.1: <custom-ident>+).
 const isIdentifiers = (item: string) => {
-  word.lastIndex = 0
-  for (let match = word.exec(item); match; match = word.exec(item)) {
-    const w = asciiLower(match[0])
-    if (w === "default" || cssWideKeywords.indexOf(w) !== -1) return false
-    if (word.lastIndex === item.length) return true
+  identifier.lastIndex = 0
+  for (let match = identifier.exec(item); match; match = identifier.exec(item)) {
+    const name = asciiLower(match[0])
+    if (name === "default" || cssWideKeywords.indexOf(name) !== -1) return false
+    if (identifier.lastIndex === item.length) return true
   }
   return false
 }
@@ -111,7 +67,7 @@ const isVarList = (entry: string) => {
     items.every(raw => {
       const item = trim(raw)
       // The first item starts with "var(", so it can only be a var().
-      return isVarReference(item) || string.test(item) || isIdentifiers(item)
+      return isVarReference(item) || stringToken.test(item) || isIdentifiers(item)
     })
   )
 }

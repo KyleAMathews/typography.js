@@ -239,13 +239,15 @@ _configuration_ object. All configuration keys are optional, and a key set to
 `undefined` takes its default.
 
 * **title**: The theme title.
-* **baseFontSize**: A positive finite pixel length, such as `16px` or `16.5px`.
-  Defaults to `16px`; fractional pixels are preserved.
+* **baseFontSize**: A positive font size, such as `16px` or `16.5px`. A number
+  (`16`) is pixels, and other CSS units convert exactly (`12pt` is `16px`; `em`,
+  `rem`, and `%` are of the browser's initial 16px). Defaults to `16px`;
+  fractional pixels are preserved.
 * **baseLineHeight**: A positive finite number (or a numeric string such as
   `"1.5"`), or a CSS length such as `"24px"`, `"1.5em"`, or `"150%"`. Defaults
   to `1.45`.
-* **headerLineHeight**: The line height of `h1`–`h6`: a positive finite number
-  (or numeric string), or a CSS length such as `"1.2em"`, used as given.
+* **headerLineHeight**: The line height of `h1`–`h6`, used as given: any CSS
+  `line-height`, such as `1.1`, `"1.2em"`, `"normal"`, or `"var(--lh)"`.
   Defaults to `1.1`. It is independent of the scale helper’s rounded line height.
 * **scaleRatio**: The "scale ratio" for the theme. This value is the ratio
   between the `h1` font size and the `baseFontSize`. So if the scale ratio is `2`
@@ -319,7 +321,9 @@ to `hsl(0,0%,0%,0.8)`.
 * **boldWeight**: Specify the font weight for "bold" (b, strong, dt, th)
   elements. Defaults to `bold`.
 * **blockMarginBottom**: Specify the default margin-bottom for block
-  elements. Defaults to one "rhythm unit" (i.e. the height of the base line height).
+  elements, in rhythm units (a number or numeric string), or as a CSS length
+  string such as `"1.5rem"`. Defaults to one "rhythm unit" (i.e. the height of
+  the base line height).
 * **includeNormalize**: Include normalize.css.
   Normalize.css is an excellent project which works to normalize the
 base browser CSS across browsers and serves as an excellent foundation

@@ -10,7 +10,8 @@
 const invalid = (name: string, what: string = "numerical value") =>
   new RangeError(`Invalid ${what} for ${name}`)
 
-const cssNumber = /^[+-]?(?:\d*\.\d+|\d+)(?:e[+-]?\d+)?$/i
+// A CSS number, with white space around it ignored, as CSS ignores it.
+const cssNumber = /^[ \t\n\r\f]*[+-]?(?:\d*\.\d+|\d+)(?:e[+-]?\d+)?[ \t\n\r\f]*$/i
 
 // A finite number, or a string that is one CSS number ("1.5"), as v0.16 read.
 export const toNumber = (name: string, value: any, positive: boolean = false) => {
@@ -28,16 +29,15 @@ export const toNumber = (name: string, value: any, positive: boolean = false) =>
 export const isNumeric = (value: any) =>
   typeof value === "number" || (typeof value === "string" && cssNumber.test(value))
 
-// A CSS length's number and unit. A unitless 0 is a length (5.1).
+// A length's number and unit. A plain number, or a string that is only a
+// number, is px, as compass-vertical-rhythm read it (and a unitless 0 is a
+// CSS length, 5.1).
 const parseLength = (name: string, value: any) => {
+  if (typeof value === "number") return [toNumber(name, value), "px"]
   const match =
-    value === 0
-      ? ["0", "0", ""]
-      : typeof value === "string" &&
-        /^([+-]?(?:\d*\.\d+|\d+)(?:e[+-]?\d+)?)([a-z%]*)$/i.exec(value)
-  if (!match || (match[2] === "" && Number(match[1]) !== 0)) {
-    throw invalid(name, "CSS length")
-  }
+    typeof value === "string" &&
+    /^[ \t\n\r\f]*([+-]?(?:\d*\.\d+|\d+)(?:e[+-]?\d+)?)([a-z%]*)[ \t\n\r\f]*$/i.exec(value)
+  if (!match) throw invalid(name, "CSS length")
   return [Number(match[1]), match[2].toLowerCase() || "px"]
 }
 
@@ -51,41 +51,37 @@ const absolutePx = {
   q: 96 / 101.6,
 }
 
-// A positive finite length in a unit that converts to px.
-export const positiveLength = (name: string, value: any) => {
+// px per unit (CSS Values 4): rem is the root size, em and % the parent size,
+// ex 0.5em (6.1.1, the x-height fallback), and absolute units exact (5.2).
+const pxPer = (unit: string, root: number, parent: number) =>
+  unit === "rem"
+    ? root
+    : unit === "em"
+    ? parent
+    : unit === "%"
+    ? parent / 100
+    : unit === "ex"
+    ? parent / 2
+    : Object.prototype.hasOwnProperty.call(absolutePx, unit)
+    ? absolutePx[unit]
+    : undefined
+// A length in px. An unknown unit has no factor: NaN, which toNumber rejects.
+const lengthPx = (name: string, value: any, root: number, parent: number) => {
   const [number, unit] = parseLength(name, value)
-  if (!/^(?:em|rem|%|ex)$/.test(unit) && !Object.prototype.hasOwnProperty.call(absolutePx, unit)) {
-    throw invalid(name, "CSS length")
-  }
-  return toNumber(name, number, true)
-}
-
-// A positive finite pixel length, such as "16px".
-export const pixelLength = (name: string, value: any) => {
-  const [number, unit] = parseLength(name, value)
-  if (unit !== "px") throw invalid(name, "CSS length")
-  return toNumber(name, number, true)
+  return toNumber(name, number * pxPer(unit, root, parent))
 }
 
 export default function verticalRhythm(options: Object) {
-  const base = pixelLength("baseFontSize", options.baseFontSize)
-  const pxPer = (unit: string, parent: number) =>
-    unit === "rem"
-      ? base
-      : unit === "em"
-      ? parent
-      : unit === "%"
-      ? parent / 100
-      : unit === "ex"
-      ? parent / 2
-      : Object.prototype.hasOwnProperty.call(absolutePx, unit)
-      ? absolutePx[unit]
-      : undefined
-  const toPixels = (name: string, length: any, parent: number) => {
-    const [number, unit] = parseLength(name, length)
-    // An unknown unit has no factor: NaN, which toNumber rejects.
-    return toNumber(name, number * pxPer(unit, parent))
-  }
+  // The root's font size. Its own root and parent is the browser's initial
+  // size, 16px, which html's percentage is of.
+  const base = toNumber(
+    "baseFontSize",
+    lengthPx("baseFontSize", options.baseFontSize, 16, 16),
+    true
+  )
+  const pxPerUnit = (unit: string, parent: number) => pxPer(unit, base, parent)
+  const toPixels = (name: string, length: any, parent: number) =>
+    lengthPx(name, length, base, parent)
 
   // A number is a multiple of the base; a length is read at html, whose font
   // size is the base. 16 × 1e308 is not a usable line height.
@@ -105,7 +101,7 @@ export default function verticalRhythm(options: Object) {
       : ""
   // A unit for lengths that converts from px. % is not one: a margin's % is
   // of the container's width.
-  if (unit === "%" || pxPer(unit, 1) === undefined) {
+  if (unit === "%" || pxPerUnit(unit, 1) === undefined) {
     throw invalid("rhythmUnit", "CSS unit")
   }
   const paddingPx = toPixels(
@@ -123,7 +119,7 @@ export default function verticalRhythm(options: Object) {
   // relative to a zero (or underflowing) size cannot hold the value, so it is
   // written in px (engineer decision 2026-11-12).
   const inUnit = (name: string, px: number, fontSize: number, floor: boolean) => {
-    const factor = pxPer(unit, fontSize)
+    const factor = pxPerUnit(unit, fontSize)
     const value = px / factor
     if (unit === "px" || (/^e[mx]$/.test(unit) && !Number.isFinite(value))) {
       return `${floor ? Math.floor(px) : parseFloat(px.toFixed(5))}px`

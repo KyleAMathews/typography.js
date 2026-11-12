@@ -2,7 +2,6 @@
 import gray from "gray-percentage"
 import set from "lodash/set"
 import each from "lodash/forEach"
-import isNumber from "lodash/isNumber"
 import isString from "lodash/isString"
 import isFunction from "lodash/isFunction"
 import isArray from "lodash/isArray"
@@ -10,6 +9,7 @@ import merge from "lodash/merge"
 import reduce from "lodash/reduce"
 
 import { baseFont, fontFamilyList } from "./fontFamily"
+import { isNumeric } from "./verticalRhythm"
 
 import type { OptionsType } from "Types"
 
@@ -69,7 +69,8 @@ export default (vr: any, options: OptionsType) => {
   // All block elements get one rhythm of bottom margin by default
   // or whatever is passed in as option.
   let blockMarginBottom = ""
-  if (isNumber(options.blockMarginBottom)) {
+  // Rhythm units, as a number or a numeric string; any other string is CSS.
+  if (isNumeric(options.blockMarginBottom)) {
     blockMarginBottom = vr.rhythm(options.blockMarginBottom)
   } else if (isString(options.blockMarginBottom)) {
     blockMarginBottom = options.blockMarginBottom

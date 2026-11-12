@@ -3,8 +3,7 @@
 // that library's helpers (rhythm, establishBaseline, linesForFontSize,
 // adjustFontSizeTo). One fixture changes on purpose, to follow CSS Values 4:
 // an em line height is relative to the element's own font size (see
-// "should work with em and fromSize"). Left out: a baseLineHeight in em,
-// which typography.js does not accept.
+// "should work with em and fromSize").
 
 import typography from "../packages/typography/src/index"
 
@@ -69,6 +68,11 @@ describe("establishBaseline", () => {
 
   it("should return unitless lineHeight", () => {
     expect(establishBaseline().lineHeight).toMatch(/^[\d.]+$/)
+  })
+
+  it("should return lineHeight with units if specified", () => {
+    const { establishBaseline: withUnits } = vr({ baseLineHeight: "1.25em" })
+    expect(withUnits().lineHeight).toMatch(/em$/)
   })
 
   it("should return sensible results", () => {

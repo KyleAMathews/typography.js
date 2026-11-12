@@ -617,7 +617,7 @@ takes its line height from typography's own rem rhythm.
   byte-identical. Over a parity sweep, every rem output matches v0.16. em-mode
   adjusted line heights change (the spec fix above). After the third review,
   px-mode font sizes are rounded to 5 decimals, which changes them by at most
-  5e-6px (T4).
+  5e-6px (T4). The engineer approved this on 2026-11-12: "rounding is fine".
 
 **Third prep-pr review (2026-11-12): restorations and decisions.**
 - **No breaking changes, restored** (engineer's choice of three; unknown
@@ -642,3 +642,21 @@ takes its line height from typography's own rem rhythm.
   `establishBaseline()`, which gives two values. They now write those values
   directly. compass-vertical-rhythm is gone from every package, and the 44
   theme snapshots are byte-identical.
+
+**Fourth prep-pr review (2026-11-12).** These fall under "inputs that worked
+in v0.16.24 keep working" and "spec is the law":
+- `baseFontSize` may be a number (px), a numeric string, or any CSS length
+  that converts. em, rem, and % are of the browser's initial 16px, and `12pt`
+  is exactly 16px. v0.16 read `12pt` as 12px.
+- `headerLineHeight` is any CSS `line-height`, kept as given: a number or
+  length of 0 or more, `normal`, a CSS-wide keyword, or a math or `var()`
+  function that is safe CSS (N5). It throws only for values CSS rejects.
+- A plain number or numeric string where a length is expected
+  (`minLinePadding`, helper font sizes) is px, as compass read it.
+- White space around a number or a length is ignored.
+- `blockMarginBottom` as a numeric string is rhythm units (README), like a
+  number. v0.16 wrote it raw as an invalid unitless margin.
+- U5, the engineer: "Golden was just it ignoring the input and falling back
+  to a default? In which case that's definitely a bug." `scaleRatio: '2'` is
+  2, listed as a fix.
+- U7, the engineer: keep whole-entry quoting for a var() list with a bad item.

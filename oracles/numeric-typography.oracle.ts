@@ -94,7 +94,10 @@ type History = {
   lines: number
   explicitRhythmUnit: boolean | undefined
   // The base spelled with an exponent, such as "1.65e+1px" (review R1).
-  exponentBase: boolean
+  // How the base is written: "16.5px", "1.65e+1px", 16.5, "16.5", or in pt.
+  // A number or numeric string is px, as v0.16 read it; pt converts exactly
+  // (review U1).
+  baseForm: "px" | "exponent" | "number" | "string" | "pt"
   // An omitted option passed as a key whose value is undefined. It means the
   // default (engineer decision 2026-11-12, review R5).
   explicitUndefined: boolean
@@ -102,8 +105,11 @@ type History = {
   // passed as null: both mean what v0.16 read (engineer, 2026-11-12).
   stringNumbers: boolean
   nullPosition: boolean
-  // headerLineHeight written as a length ("1.2em", "18px"), as v0.16 allowed.
-  headerEm: false | "em" | "px"
+  // headerLineHeight as any CSS line-height, kept as given (v0.16 passed it
+  // through; review U2): a length, a percentage, normal, var(), or calc().
+  headerForm: false | "em" | "px" | "%" | "vh" | "normal" | "var" | "calc"
+  // blockMarginBottom in rhythm units, as a number or numeric string (README).
+  blockMargin: number | string | undefined
 }
 
 type Plan = History & {
@@ -160,15 +166,24 @@ const arbitrary = fc.record({
       }
     )
   ),
-  headerLineHeight: optionalNumber(0.5, 2),
+  headerLineHeight: fc.oneof(optionalNumber(0.5, 2), fc.constant(0)),
   position: optionalNumber(-4, 4),
   lines: fc.double({ min: -4, max: 4, noNaN: true }),
   explicitRhythmUnit: fc.oneof(fc.constant(undefined), fc.boolean()),
-  exponentBase: fc.boolean(),
+  baseForm: fc.constantFrom<"px" | "exponent" | "number" | "string" | "pt">("px", "exponent", "number", "string", "pt"),
   explicitUndefined: fc.boolean(),
   stringNumbers: fc.boolean(),
   nullPosition: fc.boolean(),
-  headerEm: fc.constantFrom<false | "em" | "px">(false, "em", "px"),
+  headerForm: fc.constantFrom<false | "em" | "px" | "%" | "vh" | "normal" | "var" | "calc">(false, "em", "px", "%", "vh", "normal", "var", "calc"),
+  blockMargin: fc.oneof(
+    fc.constant(undefined),
+    fc.double({ min: 0, max: 3, noNaN: true }),
+    fc.double({ min: 0, max: 3, noNaN: true }).map(String, (text) => {
+      const n = typeof text === "string" ? Number(text) : NaN
+      if (!(n >= 0 && n <= 3) || String(n) !== text) throw new Error("not a generated margin")
+      return n
+    })
+  ),
 })
 
 const defaultHistory: History = {
@@ -179,11 +194,12 @@ const defaultHistory: History = {
   position: undefined,
   lines: 1,
   explicitRhythmUnit: undefined,
-  exponentBase: false,
+  baseForm: "px",
   explicitUndefined: false,
   stringNumbers: false,
   nullPosition: false,
-  headerEm: false,
+  headerForm: false,
+  blockMargin: undefined,
 }
 
 // A base line height in px: a multiple of the base, or a length (CSS Values 4:
@@ -212,6 +228,18 @@ function resolve(history: History): Plan {
   }
 }
 
+// A heading line height in one of the forms CSS accepts.
+const headerText = (n: number, form: Exclude<History["headerForm"], false>) =>
+  form === "%"
+    ? `${n * 100}%`
+    : form === "normal"
+    ? "normal"
+    : form === "var"
+    ? `var(--lh, ${n})`
+    : form === "calc"
+    ? `calc(${n}em + 1px)`
+    : `${n}${form}`
+
 const spell = (history: History, value: unknown) =>
   history.stringNumbers && typeof value === "number" ? String(value) : value
 
@@ -222,19 +250,26 @@ function optionsFor(history: History) {
         "baseFontSize",
         history.base === undefined
           ? undefined
-          : history.exponentBase
+          : history.baseForm === "exponent"
           ? `${history.base.toExponential()}px`
+          : history.baseForm === "number"
+          ? history.base
+          : history.baseForm === "string"
+          ? String(history.base)
+          : history.baseForm === "pt"
+          ? `${(history.base * 72) / 96}pt`
           : `${history.base}px`,
       ],
       ["scaleRatio", spell(history, history.ratio)],
       ["baseLineHeight", spell(history, history.lineHeight)],
       [
         "headerLineHeight",
-        history.headerEm && history.headerLineHeight !== undefined
-          ? `${history.headerLineHeight}${history.headerEm}`
+        history.headerForm && history.headerLineHeight !== undefined
+          ? headerText(history.headerLineHeight, history.headerForm)
           : spell(history, history.headerLineHeight),
       ],
       ["rhythmUnit", history.explicitRhythmUnit ? "rem" : undefined],
+      ["blockMarginBottom", history.blockMargin],
     ].filter(([, value]) => history.explicitUndefined || value !== undefined)
   )
 }
@@ -381,7 +416,11 @@ function declaredLengths(styles: Styles): Array<[string, string, unknown]> {
     typeof declarations !== "object"
       ? []
       : (["fontSize", "lineHeight"] as const)
-          .filter((property) => property in declarations)
+          .filter(
+            (property) =>
+              property in declarations &&
+              !(property === "lineHeight" && /^h[1-6]$/.test(selector))
+          )
           .map((property): [string, string, unknown] => [
             selector,
             property,
@@ -457,6 +496,8 @@ const requiredStates = [
   "named ratio",
   "pixel base line height",
   "exponent-spelled base",
+  "base as a number, string, or pt",
+  "block margin as a string",
   "explicit undefined option",
   "relative base line height",
   "numbers as strings",
@@ -469,7 +510,7 @@ oracleProperty<History, ReturnType<typeof expectedMeasurements>, Plan>({
   id: "numerical-typography",
   owns: [
     "packages/typography/src/index.js",
-    "packages/typography/src/utils/verticalRhythm.js",
+    "packages/typography/src/utils/verticalRhythm.js", "packages/typography/src/utils/css.js",
     "packages/typography/src/utils/createStyles.js",
   ],
   law: {
@@ -559,12 +600,32 @@ oracleProperty<History, ReturnType<typeof expectedMeasurements>, Plan>({
       {
         name: "an em heading line height",
         enters: ["em heading line height", "custom heading line height"],
-        build: (h) => ({ ...h, headerLineHeight: 1.2, headerEm: "em" }),
+        build: (h) => ({ ...h, headerLineHeight: 1.2, headerForm: "em" }),
+      },
+      {
+        name: "heading line heights CSS keeps as given",
+        enters: ["em heading line height", "custom heading line height"],
+        build: (h) => ({ ...h, headerLineHeight: 1.25, headerForm: "var" }),
+      },
+      {
+        name: "a zero heading line height",
+        enters: ["custom heading line height"],
+        build: (h) => ({ ...h, headerLineHeight: 0 }),
+      },
+      {
+        name: "a block margin as a string (U8)",
+        enters: ["block margin as a string"],
+        build: (h) => ({ ...h, blockMargin: "1" }),
+      },
+      {
+        name: "a base written as a number",
+        enters: ["base as a number, string, or pt"],
+        build: (h) => ({ ...h, base: 16, baseForm: "number" }),
       },
       {
         name: "a px heading line height",
         enters: ["em heading line height", "custom heading line height"],
-        build: (h) => ({ ...h, headerLineHeight: 1.8, headerEm: "px" }),
+        build: (h) => ({ ...h, headerLineHeight: 1.8, headerForm: "px" }),
       },
       {
         name: "a null scale position",
@@ -579,7 +640,7 @@ oracleProperty<History, ReturnType<typeof expectedMeasurements>, Plan>({
       {
         name: "exponent-spelled base",
         enters: ["exponent-spelled base", "fractional base"],
-        build: (h) => ({ ...h, base: 16.5, exponentBase: true }),
+        build: (h) => ({ ...h, base: 16.5, baseForm: "exponent" }),
       },
       {
         name: "pixel base line height",
@@ -679,10 +740,13 @@ oracleProperty<History, ReturnType<typeof expectedMeasurements>, Plan>({
     if (typeof plan.lineHeight === "string" && !plan.lineHeight.endsWith("px"))
       states.push("relative base line height")
     if (plan.stringNumbers) states.push("numbers as strings")
-    if (plan.headerEm && plan.headerLineHeight !== undefined) states.push("em heading line height")
+    if (typeof plan.blockMargin === "string") states.push("block margin as a string")
+    if (plan.headerForm && plan.headerLineHeight !== undefined) states.push("em heading line height")
     if (plan.nullPosition && plan.position === undefined) states.push("null position")
-    if (plan.exponentBase && plan.base !== undefined)
+    if (plan.baseForm === "exponent" && plan.base !== undefined)
       states.push("exponent-spelled base")
+    if (["number", "string", "pt"].includes(plan.baseForm) && plan.base !== undefined)
+      states.push("base as a number, string, or pt")
     if (
       plan.explicitUndefined &&
       [plan.base, plan.ratio, plan.lineHeight, plan.headerLineHeight].includes(
@@ -702,6 +766,7 @@ oracleProperty<History, ReturnType<typeof expectedMeasurements>, Plan>({
       const styles = t.toJSON() as Styles
       observe("root", styles.html)
       observe("styles", declaredLengths(styles))
+      observe("block margin", (styles.p as { marginBottom?: unknown } | undefined)?.marginBottom)
       observe(
         "headings",
         [1, 2, 3, 4, 5, 6].map((n) => styles[`h${n}`])
@@ -846,6 +911,18 @@ oracleProperty<History, ReturnType<typeof expectedMeasurements>, Plan>({
       "N2 geometric scale"
     )
     if (scaleFailure) return scaleFailure
+    // N3: a block's bottom margin is blockMarginBottom rhythm units (README:
+    // "Defaults to one rhythm unit").
+    const margin = observation(trace, "block margin")?.value
+    const marginLines = plan.blockMargin === undefined ? 1 : Number(plan.blockMargin)
+    const marginFailure = close(
+      "block margin",
+      lengthInPixels(margin, root, root),
+      plan.effective.lineHeightPx * marginLines,
+      lineTolerance(plan.effective.lineHeightPx * marginLines),
+      "N3 proportional rhythm"
+    )
+    if (marginFailure) return marginFailure
     const rhythmFailure = close(
       "rhythm",
       lengthInPixels(rhythm, root, root),
@@ -874,6 +951,17 @@ oracleProperty<History, ReturnType<typeof expectedMeasurements>, Plan>({
     )
     if (coverFailure) return coverFailure
     for (const heading of headings) {
+      // N5: any other form is kept as given.
+      if (plan.headerForm && plan.headerLineHeight !== undefined) {
+        const failure = differs(
+          "headings",
+          "N5 independent heading line height",
+          heading.lineHeight,
+          headerText(plan.headerLineHeight, plan.headerForm)
+        )
+        if (failure) return failure
+        continue
+      }
       const size = lengthInPixels(heading.fontSize, root, root)
       const lineHeight = linePixels(heading.lineHeight, size, root)
       if (
@@ -887,17 +975,6 @@ oracleProperty<History, ReturnType<typeof expectedMeasurements>, Plan>({
           "heading size or line height is not finite nonnegative CSS",
           "N4 valid numerical CSS"
         )
-      // N5: a length is kept as given (an em of the heading's own size).
-      if (plan.headerEm && plan.headerLineHeight !== undefined) {
-        const failure = differs(
-          "headings",
-          "N5 independent heading line height",
-          heading.lineHeight,
-          `${plan.headerLineHeight}${plan.headerEm}`
-        )
-        if (failure) return failure
-        continue
-      }
       const multiplier = unitlessMultiplier(heading.lineHeight)
       if (!Number.isFinite(multiplier))
         return violation(
@@ -1262,7 +1339,7 @@ type GenericRhythmHistory = {
 }
 oracleProperty<GenericRhythmHistory, string>({
   id: "numerical-generic-rhythm-validity",
-  owns: ["packages/typography/src/index.js", "packages/typography/src/utils/verticalRhythm.js"],
+  owns: ["packages/typography/src/index.js", "packages/typography/src/utils/verticalRhythm.js", "packages/typography/src/utils/css.js"],
   law: {
     statement:
       "N4 ordinary generic rhythm calls return finite signed spacing; extreme calls throw or return finite signed numerical CSS spacing. scale(1) in the same unit, and every font size and line height in toJSON(), are finite nonnegative CSS at ordinary bases, and otherwise throw or are such CSS.",
@@ -1579,7 +1656,13 @@ function namesTheOption(plan: InvalidHistory, result: { error?: unknown }) {
 const INVALID_ARGUMENTS: unknown[] = [NaN, Infinity, -Infinity, true, "x", "1px", ""]
 const invalidArguments = fc.constantFrom(...INVALID_ARGUMENTS)
 // A numeric string is a valid number option, as in v0.16; null is invalid.
-const INVALID_CONFIGURATION: unknown[] = [0, -1, NaN, Infinity, -Infinity, null, true, "x", "0", "-1", "1 "]
+// White space around a number is ignored, as CSS ignores it (review U1).
+const INVALID_CONFIGURATION: unknown[] = [0, -1, NaN, Infinity, -Infinity, null, true, "x", "0", "-1", "1 x"]
+// A heading line height is any CSS line-height (review U2): 0 and normal are
+// valid; a negative value, an unknown unit, or text that is not safe CSS is not.
+const INVALID_HEADER_VALUES: unknown[] = [-1, NaN, Infinity, null, true, "x", "-1", "-1em", "1.2 em", "em", "1.2foo", "1;x", "var(--a", "calc(1", "normal;", "a<b", "{}"]
+// A base font size: a positive length that converts to px, or a number (px).
+const INVALID_BASES: unknown[] = ["0px", "-1px", "", "oops", "16pxoops", "1.2.3px", "16vw", null, true, NaN, 0, -16]
 const invalidConfiguration = fc.constantFrom(...INVALID_CONFIGURATION)
 // Values that are not a named ratio: case and spacing matter, an inherited
 // object key is not a name, and neither is a non-string that stringifies to one.
@@ -1615,7 +1698,7 @@ const OPTION_OF_KIND: Record<string, string> = {
 const INVALID_RHYTHM_UNITS: unknown[] = ["vw", "ch", "%", "foo", "", 12, null, ["rem"], "constructor", "toString"]
 // headerLineHeight may be a length kept as given; it must be positive and
 // convert to px.
-const INVALID_HEADER_LENGTHS: unknown[] = ["1.2vw", "0em", "-1em", "1.2 em", "em"]
+
 // minLinePadding must be a CSS length that converts to px (review T9).
 const INVALID_PADDINGS: unknown[] = ["abc", "2vw", NaN, "", true, "2 px"]
 // Only a positive finite pixel length is a base line height with a unit.
@@ -1626,18 +1709,7 @@ const invalidPixelLineHeight = fc.constantFrom(...INVALID_PIXEL_LINE_HEIGHTS)
 const invalidArbitrary = fc.oneof(
   fc.record({
     kind: fc.constant("baseFontSize"),
-    value: fc.constantFrom(
-      "0px",
-      "-1px",
-      "",
-      "oops",
-      "16em",
-      "16pxoops",
-      "1.2.3px",
-      "16",
-      null,
-      16
-    ),
+    value: fc.constantFrom(...INVALID_BASES),
   }),
   fc.record({
     kind: fc.constant("scaleRatio"),
@@ -1649,7 +1721,7 @@ const invalidArbitrary = fc.oneof(
   }),
   fc.record({
     kind: fc.constant("headerLineHeight"),
-    value: fc.oneof(invalidConfiguration, fc.constantFrom(...INVALID_HEADER_LENGTHS)),
+    value: fc.constantFrom(...INVALID_HEADER_VALUES),
   }),
   fc.record({ kind: fc.constant("scale"), value: invalidArguments }),
   fc.record({ kind: fc.constant("rhythm"), value: invalidArguments }),
@@ -1685,7 +1757,7 @@ oracleProperty<InvalidHistory, string>({
   id: "numerical-input-rejection",
   owns: [
     "packages/typography/src/index.js",
-    "packages/typography/src/utils/verticalRhythm.js",
+    "packages/typography/src/utils/verticalRhythm.js", "packages/typography/src/utils/css.js",
     "packages/typography/src/utils/createStyles.js",
   ],
   law: {
@@ -1708,11 +1780,6 @@ oracleProperty<InvalidHistory, string>({
       "line height product out of range",
     ],
     constructed: [
-      ...INVALID_HEADER_LENGTHS.map((value) => ({
-        name: `invalid headerLineHeight length: ${JSON.stringify(value)}`,
-        enters: ["invalid configuration"],
-        build: () => ({ kind: "headerLineHeight", value }),
-      })),
       ...INVALID_PADDINGS.map((value) => ({
         name: `invalid minLinePadding: ${JSON.stringify(value)}`,
         enters: ["invalid configuration"],
@@ -1728,7 +1795,12 @@ oracleProperty<InvalidHistory, string>({
         enters: ["line height product out of range"],
         build: () => ({ kind: "line height range", value }),
       })),
-      ...["scaleRatio", "baseLineHeight", "headerLineHeight"].flatMap((kind) =>
+      ...INVALID_HEADER_VALUES.map((value) => ({
+        name: `invalid headerLineHeight: ${JSON.stringify(value)}`,
+        enters: ["invalid configuration"],
+        build: () => ({ kind: "headerLineHeight", value }),
+      })),
+      ...["scaleRatio", "baseLineHeight"].flatMap((kind) =>
         INVALID_CONFIGURATION.map((value) => ({
           name: `invalid ${kind}: ${String(value)}`,
           enters: ["invalid configuration"],
@@ -1745,18 +1817,7 @@ oracleProperty<InvalidHistory, string>({
         enters: ["invalid configuration"],
         build: () => ({ kind: "scaleRatio", value }),
       })),
-      ...[
-        "0px",
-        "-1px",
-        "",
-        "oops",
-        "16em",
-        "16pxoops",
-        "1.2.3px",
-        "16",
-        null,
-        16,
-      ].map((value) => ({
+      ...INVALID_BASES.map((value) => ({
         name: `invalid pixel base: ${String(value)}`,
         enters: ["invalid configuration"],
         build: () => ({ kind: "baseFontSize", value }),
@@ -1948,7 +2009,7 @@ const owesResult = (plan: ExtremeHistory) =>
   plan.lineHeight >= 0.5 && plan.base * 2 ** plan.position <= OWED_MAX_PIXELS
 oracleProperty<ExtremeHistory, string>({
   id: "numerical-result-validity",
-  owns: ["packages/typography/src/index.js", "packages/typography/src/utils/verticalRhythm.js"],
+  owns: ["packages/typography/src/index.js", "packages/typography/src/utils/verticalRhythm.js", "packages/typography/src/utils/css.js"],
   law: {
     statement:
       "N4 finite numerical boundary calls either throw or return finite nonnegative scale measurements whose line height covers the font size (N6). A call with a font size up to 1e300px and a line height of 0.5 or more returns base × 2^position (N2).",
@@ -2173,7 +2234,9 @@ oracleProperty<ExtremeHistory, string>({
 // N6 for adjustFontSizeTo: with lines "auto", the line height is a whole
 // number of half lines and covers the font size. Explicit lines may give less
 // (compass's own fixture allows it).
-type Length = { n: number; unit: "px" | "rem" | "em" | "%" | "ex" | "pt" | "cm" }
+// "num" and "numstr" are a plain number and a numeric string: px, as compass
+// read them (review U3, U4).
+type Length = { n: number; unit: "px" | "rem" | "em" | "%" | "ex" | "pt" | "cm" | "num" | "numstr" }
 type RhythmUnit = "rem" | "em" | "ex" | "px" | "pt" | "pc" | "in" | "cm" | "mm" | "q"
 // CSS Values 4 §5.2: absolute lengths in px.
 const ABSOLUTE: Record<string, number> = {
@@ -2199,7 +2262,8 @@ type HelperHistory = {
     | { kind: "adjust"; size: Length; lines: number | "auto" | null | undefined; from: Length | undefined }
     | { kind: "lines"; size: Length }
 }
-const lengthOf = (l: Length) => `${l.n}${l.unit}`
+const lengthOf = (l: Length): string | number =>
+  l.unit === "num" ? l.n : l.unit === "numstr" ? String(l.n) : `${l.n}${l.unit}`
 const lengthArbitrary = fc.oneof(
   fc.record({ n: fc.double({ min: 4, max: 64, noNaN: true }), unit: fc.constant("px" as const) }),
   fc.record({
@@ -2208,7 +2272,8 @@ const lengthArbitrary = fc.oneof(
   }),
   fc.record({ n: fc.double({ min: 25, max: 400, noNaN: true }), unit: fc.constant("%" as const) }),
   fc.record({ n: fc.double({ min: 3, max: 48, noNaN: true }), unit: fc.constant("pt" as const) }),
-  fc.record({ n: fc.double({ min: 0.1, max: 2, noNaN: true }), unit: fc.constant("cm" as const) })
+  fc.record({ n: fc.double({ min: 0.1, max: 2, noNaN: true }), unit: fc.constant("cm" as const) }),
+  fc.record({ n: fc.double({ min: 4, max: 64, noNaN: true }), unit: fc.constantFrom("num" as const, "numstr" as const) })
 )
 const helperArbitrary = fc.record({
   base: fc.double({ min: 1, max: 64, noNaN: true }),
@@ -2229,8 +2294,15 @@ const helperArbitrary = fc.record({
   unit: fc.constantFrom<RhythmUnit | undefined>(undefined, "rem", "em", "ex", "px", "pt", "pc", "in", "cm", "mm", "q"),
   minLinePadding: fc.oneof(
     fc.constant(undefined),
-    fc.constantFrom(0, "0"),
-    fc.double({ min: 0, max: 8, noNaN: true })
+    fc.constantFrom(0, "0", 2, "3"),
+    fc.double({ min: 0, max: 8, noNaN: true }).map(
+      (px) => `${px}px`,
+      (text) => {
+        const px = typeof text === "string" && text.endsWith("px") ? Number(text.slice(0, -2)) : NaN
+        if (!(px >= 0 && px <= 8)) throw new Error("not a generated padding")
+        return px
+      }
+    )
   ),
   roundToNearestHalfLine: fc.constantFrom(undefined, true, false, 0, null, "", 1, "x"),
   call: fc.oneof(
@@ -2301,6 +2373,8 @@ function expectedHelper(plan: HelperHistory): HelperExpected {
       ? (l.n / 100) * parent
       : l.unit === "ex"
       ? l.n * 0.5 * parent
+      : l.unit === "num" || l.unit === "numstr"
+      ? l.n
       : l.n * ABSOLUTE[l.unit]
   // An em or ex length relative to a zero (or underflowing) size cannot
   // express the value: it is in px (engineer decision 2026-11-12, review T6).
@@ -2316,7 +2390,8 @@ function expectedHelper(plan: HelperHistory): HelperExpected {
     const px = (plan.call.lines ?? 1) * linePx - (plan.call.offset ?? 0)
     return { lineHeight: inUnit(px, own) }
   }
-  const padding = plan.minLinePadding === undefined ? 2 : Number(plan.minLinePadding)
+  // A padding in px, or a plain number or numeric string (px).
+  const padding = plan.minLinePadding === undefined ? 2 : parseFloat(String(plan.minLinePadding))
   const half = plan.roundToNearestHalfLine === undefined || !!plan.roundToNearestHalfLine
   if (plan.call.kind === "lines")
     return { lines: autoLines(toPx(plan.call.size, base), linePx, padding, half) }
@@ -2355,7 +2430,7 @@ function closeRounded(actual: number, expected: number, unit: string, floor: boo
 
 oracleProperty<HelperHistory, HelperExpected>({
   id: "numerical-helper-units",
-  owns: ["packages/typography/src/index.js", "packages/typography/src/utils/verticalRhythm.js"],
+  owns: ["packages/typography/src/index.js", "packages/typography/src/utils/verticalRhythm.js", "packages/typography/src/utils/css.js"],
   law: {
     statement:
       "N7 rhythm(lines, fontSize, offset) is lines × the base line height − offset, and adjustFontSizeTo(size, lines, fromSize) gives size and a line height of the lines, in the rhythm unit, converted by CSS Values 4: rem of the base; em and % of the parent size; ex as 0.5em; absolute units exact; an em or ex line height of the element's own size; 5 decimals, px rhythm floored. N6: with lines auto, the line height is whole half lines and covers the font size.",
@@ -2451,7 +2526,7 @@ oracleProperty<HelperHistory, HelperExpected>({
           base: 16,
           lineHeight: 1.5,
           unit: undefined,
-          minLinePadding: 3,
+          minLinePadding: "3",
           roundToNearestHalfLine: false,
           call: { kind: "adjust", size: { n: 21, unit: "px" }, lines: "auto", from: undefined },
         }),
@@ -2552,7 +2627,7 @@ oracleProperty<HelperHistory, HelperExpected>({
         if (plan.roundToNearestHalfLine !== undefined && !plan.roundToNearestHalfLine) states.push("whole lines")
         const step = half ? 0.5 : 1
         const lines = Math.ceil(sizePx / linePx / step) * step
-        if (lines * linePx - sizePx === 2 * Number(plan.minLinePadding ?? 2)) states.push("padding exactly at the boundary")
+        if (lines * linePx - sizePx === 2 * parseFloat(String(plan.minLinePadding ?? 2))) states.push("padding exactly at the boundary")
       }
     } else {
       if (call.lines === null) states.push("null lines")
@@ -2572,12 +2647,7 @@ oracleProperty<HelperHistory, HelperExpected>({
         ...(plan.unit === undefined ? {} : { rhythmUnit: plan.unit }),
         ...(plan.minLinePadding === undefined
           ? {}
-          : {
-              minLinePadding:
-                typeof plan.minLinePadding === "number" && plan.minLinePadding !== 0
-                  ? `${plan.minLinePadding}px`
-                  : plan.minLinePadding,
-            }),
+          : { minLinePadding: plan.minLinePadding }),
         ...(plan.roundToNearestHalfLine === undefined
           ? {}
           : { roundToNearestHalfLine: plan.roundToNearestHalfLine }),

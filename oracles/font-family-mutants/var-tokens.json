@@ -1,41 +1,41 @@
 [
   {
     "id": "var-token-no-unquoted-url",
-    "source": "packages/typography/src/utils/fontFamily.js",
-    "find": "const varToken = /\\/\\*[^]*?\\*\\/|\\/\\*|\\\\[^\\n\\r\\f]|\"(?:\\\\[^]|[^\"\\\\\\n\\r\\f])*\"|'(?:\\\\[^]|[^'\\\\\\n\\r\\f])*'|url\\([ \\t\\n\\r\\f]*(?:\"(?:\\\\[^]|[^\"\\\\\\n\\r\\f])*\"|'(?:\\\\[^]|[^'\\\\\\n\\r\\f])*')|url\\([ \\t\\n\\r\\f]*(?:[^\"'()\\\\ \\t\\n\\r\\f\\u0000-\\u0008\\u000b\\u000e-\\u001f\\u007f]|\\\\[^\\n\\r\\f])*[ \\t\\n\\r\\f]*\\)|url\\(|[-\\w\\u0080-\\uFFFF]+|[^]/iy",
-    "replace": "const varToken = /\\/\\*[^]*?\\*\\/|\\/\\*|\\\\[^\\n\\r\\f]|\"(?:\\\\[^]|[^\"\\\\\\n\\r\\f])*\"|'(?:\\\\[^]|[^'\\\\\\n\\r\\f])*'|url\\([ \\t\\n\\r\\f]*(?:\"(?:\\\\[^]|[^\"\\\\\\n\\r\\f])*\"|'(?:\\\\[^]|[^'\\\\\\n\\r\\f])*')|url\\(|[-\\w\\u0080-\\uFFFF]+|[^]/iy",
+    "source": "packages/typography/src/utils/css.js",
+    "find": "url\\\\(${ws}*(?:[^\"'()\\\\\\\\ \\\\t\\\\n\\\\r\\\\f\\\\u0000-\\\\u0008\\\\u000b\\\\u000e-\\\\u001f\\\\u007f]|\\\\\\\\[^\\\\n\\\\r\\\\f])*${ws}*\\\\)|",
+    "replace": "(?!)|",
     "intent": "an unquoted url() is read as a bad url, so var(--f, url(x)) is quoted",
     "author": "Claude Code session (font-family oracle author), prep-pr review A1/A2"
   },
   {
     "id": "var-token-url-allows-paren",
-    "source": "packages/typography/src/utils/fontFamily.js",
-    "find": "const varToken = /\\/\\*[^]*?\\*\\/|\\/\\*|\\\\[^\\n\\r\\f]|\"(?:\\\\[^]|[^\"\\\\\\n\\r\\f])*\"|'(?:\\\\[^]|[^'\\\\\\n\\r\\f])*'|url\\([ \\t\\n\\r\\f]*(?:\"(?:\\\\[^]|[^\"\\\\\\n\\r\\f])*\"|'(?:\\\\[^]|[^'\\\\\\n\\r\\f])*')|url\\([ \\t\\n\\r\\f]*(?:[^\"'()\\\\ \\t\\n\\r\\f\\u0000-\\u0008\\u000b\\u000e-\\u001f\\u007f]|\\\\[^\\n\\r\\f])*[ \\t\\n\\r\\f]*\\)|url\\(|[-\\w\\u0080-\\uFFFF]+|[^]/iy",
-    "replace": "const varToken = /\\/\\*[^]*?\\*\\/|\\/\\*|\\\\[^\\n\\r\\f]|\"(?:\\\\[^]|[^\"\\\\\\n\\r\\f])*\"|'(?:\\\\[^]|[^'\\\\\\n\\r\\f])*'|url\\([ \\t\\n\\r\\f]*(?:\"(?:\\\\[^]|[^\"\\\\\\n\\r\\f])*\"|'(?:\\\\[^]|[^'\\\\\\n\\r\\f])*')|url\\([ \\t\\n\\r\\f]*(?:[^\"')\\\\ \\t\\n\\r\\f\\u0000-\\u0008\\u000b\\u000e-\\u001f\\u007f]|\\\\[^\\n\\r\\f])*[ \\t\\n\\r\\f]*\\)|url\\(|[-\\w\\u0080-\\uFFFF]+|[^]/iy",
+    "source": "packages/typography/src/utils/css.js",
+    "find": "[^\"'()\\\\\\\\ \\\\t\\\\n\\\\r\\\\f\\\\u0000",
+    "replace": "[^\"')\\\\\\\\ \\\\t\\\\n\\\\r\\\\f\\\\u0000",
     "intent": "a \"(\" inside an unquoted url is accepted (A1/A2 class)",
     "author": "Claude Code session (font-family oracle author), prep-pr review A1/A2"
   },
   {
     "id": "var-token-url-allows-space",
-    "source": "packages/typography/src/utils/fontFamily.js",
-    "find": "const varToken = /\\/\\*[^]*?\\*\\/|\\/\\*|\\\\[^\\n\\r\\f]|\"(?:\\\\[^]|[^\"\\\\\\n\\r\\f])*\"|'(?:\\\\[^]|[^'\\\\\\n\\r\\f])*'|url\\([ \\t\\n\\r\\f]*(?:\"(?:\\\\[^]|[^\"\\\\\\n\\r\\f])*\"|'(?:\\\\[^]|[^'\\\\\\n\\r\\f])*')|url\\([ \\t\\n\\r\\f]*(?:[^\"'()\\\\ \\t\\n\\r\\f\\u0000-\\u0008\\u000b\\u000e-\\u001f\\u007f]|\\\\[^\\n\\r\\f])*[ \\t\\n\\r\\f]*\\)|url\\(|[-\\w\\u0080-\\uFFFF]+|[^]/iy",
-    "replace": "const varToken = /\\/\\*[^]*?\\*\\/|\\/\\*|\\\\[^\\n\\r\\f]|\"(?:\\\\[^]|[^\"\\\\\\n\\r\\f])*\"|'(?:\\\\[^]|[^'\\\\\\n\\r\\f])*'|url\\([ \\t\\n\\r\\f]*(?:\"(?:\\\\[^]|[^\"\\\\\\n\\r\\f])*\"|'(?:\\\\[^]|[^'\\\\\\n\\r\\f])*')|url\\([ \\t\\n\\r\\f]*(?:[^\"'()\\\\\\u0000-\\u0008\\u000b\\u000e-\\u001f\\u007f]|\\\\[^\\n\\r\\f])*[ \\t\\n\\r\\f]*\\)|url\\(|[-\\w\\u0080-\\uFFFF]+|[^]/iy",
+    "source": "packages/typography/src/utils/css.js",
+    "find": "[^\"'()\\\\\\\\ \\\\t\\\\n\\\\r\\\\f\\\\u0000",
+    "replace": "[^\"'()\\\\\\\\\\\\t\\\\n\\\\r\\\\f\\\\u0000",
     "intent": "white space inside an unquoted url is accepted",
     "author": "Claude Code session (font-family oracle author), prep-pr review A1/A2"
   },
   {
     "id": "var-token-string-allows-newline",
-    "source": "packages/typography/src/utils/fontFamily.js",
-    "find": "const varToken = /\\/\\*[^]*?\\*\\/|\\/\\*|\\\\[^\\n\\r\\f]|\"(?:\\\\[^]|[^\"\\\\\\n\\r\\f])*\"|'(?:\\\\[^]|[^'\\\\\\n\\r\\f])*'|url\\([ \\t\\n\\r\\f]*(?:\"(?:\\\\[^]|[^\"\\\\\\n\\r\\f])*\"|'(?:\\\\[^]|[^'\\\\\\n\\r\\f])*')|url\\([ \\t\\n\\r\\f]*(?:[^\"'()\\\\ \\t\\n\\r\\f\\u0000-\\u0008\\u000b\\u000e-\\u001f\\u007f]|\\\\[^\\n\\r\\f])*[ \\t\\n\\r\\f]*\\)|url\\(|[-\\w\\u0080-\\uFFFF]+|[^]/iy",
-    "replace": "const varToken = /\\/\\*[^]*?\\*\\/|\\/\\*|\\\\[^\\n\\r\\f]|\"(?:\\\\[^]|[^\"\\\\])*\"|'(?:\\\\[^]|[^'\\\\\\n\\r\\f])*'|url\\([ \\t\\n\\r\\f]*(?:\"(?:\\\\[^]|[^\"\\\\\\n\\r\\f])*\"|'(?:\\\\[^]|[^'\\\\\\n\\r\\f])*')|url\\([ \\t\\n\\r\\f]*(?:[^\"'()\\\\ \\t\\n\\r\\f\\u0000-\\u0008\\u000b\\u000e-\\u001f\\u007f]|\\\\[^\\n\\r\\f])*[ \\t\\n\\r\\f]*\\)|url\\(|[-\\w\\u0080-\\uFFFF]+|[^]/iy",
+    "source": "packages/typography/src/utils/css.js",
+    "find": "`\"(?:\\\\\\\\[^]|[^\"\\\\\\\\\\\\n\\\\r\\\\f])*\"|",
+    "replace": "`\"(?:\\\\\\\\[^]|[^\"\\\\\\\\\\\\r\\\\f])*\"|",
     "intent": "a line break inside a double-quoted string is accepted",
     "author": "Claude Code session (font-family oracle author), prep-pr review A1/A2"
   },
   {
     "id": "var-head-no-comments",
     "source": "packages/typography/src/utils/fontFamily.js",
-    "find": "const varHead = /^var\\((?:[ \\t\\n\\r\\f]|\\/\\*(?:[^*]|\\*+[^*/])*\\*+\\/)*--(?:[-\\w\\u0080-\\uFFFF]|\\\\(?:[0-9a-fA-F]{1,6}[ \\t\\n\\r\\f]?|[^\\n\\r\\f0-9a-fA-F]))+(?:[ \\t\\n\\r\\f]|\\/\\*(?:[^*]|\\*+[^*/])*\\*+\\/)*[,)]/i",
-    "replace": "const varHead = /^var\\([ \\t\\n\\r\\f]*--(?:[-\\w\\u0080-\\uFFFF]|\\\\(?:[0-9a-fA-F]{1,6}[ \\t\\n\\r\\f]?|[^\\n\\r\\f0-9a-fA-F]))+(?:[ \\t\\n\\r\\f]|\\/\\*(?:[^*]|\\*+[^*/])*\\*+\\/)*[,)]/i",
+    "find": "`^var\\\\(${blank}*--",
+    "replace": "`^var\\\\([ \\\\t\\\\n\\\\r\\\\f]*--",
     "intent": "a comment before the custom property name makes the entry a name",
     "author": "Claude Code session (font-family oracle author), prep-pr review A1/A2"
   }
