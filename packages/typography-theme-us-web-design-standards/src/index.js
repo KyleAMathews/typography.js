@@ -54,7 +54,7 @@ const theme: OptionsType = {
       marginBottom: 0,
     },
     "blockquote cite": {
-      ...adjustFontSizeTo(options.baseFontSize),
+      ...adjustFontSizeTo("100%"),
       color: gray(54, 204),
       fontWeight: options.bodyWeight,
       fontStyle: "normal",

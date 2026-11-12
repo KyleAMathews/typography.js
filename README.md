@@ -247,7 +247,8 @@ _configuration_ object. All configuration keys are optional, and a key set to
   `"1.5"`), or a CSS length such as `"24px"`, `"1.5em"`, or `"150%"`. Defaults
   to `1.45`.
 * **headerLineHeight**: The line height of `h1`–`h6`, used as given: any CSS
-  `line-height`, such as `1.1`, `"1.2em"`, `"normal"`, or `"var(--lh)"`.
+  `line-height`, such as `1.1`, `"1.2em"`, `"normal"`, `"round(1.25, 0.25)"`,
+  or `"var(--lh)"`. A value CSS rejects, such as `"calc(foo)"`, throws.
   Defaults to `1.1`. It is independent of the scale helper’s rounded line height.
 * **scaleRatio**: The "scale ratio" for the theme. This value is the ratio
   between the `h1` font size and the `baseFontSize`. So if the scale ratio is `2`
@@ -382,10 +383,12 @@ fractional, or zero; with the default settings, `rhythm(-0.25)` is `-0.3625rem`.
 returns a font size and a line height of whole (by default, half) lines. With
 `'auto'`, the line height covers the font size with at least `minLinePadding`
 (default `2px`) above and below; set `roundToNearestHalfLine: false` for whole
-lines. Results are in `rhythmUnit` (default `rem`; also `em`, `ex`, `px`, or an
+lines. Results are in `rhythmUnit` (default `rem`; also `em`, `px`, or an
 absolute unit such as `pt`). Lengths convert as in CSS: `em` and `%` are
-relative to `fromSize`, `ex` is `0.5em`, and an `em` line height is relative to
-the new font size (in `px` when that size is zero). `null` arguments take their
+relative to `fromSize`, and an `em` line height is relative to the new font
+size (in `px` when that size is zero). `ex`, `ch`, and other font-relative
+units throw wherever a size must be computed, because only the browser knows
+the font's metrics. `null` arguments take their
 defaults, numbers may be numeric strings, and a negative font size or line
 count throws.
 

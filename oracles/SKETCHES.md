@@ -244,6 +244,18 @@ The engineer agreed to these on 2026-11-11 ("agreed").
   comment left open at its end makes it a name. Text before `var(` still
   makes it a name, as in v0.16. A `<`, raw or written `\<`, becomes `\3c `.
 
+### Law delta, 2026-11-12 (fifth prep-pr review, V6: pass through raw)
+
+- **L3.** Old: an entry that starts with a well-formed `var()` and reads as a
+  list passes through, and other text after the `var()` makes it a name. New:
+  an entry that starts with a well-formed `var()` and is a
+  <declaration-value> passes through as written. CSS reads it only after
+  substitution, so the text is the promise (`'var(--a) var(--b)'`,
+  `'var(--a), generic(kai)'`). An open string or block, or a top-level `;` or
+  `!`, still makes it a name. The check compares each `var()` entry's
+  top-level pieces with production's text, and reads every other piece alone
+  as its entry's one item.
+
 ---
 
 ## S2. Every shipped theme's stacks end in a matching generic (theme content): not an oracle
@@ -660,3 +672,27 @@ in v0.16.24 keep working" and "spec is the law":
   to a default? In which case that's definitely a bug." `scaleRatio: '2'` is
   2, listed as a fix.
 - U7, the engineer: keep whole-entry quoting for a var() list with a bad item.
+
+**Fifth prep-pr review (2026-11-12).**
+- **V7 (engineer: "reject ex, like ch"):** ex has no px factor. rhythmUnit
+  'ex', baseLineHeight '1.5ex', and ex helper lengths throw. headerLineHeight
+  '1.2ex' is written as given and never computed, so it stays valid.
+- **V6 (engineer: "pass through raw"):** a font-stack entry that starts with
+  a well-formed var() and is a <declaration-value> passes through as written
+  (S1 L3 delta). This replaces U7's whole-entry quoting for safe text.
+  'var(--a) !important' still becomes a name: a top-level "!" would make the
+  whole declaration important, or invalid if an entry follows.
+- **Math scope (engineer: "full: build the grammar"):** headerLineHeight may
+  be any CSS Values 4 math function that line-height accepts (N5). The
+  grammar types a value by CSS Values 4 §10: operands and operators, white
+  space around + and -, each function's arguments, and type combination. A
+  value with a var() or env() reference is checked only after substitution.
+  The model is calibrated against Chrome 157 CSS.supports on 1500 sampled
+  values, and 1495 agree. Chrome also accepts exp() and sqrt() of a length
+  and typed division, which the spec rejects; the spec decides.
+- **V1 (fixed):** the helpers' default font size is the computed base. Under
+  a relative baseFontSize, adjustFontSizeTo(options.baseFontSize) meant 150%
+  of the base, so createStyles' table rule and 21 theme calls now use "100%".
+  Their output is identical, and the 44 snapshots are unchanged.
+- **V2 (fixed):** the rhythm reads baseFontSize and baseLineHeight once, at
+  construction.

@@ -377,27 +377,142 @@ export function readBaseFont(declarations: ReadonlyArray<[string, unknown]>): {
   fontSize?: string
   lineHeight?: string
   family?: ReadResult
+  // The family part as written, for a list with var(), which CSS reads only
+  // after substitution, and the context it is read in.
+  familyText?: string
+  familyContext?: 'property' | 'shorthand'
 } {
-  const out: { fontSize?: string; lineHeight?: string; family?: ReadResult } = {}
+  const out: {
+    fontSize?: string
+    lineHeight?: string
+    family?: ReadResult
+    familyText?: string
+    familyContext?: 'property' | 'shorthand'
+  } = {}
   for (const [property, value] of declarations) {
     const text = String(value)
     if (property === 'font') {
       const m = /^[ \t\n]*([^\s/]+)[ \t\n]*\/[ \t\n]*([^\s]+)[ \t\n]+([\s\S]*)$/.exec(text)
       const family = m ? readFamilyList(m[3], 'shorthand') : undefined
+      if (m) {
+        out.fontSize = m[1]
+        out.lineHeight = m[2]
+        out.familyText = m[3]
+        out.familyContext = 'shorthand'
+      }
       if (!m || !family?.ok) {
         // Dropped: keep the failure, so the check can say why.
         out.family ??= family ?? { ok: false, error: 'font shorthand does not parse', itemsRead: 0 }
         continue
       }
-      out.fontSize = m[1]
-      out.lineHeight = m[2]
       out.family = family
     } else if (property === 'fontSize') out.fontSize = text
     else if (property === 'lineHeight') out.lineHeight = text
     else if (property === 'fontFamily') {
       const family = readFamilyList(text, 'property')
+      out.familyText = text
+      out.familyContext = 'property'
       if (family.ok || !out.family?.ok) out.family = family
     }
   }
   return out
+}
+
+/**
+ * CSS Variables 1 §3 and CSS Syntax 3 §8.2: `value` starts with a well-formed
+ * `var(--name[, fallback])`, and the whole of it is a <declaration-value>
+ * (balanced blocks, no bad string or url, no top-level ";" or "!"), read as
+ * it sits in a declaration. CSS reads such a value only after substitution.
+ */
+export function startsWithVarDeclaration(value: string): boolean {
+  const src = preprocess(value)
+  if (!/^var\(/i.test(src)) return false
+  // The first token is the var(): the tokenizer pushes it before it meets a
+  // token a font-family list cannot hold.
+  const first: Array<Token> = []
+  try {
+    tokenizeInto(src, first)
+  } catch (e) {
+    if (!(e instanceof ReadError)) throw e
+  }
+  const head = first[0]
+  if (
+    head?.type !== 'function' ||
+    head.name !== 'var' ||
+    !(head.firstIdent?.startsWith('--') && head.firstIdent.length > 2) ||
+    head.afterFirst === 'other' ||
+    head.afterFirst === undefined
+  )
+    return false
+  // The whole value as one function's contents: the same <declaration-value>
+  // rules, with the value's top level as the contents' top level.
+  try {
+    tokenize(`x(${src})`)
+    return true
+  } catch (e) {
+    if (e instanceof ReadError) return false
+    throw e
+  }
+}
+
+/**
+ * CSS Syntax 3: the top-level, comma-separated pieces of a value, each as
+ * written; undefined when a string, comment, or block does not close.
+ */
+export function splitTopLevel(value: string): Array<string> | undefined {
+  const pieces: Array<string> = []
+  const closers: Array<string> = []
+  let piece = ''
+  let i = 0
+  while (i < value.length) {
+    const c = value[i]
+    if (c === '\\') {
+      piece += value.slice(i, i + 2)
+      i += 2
+      continue
+    }
+    if (value.startsWith('/*', i)) {
+      const end = value.indexOf('*/', i + 2)
+      if (end < 0) return undefined
+      piece += value.slice(i, end + 2)
+      i = end + 2
+      continue
+    }
+    // An unquoted url( is one url token up to its ")" (CSS Syntax 3 §4.3.6),
+    // whatever it holds, unless a name character comes before it.
+    const url = /^url\([ \t\n\r\f]*(?!["'])/i.exec(value.slice(i))
+    if (url && !/[-\w\u0080-\uFFFF]/.test(value[i - 1] ?? '')) {
+      let j = i + url[0].length
+      while (j < value.length && value[j] !== ')') j += value[j] === '\\' ? 2 : 1
+      if (j >= value.length) return undefined
+      piece += value.slice(i, j + 1)
+      i = j + 1
+      continue
+    }
+    if (c === '"' || c === "'") {
+      let j = i + 1
+      while (j < value.length && value[j] !== c) {
+        if (/[\n\r\f]/.test(value[j])) return undefined
+        j += value[j] === '\\' ? 2 : 1
+      }
+      if (j >= value.length) return undefined
+      piece += value.slice(i, j + 1)
+      i = j + 1
+      continue
+    }
+    if (c === '(' || c === '[' || c === '{') closers.push(c === '(' ? ')' : c === '[' ? ']' : '}')
+    else if (c === ')' || c === ']' || c === '}') {
+      if (closers.pop() !== c) return undefined
+    } else if (c === ',' && closers.length === 0) {
+      pieces.push(piece)
+      piece = ''
+      i++
+      continue
+    }
+    piece += c
+    i++
+  }
+  if (closers.length > 0) return undefined
+  pieces.push(piece)
+  return pieces
 }

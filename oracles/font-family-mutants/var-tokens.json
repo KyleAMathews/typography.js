@@ -33,9 +33,9 @@
   },
   {
     "id": "var-head-no-comments",
-    "source": "packages/typography/src/utils/fontFamily.js",
-    "find": "`^var\\\\(${blank}*--",
-    "replace": "`^var\\\\([ \\\\t\\\\n\\\\r\\\\f]*--",
+    "source": "packages/typography/src/utils/css.js",
+    "find": "export const varHead = new RegExp(`^var\\\\(${blank}*--",
+    "replace": "export const varHead = new RegExp(`^var\\\\([ \\\\t\\\\n\\\\r\\\\f]*--",
     "intent": "a comment before the custom property name makes the entry a name",
     "author": "Claude Code session (font-family oracle author), prep-pr review A1/A2"
   }

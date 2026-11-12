@@ -1,13 +1,5 @@
 // @flow
-import {
-  asciiLower,
-  blank,
-  identStart,
-  listItems,
-  nameChar,
-  stringToken,
-  trim,
-} from "./css"
+import { asciiLower, cssWideKeywords, isDeclarationValue, varHead } from "./css"
 
 // Font stacks to CSS. Each entry of `bodyFontFamily` and `headerFontFamily`
 // becomes one item of a `font-family` list, following CSS Fonts 4 §2.1.
@@ -30,47 +22,14 @@ const genericFamilies = [
 // names: browsers do not implement them yet, and Chrome drops a whole
 // declaration that holds one.
 
-// CSS Values 4 §2.1: valid only as a whole property value.
-const cssWideKeywords = ["inherit", "initial", "unset", "revert", "revert-layer"]
 
-// `var(--name)` or `var(--name, fallback)`, where the fallback is a CSS
-// <declaration-value> (CSS Syntax 3 §4.3, §8.2; CSS Variables 1 §3).
-// The head: `var(`, then a custom property name, with white space or
-// comments around it, then "," or ")".
-const varHead = new RegExp(`^var\\(${blank}*--${nameChar}+${blank}*[,)]`, "i")
 
-// One var(--name[, fallback]): its parentheses close at the end, with no bad
-// string, bad url, unterminated comment, unmatched closer, or ";" or "!" at
-// the fallback's top level.
-const isVarReference = (item: string) =>
-  varHead.test(item) && listItems(item, 4, [")"], true) !== undefined
-
-const identifier = new RegExp(`${blank}+|${identStart}${nameChar}*`, "y")
-// A family name of identifiers, none a CSS-wide word or "default"
-// (CSS Fonts 4 2.1: <custom-ident>+).
-const isIdentifiers = (item: string) => {
-  identifier.lastIndex = 0
-  for (let match = identifier.exec(item); match; match = identifier.exec(item)) {
-    const name = asciiLower(match[0])
-    if (name === "default" || cssWideKeywords.indexOf(name) !== -1) return false
-    if (identifier.lastIndex === item.length) return true
-  }
-  return false
-}
-// An entry that starts with a var() and may continue as a font-family list,
-// as #307 allowed: "var(--sans), 'Lato', sans-serif". Each later item is a
-// var(), a string, or a family name.
-const isVarList = (entry: string) => {
-  const items = /^var\(/i.test(entry) && listItems(entry, 0, [])
-  return (
-    !!items &&
-    items.every(raw => {
-      const item = trim(raw)
-      // The first item starts with "var(", so it can only be a var().
-      return isVarReference(item) || stringToken.test(item) || isIdentifiers(item)
-    })
-  )
-}
+// An entry that starts with a well-formed var() and is a <declaration-value>
+// (no bad string or url, nothing left open, no top-level ";" or "!"). CSS
+// reads it only after substitution, so it passes through as written, as #307
+// passed it: "var(--sans), sans-serif" or "var(--a) var(--b)".
+const isVarEntry = (entry: string) =>
+  varHead.test(entry) && isDeclarationValue(entry)
 
 // A family name as a CSS string (CSS Syntax 3 §4.3.5). Only what a string
 // cannot hold raw is escaped: the quote, the backslash, and line breaks (LF,
@@ -97,7 +56,7 @@ const item = (entry: string) => {
   const escaped = entry.replace(/(\\*)</g, (_, slashes) =>
     slashes.length % 2 === 1 ? `${slashes.slice(1)}\\3c ` : `${slashes}\\3c `
   )
-  if (isVarList(escaped)) return escaped
+  if (isVarEntry(escaped)) return escaped
   return quote(entry)
 }
 

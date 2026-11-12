@@ -193,9 +193,10 @@ export default (vr: any, options: OptionsType) => {
     textDecoration: "none",
   }
 
-  // Table styles.
+  // Table styles, at the base size: "100%" of it in any unit (options.baseFontSize
+  // may be relative, such as "1.5rem").
   styles = setStyles(styles, ["table"], {
-    ...vr.adjustFontSizeTo(options.baseFontSize),
+    ...vr.adjustFontSizeTo("100%"),
     borderCollapse: "collapse",
     width: "100%",
   })

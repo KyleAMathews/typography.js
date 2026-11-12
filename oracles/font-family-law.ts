@@ -15,6 +15,8 @@ import {
   GENERIC_KEYWORDS,
   readBaseFont,
   readFamilyList,
+  splitTopLevel,
+  startsWithVarDeclaration,
 } from './css-font-family-reader'
 import type { FamilyItem } from './css-font-family-reader'
 
@@ -172,7 +174,7 @@ export function resolve(history: History): Plan {
 
 export type Expected =
   | { throws: Array<'bodyFontFamily' | 'headerFontFamily'> }
-  | { body: Array<FamilyItem>; header: Array<FamilyItem>; options: { body: Array<Entry>; header: Array<Entry> } }
+  | { body: Array<Slot>; header: Array<Slot>; options: { body: Array<Entry>; header: Array<Entry> } }
 
 const isValidStack = (s: Array<Entry>): s is Array<string> =>
   s.length > 0 && s.every((e) => typeof e === 'string')
@@ -195,23 +197,16 @@ export const escapeLessThan = (text: string) =>
   text.replace(/(\\*)</g, (_, slashes: string) =>
     slashes.length % 2 === 1 ? `${slashes.slice(1)}\\3c ` : `${slashes}\\3c `,
   )
-// It is read as it sits in the stylesheet, with more list after it: a string,
-// comment, or block still open at its end would swallow that text, so the
-// entry must read the same with ", serif" after it.
-const varListItems = (entry: string): Array<FamilyItem> | undefined => {
-  if (!/^var\(/i.test(entry)) return undefined
-  const escaped = escapeLessThan(entry)
-  const read = readFamilyList(escaped)
-  const inContext = readFamilyList(`${escaped}, serif`)
-  return read.ok &&
-    inContext.ok &&
-    read.items.length > 0 &&
-    'var' in read.items[0] &&
-    !read.items.some((item) => 'generic' in item && item.generic.includes('(')) &&
-    JSON.stringify(inContext.items) === JSON.stringify([...read.items, { generic: 'serif' }])
-    ? read.items
-    : undefined
-}
+// L3 (law deltas S1 and 2026-11-12, "pass through raw"): an entry that
+// starts with a well-formed var() and, with each "<" escaped, is a
+// <declaration-value> (no top-level ";" or "!", nothing left open) passes
+// through as that text. CSS reads it only after substitution, so the text is
+// the promise.
+const varRawEntry = (entry: string) =>
+  /^var\(/i.test(entry) && startsWithVarDeclaration(escapeLessThan(entry))
+
+// A slot of the expected list: one item, or a var() entry's text.
+export type Slot = FamilyItem | { raw: string }
 
 /** One entry's item. Each branch is one sentence of the law. */
 export function expectedItem(entry: string, stackLength: number): FamilyItem {
@@ -225,13 +220,10 @@ export function expectedItem(entry: string, stackLength: number): FamilyItem {
   return { name: representable(entry) }
 }
 
-/** One entry's items: a var() list's items (L3), or its one item. */
-export function expectedItems(entry: string, stackLength: number): Array<FamilyItem> {
-  return varListItems(entry) ?? [expectedItem(entry, stackLength)]
+/** One entry's slot: a var() entry's text (L3), or its one item. */
+export function expectedSlot(entry: string, stackLength: number): Slot {
+  return varRawEntry(entry) ? { raw: escapeLessThan(entry) } : expectedItem(entry, stackLength)
 }
-/** The entry each expected item comes from, for blame. */
-export const itemEntries = (stack: Array<string>) =>
-  stack.flatMap((entry) => expectedItems(entry, stack.length).map(() => entry))
 
 export function model(plan: Plan): Expected {
   const invalid = (
@@ -243,7 +235,7 @@ export function model(plan: Plan): Expected {
     .filter(([, s]) => !isValidStack(s))
     .map(([option]) => option)
   if (invalid.length) return { throws: invalid }
-  const items = (s: Array<string>) => s.flatMap((e) => expectedItems(e, s.length))
+  const items = (s: Array<string>) => s.map((e) => expectedSlot(e, s.length))
   return {
     body: items(plan.body as Array<string>),
     header: items(plan.header as Array<string>),
@@ -252,8 +244,8 @@ export function model(plan: Plan): Expected {
 }
 
 /** The law an item's mismatch breaks. */
-export function lawOfItem(entry: Entry, item: FamilyItem | undefined): string {
-  if (typeof entry === 'string' && varListItems(entry)) return L3
+export function lawOfItem(entry: Entry, item: Slot | undefined): string {
+  if (typeof entry === 'string' && varRawEntry(entry)) return L3
   if (!item) return L1
   if ('keyword' in item) return L4
   if ('generic' in item) return L2
@@ -288,29 +280,41 @@ export const thrown = (e: unknown) => ({
 const valueAt = (observations: ReadonlyArray<Observation>, checkpoint: string) =>
   observations.find((o) => o.checkpoint === checkpoint)?.value
 
+// The list, piece by top-level piece: a var() entry's pieces must be its
+// text, and every other piece must read, alone, as its entry's one item.
 function compareList(
   checkpoint: string,
-  got: ReturnType<typeof readFamilyList> | undefined,
   text: unknown,
-  expected: Array<FamilyItem>,
+  expected: Array<Slot>,
   entries: Array<string>,
+  context: 'property' | 'shorthand',
 ): Verdict | undefined {
-  if (!got || !got.ok) {
-    const k = Math.min(got?.itemsRead ?? 0, entries.length - 1)
-    return violation(
-      checkpoint,
-      `not a valid font-family list (${got?.error ?? 'missing'}); a browser drops it`,
-      lawOfItem(entries[k], expected[k]),
-      { actual: text, expected },
-    )
-  }
-  for (let k = 0; k < Math.max(got.items.length, expected.length); k++) {
-    const d = differs(checkpoint, lawOfItem(entries[k], expected[k]), got.items[k], expected[k], `item ${k + 1} reads back differently`)
+  const pieces = typeof text === 'string' ? splitTopLevel(text) : undefined
+  if (!pieces)
+    return violation(checkpoint, 'not a valid font-family list (a string, comment, or block does not close); a browser drops it', lawOfItem(entries[0], expected[0]), { actual: text, expected })
+  let p = 0
+  for (let k = 0; k < expected.length; k++) {
+    const slot = expected[k]
+    const law = lawOfItem(entries[k], slot)
+    if ('raw' in slot) {
+      const own = splitTopLevel(slot.raw)!.map((piece) => piece.trim())
+      const got = pieces.slice(p, p + own.length).map((piece) => piece.trim())
+      p += own.length
+      const d = differs(checkpoint, law, got, own, `item ${k + 1}, a var() entry, is not passed through as written`)
+      if (d) return d
+      continue
+    }
+    const piece = pieces[p++]
+    const read = piece === undefined ? undefined : readFamilyList(piece, context)
+    if (!read?.ok || read.items.length !== 1)
+      return violation(checkpoint, `item ${k + 1} is not one valid list item (${read && !read.ok ? read.error : 'missing'}); a browser drops it`, law, { actual: text, expected })
+    const d = differs(checkpoint, law, read.items[0], slot, `item ${k + 1} reads back differently`)
     if (d) return d
   }
-  return undefined
+  return p === pieces.length
+    ? undefined
+    : violation(checkpoint, 'the list has items no entry gave', lawOfItem(entries[entries.length - 1], expected[expected.length - 1]), { actual: text, expected })
 }
-
 export function check(plan: Plan, observations: ReadonlyArray<Observation>, expected: Expected): Verdict {
   const reference = valueAt(observations, 'reference') as { message?: string } | undefined
   if (reference) return violation('reference', `typography() threw on the plain stack ['serif']: ${reference.message}`, NO_THROW)
@@ -341,7 +345,7 @@ export function check(plan: Plan, observations: ReadonlyArray<Observation>, expe
   if (sheet?.lessThan) {
     const items = [...expected.body, ...expected.header]
     const nameHasIt = items.some((item) => 'name' in item && item.name.includes('<'))
-    const varHasIt = [...body, ...header].some((e) => varListItems(e) !== undefined && e.includes('<'))
+    const varHasIt = [...body, ...header].some((e) => varRawEntry(e) && e.includes('<'))
     return violation('stylesheet', 'the stylesheet holds a "<", so it can close its <style> element', varHasIt && !nameHasIt ? L3 : L1)
   }
   // L1 (decision Q6): `-apple-system` stays an unquoted identifier, the form
@@ -358,12 +362,12 @@ export function check(plan: Plan, observations: ReadonlyArray<Observation>, expe
   const bodyText = valueAt(observations, 'body.fontFamily')
   const verdict =
     differs('options', L0, valueAt(observations, 'options'), expected.options) ??
-    compareList('body.fontFamily', readFamilyList(String(bodyText)), bodyText, expected.body, itemEntries(body)) ??
-    checkHtml(observations, expected.body, itemEntries(body)) ??
+    compareList('body.fontFamily', bodyText, expected.body, body, 'property') ??
+    checkHtml(observations, expected.body, body) ??
     [1, 2, 3, 4, 5, 6]
       .map((level) => {
         const text = valueAt(observations, `h${level}.fontFamily`)
-        return compareList(`h${level}.fontFamily`, readFamilyList(String(text)), text, expected.header, itemEntries(header))
+        return compareList(`h${level}.fontFamily`, text, expected.header, header, 'property')
       })
       .find(Boolean)
   return verdict ?? pass
@@ -372,12 +376,14 @@ export function check(plan: Plan, observations: ReadonlyArray<Observation>, expe
 // `html` carries the body stack (L1), and keeps the reference's base size and
 // line height, which the stack must not change (L1; L4 when the stack is a
 // lone CSS-wide keyword and needs longhands).
-function checkHtml(observations: ReadonlyArray<Observation>, expected: Array<FamilyItem>, entries: Array<string>) {
+function checkHtml(observations: ReadonlyArray<Observation>, expected: Array<Slot>, entries: Array<string>) {
   const html = readBaseFont(valueAt(observations, 'html') as Array<[string, unknown]>)
   const reference = readBaseFont(valueAt(observations, 'reference html') as Array<[string, unknown]>)
   const law = expected.length === 1 && 'keyword' in expected[0] ? L4 : L1
   return (
-    compareList('html', html.family, valueAt(observations, 'html'), expected, entries) ??
+    (html.familyText === undefined
+      ? violation('html', `not a valid font-family list (${html.family && !html.family.ok ? html.family.error : 'missing'}); a browser drops it`, law, { actual: valueAt(observations, 'html'), expected })
+      : compareList('html', html.familyText, expected, entries, html.familyContext ?? 'property')) ??
     differs('html', law, { fontSize: html.fontSize, lineHeight: html.lineHeight }, { fontSize: reference.fontSize, lineHeight: reference.lineHeight }, 'the base font size or line height changed')
   )
 }
@@ -408,6 +414,7 @@ export const STATES = {
   bothInvalid: 'both stacks invalid',
   omitted: 'an omitted (undefined) stack',
   varList: 'a var() entry that continues as a list',
+  varText: 'a var() entry with text that is not a list',
 } as const
 
 export function reached(plan: Plan): Array<string> {
@@ -426,10 +433,11 @@ export function reached(plan: Plan): Array<string> {
     [plan.header as Array<string>, STATES.loneHeader],
   ] as const) {
     for (const e of s) {
-      const list = varListItems(e)
-      if (list) {
+      if (varRawEntry(e)) {
         states.add(STATES.varReference)
-        if (list.length > 1) states.add(STATES.varList)
+        const text = escapeLessThan(e)
+        if (!readFamilyList(text).ok) states.add(STATES.varText)
+        else if (splitTopLevel(text)!.length > 1) states.add(STATES.varList)
         if (e.includes('<')) states.add(STATES.varLessThan)
         continue
       }
@@ -505,6 +513,7 @@ export function constructedHistories(): Array<ConstructedHistory<History>> {
       { name: 'a name with </style>', enters: [STATES.lessThan], build: withBodyEntry('</style>') },
       { name: "var(--f, '</style>')", enters: [STATES.varReference, STATES.varLessThan], build: withBodyEntry("var(--f, '</style>')") },
       { name: 'a var() entry that continues as a list', enters: [STATES.varReference, STATES.varList], build: withBodyEntry("var(--brand-font), 'Lato', sans-serif") },
+      { name: 'a var() entry with text that is not a list', enters: [STATES.varReference, STATES.varText], build: withBodyEntry('var(--f) x') },
       { name: 'var(--brand-font)', enters: [STATES.varReference], build: withBodyEntry('var(--brand-font)') },
       { name: 'var(--f', enters: [STATES.malformedVar], build: withBodyEntry('var(--f') },
       { name: 'default and inherit in a list', enters: [STATES.wordInList], build: (h) => ({ ...withBodyEntry('default')(h), header: ['Lato', 'Inherit'] }) },
@@ -523,6 +532,8 @@ export const FIXED_HISTORIES: Array<FixedHistory<History>> = [
       { name: 'R5: both stacks undefined', history: { body: undefined, header: undefined } },
       { name: "T1: an escaped < in a var() fallback", history: { body: ["var(--f, '\\<')", 'serif'], header: ['serif'] } },
       { name: 'T1 sibling: two comments around a stray token in var()', history: { body: ['var(/**/x/**/--f)', 'serif'], header: ['serif'] } },
+      { name: 'V6: var() text that is not a list passes through', history: { body: ['var(--f) x', 'serif'], header: ['var(--f), , serif'] } },
+      { name: 'V6 sibling: a NUL in a custom property name', history: { body: ['var(--\u0000)', 'serif'], header: ['serif'] } },
       { name: 'restored #307: a whole list in one var() entry', history: { body: ["var(--brand-font), 'Lato', sans-serif"], header: ['var(--f) ', 'serif'] } },
       { name: 'R5: an undefined header beside an invalid body', history: { body: [], header: undefined } },
       // The var() recognizer's parts, one witness each (design grammar card).
@@ -561,7 +572,7 @@ export const LAW = {
 }
 
 // An entry as its expected items, written back as CSS.
-const written = (e: string, n: number) => expectedItems(e, n).map(serialize).join(',')
+const written = (e: string, n: number) => serialize(expectedSlot(e, n))
 
 export const calibrations: Array<Calibration<History, Plan>> = [
     {
@@ -570,7 +581,7 @@ export const calibrations: Array<Calibration<History, Plan>> = [
       law: L1,
       corrupt: (trace, plan) => {
         const names = strings(plan.body).filter((e) => lawOfItem(e, expectedItem(e, plan.body.length)) === L1 && 'name' in expectedItem(e, plan.body.length))
-        if (strings(plan.body).some((e) => varListItems(e) && /['\\\n\r\f]/.test(e))) return undefined
+        if (strings(plan.body).some((e) => varRawEntry(e) && /['\\\n\r\f]/.test(e))) return undefined
         if (!isValidStack(plan.header) || !names.some((n) => /['\\\n\r\f]/.test(n))) return undefined
         const naive = strings(plan.body)
           .map((e) => (lawOfItem(e, expectedItem(e, plan.body.length)) === L1 && 'name' in expectedItem(e, plan.body.length) ? `'${e}'` : written(e, plan.body.length)))
@@ -587,7 +598,7 @@ export const calibrations: Array<Calibration<History, Plan>> = [
         if (!plan.body.some((e) => 'generic' in expectedItem(e, plan.body.length) && e !== asciiLower(e))) return undefined
         return replace(trace, 'body.fontFamily', plan.body.map((e) => {
           const item = expectedItem(e, plan.body.length)
-          return 'generic' in item && e !== asciiLower(e) && !varListItems(e) ? `'${e}'` : written(e, plan.body.length)
+          return 'generic' in item && e !== asciiLower(e) && !varRawEntry(e) ? `'${e}'` : written(e, plan.body.length)
         }).join(','))
       },
     },
@@ -596,8 +607,8 @@ export const calibrations: Array<Calibration<History, Plan>> = [
       law: L3,
       corrupt: (trace, plan) => {
         if (!isValidStack(plan.body) || !isValidStack(plan.header)) return undefined
-        if (!plan.body.some((e) => varListItems(e))) return undefined
-        return replace(trace, 'body.fontFamily', plan.body.map((e) => (varListItems(e) ? serialize({ name: e }) : written(e, plan.body.length))).join(','))
+        if (!plan.body.some((e) => varRawEntry(e))) return undefined
+        return replace(trace, 'body.fontFamily', plan.body.map((e) => (varRawEntry(e) ? serialize({ name: e }) : written(e, plan.body.length))).join(','))
       },
     },
     {
@@ -656,8 +667,8 @@ export const calibrations: Array<Calibration<History, Plan>> = [
         if ('throws' in expected) return undefined
         const items = [...expected.body, ...expected.header]
         const nameHasIt = items.some((item) => 'name' in item && item.name.includes('<'))
-        const varHasIt = strings([...plan.body, ...plan.header]).some((e) => varListItems(e) !== undefined && e.includes('<'))
-        return nameHasIt && !varHasIt && items.some((item) => 'var' in item) ? replace(trace, 'stylesheet', { lessThan: true }) : undefined
+        const varHasIt = strings([...plan.body, ...plan.header]).some((e) => varRawEntry(e) && e.includes('<'))
+        return nameHasIt && !varHasIt && items.some((item) => 'raw' in item) ? replace(trace, 'stylesheet', { lessThan: true }) : undefined
       },
     },
     {
@@ -668,7 +679,7 @@ export const calibrations: Array<Calibration<History, Plan>> = [
         const expected = model(plan)
         if ('throws' in expected) return undefined
         if ([...expected.body, ...expected.header].some((item) => 'name' in item && item.name.includes('<'))) return undefined
-        const varHasIt = strings([...plan.body, ...plan.header]).some((e) => varListItems(e) !== undefined && e.includes('<'))
+        const varHasIt = strings([...plan.body, ...plan.header]).some((e) => varRawEntry(e) && e.includes('<'))
         return varHasIt ? replace(trace, 'stylesheet', { lessThan: true }) : undefined
       },
     },
@@ -704,7 +715,8 @@ export const calibrations: Array<Calibration<History, Plan>> = [
 
 // A correct serialization, for calibrations only: every name double-quoted
 // with CSS escapes.
-export function serialize(item: FamilyItem): string {
+export function serialize(item: Slot): string {
+  if ('raw' in item) return item.raw
   if ('name' in item)
     return `"${Array.from(item.name, (c) => {
       const cp = c.codePointAt(0)!

@@ -3,15 +3,18 @@
 // (typography.js re-exported it through v0.16): rhythm(lines, fontSize,
 // offset), adjustFontSizeTo(toSize, lines, fromSize), linesForFontSize(size),
 // and establishBaseline(). Lengths convert by CSS Values 4: rem is the base,
-// em and % are the parent size, ex is 0.5em (6.1.1, the x-height fallback),
-// and absolute units are exact (5.2). Results are in the rhythm unit, to 5
+// em and % are the parent size, and absolute units are exact (5.2). ex is
+// rejected: only the browser knows the font's x-height. Results are in the rhythm unit, to 5
 // decimals. Rhythm in px is floored to whole pixels.
 
 const invalid = (name: string, what: string = "numerical value") =>
   new RangeError(`Invalid ${what} for ${name}`)
 
+import { number } from "./css"
+
 // A CSS number, with white space around it ignored, as CSS ignores it.
-const cssNumber = /^[ \t\n\r\f]*[+-]?(?:\d*\.\d+|\d+)(?:e[+-]?\d+)?[ \t\n\r\f]*$/i
+const cssNumber = new RegExp(`^[ \\t\\n\\r\\f]*${number}[ \\t\\n\\r\\f]*$`, "i")
+const cssLength = new RegExp(`^[ \\t\\n\\r\\f]*(${number})([a-z%]*)[ \\t\\n\\r\\f]*$`, "i")
 
 // A finite number, or a string that is one CSS number ("1.5"), as v0.16 read.
 export const toNumber = (name: string, value: any, positive: boolean = false) => {
@@ -34,9 +37,7 @@ export const isNumeric = (value: any) =>
 // CSS length, 5.1).
 const parseLength = (name: string, value: any) => {
   if (typeof value === "number") return [toNumber(name, value), "px"]
-  const match =
-    typeof value === "string" &&
-    /^[ \t\n\r\f]*([+-]?(?:\d*\.\d+|\d+)(?:e[+-]?\d+)?)([a-z%]*)[ \t\n\r\f]*$/i.exec(value)
+  const match = typeof value === "string" && cssLength.exec(value)
   if (!match) throw invalid(name, "CSS length")
   return [Number(match[1]), match[2].toLowerCase() || "px"]
 }
@@ -52,7 +53,9 @@ const absolutePx = {
 }
 
 // px per unit (CSS Values 4): rem is the root size, em and % the parent size,
-// ex 0.5em (6.1.1, the x-height fallback), and absolute units exact (5.2).
+// and absolute units exact (5.2). ex and other font-relative units have no
+// factor: only the browser knows the font's x-height (engineer decision
+// 2026-11-12).
 const pxPer = (unit: string, root: number, parent: number) =>
   unit === "rem"
     ? root
@@ -60,8 +63,6 @@ const pxPer = (unit: string, root: number, parent: number) =>
     ? parent
     : unit === "%"
     ? parent / 100
-    : unit === "ex"
-    ? parent / 2
     : Object.prototype.hasOwnProperty.call(absolutePx, unit)
     ? absolutePx[unit]
     : undefined
@@ -72,6 +73,8 @@ const lengthPx = (name: string, value: any, root: number, parent: number) => {
 }
 
 export default function verticalRhythm(options: Object) {
+  // Read once, at construction, as compass-vertical-rhythm copied its options.
+  const { baseLineHeight } = options
   // The root's font size. Its own root and parent is the browser's initial
   // size, 16px, which html's percentage is of.
   const base = toNumber(
@@ -85,12 +88,11 @@ export default function verticalRhythm(options: Object) {
 
   // A number is a multiple of the base; a length is read at html, whose font
   // size is the base. 16 × 1e308 is not a usable line height.
-  const lineHeight = options.baseLineHeight
   const linePx = toNumber(
     "baseLineHeight",
-    isNumeric(lineHeight)
-      ? base * toNumber("baseLineHeight", lineHeight)
-      : toPixels("baseLineHeight", lineHeight, base),
+    isNumeric(baseLineHeight)
+      ? base * toNumber("baseLineHeight", baseLineHeight)
+      : toPixels("baseLineHeight", baseLineHeight, base),
     true
   )
   const unit =
@@ -115,13 +117,13 @@ export default function verticalRhythm(options: Object) {
       ? 0.5
       : 1
 
-  // px in the rhythm unit, relative to a font size. An em or ex length
+  // px in the rhythm unit, relative to a font size. An em length
   // relative to a zero (or underflowing) size cannot hold the value, so it is
   // written in px (engineer decision 2026-11-12).
   const inUnit = (name: string, px: number, fontSize: number, floor: boolean) => {
     const factor = pxPerUnit(unit, fontSize)
     const value = px / factor
-    if (unit === "px" || (/^e[mx]$/.test(unit) && !Number.isFinite(value))) {
+    if (unit === "px" || (unit === "em" && !Number.isFinite(value))) {
       return `${floor ? Math.floor(px) : parseFloat(px.toFixed(5))}px`
     }
     const rounded = parseFloat(value.toFixed(5))
@@ -141,7 +143,7 @@ export default function verticalRhythm(options: Object) {
     const count = lines == null ? 1 : toNumber("rhythm lines", lines)
     const context = toPixels(
       "rhythm font size",
-      fontSize == null ? options.baseFontSize : fontSize,
+      fontSize == null ? base : fontSize,
       base
     )
     const shift = offset == null ? 0 : toNumber("rhythm offset", offset)
@@ -156,7 +158,7 @@ export default function verticalRhythm(options: Object) {
   const adjustFontSizeTo = (fontSize: any, lines: any, fromSize: any) => {
     const parent = toPixels(
       "adjustFontSizeTo fromSize",
-      fromSize == null ? options.baseFontSize : fromSize,
+      fromSize == null ? base : fromSize,
       base
     )
     const px = toPixels("adjustFontSizeTo font size", fontSize, parent)
@@ -175,7 +177,7 @@ export default function verticalRhythm(options: Object) {
   const establishBaseline = () => ({
     fontSize: `${(base / 16) * 100}%`,
     // As given: a unitless line height stays unitless.
-    lineHeight: String(options.baseLineHeight),
+    lineHeight: String(baseLineHeight),
   })
 
   return {

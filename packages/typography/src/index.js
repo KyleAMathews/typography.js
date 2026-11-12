@@ -4,7 +4,15 @@ import objectAssign from "object-assign"
 import createStyles from "./utils/createStyles"
 import compileStyles from "./utils/compileStyles"
 import { checkFontStacks } from "./utils/fontFamily"
-import { asciiLower, isFunction } from "./utils/css"
+import {
+  asciiLower,
+  cssWideKeywords,
+  hasSubstitution,
+  isDeclarationValue,
+  isMathFunction,
+  lengthUnit,
+  trimSpace,
+} from "./utils/css"
 import verticalRhythm, { isNumeric, toNumber } from "./utils/verticalRhythm"
 import type { OptionsType } from "Types"
 
@@ -35,19 +43,21 @@ const ratioOf = (ratio: any) =>
     : ratio
 
 // headerLineHeight is written as given, so it may be any CSS line-height
-// (CSS Inline 3): a number or length of 0 or more, normal, a CSS-wide
-// keyword, or a math or var() function.
-const lineHeightKeywords = ["normal", "inherit", "initial", "unset", "revert", "revert-layer"]
-const lengthUnit = /^(?:%|px|r?em|r?ex|r?ch|r?ic|r?cap|r?lh|[sld]?v(?:w|h|i|b|min|max)|cq(?:w|h|i|b|min|max)|cm|mm|q|in|pt|pc)$/i
+// (CSS Inline 3), with or without !important: a number or length of 0 or
+// more, normal, a CSS-wide keyword, a math function, or a value with var() or env().
+const lineHeightLength = new RegExp(`^\\+?(?:\\d*\\.\\d+|\\d+)(?:e[+-]?\\d+)?([a-z%]+)$`, "i")
 const isLineHeight = (value: any) => {
   if (isNumeric(value)) return toNumber("headerLineHeight", value) >= 0
   if (typeof value !== "string") return false
-  const text = value.trim()
-  const length = /^\+?(?:\d*\.\d+|\d+)(?:e[+-]?\d+)?([a-z%]+)$/i.exec(text)
+  const text = trimSpace(value.replace(/[ \t\n\r\f]*![ \t\n\r\f]*important[ \t\n\r\f]*$/i, ""))
+  const length = lineHeightLength.exec(text)
   return (
-    lineHeightKeywords.indexOf(asciiLower(text)) !== -1 ||
+    (isNumeric(text) && toNumber("headerLineHeight", text) >= 0) ||
+    ["normal", ...cssWideKeywords].indexOf(asciiLower(text)) !== -1 ||
     (!!length && lengthUnit.test(length[1])) ||
-    isFunction(text, /^(?:var|calc|min|max|clamp|env)$/i)
+    isMathFunction(text) ||
+    // With a var() or env() reference, CSS decides after substitution.
+    (hasSubstitution(text) && text.indexOf("<") === -1 && isDeclarationValue(text))
   )
 }
 
