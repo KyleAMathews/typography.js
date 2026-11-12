@@ -11,7 +11,9 @@ import {
   isDeclarationValue,
   isMathFunction,
   lengthUnit,
+  number,
   trimSpace,
+  withoutImportant,
 } from "./utils/css"
 import verticalRhythm, { isNumeric, toNumber } from "./utils/verticalRhythm"
 import type { OptionsType } from "Types"
@@ -45,19 +47,19 @@ const ratioOf = (ratio: any) =>
 // headerLineHeight is written as given, so it may be any CSS line-height
 // (CSS Inline 3), with or without !important: a number or length of 0 or
 // more, normal, a CSS-wide keyword, a math function, or a value with var() or env().
-const lineHeightLength = new RegExp(`^\\+?(?:\\d*\\.\\d+|\\d+)(?:e[+-]?\\d+)?([a-z%]+)$`, "i")
+const lineHeightLength = new RegExp(`^(${number})([a-z%]+)$`, "i")
 const isLineHeight = (value: any) => {
   if (isNumeric(value)) return toNumber("headerLineHeight", value) >= 0
   if (typeof value !== "string") return false
-  const text = trimSpace(value.replace(/[ \t\n\r\f]*![ \t\n\r\f]*important[ \t\n\r\f]*$/i, ""))
+  const text = trimSpace(withoutImportant(value))
   const length = lineHeightLength.exec(text)
   return (
     (isNumeric(text) && toNumber("headerLineHeight", text) >= 0) ||
     ["normal", ...cssWideKeywords].indexOf(asciiLower(text)) !== -1 ||
-    (!!length && lengthUnit.test(length[1])) ||
-    isMathFunction(text) ||
-    // With a var() or env() reference, CSS decides after substitution.
-    (hasSubstitution(text) && text.indexOf("<") === -1 && isDeclarationValue(text))
+    (!!length && Number(length[1]) >= 0 && lengthUnit.test(length[2])) ||
+    // With a var() or env() reference, or a function the browser types, CSS
+    // decides.
+    ((isMathFunction(text) || hasSubstitution(text)) && text.indexOf("<") === -1 && isDeclarationValue(text))
   )
 }
 
@@ -126,24 +128,19 @@ const typography = function (opts: OptionsType) {
     toString() {
       return compileStyles(vr, options, this.toJSON())
     },
+    // Replaces the text of an existing style#typography.js, or inserts one
+    // first in <head>. An empty head appends, as v0.16's tests pin.
     injectStyles() {
-      if (typeof document !== "undefined") {
-        // Replace existing
-        if (document.getElementById("typography.js")) {
-          const styleNode = document.getElementById("typography.js")
-          styleNode.innerHTML = this.toString()
-        } else {
-          const node = document.createElement("style")
-          node.id = "typography.js"
-          node.innerHTML = this.toString()
-          const head = document.head
-          if (head.firstChild) {
-            head.insertBefore(node, head.firstChild)
-          } else {
-            head.appendChild(node)
-          }
-        }
+      if (typeof document === "undefined") return
+      let node = document.getElementById("typography.js")
+      if (!node) {
+        node = document.createElement("style")
+        node.id = "typography.js"
+        const head = document.head
+        if (head.firstChild) head.insertBefore(node, head.firstChild)
+        else head.appendChild(node)
       }
+      node.innerHTML = this.toString()
     },
   }
 }

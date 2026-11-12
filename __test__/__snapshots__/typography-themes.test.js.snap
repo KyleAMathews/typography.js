@@ -1063,7 +1063,7 @@ Object {
     "textRendering": "optimizeLegibility",
   },
   "h4,h5,h6": Object {
-    "textTransformation": "uppercase",
+    "textTransform": "uppercase",
   },
   "h5": Object {
     "color": "hsla(0,0%,0%,0.9)",

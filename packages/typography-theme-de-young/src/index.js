@@ -44,7 +44,7 @@ const theme: OptionsType = {
       marginBottom: rhythm(1 / 2),
     },
     "h4,h5,h6": {
-      textTransformation: "uppercase",
+      textTransform: "uppercase",
     },
     // Lists look better when not crowded by the larger headers.
     ul: {

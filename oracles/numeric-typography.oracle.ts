@@ -1206,20 +1206,17 @@ oracleProperty<History, ReturnType<typeof expectedMeasurements>, Plan>({
     {
       name: "a zero line height in a non-heading rule",
       law: "N6 helper line height covers its font size",
-      corrupt: (trace) =>
-        trace.map((o) =>
+      // The first rule outside h1–h6 with a line height (code, at the defaults).
+      corrupt: (trace) => {
+        const styles = trace.find((o) => o.checkpoint === "styles")?.value as Array<[string, string, unknown]> | undefined
+        const at = styles?.findIndex(([selector, property]) => property === "lineHeight" && !/^h[1-6]$/.test(selector)) ?? -1
+        if (!styles || at < 0) return undefined
+        return trace.map((o) =>
           o.checkpoint === "styles"
-            ? {
-                ...o,
-                value: (o.value as Array<[string, string, unknown]>).map(
-                  ([selector, property, value]): [string, string, unknown] =>
-                    selector === "code" && property === "lineHeight"
-                      ? [selector, property, "0e-7px"]
-                      : [selector, property, value]
-                ),
-              }
+            ? { ...o, value: styles.map((entry, k): [string, string, unknown] => (k === at ? [entry[0], entry[1], "0e-7px"] : entry)) }
             : o
-        ),
+        )
+      },
     },
     {
       name: "malformed line height in a non-heading rule",
@@ -1693,14 +1690,16 @@ const INVALID_CONFIGURATION: unknown[] = [0, -1, NaN, Infinity, -Infinity, null,
 const INVALID_HEADER_VALUES: unknown[] = [-1, NaN, Infinity, null, true, "x", "-1", "-1em", "1.2 em", "em", "1.2foo", "1;x", "var(--a", "calc(1", "normal;", "a<b", "{}",
   // Review V4, V5: a function whose contents CSS rejects, and a non-CSS space.
   "calc(foo)", "min()", "var(x)", "calc()", "normal\u00a0", "1.1 !importan", "!important",
-  "calc(1.2foo)", "calc(var(x))", "calc(1 + )", "clamp(1)", "calc(1 1)", "nope(1)", "calc(1))", "calc((1)",
+  "calc(1.2foo)", "calc(var(x))", "calc(1 + )", "clamp(1)", "calc(1 1)", "calc(1))", "calc((1)",
   "calc(1, 2)", "round(up)", "calc(up)", "min(1,)", "pow(2)", "env(1)", "env()",
   // Gap check: an expression cut off, a comma in a group, and a character no
   // CSS token starts with.
   "calc(1 *", "calc((1, 2))", "calc(1 # 2)",
   // Gap check: a word where round()'s comma belongs, a second operand inside a
   // group, and a group where a comma belongs.
-  "round(up x 1)", "calc((1 2))", "min(1 (2))", "min(1+ 2)", "calc((1 2)"]
+  "round(up x 1)", "calc((1 2))", "min(1 (2))", "min(1+ 2)", "calc((1 2)",
+  // Gap check (review round 6): an unknown function that does not close.
+  "sibling-index(1", "calc(sibling-index(1)"]
 // A base font size: a positive length that converts to px, or a number (px).
 const INVALID_BASES: unknown[] = ["0px", "-1px", "", "oops", "16pxoops", "1.2.3px", "16vw", null, true, NaN, 0, -16, "1ex"]
 const invalidConfiguration = fc.constantFrom(...INVALID_CONFIGURATION)
@@ -2327,6 +2326,12 @@ const lengthArbitrary = fc.oneof(
   // The base size in any unit, as typography.js's own rules and the themes ask for it.
   fc.record({ n: fc.constant(100), unit: fc.constant("%" as const) })
 )
+// A font size: mostly valid lengths; a negative one is invalid CSS (N4,
+// reviews T3 and W8); zero is valid.
+const sizeArbitrary = fc.oneof(
+  { weight: 6, arbitrary: lengthArbitrary },
+  { weight: 1, arbitrary: fc.record({ n: fc.double({ min: -64, max: 0, noNaN: true }), unit: fc.constant("px" as const) }) }
+)
 const helperArbitrary = fc.record({
   base: fc.double({ min: 1, max: 64, noNaN: true }),
   baseForm: fc.constantFrom<HelperHistory["baseForm"]>("px", "rem", "em", "%", "number"),
@@ -2365,17 +2370,10 @@ const helperArbitrary = fc.record({
       context: fc.option(lengthArbitrary, { nil: undefined }),
       offset: fc.option(fc.double({ min: -8, max: 8, noNaN: true }), { nil: undefined }),
     }),
-    fc.record({ kind: fc.constant("lines" as const), size: lengthArbitrary }),
+    fc.record({ kind: fc.constant("lines" as const), size: sizeArbitrary }),
     fc.record({
       kind: fc.constant("adjust" as const),
-      size: fc.oneof(
-        { weight: 6, arbitrary: lengthArbitrary },
-        // A negative size is invalid CSS (N4, review T3); zero is valid.
-        {
-          weight: 1,
-          arbitrary: fc.record({ n: fc.double({ min: -64, max: 0, noNaN: true }), unit: fc.constant("px" as const) }),
-        }
-      ),
+      size: sizeArbitrary,
       lines: fc.oneof(
         fc.constant("auto" as const),
         fc.constant(undefined),
@@ -2448,8 +2446,11 @@ function expectedHelper(plan: HelperHistory): HelperExpected {
   // A padding in px, or a plain number or numeric string (px).
   const padding = plan.minLinePadding === undefined ? 2 : parseFloat(String(plan.minLinePadding))
   const half = plan.roundToNearestHalfLine === undefined || !!plan.roundToNearestHalfLine
-  if (plan.call.kind === "lines")
-    return { lines: autoLines(toPx(plan.call.size, base), linePx, padding, half) }
+  if (plan.call.kind === "lines") {
+    // + 0: a size of -0 is written "0px", which reads as 0.
+    const px = toPx(plan.call.size, base) + 0
+    return px < 0 ? { throws: true } : { lines: autoLines(px, linePx, padding, half) }
+  }
   const parent = parentPx(plan.call.from)
   const sizePx = toPx(plan.call.size, parent)
   const lines = plan.call.lines
@@ -2513,8 +2514,14 @@ oracleProperty<HelperHistory, HelperExpected>({
       "unitless zero padding",
       "null lines",
       "lines for a font size",
+      "lines for a negative size",
     ],
     constructed: [
+      {
+        name: "lines for a negative size (W8)",
+        enters: ["lines for a font size", "lines for a negative size"],
+        build: (h) => ({ ...h, call: { kind: "lines", size: { n: -10, unit: "px" } } }),
+      },
       {
         name: "a negative size (T3)",
         enters: ["a negative size", "auto lines"],
@@ -2702,8 +2709,10 @@ oracleProperty<HelperHistory, HelperExpected>({
   reached: (plan) => {
     const states: string[] = []
     const call = plan.call
-    if (call.kind === "lines") states.push("lines for a font size")
-    else if (call.kind === "adjust") {
+    if (call.kind === "lines") {
+      states.push("lines for a font size")
+      if (call.size.n < 0) states.push("lines for a negative size")
+    } else if (call.kind === "adjust") {
       if (call.from !== undefined && plan.unit === "em") states.push("em adjust with a parent size")
       if (call.from !== undefined && call.size.unit === "%") states.push("percent with a parent size")
       states.push(typeof call.lines === "number" ? "explicit lines" : "auto lines")
@@ -2882,10 +2891,13 @@ oracleProperty<HelperHistory, HelperExpected>({
 // N5 for math functions: headerLineHeight may be any CSS Values 4 math
 // function that line-height accepts, written as given. CSS reads it by a
 // grammar (§10): operands (numbers, dimensions, constants, var(), nested
-// functions) and operators, with "+" and "-" between white space; each
-// function takes the arguments CSS gives it and combines its arguments'
-// types; and line-height takes a number, a length, or a percentage (CSS
-// Inline 3). Anything else is invalid CSS, so typography() throws (N4, Q2).
+// functions) and operators, with "+" and "-" between white space (a comment
+// is not white space, and is otherwise nothing); each function takes the
+// arguments CSS gives it; "*" and "/" multiply and divide types, and the
+// other operators and functions need matching types; and line-height takes a
+// number, a length, or a percentage (CSS Inline 3). A function this grammar
+// does not know is the browser's to judge, as a var() is. Anything else is
+// invalid CSS, so typography() throws (N4, Q2).
 // The model types a generated expression tree by those rules. It does not
 // read production's text.
 type MathHistory = { call: MathCall }
@@ -2894,11 +2906,11 @@ oracleProperty<MathHistory, { written: string } | { throws: true }>({
   owns: ["packages/typography/src/index.js", "packages/typography/src/utils/css.js"],
   law: {
     statement:
-      "N5 a headerLineHeight that is a CSS Values 4 math function of a type line-height accepts (number, length, percentage), or that holds a var() reference, is written to h1–h6 as given; N4 any other math text makes typography() throw an error naming headerLineHeight.",
+      "N5 a headerLineHeight that is a CSS Values 4 math function of a type line-height accepts (number, length, percentage), or that holds a var() reference or a function the grammar does not know, is written to h1–h6 as given; N4 any other math text makes typography() throw an error naming headerLineHeight.",
     authority:
-      "CSS Values 4 §10 (math functions, their arguments, white space around + and -, type checking); CSS Inline 3 line-height; engineer decisions 2026-11-12 (no breaking changes; full math grammar; N4).",
+      "CSS Values 4 Editor's Draft 24 Aug 2026 §10 (math functions, their arguments, white space around + and -, typed arithmetic); CSS Syntax 3 (comments); CSS Inline 3 line-height; engineer decisions 2026-11-12 (no breaking changes; full math grammar; N4; review W6: keep the grammar, update it to the draft, and let the browser judge unknown functions).",
     limits:
-      "Trees of depth about 3 with up to 4 arguments; units px, em, %, deg, and s (angle and time are math types that line-height does not take as a result); a value with a var() reference is checked only after substitution. Rounding strategy up only. Frequency, resolution, and flex are not generated. Calibrated against Chrome 157 CSS.supports on 1500 sampled values (probe math-vs-chrome): 1495 agree; Chrome also accepts exp() and sqrt() of a length or percentage and typed division (px / %), which CSS Values 4 (WD 2024) types as invalid, and the spec decides.",
+      "Trees of depth about 3 with up to 4 arguments; units px, em, %, deg, and s (angle and time are math types that line-height does not take as a result); a value with a var() reference or an unknown function is checked only by the browser. Comments are generated beside operators and inside parentheses only. Rounding strategy up only. Frequency, resolution, and flex are not generated. The unknown function generated is sibling-index(). Calibrated against Chrome 157 CSS.supports (probe math-vs-chrome).",
   },
   histories: {
     arbitrary: fc.record({ call: mathTree.call }),
@@ -2916,11 +2928,14 @@ oracleProperty<MathHistory, { written: string } | { throws: true }>({
       "a group",
       "two operands side by side",
       "padded parentheses",
+      "a comment",
     ],
     constructed: [
       { name: "a length plus an angle", enters: ["invalid", "types that do not combine"], build: () => ({ call: { kind: "fn", name: "calc", strategy: undefined, pad: false, args: [{ kind: "op", op: "+", space: "both", left: { kind: "num", n: 1, unit: "px" }, right: { kind: "num", n: 3, unit: "deg" } }] } }) },
       { name: "1+1 without white space", enters: ["invalid", "+ or - without white space"], build: () => ({ call: { kind: "fn", name: "calc", strategy: undefined, pad: false, args: [{ kind: "op", op: "+", space: "none", left: { kind: "num", n: 1, unit: "" }, right: { kind: "num", n: 1, unit: "" } }] } }) },
-      { name: "an unknown function", enters: ["invalid", "an unknown function"], build: () => ({ call: { kind: "fn", name: "nope", strategy: undefined, pad: false, args: [{ kind: "num", n: 1, unit: "" }] } }) },
+      { name: "an unknown function", enters: ["valid", "an unknown function"], build: () => ({ call: { kind: "fn", name: "sibling-index", strategy: undefined, pad: false, args: [{ kind: "num", n: 1, unit: "" }] } }) },
+      { name: "a comment beside an operator", enters: ["valid", "a comment"], build: () => ({ call: { kind: "fn", name: "calc", strategy: undefined, pad: false, args: [{ kind: "op", op: "*", space: "comment-tight", left: { kind: "num", n: 1.2, unit: "" }, right: { kind: "num", n: 1, unit: "" } }] } }) },
+      { name: "a length over a length", enters: ["valid"], build: () => ({ call: { kind: "fn", name: "calc", strategy: undefined, pad: false, args: [{ kind: "op", op: "/", space: "both", left: { kind: "num", n: 2.4, unit: "px" }, right: { kind: "num", n: 1, unit: "px" } }] } }) },
       { name: "round(up, …) with a var()", enters: ["valid", "a rounding strategy", "a var() inside"], build: () => ({ call: { kind: "fn", name: "round", strategy: "up", pad: false, args: [{ kind: "var" }, { kind: "num", n: 0.25, unit: "" }] } }) },
       { name: "a grouped length-percentage", enters: ["valid", "a group"], build: () => ({ call: { kind: "fn", name: "calc", strategy: undefined, pad: false, args: [{ kind: "op", op: "*", space: "none", left: { kind: "group", pad: false, inner: { kind: "op", op: "+", space: "both", left: { kind: "num", n: 1, unit: "em" }, right: { kind: "num", n: 4, unit: "%" } } }, right: { kind: "num", n: 1.1, unit: "" } }] } }) },
       { name: "1 2 side by side", enters: ["invalid", "two operands side by side"], build: () => ({ call: { kind: "fn", name: "min", strategy: undefined, pad: false, args: [{ kind: "op", op: "", space: "both", left: { kind: "num", n: 1, unit: "" }, right: { kind: "num", n: 2, unit: "" } }] } }) },
@@ -2939,8 +2954,10 @@ oracleProperty<MathHistory, { written: string } | { throws: true }>({
       { name: "a number plus a length", history: { call: { kind: "fn", name: "max", strategy: undefined, pad: false, args: [{ kind: "num", n: 1, unit: "" }, { kind: "num", n: 2, unit: "px" }] } } },
       { name: "a strategy on a function other than round()", history: { call: { kind: "fn", name: "max", strategy: "up", pad: false, args: [{ kind: "num", n: 1, unit: "" }] } } },
       { name: "round(up) with no value", history: { call: { kind: "fn", name: "round", strategy: "up", pad: false, args: [] } } },
-      { name: "a var() after a tight minus is a function named -var", history: { call: { kind: "fn", name: "calc", strategy: undefined, pad: false, args: [{ kind: "op", op: "-", space: "none", left: { kind: "const", name: "pi" }, right: { kind: "var" } }] } } },
-      { name: "a var() makes an unknown function wait for substitution", history: { call: { kind: "fn", name: "nope", strategy: undefined, pad: false, args: [{ kind: "var" }] } } },
+      { name: "pi-var( is one function token, named pi-var", history: { call: { kind: "fn", name: "calc", strategy: undefined, pad: false, args: [{ kind: "op", op: "-", space: "none", left: { kind: "const", name: "pi" }, right: { kind: "var" } }] } } },
+      { name: "pi -var( is pi beside a function named -var", history: { call: { kind: "fn", name: "calc", strategy: undefined, pad: false, args: [{ kind: "op", op: "-", space: "left", left: { kind: "const", name: "pi" }, right: { kind: "var" } }] } } },
+      { name: "e-sin( is one function token, named e-sin", history: { call: { kind: "fn", name: "calc", strategy: undefined, pad: false, args: [{ kind: "op", op: "-", space: "none", left: { kind: "const", name: "e" }, right: { kind: "fn", name: "sin", strategy: undefined, pad: false, args: [{ kind: "num", n: 1, unit: "" }] } }] } } },
+      { name: "a var() inside an unknown function", history: { call: { kind: "fn", name: "sibling-index", strategy: undefined, pad: false, args: [{ kind: "var" }] } } },
       { name: "cos() of an angle", history: { call: { kind: "fn", name: "cos", strategy: undefined, pad: false, args: [{ kind: "num", n: 3, unit: "deg" }] } } },
       { name: "tan() of an angle", history: { call: { kind: "fn", name: "tan", strategy: undefined, pad: false, args: [{ kind: "num", n: 3, unit: "deg" }] } } },
       { name: "sin(atan2()) of mixed types", history: { call: { kind: "fn", name: "sin", strategy: undefined, pad: false, args: [{ kind: "fn", name: "atan2", strategy: undefined, pad: false, args: [{ kind: "num", n: 1, unit: "px" }, { kind: "num", n: 3, unit: "deg" }] }] } } },
@@ -2955,6 +2972,25 @@ oracleProperty<MathHistory, { written: string } | { throws: true }>({
       { name: "1+ 1 spaced on the right", history: { call: { kind: "fn", name: "calc", strategy: undefined, pad: false, args: [{ kind: "op", op: "+", space: "right", left: { kind: "num", n: 1, unit: "" }, right: { kind: "num", n: 1, unit: "" } }] } } },
       { name: "-infinity", history: { call: { kind: "fn", name: "calc", strategy: undefined, pad: false, args: [{ kind: "const", name: "-infinity" }] } } },
       { name: "V4: calc() with nothing", history: { call: { kind: "fn", name: "calc", strategy: undefined, pad: false, args: [] } } },
+      // Review W3: types multiply and divide (CSS Values 4 ED §10.9).
+      { name: "a length squared over a length", history: { call: { kind: "fn", name: "calc", strategy: undefined, pad: false, args: [{ kind: "op", op: "/", space: "both", left: { kind: "op", op: "*", space: "both", left: { kind: "num", n: 2, unit: "px" }, right: { kind: "num", n: 1, unit: "em" } }, right: { kind: "num", n: 1, unit: "px" } }] } } },
+      { name: "abs() of a length squared", history: { call: { kind: "fn", name: "calc", strategy: undefined, pad: false, args: [{ kind: "op", op: "/", space: "both", left: { kind: "fn", name: "abs", strategy: undefined, pad: false, args: [{ kind: "op", op: "*", space: "both", left: { kind: "num", n: 1, unit: "px" }, right: { kind: "num", n: 1, unit: "px" } }] }, right: { kind: "num", n: 1, unit: "px" } }] } } },
+      { name: "sign() of a length squared", history: { call: { kind: "fn", name: "sign", strategy: undefined, pad: false, args: [{ kind: "op", op: "*", space: "both", left: { kind: "num", n: 1, unit: "px" }, right: { kind: "num", n: 1, unit: "px" } }] } } },
+      { name: "a length over a length squared", history: { call: { kind: "fn", name: "calc", strategy: undefined, pad: false, args: [{ kind: "op", op: "/", space: "both", left: { kind: "num", n: 2, unit: "px" }, right: { kind: "op", op: "*", space: "both", left: { kind: "num", n: 1, unit: "px" }, right: { kind: "num", n: 1, unit: "px" } } }] } } },
+      { name: "an angle over an angle in sqrt()", history: { call: { kind: "fn", name: "sqrt", strategy: undefined, pad: false, args: [{ kind: "op", op: "/", space: "both", left: { kind: "num", n: 3, unit: "deg" }, right: { kind: "num", n: 1, unit: "deg" } }] } } },
+      { name: "sqrt() of a length", history: { call: { kind: "fn", name: "sqrt", strategy: undefined, pad: false, args: [{ kind: "num", n: 1, unit: "px" }] } } },
+      { name: "round() of a length with no step", history: { call: { kind: "fn", name: "round", strategy: undefined, pad: false, args: [{ kind: "num", n: 1, unit: "px" }] } } },
+      { name: "a comment between padded arguments", history: { call: { kind: "fn", name: "min", strategy: undefined, pad: "comment", args: [{ kind: "num", n: 1, unit: "px" }, { kind: "num", n: 2, unit: "" }] } } },
+      { name: "1 /**/ + /**/ 1", history: { call: { kind: "fn", name: "calc", strategy: undefined, pad: false, args: [{ kind: "op", op: "+", space: "comment", left: { kind: "num", n: 1, unit: "" }, right: { kind: "num", n: 1, unit: "" } }] } } },
+      { name: "1/**/+/**/1", history: { call: { kind: "fn", name: "calc", strategy: undefined, pad: false, args: [{ kind: "op", op: "+", space: "comment-tight", left: { kind: "num", n: 1, unit: "" }, right: { kind: "num", n: 1, unit: "" } }] } } },
+      // Gap check (review round 6): an unknown function in typed arithmetic,
+      // two operands in a group, and "+" with white space on its left only
+      // before a group and before a constant.
+      { name: "an unknown function times a length", history: { call: { kind: "fn", name: "calc", strategy: undefined, pad: false, args: [{ kind: "op", op: "*", space: "both", left: { kind: "fn", name: "sibling-index", strategy: undefined, pad: false, args: [] }, right: { kind: "num", n: 1, unit: "px" } }] } } },
+      { name: "a length over an unknown function", history: { call: { kind: "fn", name: "calc", strategy: undefined, pad: false, args: [{ kind: "op", op: "/", space: "both", left: { kind: "num", n: 2, unit: "px" }, right: { kind: "fn", name: "sibling-index", strategy: undefined, pad: false, args: [] } }] } } },
+      { name: "two operands in a group", history: { call: { kind: "fn", name: "calc", strategy: undefined, pad: false, args: [{ kind: "group", pad: false, inner: { kind: "op", op: "", space: "both", left: { kind: "num", n: 1, unit: "" }, right: { kind: "num", n: 2, unit: "" } } }] } } },
+      { name: "1 +(2)", history: { call: { kind: "fn", name: "calc", strategy: undefined, pad: false, args: [{ kind: "op", op: "+", space: "left", left: { kind: "num", n: 1, unit: "" }, right: { kind: "group", pad: false, inner: { kind: "num", n: 2, unit: "" } } }] } } },
+      { name: "1 +pi", history: { call: { kind: "fn", name: "calc", strategy: undefined, pad: false, args: [{ kind: "op", op: "+", space: "left", left: { kind: "num", n: 1, unit: "" }, right: { kind: "const", name: "pi" } }] } } },
       { name: "V3: round(1.25, 0.25)", history: { call: { kind: "fn", name: "round", strategy: undefined, pad: false, args: [{ kind: "num", n: 1.25, unit: "" }, { kind: "num", n: 0.25, unit: "" }] } } },
     ],
   },

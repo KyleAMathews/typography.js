@@ -10,11 +10,11 @@
 const invalid = (name: string, what: string = "numerical value") =>
   new RangeError(`Invalid ${what} for ${name}`)
 
-import { number } from "./css"
+import { number, ws } from "./css"
 
 // A CSS number, with white space around it ignored, as CSS ignores it.
-const cssNumber = new RegExp(`^[ \\t\\n\\r\\f]*${number}[ \\t\\n\\r\\f]*$`, "i")
-const cssLength = new RegExp(`^[ \\t\\n\\r\\f]*(${number})([a-z%]*)[ \\t\\n\\r\\f]*$`, "i")
+const cssNumber = new RegExp(`^${ws}*${number}${ws}*$`, "i")
+const cssLength = new RegExp(`^${ws}*(${number})([a-z%]*)${ws}*$`, "i")
 
 // A finite number, or a string that is one CSS number ("1.5"), as v0.16 read.
 export const toNumber = (name: string, value: any, positive: boolean = false) => {
@@ -134,8 +134,10 @@ export default function verticalRhythm(options: Object) {
 
   // The fewest lines (half lines by default) that hold the font size, plus
   // one more when the space left is under twice minLinePadding.
+  // A negative font size is not CSS.
   const linesForFontSize = (fontSize: any) => {
     const px = toPixels("linesForFontSize font size", fontSize, base)
+    if (px < 0) throw invalid("linesForFontSize font size")
     const lines = Math.ceil(px / linePx / step) * step
     return lines * linePx - px < 2 * paddingPx ? lines + step : lines
   }
@@ -154,7 +156,7 @@ export default function verticalRhythm(options: Object) {
       true
     )
   }
-  // A negative font size or line height is not CSS.
+  // Nor is a negative line height.
   const adjustFontSizeTo = (fontSize: any, lines: any, fromSize: any) => {
     const parent = toPixels(
       "adjustFontSizeTo fromSize",

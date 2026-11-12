@@ -107,7 +107,10 @@ const VAR_FALLBACKS = ['', ', serif', ", 'Lato', serif", ',', ', calc(1)', ", 'a
 // name: a CSS-wide word, default, a generic() function, an empty item, a
 // number, or a second token in the item.
 const VAR_TAILS = ['', ' ', '/**/', ', serif', ", 'Lato', sans-serif", ', Open Sans', ', var(--b)', ', var(--b, x), serif', ' , monospace', ', <a', ", '</style>'", ', "a\\"b"',
-  ', inherit', ', Default', ', generic(kai)', ',', ', , serif', ', 12px', ', calc(1)', ' x', ', a;b', ', {a', ", 'a"] as const
+  ', inherit', ', Default', ', generic(kai)', ',', ', , serif', ', 12px', ', calc(1)', ' x', ', a;b', ', {a', ", 'a",
+  // Review W1: a lone backslash at the end escapes the ";" after it. Review
+  // W5: a top-level {} block drops the declaration; one inside () does not.
+  ' \\', ', {b}', ' {b}', ', x({b})'] as const
 const varReference = fc
   .tuple(casedWord(['var']), fc.constantFrom(...VAR_PROPERTIES), fc.constantFrom(...VAR_FALLBACKS), fc.constantFrom(...VAR_TAILS))
   .map(
@@ -280,6 +283,8 @@ export const thrown = (e: unknown) => ({
 const valueAt = (observations: ReadonlyArray<Observation>, checkpoint: string) =>
   observations.find((o) => o.checkpoint === checkpoint)?.value
 
+const trimTrivia = (piece: string) => piece.replace(/^(?:\s|\/\*(?:[^*]|\*+[^*/])*\*+\/)+|(?:\s|\/\*(?:[^*]|\*+[^*/])*\*+\/)+$/g, '')
+
 // The list, piece by top-level piece: a var() entry's pieces must be its
 // text, and every other piece must read, alone, as its entry's one item.
 function compareList(
@@ -297,8 +302,10 @@ function compareList(
     const slot = expected[k]
     const law = lawOfItem(entries[k], slot)
     if ('raw' in slot) {
-      const own = splitTopLevel(slot.raw)!.map((piece) => piece.trim())
-      const got = pieces.slice(p, p + own.length).map((piece) => piece.trim())
+      // White space and comments at a piece's edges are not part of the value
+      // (CSS Syntax 3 §5.4.6): Chrome drops a trailing comment.
+      const own = splitTopLevel(slot.raw)!.map(trimTrivia)
+      const got = pieces.slice(p, p + own.length).map(trimTrivia)
       p += own.length
       const d = differs(checkpoint, law, got, own, `item ${k + 1}, a var() entry, is not passed through as written`)
       if (d) return d

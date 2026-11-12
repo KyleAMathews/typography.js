@@ -191,3 +191,43 @@ v0.16 behaviors (S3 decisions).
   heights change (spec). px font sizes change by at most 5e-6px (T4).
 - **Final `pnpm test-ci`:** Jest 75/75 (44 snapshots), oracles 239/239
   including Chrome.
+
+## Review round 6 and coverage (2026-11-12)
+
+A sixth `/code-review high` (head 66f851e) gave W1–W10. The ledger, with a
+verdict and evidence for each, is `/tmp/typography-review6-eval/ledger.md`.
+
+- **RED on 66f851e** (production unchanged, extended oracles):
+  - W2/W3/W6, `numerical-heading-line-height-math`: `sibling-index(0)` threw;
+    `calc(2px * 1em / 1px)`, `sqrt(3deg / 1deg)`, and `1 /**/ + /**/ 1`
+    threw.
+  - W8, `numerical-helper-units`: `linesForFontSize('-5e-324px')` returned a
+    line count.
+  - W1/W5, font stacks and stylesheet: `var(--f), {b}` and `var(--f) {b}`
+    passed through; `color: a {b}` and `color: a\` were written.
+  - S8, `react-typography`: `Font & Co` was written unencoded; a font
+    without `styles` threw; `googleFonts: null` threw.
+  - Q4b, `typography-declarations-chrome`: de-young's `text-transformation`.
+- **Model corrections found on the way:** `pi-var(` and `e-sin(` are each
+  one function token (CSS Syntax 3 §4.3.4). Each math function and each of
+  its arguments resolves to one CSS type (CSS Values 4 §10.9, §10.6), so
+  `sign(1px * 1px)` and `calc(abs(1px * 1px) / 1px)` are invalid.
+- **Chrome calibration:** 2968 of 2982 sampled trees agree. Each of the 14
+  others is Chrome accepting `exp()`, `sqrt()`, or `round()` of an em or %
+  value, which the spec rejects.
+- **Gap checks:** `css.js`, `index.js`, `verticalRhythm.js`,
+  `compileStyles.js`, and the react-typography components: 631 mutants, 629
+  killed, 0 crashes. The two survivors are the components' `propTypes`
+  (React development warnings, which no law states). Two pieces of code no
+  legal history can observe were removed: the `if (!m)` in the math
+  tokenizer (every character starts a token), and the check for a group's
+  `)` (`isLineHeight` types only balanced text, and every token must be
+  read). `injectStyles()` keeps its `appendChild` branch for an empty head,
+  although `insertBefore` with no first child appends in a real DOM: a v0.16
+  Jest test pins it (engineer rule: no broken tests), so its mutant stays
+  open with that reason.
+- **Gap check, the rules and themes** (`createStyles.js`, the code plugin,
+  de-young, `fontFamily.js`): 288 mutants, 162 killed, 126 open. They are the
+  rules' design values (grays, borders, the code size) and the theme's data,
+  which the snapshots pin (decision Q4b). A calibration that only corrupted
+  `code`'s line height now corrupts the first line height outside h1–h6.

@@ -127,7 +127,7 @@ async function driver(plan: Plan, observe: (checkpoint: string, value: unknown) 
 
 oracleProperty<History, Expected, Plan>({
   id: 'typography-font-family-chrome',
-  owns: ['packages/typography/src/utils/fontFamily.js', 'packages/typography/src/utils/css.js'],
+  owns: ['packages/typography/src/index.js', 'packages/typography/src/utils/fontFamily.js', 'packages/typography/src/utils/css.js', 'packages/typography/src/utils/createStyles.js'],
   law: {
     ...LAW,
     limits:

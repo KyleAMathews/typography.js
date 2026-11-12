@@ -219,7 +219,10 @@ When creating a new instance of Typography, you can pass in an
   to `1.45`.
 * **headerLineHeight**: The line height of `h1`–`h6`, used as given: any CSS
   `line-height`, such as `1.1`, `"1.2em"`, `"normal"`, `"round(1.25, 0.25)"`,
-  or `"var(--lh)"`. A value CSS rejects, such as `"calc(foo)"`, throws.
+  `"calc(24px / 16px)"`, or `"var(--lh)"`. Math follows CSS Values 4,
+  including typed arithmetic; a function typography.js does not know, such
+  as `sibling-index()`, is left for the browser to judge. A value CSS
+  rejects, such as `"calc(foo)"`, throws.
   Defaults to `1.1`. It is independent of the scale helper’s rounded line height.
 * **scaleRatio**: The "scale ratio" for the theme. This value is the ratio
   between the `h1` font size and the `baseFontSize`. So if the scale ratio is `2`

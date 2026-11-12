@@ -7,8 +7,16 @@ import isString from "lodash/isString"
 const CodePlugin =
   (): Function =>
   ({ rhythm }, options: OptionsType) => {
+    // As the core reads it: rhythm units as a number or numeric string, any
+    // other string as CSS.
     let blockMarginBottom
-    if (isNumber(options.blockMarginBottom)) {
+    if (
+      isNumber(options.blockMarginBottom) ||
+      (isString(options.blockMarginBottom) &&
+        /^[ \t\n\r\f]*[+-]?(?:\d*\.\d+|\d+)(?:e[+-]?\d+)?[ \t\n\r\f]*$/i.test(
+          options.blockMarginBottom
+        ))
+    ) {
       blockMarginBottom = rhythm(options.blockMarginBottom)
     } else if (isString(options.blockMarginBottom)) {
       blockMarginBottom = options.blockMarginBottom

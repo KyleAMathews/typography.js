@@ -696,3 +696,127 @@ in v0.16.24 keep working" and "spec is the law":
   Their output is identical, and the 44 snapshots are unchanged.
 - **V2 (fixed):** the rhythm reads baseFontSize and baseLineHeight once, at
   construction.
+
+---
+
+## S4. toString() is the stylesheet that toJSON() describes (stylesheet serialization)
+
+- Promise: `typography(options).toString()` is CSS that a browser parses into
+  exactly the rules and declarations of `toJSON()`, with normalize.css first
+  when `includeNormalize` is true. Owns `utils/compileStyles.js`.
+- Contract: `toJSON().h1.fontSize` → the `h1` rule's `font-size`; a nested
+  object (`'@media (max-width:480px)': { html: {...} }`) → a nested rule;
+  `MozFontFeatureSettings` → `-moz-font-feature-settings`; `--brandColor`
+  → `--brandColor`.
+- Probes (2026-11-12):
+  - custom property names are mangled: `--brandColor` is written
+    `--brand-color`, a different property (CSS Variables 1 §2: custom
+    property names are case-sensitive);
+  - a `}` in an option value closes the rule early and corrupts the rest;
+  - a `<` in any option value (`bodyColor: 'red</style>…'`) reaches the
+    stylesheet, and `TypographyStyle` writes it raw into server-rendered HTML
+    (the class of review R10, beyond font stacks);
+  - `bodyColor: null` writes `color:null`.
+- Laws: every rule and declaration of toJSON() reaches the stylesheet as
+  written (camelCase to kebab-case, vendor prefixes, custom properties kept);
+  the stylesheet holds no `<`; every declaration is one CSS parses.
+- Checkpoint: Chrome's CSSOM (the second judge), plus an independent text
+  reader for declarations Chrome drops on purpose (other engines' prefixes).
+- Open: what to do with an option or override value that is not CSS (Q4a).
+
+## S5. Documented options reach their elements (createStyles)
+
+- Promise (README, Configuration): `headerColor`, `headerWeight` → h1–h6;
+  `bodyColor`, `bodyWeight` → body; `boldWeight` → b, strong, dt, th;
+  `blockMarginBottom` → every block element's bottom margin, in rhythm
+  units; `includeNormalize` → normalize.css first.
+- Laws: each option's value appears on its elements, as given; spacing that
+  the stylesheet derives from the rhythm (block margins, list indents,
+  blockquote margins, table cell padding) is that many rhythm units.
+- Scope question (Q4b): the other default rules (hr colors, abbr borders,
+  and so on) have no documented authority. Snapshots pin them today.
+
+## S6. Plugins and overrides merge in order (createStyles)
+
+- Promise (README, Themes & Plugins; overrideStyles; overrideThemeStyles):
+  plugins run in order, each with the styles so far; then overrideStyles;
+  then overrideThemeStyles, so a user's theme overrides win over the theme's.
+- Probe: `overrideThemeStyles` wins over `overrideStyles` (blue over red); a
+  plugin's result is visible to overrideStyles (`greenx`).
+- Law: each layer is deep-merged over the previous; a later layer's value for
+  a selector and property replaces the earlier one; everything else stays.
+
+## S7. injectStyles() puts one style element first in <head>
+
+- Promise (README, Javascript usage: "insert styles directly into the
+  <head>"; index.js comment "Replace existing"): after `injectStyles()`,
+  `document.head` holds exactly one `<style id="typography.js">` whose text
+  is `toString()`, as its first child; calling it again replaces the text.
+- Checkpoint: a real document in Chrome (the built UMD bundle).
+
+## S8. react-typography renders the stylesheet and the Google Fonts link
+
+- Promise (README, React.js helper components): `TypographyStyle` renders
+  `<style id="typography.js">` holding `toString()`; `GoogleFont` renders a
+  stylesheet link that requests each `googleFonts` family with its styles.
+- Probes: a family name with `&` is not URL-encoded (`family=Font+&+Co`, so
+  the browser splits the query); a font without `styles` crashes rendering;
+  an empty list renders nothing.
+- Laws: the link's URL, parsed by the URL Standard, has one `family` query
+  value listing every family (spaces as `+`) with its styles; a font
+  without styles requests the family alone (the Google Fonts API default).
+
+## S9. The code plugin follows blockMarginBottom like the core (typography-plugin-code)
+
+- Probe: `blockMarginBottom: '1'` writes `pre { padding: 1 }`, an invalid
+  unitless length, where the core reads `'1'` as one rhythm unit (review U8).
+- Law: the plugin's spacing reads `blockMarginBottom` exactly as the core
+  does.
+
+## Not oracles
+
+- typography-design-tools: an interactive editor (React UI), not a contract
+  with laws to state.
+- Themes: option data. The 44 snapshots pin their output, and their font
+  stacks run through the S1 histories.
+- typography-normalize and typography-breakpoint-constants: constants.
+
+### Decisions (2026-11-12)
+
+- The engineer: "let's just keep going finishing coverage in this PR".
+  S4–S9 are adopted, with these answers:
+- **Q4a: "Throw; null drops the property".** When toString() writes a value
+  or selector that is not safe CSS, it throws a RangeError naming the
+  selector and property. Unsafe means a `<`, a stray `}`, `;`, or `!` (a
+  trailing `!important` is CSS), an open string, a nonfinite number, or a
+  value that is not a string or number. A `null` value removes that
+  declaration. An `undefined` one leaves it as it was, as an omitted key does
+  (decision L1).
+- **Q4b: "Documented effects + spacing".** The laws are each README option's
+  effect, the rhythm-derived spacing (block margins, list indents,
+  blockquote margins, table cell padding, as that many rhythm units), and
+  valid CSS for every declaration typography.js writes. Design values, such
+  as the exact grays, stay pinned by the snapshots.
+
+### Decisions (round 6, 2026-11-12)
+
+A sixth `/code-review high` (head 66f851e) gave 10 findings (W1–W10, ledger
+`/tmp/typography-review6-eval/ledger.md`).
+
+- **W6: "Keep grammar, update it".** headerLineHeight math follows the CSS
+  Values 4 Editor's Draft (24 Aug 2026): typed arithmetic (`*` multiplies
+  types, `/` divides them), comments between tokens, and each math function
+  and each of its arguments resolving to one CSS type. A function the
+  grammar does not know is the browser's to judge, as a `var()` is, once the
+  text is safe CSS. Invalid math such as `calc(foo)` still throws. Law N5
+  changes with it.
+- **W10: "Keep the preview for now".** `@tanstack/oracles` stays on the
+  pkg.pr.new build; the PR notes it.
+- **Coverage (S7, S8, Q4b).** S7 (`injectStyles()`) and Q4b (every
+  declaration valid in Chrome) are in `stylesheet.chrome.oracle.ts`; S8 in
+  `react-typography.oracle.ts`. S8 also states that
+  `typography().options.googleFonts` is `[]` when not given (v0.16), because
+  plugins read it. Q4b found that the de-young theme wrote
+  `textTransformation`, which is not a CSS property: its h4–h6 were never
+  uppercase. The theme now writes `textTransform` (README rule: an input
+  that v0.16 ignored is a bug).

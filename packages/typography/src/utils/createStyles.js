@@ -120,7 +120,6 @@ export default (vr: any, options: OptionsType) => {
   // Basic blockquote styles.
   styles = setStyles(styles, "blockquote", {
     marginRight: vr.rhythm(1),
-    marginBottom: blockMarginBottom,
     marginLeft: vr.rhythm(1),
   })
 
@@ -245,22 +244,20 @@ export default (vr: any, options: OptionsType) => {
 
   // TODO add support for Breakpoints here.
 
-  // Call plugins if any.
-  if (isArray(options.plugins)) {
-    styles = reduce(
-      options.plugins,
-      (stylesObj, plugin) => merge(stylesObj, plugin(vr, options, stylesObj)),
-      styles
-    )
-  }
+  // Call plugins if any (reduce leaves the styles as they are without any).
+  styles = reduce(
+    options.plugins,
+    (stylesObj, plugin) => merge(stylesObj, plugin(vr, options, stylesObj)),
+    styles
+  )
 
   // Call overrideStyles function on options (if set).
-  if (options.overrideStyles && isFunction(options.overrideStyles)) {
+  if (isFunction(options.overrideStyles)) {
     styles = merge(styles, options.overrideStyles(vr, options, styles))
   }
 
   // Call overrideThemeStyles function on options (if set).
-  if (options.overrideThemeStyles && isFunction(options.overrideThemeStyles)) {
+  if (isFunction(options.overrideThemeStyles)) {
     styles = merge(styles, options.overrideThemeStyles(vr, options, styles))
   }
 

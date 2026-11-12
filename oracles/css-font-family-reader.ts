@@ -448,11 +448,33 @@ export function startsWithVarDeclaration(value: string): boolean {
   // rules, with the value's top level as the contents' top level.
   try {
     tokenize(`x(${src})`)
-    return true
   } catch (e) {
     if (e instanceof ReadError) return false
     throw e
   }
+  return !hasTopLevelBlock(src)
+}
+
+// CSS Syntax 3 §5.4.6 (consume a declaration): a non-custom declaration with
+// a top-level {} block and any other value is dropped. Call it on text that
+// tokenizes: its strings and comments close.
+function hasTopLevelBlock(src: string): boolean {
+  let depth = 0
+  for (let i = 0; i < src.length; i++) {
+    const c = src[i]
+    if (c === '\\') i++
+    else if (c === '/' && src[i + 1] === '*') i = src.indexOf('*/', i + 2) + 1
+    // An unquoted url( is one token (§4.3.6): a "{" in it opens no block.
+    else if (/^url\([ \t\n]*[^"' \t\n]/i.test(src.slice(i)) && !isNameChar(src[i - 1])) {
+      for (i += 4; src[i] !== ')'; i++) if (src[i] === '\\') i++
+    }
+    else if (c === '"' || c === "'") {
+      for (i++; src[i] !== c; i++) if (src[i] === '\\') i++
+    } else if (c === '{' && depth === 0) return true
+    else if (c === '(' || c === '[' || c === '{') depth++
+    else if (c === ')' || c === ']' || c === '}') depth--
+  }
+  return false
 }
 
 /**
