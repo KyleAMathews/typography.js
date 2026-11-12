@@ -820,3 +820,7 @@ A sixth `/code-review high` (head 66f851e) gave 10 findings (W1–W10, ledger
   `textTransformation`, which is not a CSS property: its h4–h6 were never
   uppercase. The theme now writes `textTransform` (README rule: an input
   that v0.16 ignored is a bug).
+- **propTypes: "Keep, open gap".** The components keep their `propTypes`.
+  Their two mutants stay open: React development warnings, which no law
+  states.
+- **de-young: "Keep the fix".** The theme writes `textTransform`.
