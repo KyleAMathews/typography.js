@@ -300,9 +300,11 @@ to `hsl(0,0%,0%,0.8)`.
   elements. Defaults to `bold`.
 * **blockMarginBottom**: Specify the default margin-bottom for block
   elements, in rhythm units (a number or numeric string), or as a CSS length
-  string such as `"1.5rem"` or `"calc(1rem + 2px)"`. Any other string, such
-  as `"auto"`, throws, because the margins use it in `calc()`. Defaults to
-  one "rhythm unit" (i.e. the height of the base line height).
+  string such as `"1.5rem"` or `"calc(1rem + 2px)"`. `"auto"` and the
+  CSS-wide keywords set the block elements' margin, `hr` included. The list
+  item margins that are computed from it with `calc()` are left out. Any
+  other string throws. Defaults to one "rhythm unit" (i.e. the height of the
+  base line height).
 * **includeNormalize**: Include normalize.css.
   Normalize.css is an excellent project which works to normalize the
 base browser CSS across browsers and serves as an excellent foundation

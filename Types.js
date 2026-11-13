@@ -1,5 +1,5 @@
 // @flow
-type GoogleFontsType = {name: string; styles: string[]}
+type GoogleFontsType = {name: string; styles?: string[]}
 // A number, or a string that is one ("1.5"); a length may also be a number (px).
 type NumberLike = number | string
 type Length = number | string

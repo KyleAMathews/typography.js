@@ -824,3 +824,18 @@ A sixth `/code-review high` (head 66f851e) gave 10 findings (W1–W10, ledger
   Their two mutants stay open: React development warnings, which no law
   states.
 - **de-young: "Keep the fix".** The theme writes `textTransform`.
+
+### Decisions (round 8, 2026-11-12)
+
+- **Y2/Y9: "Escape as \3c".** A `<` no longer makes `toString()` throw
+  (this replaces that part of Q4a). Each `<` before `/` in a value or
+  selector is written `\3c `, which CSS reads as the same character, so no
+  `</style` can end the element. A `<` elsewhere stays, because
+  `@media (width < 600px)` needs it raw. Font stacks keep escaping every `<`
+  (S1 L3); both use one function.
+- **Y6: "Accept, skip calc()".** `blockMarginBottom: 'auto'` and the CSS-wide
+  words set the block elements' margin (hr included). The list item margins
+  derived from it with calc() are left out, as browsers dropped v0.16's
+  `calc(auto / 2)`. The code plugin pads with 0 for `auto`.
+- **Y3 (my call, under the v0.16 rule):** `null` plugins and overrides are
+  none, as in v0.16. Other non-function values still throw.

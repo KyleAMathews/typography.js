@@ -16,8 +16,19 @@ export const ws = "[ \\t\\n\\r\\f]"
 export const number = "[+-]?(?:\\d*\\.\\d+|\\d+)(?:e[+-]?\\d+)?"
 const edgeSpace = new RegExp(`^${ws}+|${ws}+$`, "g")
 export const trimSpace = (text: string) => text.replace(edgeSpace, "")
+// auto or a CSS-wide keyword: a margin, but not a length calc() takes.
+export const isMarginKeyword = (value: mixed) =>
+  typeof value === "string" && ["auto", ...cssWideKeywords].indexOf(asciiLower(trimSpace(value))) !== -1
 // A number and its unit, which may be empty, with white space around them.
 export const dimension = new RegExp(`^${ws}*(${number})([a-z%]*)${ws}*$`, "i")
+// "<" as the escape "\3c ", which CSS reads as the same character in a
+// string, a url, or a name (4.3.7); a "<" already escaped ("\<") loses its
+// backslash. With beforeSlash, only a "<" before "/": HTML ends a <style> at
+// "</style", and a "<" elsewhere, as in @media (width < 600px), must stay.
+export const escapeLessThan = (text: string, beforeSlash: boolean) =>
+  text.replace(beforeSlash ? /(\\*)<(?=\/)/g : /(\\*)</g, (_, slashes) =>
+    slashes.length % 2 === 1 ? `${slashes.slice(1)}\\3c ` : `${slashes}\\3c `
+  )
 // A trailing !important (CSS Cascade 5 6.1), and the white space before it.
 const important = new RegExp(`${ws}*!${ws}*important${ws}*$`, "i")
 export const withoutImportant = (text: string) => text.replace(important, "")

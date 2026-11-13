@@ -9,6 +9,7 @@ import {
   cssWideKeywords,
   hasSubstitution,
   isDeclarationValue,
+  isMarginKeyword,
   isMathFunction,
   dimension,
   lengthUnit,
@@ -71,9 +72,13 @@ const isLineHeight = (value: any) => {
   )
 }
 // blockMarginBottom: rhythm units (a number or numeric string, or null for
-// one, as v0.16 read it), or a CSS length that the margins put in calc().
+// one, as v0.16 read it), a CSS length that the margins put in calc(), or a
+// margin keyword (createStyles leaves the calc() margins out for it).
 const isBlockMargin = (value: any) =>
-  value === null || isNumeric(value) || (typeof value === "string" && isLengthText(trimSpace(value), true))
+  value === null ||
+  isNumeric(value) ||
+  isMarginKeyword(value) ||
+  (typeof value === "string" && isLengthText(trimSpace(value), true))
 
 const typography = function (opts: OptionsType) {
   const defaults: OptionsType = {
@@ -119,16 +124,16 @@ const typography = function (opts: OptionsType) {
   }
   checkFontStacks(options)
   // v0.16 ignored plugins that were not a list, and overrides that were not
-  // functions: each is a mistake to report.
+  // functions: each is a mistake to report. null is none, as in v0.16.
   if (
-    options.plugins !== undefined &&
+    options.plugins != null &&
     !(Array.isArray(options.plugins) && options.plugins.every(p => typeof p === "function"))
   ) {
     throw new TypeError("Invalid plugins: a list of functions")
   }
   const overrides = ["overrideStyles", "overrideThemeStyles"]
   overrides.forEach(name => {
-    if (options[name] !== undefined && typeof options[name] !== "function") {
+    if (options[name] != null && typeof options[name] !== "function") {
       throw new TypeError(`Invalid ${name}: a function`)
     }
   })
@@ -161,6 +166,8 @@ const typography = function (opts: OptionsType) {
     // first in <head>. An empty head appends, as v0.16's tests pin.
     injectStyles() {
       if (typeof document === "undefined") return
+      // Before the document changes: toString() throws on invalid CSS.
+      const css = this.toString()
       let node = document.getElementById("typography.js")
       if (!node) {
         node = document.createElement("style")
@@ -169,7 +176,7 @@ const typography = function (opts: OptionsType) {
         if (head.firstChild) head.insertBefore(node, head.firstChild)
         else head.appendChild(node)
       }
-      node.innerHTML = this.toString()
+      node.innerHTML = css
     },
   }
 }

@@ -17,8 +17,10 @@ the <head>"; index.js: "Replace existing") leaves `document.head` with exactly
 one element with id typography.js, a style element whose text is
 `toString()`. When none exists, it is inserted as the head's first child.
 When one exists, its text is replaced and it stays where it is. The head's
-other children stay as they were, in order. Without a document (server
-rendering), `injectStyles()` does nothing and does not throw.
+other children stay as they were, in order. When `toString()` throws,
+`injectStyles()` throws the same error and leaves the document as it was
+(review Y1). Without a document (server rendering), `injectStyles()` does
+nothing and does not throw.
 Q4b. Every declaration in `toJSON()`, for the default options, every theme in
 this repository, and the code plugin, is valid CSS in Chrome:
 `CSS.supports(property, value)` holds. Every rule's selector list and every
@@ -57,9 +59,12 @@ const valueAt = (trace: ReadonlyArray<Observation>, checkpoint: string) => trace
 // ---------------------------------------------------------------------------
 
 const S7 = 'S7 injectStyles() keeps one typography.js style in the head'
-const OPTIONS = [{}, { baseFontSize: '18px' }, { includeNormalize: false, bodyColor: '#333' }] as const
+// The last option set's toString() throws (an empty color; review Y1).
+const OPTIONS = [{}, { baseFontSize: '18px' }, { includeNormalize: false, bodyColor: '#333' }, { overrideStyles: () => ({ p: { color: '' } }) }]
+const FAILS = 3
+type Call = 0 | 1 | 2 | 3
 type Child = 'meta' | 'link' | 'title' | 'stale'
-type InjectHistory = { head: Array<Child>; calls: Array<0 | 1 | 2> }
+type InjectHistory = { head: Array<Child>; calls: Array<Call> }
 type HeadChild = { tag: string; id: string; text: string | undefined }
 
 const CHILD_HTML: Record<Child, string> = {
@@ -75,7 +80,7 @@ const injectArbitrary: fc.Arbitrary<InjectHistory> = fc
   .record({
     others: fc.array(fc.constantFrom<Child>('meta', 'link', 'title'), { maxLength: 3 }),
     stale: fc.option(fc.nat({ max: 3 }), { nil: undefined }),
-    calls: fc.array(fc.constantFrom<0 | 1 | 2>(0, 1, 2), { minLength: 1, maxLength: 3 }),
+    calls: fc.array(fc.constantFrom<Call>(0, 1, 2, 3), { minLength: 1, maxLength: 3 }),
   })
   .map(
     ({ others, stale, calls }) => ({
@@ -89,16 +94,24 @@ const injectArbitrary: fc.Arbitrary<InjectHistory> = fc
     },
   )
 
-// The head after each call: the earlier typography.js style keeps its place,
-// or a new one comes first.
-const injectModel = (plan: InjectHistory) => ({
-  steps: plan.calls.map((_, k) => {
-    const css = `call ${k}`
-    return plan.head.includes('stale')
-      ? plan.head.map((c) => summary(c, css))
-      : [{ tag: 'style', id: 'typography.js', text: css }, ...plan.head.map((c) => summary(c))]
-  }),
-})
+// The head after each call: the earlier typography.js style keeps its place
+// with the new text, or a new one comes first. A call whose toString()
+// throws throws, and leaves the head as it was. A text is named by the option
+// set whose toString() it is.
+const STALE = 'h1{color:red}'
+const injectModel = (plan: InjectHistory) => {
+  let head: Array<HeadChild> = plan.head.map((c) => summary(c, STALE))
+  return {
+    steps: plan.calls.map((n) => {
+      if (n === FAILS) return { threw: true, head }
+      const text = `options ${n}`
+      head = head.some((c) => c.id === 'typography.js')
+        ? head.map((c) => (c.id === 'typography.js' ? { ...c, text } : c))
+        : [{ tag: 'style', id: 'typography.js', text }, ...head]
+      return { threw: false, head }
+    }),
+  }
+}
 
 // A node the bridge names: the document, the head, a child of the head by
 // index (as it was before the call), or the k-th element the call created.
@@ -182,6 +195,13 @@ function replayInPage(ops: Array<Op>): Array<HeadChild> {
 
 async function injectDriver(plan: InjectHistory, observe: (checkpoint: string, value: unknown) => void) {
   const instances = OPTIONS.map((o) => typography({ ...o }))
+  const texts = instances.map((t) => {
+    try {
+      return t.toString()
+    } catch {
+      return undefined
+    }
+  })
   // Server rendering: no document in Node.
   try {
     observe('injectStyles() without a document', instances[0].injectStyles() ?? null)
@@ -190,22 +210,28 @@ async function injectDriver(plan: InjectHistory, observe: (checkpoint: string, v
   }
   await page.setContent(`<!doctype html><html><head>${plan.head.map((c) => CHILD_HTML[c]).join('')}</head><body></body></html>`)
   for (const [k, n] of plan.calls.entries()) {
-    const t = instances[n]
-    const css = t.toString()
     const ops: Array<Op> = []
     const g = globalThis as { document?: unknown }
     g.document = bridge(await page.evaluate(snapshotInPage), ops)
-    let head: unknown
+    let threw = false
     try {
-      t.injectStyles()
-      head = await page.evaluate(replayInPage, ops)
-    } catch (error) {
-      head = { threw: String(error) }
+      instances[n].injectStyles()
+    } catch {
+      threw = true
     } finally {
       delete g.document
     }
-    // Each step's style text as the model names it: "call k" when it is this call's toString().
-    observe(`head after call ${k}`, Array.isArray(head) ? (head as Array<HeadChild>).map((c) => (c.text === undefined ? c : { ...c, text: c.text === css ? `call ${k}` : c.text })) : head)
+    // What the call did to the document, thrown or not.
+    let head: unknown
+    try {
+      head = (await page.evaluate(replayInPage, ops)).map((c) => {
+        const i = c.text === undefined ? -1 : texts.indexOf(c.text)
+        return i < 0 ? c : { ...c, text: `options ${i}` }
+      })
+    } catch (error) {
+      head = { replay: String(error) }
+    }
+    observe(`head after call ${k}`, { threw, head })
   }
 }
 
@@ -223,7 +249,7 @@ oracleProperty<InjectHistory, ReturnType<typeof injectModel>>({
   id: 'typography-inject-styles',
   owns: ['packages/typography/src/index.js'],
   law: {
-    statement: `${S7}: after injectStyles(), document.head has exactly one element with id typography.js, a style whose text is toString(); a new one comes first; an existing one keeps its place with the new text; other children stay in order. Without a document it does nothing.`,
+    statement: `${S7}: after injectStyles(), document.head has exactly one element with id typography.js, a style whose text is toString(); a new one comes first; an existing one keeps its place with the new text; other children stay in order; when toString() throws, it throws and the head is unchanged. Without a document it does nothing.`,
     authority: 'README (Javascript usage: insert styles directly into the <head>); index.js ("Replace existing"); engineer decisions 2026-11-12 (S7 sketch; coverage in this PR).',
     limits: 'Chrome only. Heads of meta, link, and title elements and at most one earlier typography.js style; up to 3 calls with 3 option sets.',
   },
@@ -231,10 +257,11 @@ oracleProperty<InjectHistory, ReturnType<typeof injectModel>>({
     arbitrary: injectArbitrary,
     runs: 25,
     fixedSeeds: [20261112],
-    states: ['an empty head', 'an earlier typography.js style', 'a second call', 'a head with other children'],
+    states: ['an empty head', 'an earlier typography.js style', 'a second call', 'a head with other children', 'a call that throws'],
     constructed: [
       { name: 'replace an earlier style in place', enters: ['an earlier typography.js style', 'a head with other children'], build: () => ({ head: ['meta', 'stale', 'title'], calls: [1] }) },
       { name: 'two calls into an empty head', enters: ['an empty head', 'a second call'], build: () => ({ head: [], calls: [0, 2] }) },
+      { name: 'a first call that throws (Y1)', enters: ['an empty head', 'a call that throws'], build: () => ({ head: [], calls: [3] }) },
     ],
   },
   model: injectModel,
@@ -243,6 +270,7 @@ oracleProperty<InjectHistory, ReturnType<typeof injectModel>>({
     ...(plan.head.includes('stale') ? ['an earlier typography.js style'] : []),
     ...(plan.calls.length > 1 ? ['a second call'] : []),
     ...(plan.head.some((c) => c !== 'stale') ? ['a head with other children'] : []),
+    ...(plan.calls.includes(FAILS) ? ['a call that throws'] : []),
   ],
   driver: injectDriver,
   check: injectCheck,
@@ -251,17 +279,25 @@ oracleProperty<InjectHistory, ReturnType<typeof injectModel>>({
       name: 'appended last instead of first',
       law: S7,
       corrupt: (trace, plan) =>
-        plan.head.length === 0 || plan.head.includes('stale')
+        plan.head.length === 0 || plan.head.includes('stale') || plan.calls[0] === FAILS
           ? undefined
-          : trace.map((o) => (o.checkpoint.startsWith('head after call') ? { ...o, value: [...(o.value as Array<HeadChild>).slice(1), (o.value as Array<HeadChild>)[0]] } : o)),
+          : trace.map((o) => {
+              if (o.checkpoint !== 'head after call 0') return o
+              const { head } = o.value as { head: Array<HeadChild> }
+              return { ...o, value: { threw: false, head: [...head.slice(1), head[0]] } }
+            }),
     },
     {
-      name: 'a second style added instead of replacing',
+      name: 'an empty style left by a call that threw',
       law: S7,
       corrupt: (trace, plan) =>
-        plan.calls.length < 2
+        plan.calls[0] !== FAILS || plan.head.includes('stale')
           ? undefined
-          : trace.map((o) => (o.checkpoint === 'head after call 1' ? { ...o, value: [{ tag: 'style', id: 'typography.js', text: 'call 0' }, ...(o.value as Array<HeadChild>)] } : o)),
+          : trace.map((o) =>
+              o.checkpoint === 'head after call 0'
+                ? { ...o, value: { threw: true, head: [{ tag: 'style', id: 'typography.js', text: '' }, ...(o.value as { head: Array<HeadChild> }).head] } }
+                : o,
+            ),
     },
   ],
 })
@@ -277,7 +313,7 @@ const themes = new Map<string, Record<string, unknown>>(
 )
 // blockMarginBottom goes into calc() in the margins: each valid form must
 // make CSS that Chrome keeps (review X6).
-const BLOCK_MARGINS = [undefined, 2, '0.5', '1.5rem', '20px', '5%', '-0.5rem', 'calc(1rem + 2px)', 'var(--m)'] as const
+const BLOCK_MARGINS = [undefined, 2, '0.5', '1.5rem', '20px', '5%', '-0.5rem', 'calc(1rem + 2px)', 'var(--m)', ' -1rem', 'auto', 'inherit'] as const
 type ValidityHistory = { theme: string | undefined; codePlugin: boolean; blockMarginBottom: (typeof BLOCK_MARGINS)[number] }
 
 // A property name in CSS, read independently: kebab case; Webkit, Moz, O

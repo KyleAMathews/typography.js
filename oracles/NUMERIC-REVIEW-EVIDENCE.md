@@ -260,3 +260,21 @@ A seventh `/code-review high` (head 573b24d) gave X1–X10 (ledger
   `appendChild` branch (a v0.16 test). Three more were closed with
   constructed histories (NaN alone, NaN on a custom property, a selector
   with a top-level block), and one unused default argument was removed.
+
+## Review round 8 (2026-11-12)
+
+An eighth `/code-review high` (head 6cec13d) gave Y1–Y10 (ledger
+`/tmp/typography-review8-eval/ledger.md`).
+
+- **RED on 6cec13d:** S7: a first `injectStyles()` whose `toString()` threw
+  left an empty `style#typography.js` in the head (red-chrome.txt). S4: a
+  value `'"</p>"'` threw (red-stylesheet.txt). The Chrome witness rejected
+  `blockMarginBottom: 'auto'` at `typography()`.
+- **Fixes:** `injectStyles()` reads `toString()` first; the compiler escapes
+  `<` before `/`; arrays are not values; `null` plugins and overrides are
+  none; margin keywords skip the calc() margins; the code plugin reads the
+  core's `pre` margin (no second number reader) and pads with 0 for a
+  negative or `auto` one; `Types.js` makes `styles` optional.
+- **Oracle repairs:** the constructed stylesheet histories now start from a
+  clean history, because a generated base could throw first and hide the
+  change. The stylesheet oracle owns `css.js` (the margin keyword).

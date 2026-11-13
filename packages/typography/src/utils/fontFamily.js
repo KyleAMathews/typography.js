@@ -1,5 +1,5 @@
 // @flow
-import { asciiLower, cssWideKeywords, isDeclarationValue, varHead } from "./css"
+import { asciiLower, cssWideKeywords, escapeLessThan, isDeclarationValue, varHead } from "./css"
 
 // Font stacks to CSS. Each entry of `bodyFontFamily` and `headerFontFamily`
 // becomes one item of a `font-family` list, following CSS Fonts 4 §2.1.
@@ -47,13 +47,8 @@ const item = (entry: string) => {
   if (genericFamilies.indexOf(word) !== -1) return word
   // A vendor keyword (WebKit), and a valid unquoted family name.
   if (entry === "-apple-system") return entry
-  // Passed through, but a "<" is escaped so the stylesheet cannot close its
-  // <style> element. Inside a string or an identifier the escape reads the same.
-  // A "<" written raw or as "\<" becomes "\3c " (an escaped backslash
-  // before it stays).
-  const escaped = entry.replace(/(\\*)</g, (_, slashes) =>
-    slashes.length % 2 === 1 ? `${slashes.slice(1)}\\3c ` : `${slashes}\\3c `
-  )
+  // Passed through, with each "<" escaped (law S1 L3).
+  const escaped = escapeLessThan(entry, false)
   if (isVarEntry(escaped)) return escaped
   return quote(entry)
 }

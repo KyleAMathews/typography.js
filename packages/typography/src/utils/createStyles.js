@@ -9,6 +9,7 @@ import reduce from "lodash/reduce"
 
 import { baseFont, fontFamilyList } from "./fontFamily"
 import { isNumeric } from "./verticalRhythm"
+import { isMarginKeyword } from "./css"
 
 import type { OptionsType } from "Types"
 
@@ -76,6 +77,9 @@ export default (vr: any, options: OptionsType) => {
   } else {
     blockMarginBottom = vr.rhythm(1)
   }
+  // A margin keyword goes on the block elements as given; the margins
+  // derived from it with calc() are left out (calc(auto / 2) is not CSS).
+  const derived = (rules: Object) => (isMarginKeyword(options.blockMarginBottom) ? {} : rules)
   styles = setStyles(
     styles,
     [
@@ -132,7 +136,7 @@ export default (vr: any, options: OptionsType) => {
     background: gray(80),
     border: "none",
     height: "1px",
-    marginBottom: `calc(${blockMarginBottom} - 1px)`,
+    ...derived({ marginBottom: `calc(${blockMarginBottom} - 1px)` }),
   })
 
   // ol, ul.
@@ -143,9 +147,9 @@ export default (vr: any, options: OptionsType) => {
   })
 
   // li.
-  styles = setStyles(styles, "li", {
+  styles = setStyles(styles, "li", derived({
     marginBottom: `calc(${blockMarginBottom} / 2)`,
-  })
+  }))
 
   // Remove default padding on list items.
   styles = setStyles(styles, ["ol li", "ul li"], {
@@ -155,8 +159,10 @@ export default (vr: any, options: OptionsType) => {
   // children ol, ul.
   styles = setStyles(styles, ["li > ol", "li > ul"], {
     marginLeft: vr.rhythm(1),
-    marginBottom: `calc(${blockMarginBottom} / 2)`,
-    marginTop: `calc(${blockMarginBottom} / 2)`,
+    ...derived({
+      marginBottom: `calc(${blockMarginBottom} / 2)`,
+      marginTop: `calc(${blockMarginBottom} / 2)`,
+    }),
   })
 
   // Remove margin-bottom on the last-child of a few block elements
@@ -171,9 +177,9 @@ export default (vr: any, options: OptionsType) => {
   )
 
   // Ensure li > p is 1/2 margin — this is another markdown => compiler oddity.
-  styles = setStyles(styles, ["li > p"], {
+  styles = setStyles(styles, ["li > p"], derived({
     marginBottom: `calc(${blockMarginBottom} / 2)`,
-  })
+  }))
 
   // Make generally smaller elements, smaller.
   styles = setStyles(styles, ["code", "kbd", "pre", "samp"], {
