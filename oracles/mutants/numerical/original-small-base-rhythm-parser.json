@@ -1,0 +1,8 @@
+{
+  "id": "original-small-base-rhythm-parser",
+  "source": "packages/typography/src/index.js",
+  "find": "    if (options.rhythmUnit === undefined || options.rhythmUnit === \"rem\") {\n      // Avoid the dependency's exponent-as-unit parsing for small pixel bases.\n      const offset = args[1] == null ? 0 : args[1]\n      const rem = parseFloat(\n        ((baseFont * options.baseLineHeight * lines - offset) / baseFont).toFixed(5)\n      )\n      // Rounding the coefficient can cross the physical representability limit.\n      checkNumber(\"rhythm result\", rem * baseFont)\n      return `${rem}rem`\n    }\n",
+  "replace": "    // Restore the dependency rhythm path.\n",
+  "intent": "Restore dependency parsing for default rhythm, which returns incorrect zero for small scientific pixel bases; N3 must reject it.",
+  "author": "Codex; self-generated from independent review C1 and its unchanged-production RED"
+}

@@ -2,7 +2,6 @@
 import gray from "gray-percentage"
 import type { OptionsType } from "Types"
 import { MOBILE_MEDIA_QUERY } from "typography-breakpoint-constants"
-import verticalRhythm from "compass-vertical-rhythm"
 
 const theme: OptionsType = {
   title: "Twin Peaks",
@@ -27,17 +26,19 @@ const theme: OptionsType = {
   boldWeight: 600,
   overrideStyles: ({ adjustFontSizeTo, scale, rhythm }, options) => {
     const linkColor = "#ff5700"
-    const vr = verticalRhythm({
-      baseFontSize: "19px",
-      baseLineHeight: "29.85px",
-    })
+    // The mobile baseline: a 19px base (a percentage of the browser's
+    // 16px) and its line height.
+    const mobileBaseline = {
+      fontSize: `${(19 / 16) * 100}%`,
+      lineHeight: "29.85px",
+    }
     return {
       a: {
         color: linkColor,
         textDecoration: "none",
         textShadow:
-          ".03em 0 #fff,-.03em 0 #fff,0 .03em #fff,0 -.03em #fff,.06em 0 #fff,-.06em 0 #fff,.09em 0 #fff,-.09em 0 #fff,.12em 0 #fff,-.12em 0 #fff,.15em 0 #fff,-.15em 0 #fff", // eslint-disable-line
-        backgroundImage: `linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0) 1px, ${linkColor} 1px, ${linkColor} 2px, rgba(0, 0, 0, 0) 2px)`, // eslint-disable-line
+          ".03em 0 #fff,-.03em 0 #fff,0 .03em #fff,0 -.03em #fff,.06em 0 #fff,-.06em 0 #fff,.09em 0 #fff,-.09em 0 #fff,.12em 0 #fff,-.12em 0 #fff,.15em 0 #fff,-.15em 0 #fff",
+        backgroundImage: `linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0) 1px, ${linkColor} 1px, ${linkColor} 2px, rgba(0, 0, 0, 0) 2px)`,
       },
       "a:hover,a:active": {
         textShadow: "none",
@@ -69,7 +70,7 @@ const theme: OptionsType = {
         marginBottom: 0,
       },
       "blockquote cite": {
-        ...adjustFontSizeTo(options.baseFontSize),
+        ...adjustFontSizeTo("100%"),
         color: options.bodyColor,
         fontStyle: "normal",
         fontWeight: options.bodyWeight,
@@ -79,7 +80,7 @@ const theme: OptionsType = {
       },
       [MOBILE_MEDIA_QUERY]: {
         html: {
-          ...vr.establishBaseline(),
+          ...mobileBaseline,
         },
         blockquote: {
           borderLeft: `${rhythm(3 / 16)} solid ${linkColor}`,

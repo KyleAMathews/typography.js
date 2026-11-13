@@ -122,11 +122,21 @@ class DesignTool extends React.Component {
       activeTheme.overrideThemeStyles =
         this.props.typography.options.overrideThemeStyles
 
-      const newTypography = new Typography(activeTheme)
-      newTypography.injectStyles()
+      // typography throws on invalid options, such as a field that is empty
+      // while it is edited. Keep the styles injected last until it is valid,
+      // and report the error: a theme or plugin bug throws here too.
+      let newTypography
+      try {
+        newTypography = new Typography(activeTheme)
+        newTypography.injectStyles()
+      } catch (e) {
+        console.warn("typography-design-tools: styles not updated:", e)
+        newTypography = null
+      }
 
       // If Google Fonts have changed, insert them.
       if (
+        newTypography &&
         this.googleFonts !== JSON.stringify(newTypography.options.googleFonts)
       ) {
         const googleFonts = ReactDOM.renderToStaticMarkup(
@@ -237,8 +247,8 @@ class DesignTool extends React.Component {
                 decimals={2}
                 onValueChange={(value) => {
                   const newOptions = { ...this.state.options }
-                  const fontsize = parseUnit(this.state.options.baseFontSize)[0]
-                  newOptions.baseLineHeight = value
+                  // The editor gives a string; typography wants a number.
+                  newOptions.baseLineHeight = parseFloat(value)
                   this.setState({
                     options: newOptions,
                   })

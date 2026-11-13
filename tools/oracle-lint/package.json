@@ -1,0 +1,11 @@
+{
+  "name": "oracle-lint",
+  "private": true,
+  "description": "ESLint 9 for the @tanstack/oracles lint presets. The repository's own lint stays on ESLint 3 (.eslintrc).",
+  "type": "module",
+  "devDependencies": {
+    "@tanstack/eslint-plugin-oracles": "https://pkg.pr.new/TanStack/oracles/@tanstack/eslint-plugin-oracles@cf64491",
+    "@typescript-eslint/parser": "^8.72.1",
+    "eslint": "^9.39.2"
+  }
+}

@@ -2,12 +2,14 @@
 import gray from "gray-percentage"
 import set from "lodash/set"
 import each from "lodash/forEach"
-import isNumber from "lodash/isNumber"
 import isString from "lodash/isString"
-import isFunction from "lodash/isFunction"
 import isArray from "lodash/isArray"
 import merge from "lodash/merge"
 import reduce from "lodash/reduce"
+
+import { baseFont, fontFamilyList } from "./fontFamily"
+import { isNumeric } from "./verticalRhythm"
+import { isMarginKeyword } from "./css"
 
 import type { OptionsType } from "Types"
 
@@ -30,32 +32,13 @@ const setStyles = (
   return styles
 }
 
-// Wrap font names in quotes, unless the font name is actually a keyword.
-// See https://stackoverflow.com/a/13752149 and https://www.w3.org/TR/CSS2/fonts.html#font-family-prop
-const genericFontFamilies = [
-  "inherit",
-  "default",
-  "serif",
-  "sans-serif",
-  "monospace",
-  "fantasy",
-  "cursive",
-  "-apple-system",
-]
-const wrapFontFamily = fontFamily =>
-  genericFontFamilies.indexOf(fontFamily) !== -1 || fontFamily.startsWith('var(')
-    ? fontFamily
-    : `'${fontFamily}'`
-
 export default (vr: any, options: OptionsType) => {
   let styles = {}
   const { fontSize, lineHeight } = vr.establishBaseline()
 
   // Base HTML styles.
   styles = setStyles(styles, "html", {
-    font: `${fontSize}/${lineHeight} ${options.bodyFontFamily
-      .map(wrapFontFamily)
-      .join(",")}`,
+    ...baseFont(fontSize, lineHeight, options.bodyFontFamily),
     boxSizing: "border-box",
     overflowY: "scroll",
   })
@@ -68,7 +51,7 @@ export default (vr: any, options: OptionsType) => {
   // Base body styles.
   styles = setStyles(styles, "body", {
     color: options.bodyColor,
-    fontFamily: options.bodyFontFamily.map(wrapFontFamily).join(","),
+    fontFamily: fontFamilyList(options.bodyFontFamily),
     fontWeight: options.bodyWeight,
     wordWrap: "break-word",
     fontKerning: "normal",
@@ -86,13 +69,18 @@ export default (vr: any, options: OptionsType) => {
   // All block elements get one rhythm of bottom margin by default
   // or whatever is passed in as option.
   let blockMarginBottom = ""
-  if (isNumber(options.blockMarginBottom)) {
+  // Rhythm units, as a number or a numeric string; any other string is CSS,
+  // and anything else (null, false, a blank string) one rhythm unit.
+  if (isNumeric(options.blockMarginBottom)) {
     blockMarginBottom = vr.rhythm(options.blockMarginBottom)
-  } else if (isString(options.blockMarginBottom)) {
+  } else if (isString(options.blockMarginBottom) && /[^ \t\n\r\f]/.test(options.blockMarginBottom)) {
     blockMarginBottom = options.blockMarginBottom
   } else {
     blockMarginBottom = vr.rhythm(1)
   }
+  // A margin keyword goes on the block elements as given; the margins
+  // derived from it with calc() are left out (calc(auto / 2) is not CSS).
+  const derived = (rules: Object) => (isMarginKeyword(options.blockMarginBottom) ? {} : rules)
   styles = setStyles(
     styles,
     [
@@ -136,7 +124,6 @@ export default (vr: any, options: OptionsType) => {
   // Basic blockquote styles.
   styles = setStyles(styles, "blockquote", {
     marginRight: vr.rhythm(1),
-    marginBottom: blockMarginBottom,
     marginLeft: vr.rhythm(1),
   })
 
@@ -150,7 +137,7 @@ export default (vr: any, options: OptionsType) => {
     background: gray(80),
     border: "none",
     height: "1px",
-    marginBottom: `calc(${blockMarginBottom} - 1px)`,
+    ...derived({ marginBottom: `calc(${blockMarginBottom} - 1px)` }),
   })
 
   // ol, ul.
@@ -161,9 +148,9 @@ export default (vr: any, options: OptionsType) => {
   })
 
   // li.
-  styles = setStyles(styles, "li", {
+  styles = setStyles(styles, "li", derived({
     marginBottom: `calc(${blockMarginBottom} / 2)`,
-  })
+  }))
 
   // Remove default padding on list items.
   styles = setStyles(styles, ["ol li", "ul li"], {
@@ -173,8 +160,10 @@ export default (vr: any, options: OptionsType) => {
   // children ol, ul.
   styles = setStyles(styles, ["li > ol", "li > ul"], {
     marginLeft: vr.rhythm(1),
-    marginBottom: `calc(${blockMarginBottom} / 2)`,
-    marginTop: `calc(${blockMarginBottom} / 2)`,
+    ...derived({
+      marginBottom: `calc(${blockMarginBottom} / 2)`,
+      marginTop: `calc(${blockMarginBottom} / 2)`,
+    }),
   })
 
   // Remove margin-bottom on the last-child of a few block elements
@@ -189,9 +178,9 @@ export default (vr: any, options: OptionsType) => {
   )
 
   // Ensure li > p is 1/2 margin — this is another markdown => compiler oddity.
-  styles = setStyles(styles, ["li > p"], {
+  styles = setStyles(styles, ["li > p"], derived({
     marginBottom: `calc(${blockMarginBottom} / 2)`,
-  })
+  }))
 
   // Make generally smaller elements, smaller.
   styles = setStyles(styles, ["code", "kbd", "pre", "samp"], {
@@ -209,9 +198,10 @@ export default (vr: any, options: OptionsType) => {
     textDecoration: "none",
   }
 
-  // Table styles.
+  // Table styles, at the base size: "100%" of it in any unit (options.baseFontSize
+  // may be relative, such as "1.5rem").
   styles = setStyles(styles, ["table"], {
-    ...vr.adjustFontSizeTo(options.baseFontSize),
+    ...vr.adjustFontSizeTo("100%"),
     borderCollapse: "collapse",
     width: "100%",
   })
@@ -240,7 +230,7 @@ export default (vr: any, options: OptionsType) => {
   // Create styles for headers.
   styles = setStyles(styles, ["h1", "h2", "h3", "h4", "h5", "h6"], {
     color: options.headerColor,
-    fontFamily: options.headerFontFamily.map(wrapFontFamily).join(","),
+    fontFamily: fontFamilyList(options.headerFontFamily),
     fontWeight: options.headerWeight,
     textRendering: "optimizeLegibility",
   })
@@ -260,22 +250,20 @@ export default (vr: any, options: OptionsType) => {
 
   // TODO add support for Breakpoints here.
 
-  // Call plugins if any.
-  if (isArray(options.plugins)) {
-    styles = reduce(
-      options.plugins,
-      (stylesObj, plugin) => merge(stylesObj, plugin(vr, options, stylesObj)),
-      styles
-    )
-  }
+  // Call plugins if any (reduce leaves the styles as they are without any).
+  styles = reduce(
+    options.plugins,
+    (stylesObj, plugin) => merge(stylesObj, plugin(vr, options, stylesObj)),
+    styles
+  )
 
   // Call overrideStyles function on options (if set).
-  if (options.overrideStyles && isFunction(options.overrideStyles)) {
+  if (options.overrideStyles) {
     styles = merge(styles, options.overrideStyles(vr, options, styles))
   }
 
   // Call overrideThemeStyles function on options (if set).
-  if (options.overrideThemeStyles && isFunction(options.overrideThemeStyles)) {
+  if (options.overrideThemeStyles) {
     styles = merge(styles, options.overrideThemeStyles(vr, options, styles))
   }
 

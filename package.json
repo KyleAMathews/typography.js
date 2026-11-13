@@ -1,5 +1,6 @@
 {
   "devDependencies": {
+    "@tanstack/oracles": "https://pkg.pr.new/TanStack/oracles/@tanstack/oracles@cf64491",
     "babel-cli": "^6.24.1",
     "babel-eslint": "^7.2.3",
     "babel-jest": "19",
@@ -7,13 +8,13 @@
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
-    "codecov": "^1.0.1",
-    "compass-vertical-rhythm": "^1.3.1",
     "eslint": "^3.19.0",
     "eslint-plugin-flow-vars": "^0.5.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^6.10.3",
+    "fast-check": "^4.10.2",
     "flow-bin": "^0.45.0",
+    "flow-remove-types": "^2.338.0",
     "glob": "^7.1.0",
     "jest": "19",
     "jest-cli": "19",
@@ -22,11 +23,14 @@
     "lodash": "^4.17.4",
     "phantom": "^4.0.1",
     "phantomjs-prebuilt": "^2.1.14",
+    "playwright-core": "^1.65.0",
     "prop-types": "^15.5.8",
     "react": "^17.0.2",
     "react-addons-test-utils": "^15.4.2",
     "react-dom": "^17.0.2",
-    "react-test-renderer": "^17.0.2"
+    "react-test-renderer": "^17.0.2",
+    "recheck": "^4.6.2",
+    "vitest": "^4.1.12"
   },
   "jest": {
     "testEnvironment": "node",
@@ -36,21 +40,28 @@
   },
   "private": true,
   "scripts": {
-    "bootstrap": "lerna bootstrap",
-    "build": "lerna run build",
+    "bootstrap": "pnpm install",
+    "build": "pnpm -r run build",
     "flow": "flow",
     "lint": "eslint --ext .js,.jsx --ignore-path .gitignore .",
     "format": "prettier --write packages/**/src/*.js",
-    "publish": "npm run build && lerna publish",
-    "test": "npm run build && npm run lint && npm run test-api",
+    "publish": "pnpm run build && lerna publish",
+    "test": "pnpm run build && pnpm run lint && pnpm run lint:regex && pnpm run test-api && pnpm run test:oracles",
     "test-api": "jest",
-    "test-ci": "npm run build && npm run test-coverage && codecov",
+    "test-ci": "pnpm run build && pnpm run lint && pnpm run lint:regex && pnpm run test-coverage && pnpm run lint:oracles && pnpm run test:oracles",
     "test-coverage": "npm run test-api -- --coverage",
-    "watch": "lerna run watch"
+    "watch": "pnpm -r --parallel run watch",
+    "test:oracles": "vitest run",
+    "lint:oracles": "tools/oracle-lint/node_modules/.bin/eslint -c tools/oracle-lint/eslint.config.mjs oracles packages/*/src",
+    "lint:regex": "node tools/check-regex.cjs"
   },
   "dependencies": {
     "babel-preset-env": "^1.6.0",
     "babel-preset-react": "^6.24.1",
     "prettier": "^2.3.0"
+  },
+  "packageManager": "pnpm@11.1.0",
+  "engines": {
+    "node": ">=22"
   }
 }

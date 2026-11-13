@@ -40,7 +40,7 @@ const theme: OptionsType = {
       marginBottom: 0,
     },
     "blockquote cite": {
-      ...adjustFontSizeTo(options.baseFontSize),
+      ...adjustFontSizeTo("100%"),
       color: options.bodyColor,
       fontWeight: options.bodyWeight,
     },

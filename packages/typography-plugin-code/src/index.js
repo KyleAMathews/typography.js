@@ -1,20 +1,32 @@
 // @flow
-import type { OptionsType } from "Types"
 import gray from "gray-percentage"
-import isNumber from "lodash/isNumber"
-import isString from "lodash/isString"
+
+// blockMarginBottom as the core reads it: one rhythm unit for null,
+// undefined, false, or a blank string; rhythm units when rhythm() takes the
+// value (a number or a numeric string); and any other string as written.
+// typography 0.17's rhythm() throws for such a string; 0.16's returned NaN
+// text, and read null as 0.
+const blockMargin = (rhythm: Function, value: mixed) => {
+  if (value == null || value === false || (typeof value === "string" && !/[^ \t\n\r\f]/.test(value))) return rhythm(1)
+  try {
+    const margin = rhythm(value)
+    return /NaN/.test(String(margin)) ? value : margin
+  } catch (error) {
+    return value
+  }
+}
+
+// A negative padding, or auto, is not CSS, and a CSS-wide word means another
+// thing on padding (inherit takes the parent's padding): these pad with the
+// reset's 0. The words are the core's margin keywords (utils/css.js).
+// A negative length starts "-" then a digit or ".": -webkit-calc() does not.
+const zeroPadding = /^[ \t\n\r\f]*(?:-[\d.]|(?:auto|inherit|initial|unset|revert|revert-layer)[ \t\n\r\f]*$)/i
 
 const CodePlugin =
   (): Function =>
-  ({ rhythm }, options: OptionsType) => {
-    let blockMarginBottom
-    if (isNumber(options.blockMarginBottom)) {
-      blockMarginBottom = rhythm(options.blockMarginBottom)
-    } else if (isString(options.blockMarginBottom)) {
-      blockMarginBottom = options.blockMarginBottom
-    } else {
-      blockMarginBottom = rhythm(1)
-    }
+  ({ rhythm }: Object, options: Object) => {
+    const margin = blockMargin(rhythm, options.blockMarginBottom)
+    const padding = zeroPadding.test(String(margin)) ? 0 : margin
     return {
       "tt,code": {
         backgroundColor: gray(96),
@@ -31,7 +43,7 @@ const CodePlugin =
         lineHeight: 1.42,
         overflow: "auto",
         wordWrap: "normal", // So code will scroll on Safari.
-        padding: blockMarginBottom,
+        padding,
       },
       "pre code": {
         background: "none",

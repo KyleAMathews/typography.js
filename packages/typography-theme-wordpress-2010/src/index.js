@@ -16,7 +16,7 @@ const theme: OptionsType = {
     "Apple Color Emoji",
     "Segoe UI Emoji",
     "Segoe UI Symbol",
-  ], // eslint-disable-line
+  ],
   bodyFontFamily: ["georgia", "serif"],
   headerColor: "hsla(0,0%,0%,1)",
   bodyColor: "hsla(0,0%,0%,0.8)",

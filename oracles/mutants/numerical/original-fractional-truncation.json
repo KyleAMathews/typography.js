@@ -1,0 +1,8 @@
+{
+  "id": "original-fractional-base-truncation",
+  "source": "packages/typography/src/index.js",
+  "find": "parseFloat(options.baseFontSize)",
+  "replace": "parseInt(options.baseFontSize, 10)",
+  "intent": "Restore the original integer truncation of a fractional pixel base; N1 must reject the resulting heading measurement.",
+  "author": "Codex; self-generated from approved S3 and the original defect after inspecting the oracle"
+}

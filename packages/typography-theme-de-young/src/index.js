@@ -2,7 +2,6 @@
 import gray from "gray-percentage"
 import type { OptionsType } from "Types"
 import { MOBILE_MEDIA_QUERY } from "typography-breakpoint-constants"
-import verticalRhythm from "compass-vertical-rhythm"
 
 const theme: OptionsType = {
   title: "de Young",
@@ -45,7 +44,7 @@ const theme: OptionsType = {
       marginBottom: rhythm(1 / 2),
     },
     "h4,h5,h6": {
-      textTransformation: "uppercase",
+      textTransform: "uppercase",
     },
     // Lists look better when not crowded by the larger headers.
     ul: {

@@ -235,14 +235,35 @@ injectFonts(typography)
 
 ### Configuration
 When creating a new instance of Typography, you can pass in a
-_configuration_ object. All configuration keys are optional.
+_configuration_ object. All configuration keys are optional, and a key set to
+`undefined` takes its default. Typography reads the configuration once:
+changing `typography.options` afterwards does not change the styles.
 
 * **title**: The theme title.
-* **baseFontSize**: The base font size in pixels, defaults to `16px`.
-* **baseLineHeight**: The base line height using the css unitless number, defaults to `1.45`.
+* **baseFontSize**: A positive font size, such as `16px` or `16.5px`. A number
+  (`16`) is pixels, and other CSS units convert exactly (`12pt` is `16px`; `em`,
+  `rem`, and `%` are of the browser's initial 16px). Defaults to `16px`;
+  fractional pixels are preserved.
+* **baseLineHeight**: A positive finite number (or a numeric string such as
+  `"1.5"`), or a CSS length such as `"24px"`, `"1.5em"`, or `"150%"`. Defaults
+  to `1.45`.
+* **headerLineHeight**: The line height of `h1`–`h6`, used as given: any CSS
+  `line-height`, such as `1.1`, `"1.2em"`, `"normal"`, `"round(1.25, 0.25)"`,
+  `"calc(24px / 16px)"`, or `"var(--lh)"`. Math follows CSS Values 4,
+  including typed arithmetic; a function typography.js does not know, such
+  as `sibling-index()`, is left for the browser to judge. A value CSS
+  rejects, such as `"calc(foo)"`, throws.
+  Defaults to `1.1`. It is independent of the scale helper’s rounded line height.
 * **scaleRatio**: The "scale ratio" for the theme. This value is the ratio
   between the `h1` font size and the `baseFontSize`. So if the scale ratio is `2`
   and the `baseFontSize` is `16px` then the `h1` font size is `32px`.
+  The ratio must be positive and finite; ratios below one are supported.
+  It may also be one of these named ratios, spelled exactly: `minor second`,
+  `major second`, `minor third`, `major third`, `diminished fourth`,
+  `perfect fifth`, `minor sixth`, `golden`, `phi`, `major sixth`,
+  `minor seventh`, `major seventh`, `octave`, `major tenth`,
+  `major eleventh`, `major twelfth`, `double octave`. `null` is the default
+  ratio. Any other value throws.
 ```javascript
 {
   scaleRatio: 2,
@@ -273,6 +294,31 @@ googleFonts: [
 system UI font stack.
 * **bodyFontFamily**: An array of strings specifying the font family
   stack for the body, defaults to `['georgia', 'serif']`.
+
+  Each entry of either stack is one font family. Write a family name as
+  plain text, such as `"Font's Name"`: typography.js quotes and escapes
+  it for you. The quoted name stays valid CSS and cannot close a `<style>`
+  element. These entries are kept as CSS instead:
+  * generic families from [CSS Fonts 4](https://www.w3.org/TR/css-fonts-4/#generic-font-families)
+    (`serif`, `sans-serif`, `monospace`, `cursive`, `fantasy`,
+    `system-ui`, `math`, `ui-serif`, `ui-sans-serif`, `ui-monospace`,
+    `ui-rounded`), in any letter case. The newer functional form, such as
+    `generic(kai)`, is treated as a family name until browsers support it.
+  * a CSS variable, such as `var(--brand-font)` or
+    `var(--brand-font, serif)`, passed through unchanged except that a `<`
+    is escaped. An entry that starts with `var(` may continue as a list, as
+    in `'var(--brand-font), Georgia, serif'`. The entry is written as
+    given, because CSS reads it only after substitution. Text before the
+    `var(`, or text that CSS cannot read as part of one declaration (an open
+    string, comment, or bracket, a top-level `{}`, `;`, or `!`, or a lone
+    backslash at the end), makes the entry a family name
+  * `-apple-system`
+  * `inherit`, `initial`, `unset`, `revert`, or `revert-layer`, only
+    when it is the whole stack (`['inherit']`); in a longer stack it is a
+    family name, as is `default`
+
+  An empty stack, or an entry that is not a string, throws a `TypeError`
+  that names every invalid option.
 * **headerColor**: A css color string to be set on headers. Defaults
   to `inherit`.
 * **bodyColor**: A css color string to be set for body text. Defaults
@@ -284,7 +330,12 @@ to `hsl(0,0%,0%,0.8)`.
 * **boldWeight**: Specify the font weight for "bold" (b, strong, dt, th)
   elements. Defaults to `bold`.
 * **blockMarginBottom**: Specify the default margin-bottom for block
-  elements. Defaults to one "rhythm unit" (i.e. the height of the base line height).
+  elements, in rhythm units (a number or numeric string), or as a CSS length
+  string such as `"1.5rem"` or `"calc(1rem + 2px)"`. `"auto"` and the
+  CSS-wide keywords set the block elements' margin, `hr` included. The list
+  item margins that are computed from it with `calc()` are left out. Any
+  other string throws. Defaults to one "rhythm unit" (i.e. the height of the
+  base line height).
 * **includeNormalize**: Include normalize.css.
   Normalize.css is an excellent project which works to normalize the
 base browser CSS across browsers and serves as an excellent foundation
@@ -328,6 +379,33 @@ overrideThemeStyles: ({ rhythm }, options, styles) => ({
 })
 ```
 
+### Numerical helpers
+
+`typography.scale(position = 0)` returns a font size and a rhythm-adjusted line
+height. The font size is `baseFontSize × scaleRatio ** position`. Positions may
+be negative or fractional: with a `16px` base and ratio `2`, `scale(-1)` gives
+an `8px` font size, returned as `0.5rem` with the default rhythm unit.
+
+`typography.rhythm(lines = 1)` returns spacing based on the base line height,
+subject to rhythm-unit conversion and rounding. Counts may be negative,
+fractional, or zero; with the default settings, `rhythm(-0.25)` is `-0.3625rem`.
+
+`typography.adjustFontSizeTo(size, lines = 'auto', fromSize = baseFontSize)`
+returns a font size and a line height of whole (by default, half) lines. With
+`'auto'`, the line height covers the font size with at least `minLinePadding`
+(default `2px`) above and below; set `roundToNearestHalfLine: false` for whole
+lines. Results are in `rhythmUnit` (default `rem`; also `em`, `px`, or an
+absolute unit such as `pt`). Lengths convert as in CSS: `em` and `%` are
+relative to `fromSize`, and an `em` line height is relative to the new font
+size (in `px` when that size is zero). `ex`, `ch`, and other font-relative
+units throw wherever a size must be computed, because only the browser knows
+the font's metrics. `null` arguments take their
+defaults, numbers may be numeric strings, and a negative font size or line
+count throws.
+
+Invalid numerical configuration, nonfinite positions or counts, and calculations
+that produce nonfinite or malformed CSS lengths throw an error.
+
 ## Related
 
 - [postcss-typography](https://github.com/BarryThePenguin/postcss-typography)
@@ -336,20 +414,22 @@ overrideThemeStyles: ({ rhythm }, options, styles) => ({
 Typography.js is a monorepo facilitated by
 [Lerna](https://github.com/lerna/lerna).
 
+Install with `pnpm install` and run the tests with `pnpm test`. The tests
+include an oracle that reads the generated CSS in Chrome, so they need an
+installed Chrome.
+
 TODO: document constants + compass-vertical-rhythm + using typgraphy.js
 for inline styles.
 
 <!-- Definitions -->
 
-[build-badge]: https://img.shields.io/travis/KyleAMathews/typography.js.svg
+[build-badge]: https://github.com/KyleAMathews/typography.js/actions/workflows/ci.yml/badge.svg
 
-[build-status]: https://travis-ci.org/KyleAMathews/typography.js
+[build-status]: https://github.com/KyleAMathews/typography.js/actions/workflows/ci.yml
 
 [coverage-status]: https://codecov.io/github/KyleAMathews/typography.js
 
 [coverage-badge]: https://img.shields.io/codecov/c/github/KyleAMathews/typography.js.svg
-
-=======
 
 ## Backers
 

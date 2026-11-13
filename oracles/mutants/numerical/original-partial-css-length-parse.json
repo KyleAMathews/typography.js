@@ -1,0 +1,8 @@
+{
+  "id": "original-partial-css-length-parse",
+  "source": "packages/typography/src/index.js",
+  "find": "const checkLength = (name: string, value: any) => {\n  if (\n    typeof value !== \"string\" ||\n    !/^[+-]?(?:\\d*\\.\\d+|\\d+)(?:e[+-]?\\d+)?(?:px|rem|em|ex|%|in|cm|mm|q|pt|pc)$/i.test(\n      value\n    )\n  ) {\n    throw new RangeError(`Invalid CSS length for ${name}`)\n  }\n}",
+  "replace": "const checkLength = (name: string, value: any) => {\n  checkNumber(name, parseFloat(value))\n}",
+  "intent": "Restore the partial numeric-prefix validation that returned malformed duplicate-exponent CSS; N4 must reject it.",
+  "author": "Codex; self-generated from the observed malformed-exponent defect after inspecting the oracle"
+}

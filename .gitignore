@@ -34,3 +34,8 @@ examples/bundle.js
 www/public
 packages/**/package-lock.json
 packages/**/yarn.lock
+
+# @tanstack/oracles gap check output, and the temporary files a run writes
+.oracle-gaps/
+.oracle-gaps-*
+oracles/.oracle-gaps-*

@@ -2,7 +2,6 @@
 import gray from "gray-percentage"
 import type { OptionsType } from "Types"
 import { MOBILE_MEDIA_QUERY } from "typography-breakpoint-constants"
-import verticalRhythm from "compass-vertical-rhythm"
 
 const theme: OptionsType = {
   title: "Alton",
@@ -48,7 +47,7 @@ const theme: OptionsType = {
       marginBottom: 0,
     },
     "blockquote cite": {
-      ...adjustFontSizeTo(options.baseFontSize),
+      ...adjustFontSizeTo("100%"),
       color: options.bodyColor,
       fontWeight: options.bodyWeight,
     },

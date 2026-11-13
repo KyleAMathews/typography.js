@@ -5,7 +5,6 @@ import {
   TABLET_MEDIA_QUERY,
   MOBILE_MEDIA_QUERY,
 } from "typography-breakpoint-constants"
-import verticalRhythm from "compass-vertical-rhythm"
 
 const theme: OptionsType = {
   title: "Parnassus",
@@ -30,10 +29,12 @@ const theme: OptionsType = {
   bodyWeight: 400,
   boldWeight: 700,
   overrideStyles: ({ adjustFontSizeTo, scale, rhythm }, options) => {
-    const vr = verticalRhythm({
-      baseFontSize: "15px",
-      baseLineHeight: "27.35px",
-    })
+    // The mobile baseline: a 15px base (a percentage of the browser's
+    // 16px) and its line height.
+    const mobileBaseline = {
+      fontSize: `${(15 / 16) * 100}%`,
+      lineHeight: "27.35px",
+    }
 
     return {
       a: {
@@ -59,7 +60,7 @@ const theme: OptionsType = {
         marginBottom: 0,
       },
       "blockquote cite": {
-        ...adjustFontSizeTo(options.baseFontSize),
+        ...adjustFontSizeTo("100%"),
         color: options.bodyColor,
         fontWeight: options.bodyWeight,
       },
@@ -77,7 +78,7 @@ const theme: OptionsType = {
       },
       [TABLET_MEDIA_QUERY]: {
         html: {
-          ...vr.establishBaseline(),
+          ...mobileBaseline,
         },
       },
     }

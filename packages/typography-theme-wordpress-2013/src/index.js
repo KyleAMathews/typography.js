@@ -55,7 +55,7 @@ const theme: OptionsType = {
       marginRight: rhythm(1.5),
     },
     "blockquote cite": {
-      ...adjustFontSizeTo(options.baseFontSize),
+      ...adjustFontSizeTo("100%"),
       fontWeight: options.bodyWeight,
       textTransform: "uppercase",
     },

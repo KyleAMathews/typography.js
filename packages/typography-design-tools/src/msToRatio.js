@@ -26,8 +26,11 @@ module.exports = function (ratio) {
   if (ratio == null) {
     r = 2
   }
+  // A numeric string is its number, as typography reads scaleRatio.
   if (_.isNumber(ratio)) {
     r = ratio
+  } else if (typeof ratio === "string" && /^[ \t\n\r\f]*[+-]?(?:\d*\.\d+|\d+)(?:e[+-]?\d+)?[ \t\n\r\f]*$/i.test(ratio)) {
+    r = Number(ratio)
   } else if (ratios[ratio] != null) {
     r = ratios[ratio]
   } else {

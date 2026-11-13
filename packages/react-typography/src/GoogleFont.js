@@ -1,32 +1,28 @@
 import React from "react"
 import PropTypes from "prop-types"
 
+// A name with its spaces as "+", as v0.16 wrote it and Google Fonts reads it.
+// Names and styles are otherwise written as given: sites put query
+// parameters such as "&display=swap" into a style.
+const plusSpaces = (text) => String(text).split(" ").join("+")
+
+// The Google Fonts CSS API: family=Name:style,style|Name. A font without
+// styles is its name alone (the default weight).
 const GoogleFont = (props) => {
-  // Create family + styles string
-  let fontsStr = ""
-  if (props.typography.options.googleFonts) {
-    const fonts = props.typography.options.googleFonts.map((font) => {
-      let str = ""
-      str += font.name.split(" ").join("+")
-      str += ":"
-      str += font.styles.join(",")
-
-      return str
-    })
-
-    fontsStr = fonts.join("|")
-
-    if (fontsStr) {
-      return (
-        <link
-          href={`//fonts.googleapis.com/css?family=${fontsStr}`}
-          rel={"stylesheet"}
-          type={"text/css"}
-        />
-      )
-    }
-    return null
-  }
+  const fonts = props.typography.options.googleFonts || []
+  if (fonts.length === 0) return null
+  const family = fonts
+    .map(({ name, styles }) =>
+      styles && styles.length > 0
+        ? `${plusSpaces(name)}:${styles.join(",")}`
+        : plusSpaces(name)
+    )
+    .join("|")
+  return React.createElement("link", {
+    href: `//fonts.googleapis.com/css?family=${family}`,
+    rel: "stylesheet",
+    type: "text/css",
+  })
 }
 
 GoogleFont.propTypes = {
