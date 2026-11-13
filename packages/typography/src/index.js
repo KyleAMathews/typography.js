@@ -26,7 +26,7 @@ import type { OptionsType } from "Types"
 const isLengthText = (text: string, lengthOnly: boolean) => {
   const length = dimension.exec(text)
   return (
-    (!!length && lengthUnit.test(length[2])) ||
+    (!!length && lengthUnit.test(length[2]) && Number.isFinite(Number(length[1]))) ||
     ((isMathFunction(text, lengthOnly) || hasSubstitution(text)) &&
       text.indexOf("<") === -1 &&
       isDeclarationValue(text))

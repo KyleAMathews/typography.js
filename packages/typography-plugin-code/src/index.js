@@ -19,7 +19,8 @@ const blockMargin = (rhythm: Function, value: mixed) => {
 // A negative padding, or auto, is not CSS, and a CSS-wide word means another
 // thing on padding (inherit takes the parent's padding): these pad with the
 // reset's 0. The words are the core's margin keywords (utils/css.js).
-const zeroPadding = /^[ \t\n\r\f]*(?:-|(?:auto|inherit|initial|unset|revert|revert-layer)[ \t\n\r\f]*$)/i
+// A negative length starts "-" then a digit or ".": -webkit-calc() does not.
+const zeroPadding = /^[ \t\n\r\f]*(?:-[\d.]|(?:auto|inherit|initial|unset|revert|revert-layer)[ \t\n\r\f]*$)/i
 
 const CodePlugin =
   (): Function =>

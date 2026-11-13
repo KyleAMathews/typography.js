@@ -147,7 +147,7 @@ const optionalNumber = (min: number, max: number) =>
 // Heading line heights written as given (review V3). Math functions have
 // their own grammar in numerical-heading-line-height-math.
 // Comments may sit around a trailing !important (review P5's scan).
-const HEADER_VALUES = ["calc(1.2 * 1)", "env(safe-area-inset-top, 1.2)", "1.2ex", "1.2 /* c */ !important", "1.2/**/!important", "1.2 /**/!/**/important"] as const
+const HEADER_VALUES = ["calc(1.2 * 1)", "env(safe-area-inset-top, 1.2)", "1.2ex", "1.2 /* c */ !important", "1.2/**/!important", "1.2 /**/!/**/important", "1.2 !important /* ! */"] as const
 
 // These are measurement bounds, not a narrower adoption of the laws. Each
 // coordinate contributes separately: base reveals truncation, ratio/position
@@ -1713,7 +1713,12 @@ const INVALID_HEADER_VALUES: unknown[] = [-1, NaN, Infinity, null, true, "x", "-
   // trailing !important takes quadratic time over (minutes at this length).
   " ".repeat(200000) + "x", " /**/".repeat(40000) + "x",
   // A comment and no value before !important, and a comment left open.
-  "/**/ !important", "1.2 /* !important", "1.2 */ !important"]
+  "/**/ !important", "1.2 /* !important", "1.2 */ !important",
+  // Review T1: a comment ends at its first "*/"; review T6: an overflowing
+  // length.
+  "1 /* a */ } h1{color:blue} */ !important", "1 /*/ !important", "1e400px", "1e400em",
+  // "important" with no "!" before it, and alone.
+  "1.2 important", "important"]
 // A base font size: a positive length that converts to px, or a number (px).
 const INVALID_BASES: unknown[] = ["0px", "-1px", "", "oops", "16pxoops", "1.2.3px", "16vw", null, true, NaN, 0, -16, "1ex"]
 const invalidConfiguration = fc.constantFrom(...INVALID_CONFIGURATION)

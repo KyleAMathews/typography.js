@@ -355,3 +355,29 @@ high-severity bug (ledger `/tmp/typography-review12-eval/ledger.md`).
   clamp), so the plugin's zero-padding rule needs no math case.
 - **Gap check** (`css.js`): 372 mutants, 371 killed; the last one makes the
   comment scan loop forever (a CLI limit). One dead guard was removed.
+
+## Review round 13 (2026-11-13)
+
+A thirteenth `/code-review high` (head f5df01e) gave T1–T9 (ledger
+`/tmp/typography-review13-eval/ledger.md`). Two were severe, both in the
+value check:
+
+- **T1 (my round-12 scan):** the backward search for a comment before
+  `!important` paired the last `*/` with the last `/*`, so
+  `'red /* a */ } h1{color:blue} */ !important'` was checked as `red` and
+  written whole, injecting a rule. The scan now reads tokens forward, as CSS
+  does, and stays linear.
+- **T2:** only a literal `url(` was a url token, so an escaped spelling such
+  as `\75 rl(a b "x)" )` passed as a function and opened a string that
+  swallowed later declarations. Names are now read with their escapes, and a
+  name that decodes to `url` starts a url token.
+- **Also fixed:** `-webkit-calc()` is not a negative margin for the code
+  plugin (T3); a `!` in a trailing comment (T4); white space alone is no
+  declaration, like `''` (T5, extending decision Q2); an overflowing length
+  such as `1e400px` throws (T6).
+- **RED on f5df01e:** red.txt (stylesheet and numeric oracles).
+- **Model fix:** the stylesheet model's escape decoding now reads a code point
+  beyond Unicode as U+FFFD, as CSS does; it threw.
+- **Gap check** (`css.js`): 449 mutants, 444 killed after witnesses for the
+  url scan and the `!important` scan; the rest make a scan loop forever (a
+  CLI limit). Two branches with no legal effect were folded into one.

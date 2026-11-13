@@ -35,25 +35,6 @@ const escape = "\\\\(?:[0-9a-fA-F]{1,6}[ \\t\\n\\r\\f]?|[^\\n\\r\\f0-9a-fA-F])"
 const string = `"(?:\\\\[^]|[^"\\\\\\n\\r\\f])*"|'(?:\\\\[^]|[^'\\\\\\n\\r\\f])*'`
 // White space and comments.
 export const blank = `(?:${ws}|${comment})`
-// A trailing !important (CSS Cascade 5 6.1), with the white space and
-// comments around its "!" and "important". It is read from the last "!", so
-// the time is linear in the text: a search for the pattern from each start
-// would take quadratic time on a long run of white space.
-const importantFlag = new RegExp(`^!${blank}*important${blank}*$`, "i")
-const blankEnd = (text: string, end: number) => {
-  let at = end
-  for (;;) {
-    while (/[ \t\n\r\f]/.test(text.charAt(at - 1))) at--
-    if (text.slice(at - 2, at) !== "*/") return at
-    const open = text.lastIndexOf("/*", at - 3)
-    if (open < 0) return at
-    at = open
-  }
-}
-export const withoutImportant = (text: string) => {
-  const bang = text.lastIndexOf("!")
-  return bang < 0 || !importantFlag.test(text.slice(bang)) ? text : text.slice(0, blankEnd(text, bang))
-}
 // A character of a name (4.3.9). NUL reads as U+FFFD, a name character (3.3).
 export const nameChar = `(?:[-\\w\\u0000\\u0080-\\uFFFF]|${escape})`
 // A property name: one identifier (4.3.11), or a custom property's "--" and
@@ -64,15 +45,72 @@ export const isPropertyName = (name: string) => identifier.test(name)
 export const varHead = new RegExp(`^var\\(${blank}*--${nameChar}+${blank}*[,)]`, "i")
 const envHead = new RegExp(`^env\\(${blank}*[a-z-]${nameChar}*${blank}*[,)]`, "i")
 
-// A token as CSS reads it. In order: a comment; an unterminated comment; an
-// escape; a string; `url(` with a quoted argument (an ordinary function,
-// through its string); an unquoted url token; any other `url(` (a bad url); a
-// run of name characters (so "xurl(" is not a url); any other character. A
-// lone quote is a string that a line break or the end cut off.
-const token = new RegExp(
-  `${comment}|\\/\\*|\\\\[^\\n\\r\\f]|${string}|url\\(${ws}*(?:${string})|url\\(${ws}*(?:[^"'()\\\\ \\t\\n\\r\\f\\u0000-\\u0008\\u000b\\u000e-\\u001f\\u007f]|\\\\[^\\n\\r\\f])*${ws}*\\)|url\\(|[-\\w\\u0000\\u0080-\\uFFFF]+|[^]`,
-  "iy"
-)
+// A token as CSS reads it. In order: a comment; an unterminated comment; a
+// string; a run of name characters and escapes (a name, so "xurl(" is not a
+// url); any other character. A lone quote is a string that a line break or
+// the end cut off, and a lone backslash is not an escape.
+const token = new RegExp(`${comment}|\\/\\*|${string}|${nameChar}+|[^]`, "y")
+// A name with its escapes decoded (4.3.7): "\\75 rl" is "url". Only ASCII
+// names are compared ("url", "var", "env", "important"), so a code point
+// beyond Unicode, which CSS reads as U+FFFD, only needs to stay non-ASCII.
+const decodeName = (name: string) =>
+  name.replace(/\\(?:([0-9a-fA-F]{1,6})[ \t\n\r\f]?|([^]))/g, (_, hex, c) =>
+    hex ? String.fromCodePoint(Math.min(parseInt(hex, 16), 0x10ffff)) : c
+  )
+const isName = (t: string) => /^(?:[-\w\u0000\u0080-\uFFFF]|\\[^\n\r\f])/.test(t)
+const isWs = (c: string) => c === " " || c === "\t" || c === "\n" || c === "\r" || c === "\f"
+// After a name "url" (in any spelling) and its "(": the index of the ")" that
+// ends an unquoted url token; -1 for a bad url (4.3.6: white space inside, a
+// quote, "(", a non-printable character, or a bad escape); or undefined when
+// a quote comes first, as url("…") is an ordinary function.
+const urlEnd = (text: string, at: number) => {
+  let j = at
+  while (isWs(text.charAt(j))) j++
+  if (text[j] === '"' || text[j] === "'") return undefined
+  for (; ; j++) {
+    const c = text.charAt(j)
+    if (c === "") return -1
+    if (c === ")") return j
+    if (isWs(c)) {
+      while (isWs(text.charAt(j))) j++
+      return text[j] === ")" ? j : -1
+    }
+    if (/["'(\u0000-\u0008\u000b\u000e-\u001f\u007f]/.test(c)) return -1
+    // An escape: a backslash, then a character other than a line break.
+    if (c === "\\") {
+      if (/^$|[\n\r\f]/.test(text.charAt(j + 1))) return -1
+      j++
+    }
+  }
+}
+// The tokens of `text`, or undefined at a comment that does not close.
+const tokens = (text: string) => {
+  const out = []
+  token.lastIndex = 0
+  for (let match = token.exec(text); match; match = token.exec(text)) {
+    if (match[0] === "/*") return undefined
+    out.push(match)
+  }
+  return out
+}
+// The text before a trailing !important (CSS Cascade 5 6.1), read token by
+// token as CSS reads it (a comment ends at its first "*/"), with the white
+// space and comments around "!" and "important"; else the text. Linear in
+// the text.
+export const withoutImportant = (text: string) => {
+  const all = tokens(text)
+  if (!all) return text
+  const blankAt = k => k > 0 && (isWs(all[k - 1][0]) || all[k - 1][0].slice(0, 2) === "/*")
+  let k = all.length
+  while (blankAt(k)) k--
+  if (!k || asciiLower(decodeName(all[k - 1][0])) !== "important") return text
+  k--
+  while (blankAt(k)) k--
+  if (!k || all[k - 1][0] !== "!") return text
+  k--
+  while (blankAt(k)) k--
+  return k ? text.slice(0, all[k - 1].index + all[k - 1][0].length) : ""
+}
 const closerOf = { "(": ")", "[": "]", "{": "}" }
 // A lone backslash (before a line break or the end) is not an escape: at the
 // end, it would escape the ";" written after it.
@@ -92,13 +130,21 @@ export const isDeclarationValue = (text: string, custom: boolean = false) => {
   for (let match = token.exec(text); match; match = token.exec(text)) {
     const t = match[0]
     const top = closers[closers.length - 1]
-    if (broken[t] || /^url\($/i.test(t)) return false
+    if (broken[t]) return false
     if ((top === undefined || top === "v") && (t === ";" || t === "!")) return false
     if (t === "{" && top === undefined && !custom) return false
-    if (/^url\(/i.test(t)) {
-      // A quoted url() stays open after its string; an unquoted one is whole.
-      if (t[t.length - 1] !== ")") closers.push(")")
-    } else if (t === "(" && /^(?:var|env)$/i.test(before)) closers.push("v")
+    // A name "url" (in any spelling) and "(" start a url token, unless a
+    // quote follows: then it is a function like any other.
+    if (isName(t) && asciiLower(decodeName(t)) === "url" && text[token.lastIndex] === "(") {
+      const end = urlEnd(text, token.lastIndex + 1)
+      if (end === -1) return false
+      if (end !== undefined) {
+        token.lastIndex = end + 1
+        before = ")"
+        continue
+      }
+    }
+    if (t === "(" && /^(?:var|env)$/i.test(decodeName(before))) closers.push("v")
     else if (closerOf[t]) closers.push(closerOf[t])
     else if ((t === ")" || t === "]" || t === "}") && (closers.pop() || "").replace("v", ")") !== t) return false
     before = t

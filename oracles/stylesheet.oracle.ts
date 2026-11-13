@@ -133,12 +133,14 @@ const MEDIA = '@media (max-width:480px)'
 // !important. Unsafe ones break the rule, the stylesheet, or the <style>.
 // 'a {b}' and '' are safe for a custom property only (reviews W5, X8); '\\(a' holds an
 // escaped "(" that opens no block.
-const SAFE_VALUES: Array<Value> = ['red', '#123456', '1.5rem', 0, 12, 'calc(1em + 2px)', 'var(--x)', "'a;b}'", 'url(a.png)', 'red !important', 'inherit', 'var(--x, {a})', 'a {b}', '\\(a', '', 'red</style>', '"</p>"', '"<"', 'a\\</b', 'red !important /* x */', 'red ! /**/ important', '{a:b; c:d}', 'f(a;b)', '*/ !important']
+const SAFE_VALUES: Array<Value> = ['red', '#123456', '1.5rem', 0, 12, 'calc(1em + 2px)', 'var(--x)', "'a;b}'", 'url(a.png)', 'red !important', 'inherit', 'var(--x, {a})', 'a {b}', '\\(a', '', 'red</style>', '"</p>"', '"<"', 'a\\</b', 'red !important /* x */', 'red ! /**/ important', '{a:b; c:d}', 'f(a;b)', '*/ !important', 'red !important /* ! */', ' ', 'url(a;b)', 'url( a )', '\\110000x']
 // 'a\\': a lone backslash at the end escapes the ";" after it (review W1).
 // An array or a function is not a CSS value (reviews Y5, Z5).
 const ARRAY_VALUE = ['a', 'b']
 const FUNCTION_VALUE = () => 1
-const UNSAFE_VALUES: Array<Value> = [ARRAY_VALUE, FUNCTION_VALUE, 'var(--x, a;b)', '/**/ !important', 'red}', 'a;b', 'red !importan', "'open", NaN, true, '!important', 'a\\', 'a /* b']
+// Review T1: a comment that ends at its first "*/", and one that never
+// ends; T2: a bad url, in any spelling of "url(".
+const UNSAFE_VALUES: Array<Value> = [ARRAY_VALUE, FUNCTION_VALUE, 'var(--x, a;b)', '/**/ !important', 'red /* a */ } h1{color:blue} */ !important', 'red /*/ !important', '\\75 rl(a b "x)" )', 'u\\rl(a b)', 'url(a b)', 'url(a\\\nb)', 'url(a', 'red}', 'a;b', 'red !importan', "'open", NaN, true, '!important', 'a\\', 'a /* b']
 // Names that are not one CSS identifier break the rule or the <style>
 // (review X1).
 const UNSAFE_PROPERTIES = ['</style>', 'color;}body{background', '--x}', 'a b']
@@ -162,8 +164,8 @@ const entry = fc.record({
 })
 const layer = fc.array(entry, { maxLength: 5 })
 const color = fc.oneof(
-  { weight: 6, arbitrary: fc.constantFrom<Value>(undefined, 'red', '#333', 'hsla(0,0%,0%,0.8)', 'var(--fg)', 'inherit', '', false) },
-  { weight: 1, arbitrary: fc.constantFrom<Value>('red</style>', 'red}', '"</p>"', null) },
+  { weight: 6, arbitrary: fc.constantFrom<Value>(undefined, 'red', '#333', 'hsla(0,0%,0%,0.8)', 'var(--fg)', 'inherit', '', false, 'red !important /* ! */') },
+  { weight: 1, arbitrary: fc.constantFrom<Value>('red</style>', 'red}', '"</p>"', null, 'red /* a */ } h1{color:blue} */ !important', '\\75 rl(a b "x)" )') },
 )
 const weight = fc.constantFrom<Value>(undefined, 400, 700, 'bold', 'normal', '600')
 const arbitrary: fc.Arbitrary<History> = fc.record({
@@ -176,8 +178,9 @@ const arbitrary: fc.Arbitrary<History> = fc.record({
     // null is one rhythm, as v0.16 read it. A string is a CSS length, which
     // calc() takes (review X6); any other string throws.
     blockMarginBottom: fc.oneof(
-      { weight: 6, arbitrary: fc.constantFrom<Value>(undefined, null, 0.5, 1, 2, -1, '1', '1.5rem', '20px', '5%', '-0.5rem', ' -1rem', 'calc(1rem + 2px)', 'var(--m)', 'auto', 'inherit', 'INITIAL') },
-      { weight: 1, arbitrary: fc.constantFrom<Value>('auto', '1rem !important', 'red', 'calc(1)', '1rem;', 'x', NaN, Infinity, 'rgb(1,2,3)', 'url(x)') },
+      { weight: 6, arbitrary: fc.constantFrom<Value>(undefined, null, 0.5, 1, 2, -1, '1', '1.5rem', '20px', '5%', '-0.5rem', ' -1rem', 'calc(1rem + 2px)', 'var(--m)', 'auto', 'inherit', 'INITIAL', '-webkit-calc(2rem)') },
+      // '1e400px' overflows to an infinite length (review T6).
+      { weight: 1, arbitrary: fc.constantFrom<Value>('1rem !important', 'red', 'calc(1)', '1rem;', 'x', NaN, Infinity, 'rgb(1,2,3)', 'url(x)', '1e400px') },
     ),
     includeNormalize: fc.constantFrom(undefined, true, false),
   }),
@@ -212,6 +215,49 @@ const toObject = (entries: Array<Entry>) => {
 
 // CSS Syntax 3 §5.4.6: a top-level {} block is a custom property's only; a
 // non-custom declaration with one and any other value is dropped.
+// A name and its end (CSS Syntax 3 §4.3.11), with its escapes decoded, at k.
+const NAME_CHAR = /[-\w\u0080-\uFFFF]/
+const readName = (text: string, k: number): { name: string; end: number } => {
+  let name = ''
+  let j = k
+  for (;;) {
+    if (j < text.length && NAME_CHAR.test(text[j])) name += text[j++]
+    else if (text[j] === '\\' && j + 1 < text.length && !/[\n\r\f]/.test(text[j + 1])) {
+      const hex = /^[0-9a-fA-F]{1,6}[ \t\n\r\f]?/.exec(text.slice(j + 1, j + 8))
+      if (hex) {
+        // Zero, a surrogate, or beyond Unicode reads as U+FFFD (§4.3.7).
+        const n = parseInt(hex[0], 16)
+        name += n === 0 || n > 0x10ffff || (n >= 0xd800 && n <= 0xdfff) ? '\uFFFD' : String.fromCodePoint(n)
+        j += 1 + hex[0].length
+      } else {
+        name += text[j + 1]
+        j += 2
+      }
+    } else return { name, end: j }
+  }
+}
+// After "url(" (any spelling): the end of an unquoted url token, at its ")",
+// or -1 for a bad url (§4.3.6), or undefined when a string follows (then it
+// is a function).
+const urlEnd = (text: string, k: number): number | undefined => {
+  let j = k
+  while (/[ \t\n\r\f]/.test(text.charAt(j))) j++
+  if (text[j] === '"' || text[j] === "'") return undefined
+  for (; j < text.length; j++) {
+    const c = text[j]
+    if (c === ')') return j
+    if (/[ \t\n\r\f]/.test(c)) {
+      while (/[ \t\n\r\f]/.test(text.charAt(j))) j++
+      return text[j] === ')' ? j : -1
+    }
+    if (c === '"' || c === "'" || c === '(' || /[\u0000-\u0008\u000b\u000e-\u001f\u007f]/.test(c)) return -1
+    if (c === '\\') {
+      if (j + 1 >= text.length || /[\n\r\f]/.test(text[j + 1])) return -1
+      j++
+    }
+  }
+  return -1
+}
 const isSafeText = (v: string, custom: boolean) => {
   // A trailing !important is CSS, but only after a value.
   // White space and comments may sit around "!" and "important".
@@ -226,6 +272,23 @@ const isSafeText = (v: string, custom: boolean) => {
       if (c === '\\') k++
       else if (c === quote) quote = undefined
       continue
+    }
+    // A name: "url(" in any spelling (an escape included, review T2) starts
+    // a url token, which a quote does not end.
+    if ((NAME_CHAR.test(c) || c === '\\') && !NAME_CHAR.test(body[k - 1] ?? '') && body[k - 1] !== '\\') {
+      const { name, end } = readName(body, k)
+      if (end > k) {
+        if (name.toLowerCase() === 'url' && body[end] === '(') {
+          const close = urlEnd(body, end + 1)
+          if (close === -1) return false
+          if (close !== undefined) {
+            k = close
+            continue
+          }
+        }
+        k = end - 1
+        continue
+      }
     }
     if (c === '/' && body[k + 1] === '*') {
       // A comment ends at its first "*/".
@@ -252,7 +315,9 @@ const isSafeText = (v: string, custom: boolean) => {
 // No declaration: null and undefined, and false and '' as in `cond && value`
 // (engineer decision 2026-11-12, review Q2). A custom property's '' is its
 // empty value.
-const isAbsent = (v: unknown, property: string) => v === null || v === undefined || v === false || (v === '' && !property.startsWith('--'))
+// White space alone is empty too (review T5).
+const isAbsent = (v: unknown, property: string) =>
+  v === null || v === undefined || v === false || (typeof v === 'string' && /^[ \t\n\r\f]*$/.test(v) && !property.startsWith('--'))
 const isSafeValue = (v: Value, property: string) =>
   isAbsent(v, property) || (typeof v === 'number' && Number.isFinite(v)) || (typeof v === 'string' && isSafeText(v, property.startsWith('--')))
 // A selector (or @media prelude) is safe text with something in it.
@@ -289,7 +354,7 @@ const isNumeric = (v: Value) => typeof v === 'number' || (typeof v === 'string' 
 
 // The generated blockMarginBottom strings that are CSS lengths calc() takes
 // (the Chrome witness checks the calc() they make); the others are not.
-const MARGIN_LENGTHS = ['1.5rem', '20px', '5%', '-0.5rem', ' -1rem', 'calc(1rem + 2px)', 'var(--m)']
+const MARGIN_LENGTHS = ['1.5rem', '20px', '5%', '-0.5rem', ' -1rem', 'calc(1rem + 2px)', 'var(--m)', '-webkit-calc(2rem)']
 // auto and the CSS-wide words go on the block elements as given; the margins
 // derived from them with calc() are left out, as browsers dropped v0.16's
 // calc(auto - 1px) (engineer decision 2026-11-12, review Y6).
@@ -514,7 +579,9 @@ function check(plan: History, trace: ReadonlyArray<Observation>, expected: Expec
   const rhythmOf = (count: number) => (count === 1 ? r.one : count === 2 / 3 ? r.twoThirds : r.half)
   // S9: the plugin's pre padding, called directly, is the block margin, or 0
   // for a negative one or a keyword (review Z1).
-  const padding = /^\s*-/.test(r.block) || MARGIN_KEYWORDS.includes(r.block) ? '0' : r.block
+  // A negative length starts "-" then a digit: -webkit-calc() is a function
+  // (review T3).
+  const padding = /^\s*-[\d.]/.test(r.block) || MARGIN_KEYWORDS.includes(r.block) ? '0' : r.block
   const direct = valueAt(trace, 'codePlugin()(vr, options).pre.padding')
   const directDiff = differs('codePlugin()(vr, options).pre.padding', S5, String(direct).trim(), padding.trim(), 'the code plugin called directly pads otherwise')
   if (directDiff) return directDiff
@@ -601,6 +668,10 @@ oracleProperty<History, ReturnType<typeof model>>({
       { name: 'an empty custom property (X8)', enters: ['a custom property', 'an empty value'], build: () => ({ ...CLEAN, overrideStyles: [{ media: false, selector: ':root', property: '--x-y', value: '' }], overrideThemeStyles: undefined }) },
       // Gap check (round 7): NaN alone, on a property and on a custom property.
       { name: 'NaN alone', enters: ['an unsafe value'], build: () => ({ ...CLEAN, overrideStyles: [{ media: false, selector: 'p', property: 'color', value: NaN }], overrideThemeStyles: undefined }) },
+      { name: 'a "*/" that closes no trailing comment (T1)', enters: ['an unsafe value'], build: () => ({ ...CLEAN, options: { ...CLEAN.options, bodyColor: 'red /* a */ } h1{color:blue} */ !important' } }) },
+      { name: 'an escaped bad url (T2)', enters: ['an unsafe value'], build: () => ({ ...CLEAN, options: { ...CLEAN.options, bodyColor: '\\75 rl(a b "x)" )' } }) },
+      { name: 'a "!" in a trailing comment (T4)', enters: [], build: () => ({ ...CLEAN, options: { ...CLEAN.options, bodyColor: 'red !important /* ! */' } }) },
+      { name: 'white space alone (T5)', enters: ['a falsy value'], build: () => ({ ...CLEAN, overrideStyles: [{ media: false, selector: 'h1', property: 'color', value: ' ' }] }) },
       { name: 'a comment and no value before !important', enters: ['an unsafe value'], build: () => ({ ...CLEAN, overrideStyles: [{ media: false, selector: 'p', property: 'color', value: '/**/ !important' }] }) },
       { name: 'a stray */ in a custom property', enters: ['a custom property'], build: () => ({ ...CLEAN, overrideStyles: [{ media: false, selector: ':root', property: '--x-y', value: '*/ !important' }] }) },
       { name: 'an empty custom property that is important', enters: ['a custom property'], build: () => ({ ...CLEAN, overrideStyles: [{ media: false, selector: ':root', property: '--x-y', value: '!important' }] }) },
@@ -618,7 +689,7 @@ oracleProperty<History, ReturnType<typeof model>>({
   reached: (plan) => {
     const states = new Set<string>()
     const all = [...plan.plugins.flat(), ...(plan.overrideStyles ?? []), ...(plan.overrideThemeStyles ?? [])]
-    if (all.some((e) => !isSafeValue(e.value, e.property))) states.add('an unsafe value')
+    if (all.some((e) => !isSafeValue(e.value, e.property)) || [plan.options.headerColor, plan.options.bodyColor].some((v) => !isSafeValue(v, 'color'))) states.add('an unsafe value')
     if (all.some((e) => !isSafeSelector(e.selector))) states.add('an unsafe selector')
     if (all.some((e) => e.value === null)) states.add('a null value')
     if (all.some((e) => e.property.startsWith('--'))) states.add('a custom property')
@@ -631,7 +702,7 @@ oracleProperty<History, ReturnType<typeof model>>({
     if (plan.malformed && !NONE.includes(plan.malformed.as)) states.add('a malformed plugin option')
     if (plan.malformed && NONE.includes(plan.malformed.as)) states.add('null plugins or overrides')
     if (plan.options.blockMarginBottom === null) states.add('a null block margin')
-    if ([...all.map((e) => e.value), plan.options.headerColor, plan.options.bodyColor].some((v) => v === false || v === '')) states.add('a falsy value')
+    if ([...all.map((e) => e.value), plan.options.headerColor, plan.options.bodyColor].some((v) => v === false || (typeof v === 'string' && /^[ \t\n\r\f]*$/.test(v)))) states.add('a falsy value')
     if (typeof plan.options.blockMarginBottom === 'string' && MARGIN_KEYWORDS.includes(plan.options.blockMarginBottom)) states.add('a keyword block margin')
     if ([...all.map((e) => e.selector), ...all.map((e) => String(e.value)), String(plan.options.headerColor), String(plan.options.bodyColor)].some((t) => t.includes('</'))) states.add('a "</" in the text')
     if (typeof plan.options.blockMarginBottom === 'string' && !isNumeric(plan.options.blockMarginBottom) && !MARGIN_LENGTHS.includes(plan.options.blockMarginBottom) && !MARGIN_KEYWORDS.includes(plan.options.blockMarginBottom)) states.add('an invalid block margin')
