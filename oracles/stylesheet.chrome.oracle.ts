@@ -59,8 +59,8 @@ const valueAt = (trace: ReadonlyArray<Observation>, checkpoint: string) => trace
 // ---------------------------------------------------------------------------
 
 const S7 = 'S7 injectStyles() keeps one typography.js style in the head'
-// The last option set's toString() throws (an empty color; review Y1).
-const OPTIONS = [{}, { baseFontSize: '18px' }, { includeNormalize: false, bodyColor: '#333' }, { overrideStyles: () => ({ p: { color: '' } }) }]
+// The last option set's toString() throws (a ";" in a color; review Y1).
+const OPTIONS = [{}, { baseFontSize: '18px' }, { includeNormalize: false, bodyColor: '#333' }, { overrideStyles: () => ({ p: { color: 'a;b' } }) }]
 const FAILS = 3
 type Call = 0 | 1 | 2 | 3
 type Child = 'meta' | 'link' | 'title' | 'stale'

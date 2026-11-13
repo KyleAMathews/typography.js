@@ -318,3 +318,21 @@ A tenth `/code-review high` (head d22610c) gave R1–R10 (ledger
 - **Gap check** (`css.js`, `fontFamily.js`, `client.js`, `GoogleFont.js`,
   the plugin): 459 mutants, 435 killed. Open: the plugin's design values,
   the `propTypes`, and one dead escape in `baseFont`, now removed.
+
+## Review round 11 (2026-11-12)
+
+An eleventh `/code-review high` (head b58ab0a) gave Q1–Q10 (ledger
+`/tmp/typography-review11-eval/ledger.md`).
+
+- **RED on b58ab0a** (red.txt): `styles: [700]` made GoogleFont throw;
+  `bodyColor: ''` made `toString()` throw.
+- **Fixes:** numeric Google font styles; `false` and `''` style values and
+  falsy plugins or overrides are none (engineer decision); `utils/configure.js`
+  holds what `typography()` and `src/client.js` share, so the client entry no
+  longer loads the stylesheet code; one `isVarEntry` question per entry.
+- **Found on the way:** the computed html check fails for a lone `monospace`
+  stack, which browsers size against their monospace default; excluded.
+- **Gap check** (`index.js`, `configure.js`, `client.js`, `compileStyles.js`,
+  `GoogleFont.js`, `fontFamily.js`): 282 mutants, 278 killed. One unused
+  return value was removed and one history added; the open ones are the
+  `appendChild` branch and the `propTypes`.

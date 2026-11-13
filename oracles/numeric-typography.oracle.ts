@@ -539,7 +539,7 @@ const requiredStates = [
 oracleProperty<History, ReturnType<typeof expectedMeasurements>, Plan>({
   id: "numerical-typography",
   owns: [
-    "packages/typography/src/index.js",
+    "packages/typography/src/index.js", "packages/typography/src/utils/configure.js",
     "packages/typography/src/utils/verticalRhythm.js", "packages/typography/src/utils/css.js",
     "packages/typography/src/utils/createStyles.js",
   ],
@@ -1372,7 +1372,7 @@ type GenericRhythmHistory = {
 }
 oracleProperty<GenericRhythmHistory, string>({
   id: "numerical-generic-rhythm-validity",
-  owns: ["packages/typography/src/index.js", "packages/typography/src/utils/verticalRhythm.js", "packages/typography/src/utils/css.js"],
+  owns: ["packages/typography/src/index.js", "packages/typography/src/utils/configure.js", "packages/typography/src/utils/verticalRhythm.js", "packages/typography/src/utils/css.js"],
   law: {
     statement:
       "N4 ordinary generic rhythm calls return finite signed spacing; extreme calls throw or return finite signed numerical CSS spacing. scale(1) in the same unit, and every font size and line height in toJSON(), are finite nonnegative CSS at ordinary bases, and otherwise throw or are such CSS.",
@@ -1803,7 +1803,7 @@ const invalidArbitrary = fc.oneof(
 oracleProperty<InvalidHistory, string>({
   id: "numerical-input-rejection",
   owns: [
-    "packages/typography/src/index.js",
+    "packages/typography/src/index.js", "packages/typography/src/utils/configure.js",
     "packages/typography/src/utils/verticalRhythm.js", "packages/typography/src/utils/css.js",
     "packages/typography/src/utils/createStyles.js",
   ],
@@ -2056,7 +2056,7 @@ const owesResult = (plan: ExtremeHistory) =>
   plan.lineHeight >= 0.5 && plan.base * 2 ** plan.position <= OWED_MAX_PIXELS
 oracleProperty<ExtremeHistory, string>({
   id: "numerical-result-validity",
-  owns: ["packages/typography/src/index.js", "packages/typography/src/utils/verticalRhythm.js", "packages/typography/src/utils/css.js"],
+  owns: ["packages/typography/src/index.js", "packages/typography/src/utils/configure.js", "packages/typography/src/utils/verticalRhythm.js", "packages/typography/src/utils/css.js"],
   law: {
     statement:
       "N4 finite numerical boundary calls either throw or return finite nonnegative scale measurements whose line height covers the font size (N6). A call with a font size up to 1e300px and a line height of 0.5 or more returns base × 2^position (N2).",
@@ -2497,7 +2497,7 @@ function closeRounded(actual: number, expected: number, unit: string, floor: boo
 
 oracleProperty<HelperHistory, HelperExpected>({
   id: "numerical-helper-units",
-  owns: ["packages/typography/src/index.js", "packages/typography/src/utils/verticalRhythm.js", "packages/typography/src/utils/css.js"],
+  owns: ["packages/typography/src/index.js", "packages/typography/src/utils/configure.js", "packages/typography/src/utils/verticalRhythm.js", "packages/typography/src/utils/css.js"],
   law: {
     statement:
       "N7 rhythm(lines, fontSize, offset) is lines × the base line height − offset, and adjustFontSizeTo(size, lines, fromSize) gives size and a line height of the lines, in the rhythm unit, converted by CSS Values 4: rem of the base; em and % of the parent size; ex as 0.5em; absolute units exact; an em or ex line height of the element's own size; 5 decimals, px rhythm floored. N6: with lines auto, the line height is whole half lines and covers the font size.",
@@ -2921,7 +2921,7 @@ oracleProperty<HelperHistory, HelperExpected>({
 type MathHistory = { call: MathCall }
 oracleProperty<MathHistory, { written: string } | { throws: true }>({
   id: "numerical-heading-line-height-math",
-  owns: ["packages/typography/src/index.js", "packages/typography/src/utils/css.js"],
+  owns: ["packages/typography/src/index.js", "packages/typography/src/utils/configure.js", "packages/typography/src/utils/css.js"],
   law: {
     statement:
       "N5 a headerLineHeight that is a CSS Values 4 math function of a type line-height accepts (number, length, percentage), or that holds a var() reference or a function the grammar does not know, is written to h1–h6 as given; N4 any other math text makes typography() throw an error naming headerLineHeight.",

@@ -145,7 +145,7 @@ oracleProperty<History, Expected, Plan>({
   law: {
     ...LAW,
     limits:
-      'Read by Chrome (installed Chrome, via playwright-core). For a stack with var(), Chrome only shows that the declaration survives; the list is read by the reader. Safari and Firefox are not checked. Otherwise the limits of typography-font-family (font-family.oracle.ts).',
+      'Read by Chrome (installed Chrome, via playwright-core). For a stack with var(), Chrome only shows that the declaration survives; the list is read by the reader. The computed base size is not judged for a lone monospace stack, which browsers size against their monospace default. Safari and Firefox are not checked. Otherwise the limits of typography-font-family (font-family.oracle.ts).',
   },
   histories: {
     arbitrary: historyArbitrary(),
@@ -162,6 +162,11 @@ oracleProperty<History, Expected, Plan>({
   check: (plan: Plan, trace: ReadonlyArray<Observation>, expected: Expected) => {
     const judged = check(plan, trace, expected)
     if (judged !== pass || 'throws' in expected) return judged
+    // A stack that is the generic monospace alone sizes against the
+    // browser's monospace default (13px in Chrome), not 16px: a browser
+    // behavior, the same in v0.16, and outside this law.
+    const body = expected.body
+    if (body.length === 1 && 'generic' in body[0] && body[0].generic === 'monospace') return pass
     return differs('html computed at 18px', L1, trace.find((o) => o.checkpoint === 'html computed at 18px')?.value, { fontSize: '18px', lineHeight: '26.1px' }, 'the stack changed the computed base size or line height') ?? pass
   },
   reached,

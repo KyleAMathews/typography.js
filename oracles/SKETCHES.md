@@ -839,3 +839,11 @@ A sixth `/code-review high` (head 66f851e) gave 10 findings (W1–W10, ledger
   `calc(auto / 2)`. The code plugin pads with 0 for `auto`.
 - **Y3 (my call, under the v0.16 rule):** `null` plugins and overrides are
   none, as in v0.16. Other non-function values still throw.
+
+### Decisions (round 11, 2026-11-12)
+
+- **Q2/Q3: "Treat like null".** A `false` or `''` style value writes no
+  declaration, as `null` does, so `{ color: isDark && 'white' }` works; a
+  custom property's `''` is still its empty value. A falsy `plugins`,
+  `overrideStyles`, or `overrideThemeStyles` (`null`, `false`, `''`, `0`)
+  is none. Other non-CSS values still throw.

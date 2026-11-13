@@ -47,9 +47,9 @@ const item = (entry: string) => {
   if (genericFamilies.indexOf(word) !== -1) return word
   // A vendor keyword (WebKit), and a valid unquoted family name.
   if (entry === "-apple-system") return entry
-  // Passed through, with each "<" escaped (law S1 L3).
-  const escaped = escapeLessThan(entry, false)
-  if (isVarEntry(escaped)) return escaped
+  // Passed through, with each "<" escaped (law S1 L3). baseFont() asks the
+  // same question of the same entry.
+  if (isVarEntry(entry)) return escapeLessThan(entry, false)
   return quote(entry)
 }
 

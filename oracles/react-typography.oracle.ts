@@ -50,7 +50,7 @@ import typography from '../packages/typography/src/index.js'
 const S8a = 'S8a TypographyStyle embeds toString()'
 const S8b = 'S8b GoogleFont requests each family with its styles'
 
-type Font = { name: string; styles: Array<string> | undefined }
+type Font = { name: string; styles: Array<string | number> | undefined }
 type History = {
   googleFonts: Array<Font> | null | undefined
   includeNormalize: boolean
@@ -60,11 +60,12 @@ type History = {
 // Names as Google Fonts lists them, and names that a raw query would change:
 // "&" and "#" end the value, "+" reads as a space, "%" starts an escape.
 const NAMES = ['Open Sans', 'Open+Sans', 'Roboto', 'Montserrat', 'Source Code Pro', 'Font & Co', 'A+B Sans', 'Hash #1', '100% Sans', 'Ünïcödé', "O'Reilly", 'Fira  Sans', 'Name=Value']
-const STYLES = ['400', '700', '400italic', '700i', '300', 'bold', '100;200']
+// A number is a style too, as design-tools writes it (review Q1).
+const STYLES = ['400', '700', '400italic', '700i', '300', 'bold', '100;200', 700, 400]
 const font = fc.record({
   name: fc.constantFrom(...NAMES),
   styles: fc.oneof(
-    { weight: 4, arbitrary: fc.array(fc.constantFrom(...STYLES), { minLength: 1, maxLength: 3 }) },
+    { weight: 4, arbitrary: fc.array(fc.constantFrom<string | number>(...STYLES), { minLength: 1, maxLength: 3 }) },
     { weight: 1, arbitrary: fc.constantFrom<Array<string> | undefined>(undefined, []) },
   ),
 })
@@ -139,7 +140,7 @@ const withMarkup = (trace: ReadonlyArray<Observation>, f: (markup: string) => st
 
 oracleProperty<History, Expected>({
   id: 'react-typography',
-  owns: ['packages/react-typography/src/GoogleFont.js', 'packages/react-typography/src/TypographyStyle.js', 'packages/typography/src/index.js'],
+  owns: ['packages/react-typography/src/GoogleFont.js', 'packages/react-typography/src/TypographyStyle.js', 'packages/typography/src/index.js', 'packages/typography/src/utils/configure.js'],
   law: {
     statement: `${S8a}: <style id="typography.js"> holding toString() as is. ${S8b}: options.googleFonts as given, or [] when not given; nothing without fonts; otherwise one stylesheet link to fonts.googleapis.com/css whose only query parameter, family, decodes to each name with ":" and its styles joined by ",", fonts joined by "|", and a font without styles as its name alone.`,
     authority: 'README (React.js helper components); URL Standard (URL parsing, application/x-www-form-urlencoded); Google Fonts CSS API v1 (family=Name:styles|Name); engineer decisions 2026-11-12 (S8 sketch; coverage in this PR).',
@@ -149,11 +150,12 @@ oracleProperty<History, Expected>({
     arbitrary,
     runs: 100,
     fixedSeeds: [20261112],
-    states: ['no fonts', 'a name a raw query changes', 'a font without styles', 'null googleFonts', 'several fonts'],
+    states: ['no fonts', 'a name a raw query changes', 'a font without styles', 'null googleFonts', 'several fonts', 'a numeric style'],
     constructed: [
       { name: 'a name with "&"', enters: ['a name a raw query changes'], build: (h) => ({ ...h, googleFonts: [{ name: 'Font & Co', styles: ['400'] }] }) },
       { name: 'a font without styles', enters: ['a font without styles'], build: (h) => ({ ...h, googleFonts: [{ name: 'Roboto', styles: undefined }] }) },
       { name: 'null googleFonts', enters: ['null googleFonts', 'no fonts'], build: (h) => ({ ...h, googleFonts: null }) },
+      { name: 'a numeric style (Q1)', enters: ['a numeric style'], build: (h) => ({ ...h, googleFonts: [{ name: 'Open Sans', styles: [700] }] }) },
       { name: 'two fonts', enters: ['several fonts'], build: (h) => ({ ...h, googleFonts: [{ name: 'Open Sans', styles: ['400', '700'] }, { name: 'Montserrat', styles: ['700'] }] }) },
     ],
     fixed: [
@@ -166,7 +168,8 @@ oracleProperty<History, Expected>({
     const fonts = plan.googleFonts ?? []
     return [
       ...(fonts.length === 0 ? ['no fonts'] : []),
-      ...(fonts.some((f) => /[&#+%=]/.test(f.name) || f.styles?.some((s) => /[;]/.test(s))) ? ['a name a raw query changes'] : []),
+      ...(fonts.some((f) => /[&#+%=]/.test(f.name) || f.styles?.some((s) => /[;]/.test(String(s)))) ? ['a name a raw query changes'] : []),
+      ...(fonts.some((f) => f.styles?.some((s) => typeof s === 'number')) ? ['a numeric style'] : []),
       ...(fonts.some((f) => !f.styles || f.styles.length === 0) ? ['a font without styles'] : []),
       ...(plan.googleFonts === null ? ['null googleFonts'] : []),
       ...(fonts.length > 1 ? ['several fonts'] : []),

@@ -44,8 +44,9 @@ const compileStyles = styles =>
       }
       stylesStr += `${html(selector)}{`
       each(ruleSet, (value, property) => {
-        // null removes a declaration (engineer decision 2026-11-12).
-        if (value === null || value === undefined) return
+        // null removes a declaration, and so do false and "" outside a custom
+        // property, as in `cond && value` (engineer decisions 2026-11-12).
+        if (value == null || value === false || (value === "" && property.slice(0, 2) !== "--")) return
         // A plain object is a nested rule (an array or a function is not a
         // CSS value).
         if (isPlainObject(value)) {
