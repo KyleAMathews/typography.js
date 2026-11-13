@@ -1,7 +1,8 @@
 /*
-Two promises that only a browser can judge: what `injectStyles()` does to a
-document (S7), and whether the browser keeps every declaration typography.js
-writes (Q4b). Both run in Chrome through playwright-core.
+Three promises that only a browser can judge: what `injectStyles()` does to
+a document (S7), whether the browser keeps every declaration typography.js
+writes (Q4b), and whether a value typography.js writes stays inside its
+declaration (S4). All run in Chrome through playwright-core.
 
 ```js
 typography(options).injectStyles()
@@ -10,6 +11,8 @@ typography(other).injectStyles()
   // → the same element, now holding other's toString(); nothing else moves
 typography(deYoung).toJSON()['h4,h5,h6'].textTransformation
   // → was written as "text-transformation: uppercase", which no browser reads
+typography({ bodyColor: '\\75 rl(a b "x)" )' }).toString()
+  // → throws: an escaped url( is still a url token, and this one is bad
 ```
 
 S7. `injectStyles()` (README, Javascript usage: "insert styles directly into
@@ -26,6 +29,14 @@ this repository, and the code plugin, is valid CSS in Chrome:
 `CSS.supports(property, value)` holds. Every rule's selector list and every
 @media prelude parses. A vendor prefix of another engine (-moz-, -ms-, -o-)
 is that engine's to judge (engineer decision 2026-11-12, Q4b).
+S4. For every value built from the pieces that open or close a string, a
+comment, a bracket, or a url token (`url(` in any spelling, `\75 rl(`
+included), escapes, ";", "!", "{", "}", and "</": a value that the shared
+safety reader (`css-value-safety.ts`) calls unsafe makes `toString()` throw a
+RangeError. Any other is written, and Chrome reads `.oracle-value{…}` with at
+most one declaration and `.oracle-after{color:red}` intact, and HTML ends the
+`<style>` where the stylesheet ends. Reviews found this class one spelling at
+a time (W1, W5, X2, R6, T1, T2); the pieces generate them all.
 
 The S7 driver runs production's `injectStyles()` in Node against a bridge
 to Chrome's document: each read it makes (`getElementById`, `head`,
@@ -33,7 +44,8 @@ to Chrome's document: each read it makes (`getElementById`, `head`,
 property set, `insertBefore`, `appendChild`) is replayed in the page, which
 then holds the real result. Any other read throws, so a change to what the
 method touches fails loudly. The S7 model predicts the head's children from the plan alone. The Q4b
-check reads `toJSON()` and asks Chrome about each declaration.
+check reads `toJSON()` and asks Chrome about each declaration. The S4
+model is the safety reader; Chrome judges every value it calls safe.
 
 Limits: one browser (Chrome). normalize.css (typography-normalize), which
 typography.js includes as written, is not judged. S7 heads hold meta, link,
@@ -47,6 +59,7 @@ import { differs, oracleProperty, pass, violation } from '@tanstack/oracles'
 import type { Observation } from '@tanstack/oracles'
 import typography from '../packages/typography/src/index.js'
 import codePlugin from '../packages/typography-plugin-code/src/index.js'
+import { isAbsent, isSafeText } from './css-value-safety'
 
 const browser = await chromium.launch({ channel: 'chrome' })
 const page = await browser.newPage()
@@ -445,5 +458,145 @@ oracleProperty<ValidityHistory, { rejects: Array<string> }>({
   },
   calibrations: [
     { name: 'a misspelled property kept', law: Q4B, corrupt: (trace) => trace.map((o) => (o.checkpoint === 'Chrome rejects' ? { ...o, value: ['h4 { text-transformation: uppercase }'] } : o)) },
+  ],
+})
+
+// ---------------------------------------------------------------------------
+// S4 in the browser: a written value stays inside its declaration.
+// ---------------------------------------------------------------------------
+
+const S4 = 'S4 a written value stays inside its declaration'
+// The pieces a value is built from: what opens or closes a string, a
+// comment, a bracket, or a url token (in any spelling), what ends a
+// declaration or a rule, escapes, "<" before "/", and plain text. A value is
+// up to 12 of them, in any order (reviews W1, W5, X2, R6, T1, T2).
+const PIECES = ['a', 'red', '1px', ' ', '\n', ';', '!', 'important', ':', '{', '}', '(', ')', '[', ']', '"', "'", '\\', '\\\n', '\\75 ', '\\3b ', '/*', '*/', '/', '*', 'url(', 'URL(', '\\75 rl(', 'u\\rl(', 'var(', '--a', ',', '<', '</', 'style>', '#'] as const
+type Piece = (typeof PIECES)[number]
+type BreakoutHistory = { pieces: Array<Piece>; custom: boolean }
+const valueOf = (plan: BreakoutHistory) => plan.pieces.join('')
+const VALUE = '.oracle-value'
+const AFTER = '.oracle-after'
+
+// The model: the shared safety reader decides whether the value is written
+// (S4, Q4a), absent (Q2, T5), or rejected with a RangeError.
+const breakoutModel = (plan: BreakoutHistory) => {
+  const property = plan.custom ? '--x' : 'color'
+  const value = valueOf(plan)
+  return isAbsent(value, property) ? 'absent' : isSafeText(value, plan.custom) ? 'written' : 'throws'
+}
+
+// In the page: the rules Chrome reads from the text, and whether HTML ends a
+// <style> holding it where the text ends.
+function readBreakout(css: string) {
+  const sheet = new CSSStyleSheet()
+  sheet.replaceSync(css)
+  const rules = [...sheet.cssRules] as Array<CSSStyleRule>
+  const last = rules[rules.length - 1]
+  const previous = rules[rules.length - 2]
+  const doc = new DOMParser().parseFromString(`<style>${css}</style><b id="after"></b>`, 'text/html')
+  return {
+    lastSelector: last?.selectorText,
+    lastColor: last?.style?.getPropertyValue('color'),
+    previousSelector: previous?.selectorText,
+    previousDeclarations: previous?.style?.length,
+    styleHoldsText: doc.querySelectorAll('style').length === 1 && doc.querySelector('style')?.textContent === css && !!doc.getElementById('after'),
+  }
+}
+
+async function breakoutDriver(plan: BreakoutHistory, observe: (checkpoint: string, value: unknown) => void) {
+  const property = plan.custom ? '--x' : 'color'
+  let css: string
+  try {
+    css = typography({ includeNormalize: false, overrideStyles: () => ({ [VALUE]: { [property]: valueOf(plan) }, [AFTER]: { color: 'red' } }) }).toString()
+  } catch (error) {
+    observe('toString()', { threw: error instanceof RangeError ? 'RangeError' : String(error) })
+    return
+  }
+  observe('toString()', { threw: false, holdsValue: css.includes(`${VALUE}{${property}:`) })
+  observe('Chrome', await page.evaluate(readBreakout, css))
+}
+
+function breakoutCheck(_plan: BreakoutHistory, trace: ReadonlyArray<Observation>, expected: ReturnType<typeof breakoutModel>) {
+  const written = valueAt(trace, 'toString()') as { threw: string | false; holdsValue?: boolean }
+  if (expected === 'throws') return differs('toString()', S4, written.threw, 'RangeError', 'an unsafe value was not rejected with a RangeError') ?? pass
+  if (written.threw) return violation('toString()', 'a safe value threw', S4, { actual: written.threw })
+  const intact = differs('toString()', S4, written.holdsValue, expected === 'written', expected === 'written' ? 'the value was not written' : 'an empty value was written')
+  if (intact) return intact
+  // Chrome reads the value's rule, with one declaration at most, and the
+  // rule after it intact; HTML ends the <style> where the text ends.
+  return (
+    differs('Chrome', S4, valueAt(trace, 'Chrome'), {
+      lastSelector: AFTER,
+      lastColor: 'red',
+      previousSelector: VALUE,
+      previousDeclarations: (valueAt(trace, 'Chrome') as { previousDeclarations: number }).previousDeclarations <= 1 ? (valueAt(trace, 'Chrome') as { previousDeclarations: number }).previousDeclarations : 1,
+      styleHoldsText: true,
+    }, 'the value broke out of its declaration') ?? pass
+  )
+}
+
+const BREAKOUT_STATES = ['a comment', 'an escape', 'a string', 'a url( spelling', 'a bracket', 'written', 'rejected', 'a custom property'] as const
+const breakoutReached = (plan: BreakoutHistory) => {
+  const value = valueOf(plan)
+  const expected = breakoutModel(plan)
+  return [
+    ...(value.includes('/*') ? ['a comment'] : []),
+    ...(value.includes('\\') ? ['an escape'] : []),
+    ...(/["']/.test(value) ? ['a string'] : []),
+    ...(plan.pieces.some((p) => /rl\($/i.test(p)) ? ['a url( spelling'] : []),
+    ...(/[{}()[\]]/.test(value) ? ['a bracket'] : []),
+    ...(expected === 'written' ? ['written'] : []),
+    ...(expected === 'throws' ? ['rejected'] : []),
+    ...(plan.custom ? ['a custom property'] : []),
+  ]
+}
+
+oracleProperty<BreakoutHistory, ReturnType<typeof breakoutModel>>({
+  id: 'typography-value-breakout',
+  owns: ['packages/typography/src/utils/compileStyles.js', 'packages/typography/src/utils/css.js'],
+  law: {
+    statement: `${S4}: for every value built from strings, comments, brackets, url( in any spelling, escapes, ";", "!", "{", "}", and "</": a value the safety reader calls unsafe makes toString() throw a RangeError; any other is written, and Chrome reads its rule with at most one declaration and the rule after it intact, and HTML ends the <style> where the stylesheet ends.`,
+    authority: 'CSS Syntax 3 §4.3 (tokens), §5.4 (rules and declarations); CSS Variables 1 §2–3; HTML (a style element ends at "</style"); engineer decisions 2026-11-12 (Q4a, Q2) and 2026-11-13 (T5).',
+    limits: 'Values of up to 12 pieces from a fixed list, in a color or a custom property. Chrome only. The safety reader is the model, and Chrome is its judge only for values it calls safe.',
+  },
+  histories: {
+    arbitrary: fc.record({ pieces: fc.array(fc.constantFrom(...PIECES), { maxLength: 12 }), custom: fc.boolean() }),
+    runs: 100,
+    fixedSeeds: [20261113],
+    states: [...BREAKOUT_STATES],
+    constructed: [
+      { name: 'a comment that ends at its first */ (T1)', enters: ['a comment', 'a bracket', 'rejected'], build: () => ({ pieces: ['red', ' ', '/*', ' ', '*/', ' ', '}', ' ', '*/', ' ', '!', 'important'], custom: false }) },
+      { name: 'an escaped bad url (T2)', enters: ['an escape', 'a url( spelling', 'a string', 'a bracket', 'rejected'], build: () => ({ pieces: ['\\75 rl(', 'a', ' ', 'a', '"', ')', '"', ')'], custom: false }) },
+      { name: 'a quoted url with ";" (a nearby safe case)', enters: ['a url( spelling', 'a string', 'a bracket', 'written'], build: () => ({ pieces: ['url(', '"', ';', '"', ')'], custom: false }) },
+      { name: 'an escaped space (found by the sweep)', enters: ['an escape', 'written'], build: () => ({ pieces: ['a', '\\', ' '], custom: false }) },
+      { name: 'an escaped space before !important', enters: ['an escape', 'written'], build: () => ({ pieces: ['a', '\\', ' ', '!', 'important'], custom: false }) },
+      { name: 'a closer of the wrong kind (found by the sweep)', enters: ['a bracket', 'a url( spelling', 'rejected'], build: () => ({ pieces: ['(', 'url(', ')', ']'], custom: false }) },
+      { name: 'a block in a custom property', enters: ['a bracket', 'a custom property', 'written'], build: () => ({ pieces: ['{', 'a', ':', 'red', ';', '}'], custom: true }) },
+    ],
+    fixed: [
+      { name: 'W1: a lone backslash at the end', history: { pieces: ['red', '\\'], custom: false } },
+      { name: 'R6: ";" inside a block', history: { pieces: ['(', 'a', ';', 'a', ')'], custom: false } },
+      { name: 'Y2: "</" in a string', history: { pieces: ['"', '</', 'style>', '"'], custom: false } },
+    ],
+  },
+  model: breakoutModel,
+  reached: breakoutReached,
+  driver: breakoutDriver,
+  check: breakoutCheck,
+  calibrations: [
+    {
+      name: 'a value that swallows the next rule',
+      law: S4,
+      corrupt: (trace, plan) =>
+        breakoutModel(plan) !== 'written'
+          ? undefined
+          : trace.map((o) => (o.checkpoint === 'Chrome' ? { ...o, value: { ...(o.value as object), lastSelector: VALUE } } : o)),
+    },
+    {
+      name: 'an unsafe value written',
+      law: S4,
+      corrupt: (trace, plan) =>
+        breakoutModel(plan) !== 'throws' ? undefined : trace.map((o) => (o.checkpoint === 'toString()' ? { ...o, value: { threw: false, holdsValue: true } } : o)),
+    },
   ],
 })

@@ -400,3 +400,30 @@ A fourteenth `/code-review high` (head c8d7b41) gave U1–U9 (ledger
   `url(` history added. The open ones are design values (Q4b), the
   `appendChild` branch, and scans that a mutant makes loop forever (a CLI
   limit).
+
+## The value-breakout family (2026-11-13)
+
+Law S4 (adopted; strengthened, not changed): a value the safety reader calls
+unsafe makes `toString()` throw, and any other is written and stays inside
+its declaration. Reviews found this class one spelling at a time (W1, W5,
+X2, R6, T1, T2). `typography-value-breakout` (`stylesheet.chrome.oracle.ts`)
+now generates it: values of up to 12 pieces that open or close strings,
+comments, brackets, and url tokens in any spelling, with escapes, ";", "!",
+"{", "}", and "</". The model is the shared safety reader
+(`oracles/css-value-safety.ts`); Chrome judges every value it calls safe
+(the rule after it intact, one declaration at most, the `<style>` ending
+where the text ends).
+
+- **Production passes**, and both calibrations fail their law.
+- **The original defects, as mutants, fail it:** `css.js` from round 12
+  (f5df01e) fails at `*/*/!important` (the T1 family, a neighbor no review
+  reported); `css.js` from round 11 (a2cdafc) fails at `\75 rl(a"")`
+  (the T2 family). Both are in `/tmp/typography-review14-eval/`.
+- **Neighbors found by a 50× sweep:** an escaped space (`\ `) threw in
+  production (RED, fixed: `compileStyles` checks the untrimmed text); the
+  model closed a block with a closer of another kind and read a line break
+  in a string as safe (both model errors, fixed to CSS Syntax 3 §4.3.5 and
+  §8.2). Three further 50× sweeps are clean.
+- **Gap check** (`css.js`, `compileStyles.js`): 513 mutants, 508 killed; the
+  five left make the url scan loop forever (a CLI limit).
+- **U4 RED by oracle:** `css.js` from c8d7b41 throws on `v\61r(--lh)`.

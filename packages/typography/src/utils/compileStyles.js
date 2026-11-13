@@ -28,8 +28,10 @@ const html = (text: string) => escapeLessThan(text, true)
 const cssValue = (selector: string, property: string, value: mixed) => {
   if (typeof value === "number" && isFinite(value)) return String(value)
   const custom = property.slice(0, 2) === "--"
-  const body = typeof value === "string" ? trimSpace(withoutImportant(value)) : ""
-  if (typeof value !== "string" || (!body && !custom) || !isDeclarationValue(body, custom)) {
+  // The value before its !important, untrimmed: trimming would strip an
+  // escaped space ("\\ ") and leave a lone backslash.
+  const body = typeof value === "string" ? withoutImportant(value) : ""
+  if (typeof value !== "string" || (!trimSpace(body) && !custom) || !isDeclarationValue(body, custom)) {
     throw new RangeError(`Invalid CSS value for ${selector} ${property}`)
   }
   return html(value)
