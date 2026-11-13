@@ -146,7 +146,8 @@ const optionalNumber = (min: number, max: number) =>
 
 // Heading line heights written as given (review V3). Math functions have
 // their own grammar in numerical-heading-line-height-math.
-const HEADER_VALUES = ["calc(1.2 * 1)", "env(safe-area-inset-top, 1.2)", "1.2ex"] as const
+// Comments may sit around a trailing !important (review P5's scan).
+const HEADER_VALUES = ["calc(1.2 * 1)", "env(safe-area-inset-top, 1.2)", "1.2ex", "1.2 /* c */ !important", "1.2/**/!important", "1.2 /**/!/**/important"] as const
 
 // These are measurement bounds, not a narrower adoption of the laws. Each
 // coordinate contributes separately: base reveals truncation, ratio/position
@@ -1707,7 +1708,12 @@ const INVALID_HEADER_VALUES: unknown[] = [-1, NaN, Infinity, null, true, "x", "-
   // Gap check (review round 6): an unknown function that does not close.
   "sibling-index(1", "calc(sibling-index(1)",
   // Review Z4: functions that are not numbers or lengths.
-  "url(x)", "rgb(1,2,3)", "calc(rgb(1, 2, 3) * 1)", "linear-gradient(red, blue)", "URL(x)"]
+  "url(x)", "rgb(1,2,3)", "calc(rgb(1, 2, 3) * 1)", "linear-gradient(red, blue)", "URL(x)",
+  // Review P5: a long run of white space, which a backtracking search for a
+  // trailing !important takes quadratic time over (minutes at this length).
+  " ".repeat(200000) + "x", " /**/".repeat(40000) + "x",
+  // A comment and no value before !important, and a comment left open.
+  "/**/ !important", "1.2 /* !important", "1.2 */ !important"]
 // A base font size: a positive length that converts to px, or a number (px).
 const INVALID_BASES: unknown[] = ["0px", "-1px", "", "oops", "16pxoops", "1.2.3px", "16vw", null, true, NaN, 0, -16, "1ex"]
 const invalidConfiguration = fc.constantFrom(...INVALID_CONFIGURATION)
@@ -1843,7 +1849,7 @@ oracleProperty<InvalidHistory, string>({
         build: () => ({ kind: "line height range", value }),
       })),
       ...INVALID_HEADER_VALUES.map((value) => ({
-        name: `invalid headerLineHeight: ${JSON.stringify(value)}`,
+        name: `invalid headerLineHeight: ${JSON.stringify(value).slice(0, 60)}`,
         enters: ["invalid configuration"],
         build: () => ({ kind: "headerLineHeight", value }),
       })),
@@ -2975,6 +2981,7 @@ oracleProperty<MathHistory, { written: string } | { throws: true }>({
       { name: "a strategy on a function other than round()", history: { call: { kind: "fn", name: "max", strategy: "up", pad: false, args: [{ kind: "num", n: 1, unit: "" }] } } },
       { name: "round(up) with no value", history: { call: { kind: "fn", name: "round", strategy: "up", pad: false, args: [] } } },
       { name: "pi-var( is one function token, named pi-var", history: { call: { kind: "fn", name: "calc", strategy: undefined, pad: false, args: [{ kind: "op", op: "-", space: "none", left: { kind: "const", name: "pi" }, right: { kind: "var" } }] } } },
+      { name: "-infinity-( is one function token, named -infinity- (random seed)", history: { call: { kind: "fn", name: "exp", strategy: undefined, pad: false, args: [{ kind: "op", op: "-", space: "none", left: { kind: "const", name: "-infinity" }, right: { kind: "group", pad: false, inner: { kind: "num", n: 1, unit: "deg" } } }] } } },
       { name: "pi -var( is pi beside a function named -var", history: { call: { kind: "fn", name: "calc", strategy: undefined, pad: false, args: [{ kind: "op", op: "-", space: "left", left: { kind: "const", name: "pi" }, right: { kind: "var" } }] } } },
       { name: "e-sin( is one function token, named e-sin", history: { call: { kind: "fn", name: "calc", strategy: undefined, pad: false, args: [{ kind: "op", op: "-", space: "none", left: { kind: "const", name: "e" }, right: { kind: "fn", name: "sin", strategy: undefined, pad: false, args: [{ kind: "num", n: 1, unit: "" }] } }] } } },
       { name: "a var() inside an unknown function", history: { call: { kind: "fn", name: "sibling-index", strategy: undefined, pad: false, args: [{ kind: "var" }] } } },

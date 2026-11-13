@@ -847,3 +847,11 @@ A sixth `/code-review high` (head 66f851e) gave 10 findings (W1–W10, ledger
   custom property's `''` is still its empty value. A falsy `plugins`,
   `overrideStyles`, or `overrideThemeStyles` (`null`, `false`, `''`, `0`)
   is none. Other non-CSS values still throw.
+
+### Decisions (round 12, 2026-11-13)
+
+- **P1: "v0.16 passthrough".** GoogleFont writes the URL as v0.16 did: each
+  name with its spaces as "+", and names and styles otherwise as given, so a
+  style such as `'700&display=swap'` keeps passing its query parameter. This
+  replaces round 6's encoding (S8b). The fixes for a font without styles,
+  numeric styles, and `googleFonts: null` stay.

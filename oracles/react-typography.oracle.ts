@@ -8,36 +8,36 @@ weights. It renders both components to static markup with react-dom/server.
 <TypographyStyle typography={t} />   // → <style id="typography.js">{t.toString()}</style>
 <GoogleFont typography={typography({ googleFonts: [{ name: 'Open Sans', styles: ['400', '700'] }] })} />
                                      // → <link href="//fonts.googleapis.com/css?family=Open+Sans:400,700" …/>
-<GoogleFont typography={typography({ googleFonts: [{ name: 'Font & Co', styles: ['400'] }] })} />
-                                     // → family=Font+%26+Co:400 (an unencoded "&" would end the family value)
+<GoogleFont typography={typography({ googleFonts: [{ name: 'Roboto', styles: ['400', '700&display=swap'] }] })} />
+                                     // → family=Roboto:400,700&display=swap (as v0.16 wrote it)
 ```
 
-Why does this need a law? The family names go into a URL's query. A name
-with "&", "#", "+", or "%" written as is changes what the query says: "&"
-ends the family value, "#" ends the query. A font without `styles` crashed
-rendering, and a `googleFonts` of null rendered nothing React accepts.
+Why does this need a law? A font without `styles` crashed rendering, a
+numeric style crashed it, and a `googleFonts` of null rendered nothing React
+accepts. The URL itself is v0.16's text: sites put query parameters such as
+`&display=swap` into a style, and no Google family name holds "&", "=",
+"#", or "%" (engineer decision 2026-11-12, review P1, which replaced round
+6's encoding).
 
 S8a. `TypographyStyle` renders exactly `<style id="typography.js">` holding
 `toString()`, unescaped (the style element is raw text, and S4 keeps "<" out
 of the stylesheet).
 S8b. `typography().options.googleFonts` is the option as given, or [] when it
 is not given (v0.16), as plugins that build their own links read it.
-`GoogleFont` renders nothing when `googleFonts` is empty, null, or not given. Otherwise it renders one `<link rel="stylesheet" type="text/css">`
-whose href, parsed by the URL Standard against https, is
-fonts.googleapis.com/css with one query parameter, `family`. Its value,
-decoded as application/x-www-form-urlencoded, lists each font in order,
-separated by "|": the name (a "+" in it read as a space, as v0.16 wrote it into the URL;
-review R3), then ":" and its styles separated by "," when it
-has any. A font without styles requests the name alone, which the Google
-Fonts CSS API serves in its default weight.
+`GoogleFont` renders nothing when `googleFonts` is empty, null, or not given.
+Otherwise it renders one `<link rel="stylesheet" type="text/css">` whose
+href is `//fonts.googleapis.com/css?family=` and then each font in order,
+separated by "|": the name with its spaces as "+", then ":" and its styles
+(numbers as written) separated by "," when it has any. A font without
+styles requests the name alone, which the Google Fonts CSS API serves in its
+default weight. The href parses, by the URL Standard, as the Google Fonts
+CSS API.
 
 The model reads the plan alone. The check reads the markup with an
 attribute reader of its own and the href with the WHATWG URL parser.
 
-Limits: names and styles with "|", ":", or ",", which the Google Fonts API
-reads as separators however they are encoded, are not generated. The
-stylesheet's content is S4's (stylesheet.oracle.ts); here it is only
-embedded.
+Limits: what Google Fonts serves for a name is not checked. The stylesheet's
+content is S4's (stylesheet.oracle.ts); here it is only embedded.
 */
 import fc from 'fast-check'
 import { createElement } from 'react'
@@ -61,7 +61,7 @@ type History = {
 // "&" and "#" end the value, "+" reads as a space, "%" starts an escape.
 const NAMES = ['Open Sans', 'Open+Sans', 'Roboto', 'Montserrat', 'Source Code Pro', 'Font & Co', 'A+B Sans', 'Hash #1', '100% Sans', 'Ünïcödé', "O'Reilly", 'Fira  Sans', 'Name=Value']
 // A number is a style too, as design-tools writes it (review Q1).
-const STYLES = ['400', '700', '400italic', '700i', '300', 'bold', '100;200', 700, 400]
+const STYLES = ['400', '700', '400italic', '700i', '300', 'bold', '100;200', 700, 400, '700&display=swap']
 const font = fc.record({
   name: fc.constantFrom(...NAMES),
   styles: fc.oneof(
@@ -78,14 +78,12 @@ const arbitrary: fc.Arbitrary<History> = fc.record({
   baseFontSize: fc.constantFrom('16px', '18px', '1.25rem'),
 })
 
-type Expected = { family: string | undefined }
+type Expected = { href: string | undefined }
 const model = (plan: History): Expected => {
   const fonts = plan.googleFonts ?? []
-  if (fonts.length === 0) return { family: undefined }
-  // A "+" in a name is a space: names written in the URL's own form
-  // ('Open+Sans') loaded in v0.16 (review R3); no Google family has a "+".
-  const name = (f: Font) => f.name.replace(/\+/g, ' ')
-  return { family: fonts.map((f) => (f.styles && f.styles.length > 0 ? `${name(f)}:${f.styles.join(',')}` : name(f))).join('|') }
+  if (fonts.length === 0) return { href: undefined }
+  const name = (f: Font) => f.name.split(' ').join('+')
+  return { href: `//fonts.googleapis.com/css?family=${fonts.map((f) => (f.styles && f.styles.length > 0 ? `${name(f)}:${f.styles.join(',')}` : name(f))).join('|')}` }
 }
 
 function driver(plan: History, observe: (checkpoint: string, value: unknown) => void) {
@@ -126,13 +124,14 @@ function check(plan: History, trace: ReadonlyArray<Observation>, expected: Expec
   const error = valueAt(trace, 'GoogleFont error')
   if (error) return violation('GoogleFont error', 'GoogleFont threw', S8b, { actual: error })
   const markup = String(valueAt(trace, 'GoogleFont'))
-  if (expected.family === undefined) return differs('GoogleFont', S8b, markup, '') ?? pass
+  if (expected.href === undefined) return differs('GoogleFont', S8b, markup, '') ?? pass
   const link = /^<link href="([^"]*)" rel="stylesheet" type="text\/css"\/>$/.exec(markup)
   if (!link) return violation('GoogleFont', 'the markup is not one stylesheet link', S8b, { actual: markup })
-  const url = new URL(decodeAttribute(link[1]), 'https://example.invalid/')
+  const href = decodeAttribute(link[1])
+  const url = new URL(href, 'https://example.invalid/')
   const where = differs('GoogleFont', S8b, `${url.host}${url.pathname}`, 'fonts.googleapis.com/css', 'the link is not the Google Fonts CSS API')
   if (where) return where
-  return differs('GoogleFont', S8b, [...url.searchParams.entries()], [['family', expected.family]], 'the query does not request the families') ?? pass
+  return differs('GoogleFont', S8b, href, expected.href, 'the href is not the families as v0.16 wrote them') ?? pass
 }
 
 const withMarkup = (trace: ReadonlyArray<Observation>, f: (markup: string) => string) =>
@@ -142,9 +141,9 @@ oracleProperty<History, Expected>({
   id: 'react-typography',
   owns: ['packages/react-typography/src/GoogleFont.js', 'packages/react-typography/src/TypographyStyle.js', 'packages/typography/src/index.js', 'packages/typography/src/utils/configure.js'],
   law: {
-    statement: `${S8a}: <style id="typography.js"> holding toString() as is. ${S8b}: options.googleFonts as given, or [] when not given; nothing without fonts; otherwise one stylesheet link to fonts.googleapis.com/css whose only query parameter, family, decodes to each name with ":" and its styles joined by ",", fonts joined by "|", and a font without styles as its name alone.`,
-    authority: 'README (React.js helper components); URL Standard (URL parsing, application/x-www-form-urlencoded); Google Fonts CSS API v1 (family=Name:styles|Name); engineer decisions 2026-11-12 (S8 sketch; coverage in this PR).',
-    limits: 'Names and styles from fixed lists, without "|", ":", or ",". Up to 3 fonts. The stylesheet content is S4\'s; here it is only embedded.',
+    statement: `${S8a}: <style id="typography.js"> holding toString() as is. ${S8b}: options.googleFonts as given, or [] when not given; nothing without fonts; otherwise one stylesheet link whose href is //fonts.googleapis.com/css?family= and each name (spaces as +) with ":" and its styles joined by ",", fonts joined by "|", as v0.16 wrote it; a font without styles is its name alone.`,
+    authority: 'README (React.js helper components); URL Standard (URL parsing); Google Fonts CSS API v1 (family=Name:styles|Name); v0.16 GoogleFont; engineer decisions 2026-11-12 (S8 sketch; coverage in this PR; review P1: v0.16 passthrough).',
+    limits: 'Names and styles from fixed lists. Up to 3 fonts. What Google Fonts serves is not checked. The stylesheet content is S4\'s; here it is only embedded.',
   },
   histories: {
     arbitrary,
@@ -155,6 +154,7 @@ oracleProperty<History, Expected>({
       { name: 'a name with "&"', enters: ['a name a raw query changes'], build: (h) => ({ ...h, googleFonts: [{ name: 'Font & Co', styles: ['400'] }] }) },
       { name: 'a font without styles', enters: ['a font without styles'], build: (h) => ({ ...h, googleFonts: [{ name: 'Roboto', styles: undefined }] }) },
       { name: 'null googleFonts', enters: ['null googleFonts', 'no fonts'], build: (h) => ({ ...h, googleFonts: null }) },
+      { name: 'a query parameter in a style (P1)', enters: ['a name a raw query changes'], build: (h) => ({ ...h, googleFonts: [{ name: 'Roboto', styles: ['400', '700&display=swap'] }] }) },
       { name: 'a numeric style (Q1)', enters: ['a numeric style'], build: (h) => ({ ...h, googleFonts: [{ name: 'Open Sans', styles: [700] }] }) },
       { name: 'two fonts', enters: ['several fonts'], build: (h) => ({ ...h, googleFonts: [{ name: 'Open Sans', styles: ['400', '700'] }, { name: 'Montserrat', styles: ['700'] }] }) },
     ],
@@ -168,7 +168,7 @@ oracleProperty<History, Expected>({
     const fonts = plan.googleFonts ?? []
     return [
       ...(fonts.length === 0 ? ['no fonts'] : []),
-      ...(fonts.some((f) => /[&#+%=]/.test(f.name) || f.styles?.some((s) => /[;]/.test(String(s)))) ? ['a name a raw query changes'] : []),
+      ...(fonts.some((f) => /[&#+%=]/.test(f.name) || f.styles?.some((s) => /[&#+%=;]/.test(String(s)))) ? ['a name a raw query changes'] : []),
       ...(fonts.some((f) => f.styles?.some((s) => typeof s === 'number')) ? ['a numeric style'] : []),
       ...(fonts.some((f) => !f.styles || f.styles.length === 0) ? ['a font without styles'] : []),
       ...(plan.googleFonts === null ? ['null googleFonts'] : []),
@@ -179,6 +179,7 @@ oracleProperty<History, Expected>({
   check,
   calibrations: [
     { name: 'spaces as %20 kept literal in the value', law: S8b, corrupt: (trace, plan) => (plan.googleFonts?.some((f) => f.name.includes(' ')) ? withMarkup(trace, (m) => m.replace(/\+/g, '%2B')) : undefined) },
+    { name: 'a query parameter in a style encoded (round 6)', law: S8b, corrupt: (trace, plan) => (plan.googleFonts?.some((f) => f.styles?.some((st) => String(st).includes('&'))) ? withMarkup(trace, (m) => m.replace(/&amp;display=/g, '%26display%3D')) : undefined) },
     { name: 'the last font dropped', law: S8b, corrupt: (trace, plan) => ((plan.googleFonts?.length ?? 0) > 1 ? withMarkup(trace, (m) => m.replace(/(%7C|\|)[^|"]*"/, '"')) : undefined) },
     { name: 'the style element escaped', law: S8a, corrupt: (trace) => trace.map((o) => (o.checkpoint === 'TypographyStyle' ? { ...o, value: String(o.value).replace(/"/g, '&quot;').replace('id=&quot;typography.js&quot;', 'id="typography.js"') } : o)) },
   ],

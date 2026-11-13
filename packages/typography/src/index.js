@@ -66,7 +66,7 @@ const typography = function (opts: OptionsType) {
   // 0) is none, as in v0.16, so `cond && plugin` works.
   if (
     options.plugins &&
-    !(Array.isArray(options.plugins) && options.plugins.every(p => typeof p === "function"))
+    !(Array.isArray(options.plugins) && Array.from(options.plugins).every(p => typeof p === "function"))
   ) {
     throw new TypeError("Invalid plugins: a list of functions")
   }

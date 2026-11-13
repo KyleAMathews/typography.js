@@ -125,7 +125,7 @@ type History = {
 }
 // null, false, '' and 0 are none (v0.16 skipped them; engineer decision
 // 2026-11-12, reviews Y3 and Q3); the others are mistakes.
-type Malformed = 'a string' | 'null' | 'false' | 'an empty string' | 'zero' | 'an object' | 'a list with a string'
+type Malformed = 'a string' | 'null' | 'false' | 'an empty string' | 'zero' | 'an object' | 'a list with a string' | 'a sparse list'
 const NONE: Array<Malformed> = ['null', 'false', 'an empty string', 'zero']
 
 const MEDIA = '@media (max-width:480px)'
@@ -133,12 +133,12 @@ const MEDIA = '@media (max-width:480px)'
 // !important. Unsafe ones break the rule, the stylesheet, or the <style>.
 // 'a {b}' and '' are safe for a custom property only (reviews W5, X8); '\\(a' holds an
 // escaped "(" that opens no block.
-const SAFE_VALUES: Array<Value> = ['red', '#123456', '1.5rem', 0, 12, 'calc(1em + 2px)', 'var(--x)', "'a;b}'", 'url(a.png)', 'red !important', 'inherit', 'var(--x, {a})', 'a {b}', '\\(a', '', 'red</style>', '"</p>"', '"<"', 'a\\</b', 'red !important /* x */', 'red ! /**/ important', '{a:b; c:d}', 'f(a;b)']
+const SAFE_VALUES: Array<Value> = ['red', '#123456', '1.5rem', 0, 12, 'calc(1em + 2px)', 'var(--x)', "'a;b}'", 'url(a.png)', 'red !important', 'inherit', 'var(--x, {a})', 'a {b}', '\\(a', '', 'red</style>', '"</p>"', '"<"', 'a\\</b', 'red !important /* x */', 'red ! /**/ important', '{a:b; c:d}', 'f(a;b)', '*/ !important']
 // 'a\\': a lone backslash at the end escapes the ";" after it (review W1).
 // An array or a function is not a CSS value (reviews Y5, Z5).
 const ARRAY_VALUE = ['a', 'b']
 const FUNCTION_VALUE = () => 1
-const UNSAFE_VALUES: Array<Value> = [ARRAY_VALUE, FUNCTION_VALUE, 'var(--x, a;b)', 'red}', 'a;b', 'red !importan', "'open", NaN, true, '!important', 'a\\', 'a /* b']
+const UNSAFE_VALUES: Array<Value> = [ARRAY_VALUE, FUNCTION_VALUE, 'var(--x, a;b)', '/**/ !important', 'red}', 'a;b', 'red !importan', "'open", NaN, true, '!important', 'a\\', 'a /* b']
 // Names that are not one CSS identifier break the rule or the <style>
 // (review X1).
 const UNSAFE_PROPERTIES = ['</style>', 'color;}body{background', '--x}', 'a b']
@@ -191,7 +191,7 @@ const arbitrary: fc.Arbitrary<History> = fc.record({
       weight: 1,
       arbitrary: fc.record({
         option: fc.constantFrom('plugins' as const, 'overrideStyles' as const, 'overrideThemeStyles' as const),
-        as: fc.constantFrom<Malformed>('a string', 'null', 'false', 'an empty string', 'zero', 'an object', 'a list with a string'),
+        as: fc.constantFrom<Malformed>('a string', 'null', 'false', 'an empty string', 'zero', 'an object', 'a list with a string', 'a sparse list'),
       }),
     },
   ),
@@ -376,6 +376,8 @@ function driver(plan: History, observe: (checkpoint: string, value: unknown) => 
       zero: 0,
       'an object': plan.malformed.option === 'plugins' ? { a: () => ({}) } : {},
       'a list with a string': plan.malformed.option === 'plugins' ? ['x'] : [() => ({})],
+      // A hole is not a function (review P4).
+      'a sparse list': [, () => ({})],
     }[plan.malformed.as],
   }
   try {
@@ -583,6 +585,7 @@ oracleProperty<History, ReturnType<typeof model>>({
       { name: 'a "</" in a string (Y2)', enters: ['a "</" in the text'], build: () => ({ ...CLEAN, overrideStyles: [{ media: false, selector: 'p', property: 'color', value: '"</p>"' }], overrideThemeStyles: undefined }) },
       { name: 'an array value (Y5)', enters: ['an unsafe value'], build: () => ({ ...CLEAN, overrideStyles: [{ media: false, selector: 'p', property: 'color', value: ARRAY_VALUE }], overrideThemeStyles: undefined }) },
       { name: 'null plugins (Y3)', enters: ['null plugins or overrides'], build: () => ({ ...CLEAN, malformed: { option: 'plugins', as: 'null' } }) },
+      { name: 'a sparse plugins list (P4)', enters: ['a malformed plugin option'], build: () => ({ ...CLEAN, malformed: { option: 'plugins', as: 'a sparse list' } }) },
       { name: 'plugins with a string in the list', enters: ['a malformed plugin option'], build: () => ({ ...CLEAN, malformed: { option: 'plugins', as: 'a list with a string' } }) },
       { name: 'false overrideStyles (Q3)', enters: ['null plugins or overrides'], build: () => ({ ...CLEAN, malformed: { option: 'overrideStyles', as: 'false' } }) },
       { name: 'a false value and an empty bodyColor (Q2)', enters: ['a falsy value'], build: () => ({ ...CLEAN, options: { ...CLEAN.options, bodyColor: '' }, overrideStyles: [{ media: false, selector: 'h1', property: 'color', value: false }] }) },
@@ -598,6 +601,9 @@ oracleProperty<History, ReturnType<typeof model>>({
       { name: 'an empty custom property (X8)', enters: ['a custom property', 'an empty value'], build: () => ({ ...CLEAN, overrideStyles: [{ media: false, selector: ':root', property: '--x-y', value: '' }], overrideThemeStyles: undefined }) },
       // Gap check (round 7): NaN alone, on a property and on a custom property.
       { name: 'NaN alone', enters: ['an unsafe value'], build: () => ({ ...CLEAN, overrideStyles: [{ media: false, selector: 'p', property: 'color', value: NaN }], overrideThemeStyles: undefined }) },
+      { name: 'a comment and no value before !important', enters: ['an unsafe value'], build: () => ({ ...CLEAN, overrideStyles: [{ media: false, selector: 'p', property: 'color', value: '/**/ !important' }] }) },
+      { name: 'a stray */ in a custom property', enters: ['a custom property'], build: () => ({ ...CLEAN, overrideStyles: [{ media: false, selector: ':root', property: '--x-y', value: '*/ !important' }] }) },
+      { name: 'an empty custom property that is important', enters: ['a custom property'], build: () => ({ ...CLEAN, overrideStyles: [{ media: false, selector: ':root', property: '--x-y', value: '!important' }] }) },
       { name: 'NaN on a custom property', enters: ['an unsafe value', 'a custom property'], build: () => ({ ...CLEAN, overrideStyles: [{ media: false, selector: ':root', property: '--x-y', value: NaN }], overrideThemeStyles: undefined }) },
       { name: 'a selector with a top-level {} block', enters: ['an unsafe selector'], build: () => ({ ...CLEAN, overrideStyles: [{ media: false, selector: 'p {x}', property: 'color', value: 'red' }], overrideThemeStyles: undefined }) },
       { name: 'plugins as a string (X5)', enters: ['a malformed plugin option'], build: () => ({ ...CLEAN, malformed: { option: 'plugins', as: 'a string' } }) },

@@ -336,3 +336,22 @@ An eleventh `/code-review high` (head b58ab0a) gave Q1–Q10 (ledger
   `GoogleFont.js`, `fontFamily.js`): 282 mutants, 278 killed. One unused
   return value was removed and one history added; the open ones are the
   `appendChild` branch and the `propTypes`.
+
+## Review round 12 (2026-11-13)
+
+A twelfth `/code-review high` (head a2cdafc) gave P1–P10 and found no
+high-severity bug (ledger `/tmp/typography-review12-eval/ledger.md`).
+
+- **RED on a2cdafc:** the encoded href lost `&display=swap` (red-react.txt);
+  a 200000-space `headerLineHeight` timed out (red-p5.txt; 7 s at 80000
+  spaces in p5-timing.txt).
+- **Fixes:** GoogleFont writes v0.16's URL text (engineer decision); a sparse
+  plugins list throws; the trailing `!important` is read from the last "!",
+  in linear time; design-tools reads a numeric-string ratio as its number.
+- **Model error found by a random seed:** `-infinity-(…)` is one function
+  token named `-infinity-`; the model now merges a constant with any
+  following "(" form. 300000 sampled trees then agree with production.
+- **Refuted:** padding `min(-1rem, 0px)` is valid in Chrome (math results
+  clamp), so the plugin's zero-padding rule needs no math case.
+- **Gap check** (`css.js`): 372 mutants, 371 killed; the last one makes the
+  comment scan loop forever (a CLI limit). One dead guard was removed.

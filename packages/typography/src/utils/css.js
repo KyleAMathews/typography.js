@@ -36,9 +36,24 @@ const string = `"(?:\\\\[^]|[^"\\\\\\n\\r\\f])*"|'(?:\\\\[^]|[^'\\\\\\n\\r\\f])*
 // White space and comments.
 export const blank = `(?:${ws}|${comment})`
 // A trailing !important (CSS Cascade 5 6.1), with the white space and
-// comments around its "!" and "important".
-const important = new RegExp(`${blank}*!${blank}*important${blank}*$`, "i")
-export const withoutImportant = (text: string) => text.replace(important, "")
+// comments around its "!" and "important". It is read from the last "!", so
+// the time is linear in the text: a search for the pattern from each start
+// would take quadratic time on a long run of white space.
+const importantFlag = new RegExp(`^!${blank}*important${blank}*$`, "i")
+const blankEnd = (text: string, end: number) => {
+  let at = end
+  for (;;) {
+    while (/[ \t\n\r\f]/.test(text.charAt(at - 1))) at--
+    if (text.slice(at - 2, at) !== "*/") return at
+    const open = text.lastIndexOf("/*", at - 3)
+    if (open < 0) return at
+    at = open
+  }
+}
+export const withoutImportant = (text: string) => {
+  const bang = text.lastIndexOf("!")
+  return bang < 0 || !importantFlag.test(text.slice(bang)) ? text : text.slice(0, blankEnd(text, bang))
+}
 // A character of a name (4.3.9). NUL reads as U+FFFD, a name character (3.3).
 export const nameChar = `(?:[-\\w\\u0000\\u0080-\\uFFFF]|${escape})`
 // A property name: one identifier (4.3.11), or a custom property's "--" and

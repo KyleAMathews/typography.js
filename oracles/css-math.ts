@@ -167,9 +167,10 @@ export function mathTypeOf(node: MathNode): MathType {
       // "+" and "-" need white space on both sides (§10.8); a comment is not
       // white space; two operands need an operator between them.
       const spaced = node.space === "both" || node.space === "comment"
-      // "pi-var(" and "pi-sin(" are one function token each, named "pi-var"
-      // and "pi-sin" (CSS Syntax 3 §4.3.4): a function the grammar does not know.
-      if (node.op === "-" && node.space === "none" && node.left.kind === "const" && (node.right.kind === "var" || node.right.kind === "fn"))
+      // "pi-var(", "pi-sin(", and "pi-(" are one function token each, named
+      // "pi-var", "pi-sin", and "pi-" (CSS Syntax 3 §4.3.4): a function the
+      // grammar does not know. A group or an inner operation starts with "(".
+      if (node.op === "-" && node.space === "none" && node.left.kind === "const" && node.right.kind !== "num" && node.right.kind !== "const")
         return "any"
       if (node.op === "" || ((node.op === "+" || node.op === "-") && !spaced)) return undefined
       const l = mathTypeOf(node.left)

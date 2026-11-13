@@ -1,11 +1,10 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-// A query value, percent-encoded so that no character in a name ends or
-// splits it ("&", "#", "%"), with spaces as "+", as Google Fonts writes
-// them. A "+" in a name is a space: v0.16 wrote names such as 'Open+Sans'
-// into the URL as they were, and no Google family has a "+".
-const encode = (text) => encodeURIComponent(String(text).replace(/\+/g, " ")).replace(/%20/g, "+")
+// A name with its spaces as "+", as v0.16 wrote it and Google Fonts reads it.
+// Names and styles are otherwise written as given: sites put query
+// parameters such as "&display=swap" into a style.
+const plusSpaces = (text) => String(text).split(" ").join("+")
 
 // The Google Fonts CSS API: family=Name:style,style|Name. A font without
 // styles is its name alone (the default weight).
@@ -15,8 +14,8 @@ const GoogleFont = (props) => {
   const family = fonts
     .map(({ name, styles }) =>
       styles && styles.length > 0
-        ? `${encode(name)}:${styles.map(encode).join(",")}`
-        : encode(name)
+        ? `${plusSpaces(name)}:${styles.join(",")}`
+        : plusSpaces(name)
     )
     .join("|")
   return React.createElement("link", {
