@@ -57,20 +57,24 @@ export const fontFamilyList = (stack: Array<string>) =>
   isLoneCssWide(stack) ? asciiLower(stack[0]) : stack.map(item).join(",")
 
 // The `html` base font. A lone CSS-wide keyword cannot sit inside the `font`
-// shorthand, so it gets longhands.
+// shorthand, so it gets longhands. So does a stack with a var() entry: an
+// undefined variable drops the declaration it is in, and in the shorthand
+// the base size and line height would go with it.
 export const baseFont = (
   fontSize: string,
   lineHeight: string | number,
   stack: Array<string>
 ) =>
-  isLoneCssWide(stack)
+  isLoneCssWide(stack) || stack.some(isVarEntry)
     ? { fontSize, lineHeight, fontFamily: fontFamilyList(stack) }
     : { font: `${fontSize}/${lineHeight} ${fontFamilyList(stack)}` }
 
+// Array.from reads a hole in a sparse stack as undefined; every() would
+// skip it.
 const isFontStack = (stack: mixed) =>
   Array.isArray(stack) &&
   stack.length > 0 &&
-  stack.every(entry => typeof entry === "string")
+  Array.from(stack).every(entry => typeof entry === "string")
 
 // Throws for every invalid stack at once, naming each.
 export const checkFontStacks = (options: Object) => {

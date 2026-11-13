@@ -26,7 +26,8 @@ is not given (v0.16), as plugins that build their own links read it.
 whose href, parsed by the URL Standard against https, is
 fonts.googleapis.com/css with one query parameter, `family`. Its value,
 decoded as application/x-www-form-urlencoded, lists each font in order,
-separated by "|": the name, then ":" and its styles separated by "," when it
+separated by "|": the name (a "+" in it read as a space, as v0.16 wrote it into the URL;
+review R3), then ":" and its styles separated by "," when it
 has any. A font without styles requests the name alone, which the Google
 Fonts CSS API serves in its default weight.
 
@@ -58,7 +59,7 @@ type History = {
 
 // Names as Google Fonts lists them, and names that a raw query would change:
 // "&" and "#" end the value, "+" reads as a space, "%" starts an escape.
-const NAMES = ['Open Sans', 'Roboto', 'Montserrat', 'Source Code Pro', 'Font & Co', 'A+B Sans', 'Hash #1', '100% Sans', 'Ünïcödé', "O'Reilly", 'Fira  Sans', 'Name=Value']
+const NAMES = ['Open Sans', 'Open+Sans', 'Roboto', 'Montserrat', 'Source Code Pro', 'Font & Co', 'A+B Sans', 'Hash #1', '100% Sans', 'Ünïcödé', "O'Reilly", 'Fira  Sans', 'Name=Value']
 const STYLES = ['400', '700', '400italic', '700i', '300', 'bold', '100;200']
 const font = fc.record({
   name: fc.constantFrom(...NAMES),
@@ -80,7 +81,10 @@ type Expected = { family: string | undefined }
 const model = (plan: History): Expected => {
   const fonts = plan.googleFonts ?? []
   if (fonts.length === 0) return { family: undefined }
-  return { family: fonts.map((f) => (f.styles && f.styles.length > 0 ? `${f.name}:${f.styles.join(',')}` : f.name)).join('|') }
+  // A "+" in a name is a space: names written in the URL's own form
+  // ('Open+Sans') loaded in v0.16 (review R3); no Google family has a "+".
+  const name = (f: Font) => f.name.replace(/\+/g, ' ')
+  return { family: fonts.map((f) => (f.styles && f.styles.length > 0 ? `${name(f)}:${f.styles.join(',')}` : name(f))).join('|') }
 }
 
 function driver(plan: History, observe: (checkpoint: string, value: unknown) => void) {

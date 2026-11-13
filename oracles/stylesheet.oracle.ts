@@ -50,7 +50,12 @@ margin, and table cells two thirds (sides) and one half (top) of a rhythm
 block margin too, or 0 when the block margin is negative or a keyword (a
 negative or `auto` padding is not CSS, and the browser keeps the reset's 0;
 `inherit` would take the parent's padding). Called directly with
-`(vr, options)`, as v0.16 allowed, the plugin pads the same (review Z1). A `blockMarginBottom` string that is not a CSS length,
+`(vr, options)`, as v0.16 allowed, the plugin pads the same (review Z1),
+and with typography 0.16's helpers too (review R1).
+S10. `typography/src/client.js` gives the options and rhythm helpers of
+`typography()` (`rhythm`, `adjustFontSizeTo`, `linesForFontSize`,
+`establishBaseline`, `scale`) without the stylesheet methods, as v0.16
+shipped it (review R7). A `blockMarginBottom` string that is not a CSS length,
 which the margins put in calc(), makes typography() throw a RangeError
 naming it (review X6). `auto` and the CSS-wide words go on the block
 elements as given, and the margins derived from them with calc() are left
@@ -82,6 +87,7 @@ import { differs, oracleProperty, pass, violation } from '@tanstack/oracles'
 import type { Observation } from '@tanstack/oracles'
 import typography from '../packages/typography/src/index.js'
 import codePlugin from '../packages/typography-plugin-code/src/index.js'
+import client from '../packages/typography/src/client.js'
 import normalize from '../packages/typography-normalize/src/index.js'
 import { readStylesheet, StylesheetError } from './css-rule-reader'
 import type { Rule } from './css-rule-reader'
@@ -89,6 +95,7 @@ import type { Rule } from './css-rule-reader'
 const S4 = 'S4 toString() is the stylesheet toJSON() describes'
 const S5 = 'S5 documented options and rhythm spacing'
 const S6 = 'S6 plugins and overrides merge in order'
+const S10 = "S10 src/client.js is the options and helpers of typography()"
 
 // ---------------------------------------------------------------------------
 // Grammar: options, and style layers built from entries.
@@ -121,12 +128,12 @@ const MEDIA = '@media (max-width:480px)'
 // !important. Unsafe ones break the rule, the stylesheet, or the <style>.
 // 'a {b}' and '' are safe for a custom property only (reviews W5, X8); '\\(a' holds an
 // escaped "(" that opens no block.
-const SAFE_VALUES: Array<Value> = ['red', '#123456', '1.5rem', 0, 12, 'calc(1em + 2px)', 'var(--x)', "'a;b}'", 'url(a.png)', 'red !important', 'inherit', 'var(--x, {a})', 'a {b}', '\\(a', '', 'red</style>', '"</p>"', '"<"', 'a\\</b', 'red !important /* x */', 'red ! /**/ important']
+const SAFE_VALUES: Array<Value> = ['red', '#123456', '1.5rem', 0, 12, 'calc(1em + 2px)', 'var(--x)', "'a;b}'", 'url(a.png)', 'red !important', 'inherit', 'var(--x, {a})', 'a {b}', '\\(a', '', 'red</style>', '"</p>"', '"<"', 'a\\</b', 'red !important /* x */', 'red ! /**/ important', '{a:b; c:d}', 'f(a;b)']
 // 'a\\': a lone backslash at the end escapes the ";" after it (review W1).
 // An array or a function is not a CSS value (reviews Y5, Z5).
 const ARRAY_VALUE = ['a', 'b']
 const FUNCTION_VALUE = () => 1
-const UNSAFE_VALUES: Array<Value> = [ARRAY_VALUE, FUNCTION_VALUE, 'red}', 'a;b', 'red !importan', "'open", NaN, true, '!important', 'a\\', 'a /* b']
+const UNSAFE_VALUES: Array<Value> = [ARRAY_VALUE, FUNCTION_VALUE, 'var(--x, a;b)', 'red}', 'a;b', 'red !importan', "'open", NaN, true, '!important', 'a\\', 'a /* b']
 // Names that are not one CSS identifier break the rule or the <style>
 // (review X1).
 const UNSAFE_PROPERTIES = ['</style>', 'color;}body{background', '--x}', 'a b']
@@ -206,7 +213,8 @@ const isSafeText = (v: string, custom: boolean) => {
   const body = v.replace(/(?:\s|\/\*(?:[^*]|\*+[^*/])*\*+\/)*!(?:\s|\/\*(?:[^*]|\*+[^*/])*\*+\/)*important(?:\s|\/\*(?:[^*]|\*+[^*/])*\*+\/)*$/i, '')
   if (body.trim() === '') return custom
   let quote: string | undefined
-  let depth = 0
+  // Open blocks: "v" for a var() or env() fallback, else the bracket.
+  const open: Array<string> = []
   for (let k = 0; k < body.length; k++) {
     const c = body[k]
     if (quote) {
@@ -224,14 +232,17 @@ const isSafeText = (v: string, custom: boolean) => {
       if (k + 1 >= body.length || /[\n\r\f]/.test(body[k + 1])) return false
       k++
     } else if (c === '"' || c === "'") quote = c
-    else if (c === '{' && depth === 0 && !custom) return false
-    else if (c === '(' || c === '{' || c === '[') depth++
-    else if (c === ')' || c === '}' || c === ']') depth--
-    // At the top, or a function's top (a var() fallback's top, CSS Variables 1).
-    else if ((c === ';' || c === '!') && depth <= 1) return false
-    if (depth < 0) return false
+    else if (c === '{' && open.length === 0 && !custom) return false
+    else if (c === '(') open.push(/(?:^|[^-\w])(?:var|env)$/i.test(body.slice(0, k)) ? 'v' : '(')
+    else if (c === '{' || c === '[') open.push(c)
+    else if (c === ')' || c === '}' || c === ']') {
+      if (open.pop() === undefined) return false
+    }
+    // At the top, or at the top of a var() fallback (CSS Variables 1 §3);
+    // inside any other block, ";" and "!" are part of it (review R6).
+    else if ((c === ';' || c === '!') && (open.length === 0 || open[open.length - 1] === 'v')) return false
   }
-  return !quote && depth === 0
+  return !quote && open.length === 0
 }
 const isSafeValue = (v: Value, property: string) =>
   v === null || v === undefined || (typeof v === 'number' && Number.isFinite(v)) || (typeof v === 'string' && isSafeText(v, property.startsWith('--')))
@@ -394,12 +405,31 @@ function driver(plan: History, observe: (checkpoint: string, value: unknown) => 
     observe('toString()', text)
     // createStyles() is kept for v0.16 callers: the same text.
     observe('createStyles() is toString()', t.createStyles() === text)
-    // The code plugin called directly, as v0.16 allowed: (vr, options).
-    try {
-      observe('codePlugin()(vr, options).pre.padding', (codePlugin()(t, t.options) as { pre: { padding: unknown } }).pre.padding)
-    } catch (error) {
-      observe('codePlugin()(vr, options).pre.padding', { threw: String(error) })
+    // The code plugin called directly, as v0.16 allowed: (vr, options); and
+    // with v0.16's helpers, whose rhythm() (compass-vertical-rhythm 1.4.5)
+    // multiplies its argument, so a CSS length gives NaN text, null gives 0,
+    // and undefined is one line (review R1).
+    const v016 = {
+      rhythm: (lines: unknown = 1) => {
+        const n = (lines as number) * 1
+        return Number.isFinite(n) ? t.rhythm(n) : 'NaNNaNpx'
+      },
     }
+    for (const [name, vr] of [['codePlugin()(vr, options).pre.padding', t], ['codePlugin() with v0.16 helpers', v016]] as const) {
+      try {
+        observe(name, (codePlugin()(vr, t.options) as { pre: { padding: unknown } }).pre.padding)
+      } catch (error) {
+        observe(name, { threw: String(error) })
+      }
+    }
+    // S10: the client entry (v0.16's src/client.js).
+    const c = client(t.options) as Record<string, unknown>
+    observe('client', {
+      keys: Object.keys(c).sort(),
+      rhythm: (c.rhythm as (n: number) => string)(1) === t.rhythm(1),
+      scale: JSON.stringify((c.scale as (n: number) => unknown)(1)) === JSON.stringify(t.scale(1)),
+      options: JSON.stringify(c.options) === JSON.stringify(t.options),
+    })
   } catch (error) {
     observe('toString() error', error)
   }
@@ -474,6 +504,11 @@ function check(plan: History, trace: ReadonlyArray<Observation>, expected: Expec
   const direct = valueAt(trace, 'codePlugin()(vr, options).pre.padding')
   const directDiff = differs('codePlugin()(vr, options).pre.padding', S5, String(direct).trim(), padding.trim(), 'the code plugin called directly pads otherwise')
   if (directDiff) return directDiff
+  const old = valueAt(trace, 'codePlugin() with v0.16 helpers')
+  const oldDiff = differs('codePlugin() with v0.16 helpers', S5, String(old).trim(), padding.trim(), 'the code plugin pads otherwise with typography 0.16')
+  if (oldDiff) return oldDiff
+  const clientDiff = differs('client', S10, valueAt(trace, 'client'), { keys: ['adjustFontSizeTo', 'establishBaseline', 'linesForFontSize', 'options', 'rhythm', 'scale'], rhythm: true, scale: true, options: true })
+  if (clientDiff) return clientDiff
   for (const [k, owed] of expected.owed) {
     const [scope, selector, property] = JSON.parse(k) as [string, string, string]
     const want =
@@ -515,13 +550,14 @@ oracleProperty<History, ReturnType<typeof model>>({
   id: 'typography-stylesheet',
   owns: [
     'packages/typography/src/index.js',
+    'packages/typography/src/client.js',
     'packages/typography/src/utils/css.js',
     'packages/typography/src/utils/compileStyles.js',
     'packages/typography/src/utils/createStyles.js',
     'packages/typography-plugin-code/src/index.js',
   ],
   law: {
-    statement: `${S4}: rule by rule, kebab-case names, vendor prefixes, custom properties as written, values as given with each "<" before "/" written \\3c (no "</" in the text), null dropped, normalize first unless includeNormalize is false, createStyles() the same text (v0.16); an unsafe value, selector, or property name throws a RangeError (an empty value is a custom property's only). ${S5}: typography().options holds each given option or its README default; headerColor/headerWeight on h1–h6, bodyColor/bodyWeight on body, boldWeight on b/strong/dt/th; block margins, list indents, blockquote margins, and cell padding in rhythm units; the code plugin's pre padding is the block margin; a blockMarginBottom string that is not a CSS length or a margin keyword throws a RangeError naming it; a keyword leaves out the calc() margins. ${S6}: plugins, then overrideStyles, then overrideThemeStyles, each deep-merged, null removing; plugins that are not a list of functions, or an override that is not a function, throw a TypeError naming the option; null is none.`,
+    statement: `${S4}: rule by rule, kebab-case names, vendor prefixes, custom properties as written, values as given with each "<" before "/" written \\3c (no "</" in the text), null dropped, normalize first unless includeNormalize is false, createStyles() the same text (v0.16); an unsafe value, selector, or property name throws a RangeError (an empty value is a custom property's only). ${S5}: typography().options holds each given option or its README default; headerColor/headerWeight on h1–h6, bodyColor/bodyWeight on body, boldWeight on b/strong/dt/th; block margins, list indents, blockquote margins, and cell padding in rhythm units; the code plugin's pre padding is the block margin; a blockMarginBottom string that is not a CSS length or a margin keyword throws a RangeError naming it; a keyword leaves out the calc() margins. ${S6}: plugins, then overrideStyles, then overrideThemeStyles, each deep-merged, null removing; plugins that are not a list of functions, or an override that is not a function, throw a TypeError naming the option; null is none. ${S10}: options, rhythm, adjustFontSizeTo, linesForFontSize, establishBaseline, and scale of typography(), without the stylesheet methods.`,
     authority: 'README (Configuration; Themes & Plugins; overrideStyles; overrideThemeStyles); CSS Variables 1 §2 (custom property names are case-sensitive); CSS Syntax 3 §4.3.7 (escapes), §5 and §8.2; HTML (a style element ends at "</style"); engineer decisions 2026-11-12 (Q4a, Q4b; coverage in this PR; Y2 escape "<"; Y6 margin keywords).',
     limits: 'Design values of the default rules are pinned by snapshots. Up to 2 plugins, 5 entries per layer, selectors and properties from fixed lists, one @media scope. Property names with two capitals in a row are not generated. Browser acceptance of each declaration is the Chrome witness.',
   },

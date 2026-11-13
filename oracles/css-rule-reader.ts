@@ -54,7 +54,9 @@ export function readStylesheet(text: string): Array<Rule> {
         skipBlock('}')
         continue
       }
-      if (text[i] === '}' || text[i] === ')' || text[i] === ']' || (text[i] === ';' && close !== '}')) fail(`a "${text[i]}" inside ${open}`)
+      // A ";" is part of a block (CSS Syntax 3 §5.4.8); a closer of another
+      // kind is not.
+      if (text[i] === '}' || text[i] === ')' || text[i] === ']') fail(`a "${text[i]}" inside ${open}`)
       i++
     }
     if (i >= text.length) fail(`an unclosed ${open}`)

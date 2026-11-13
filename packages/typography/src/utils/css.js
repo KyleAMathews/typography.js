@@ -65,22 +65,28 @@ const broken = { "/*": true, '"': true, "'": true, "\\": true }
 
 // Whether CSS reads `text` as one declaration's value (8.2, 5.4.6): no bad
 // string, no bad url, no unterminated comment, no lone backslash, no
-// unmatched closer, no ";" or "!" at the top level or a function's top level,
+// unmatched closer, no ";" or "!" at the top level or a var() fallback's,
 // nothing left open at the end, and no top-level {} block unless the property
 // is custom.
 export const isDeclarationValue = (text: string, custom: boolean = false) => {
+  // Each open block's closer; "v" closes a var() or env(), whose fallback
+  // is a <declaration-value> of its own (CSS Variables 1 3).
   const closers = []
+  let before = ""
   token.lastIndex = 0
   for (let match = token.exec(text); match; match = token.exec(text)) {
     const t = match[0]
+    const top = closers[closers.length - 1]
     if (broken[t] || /^url\($/i.test(t)) return false
-    if (closers.length <= 1 && (t === ";" || t === "!")) return false
-    if (t === "{" && closers.length === 0 && !custom) return false
+    if ((top === undefined || top === "v") && (t === ";" || t === "!")) return false
+    if (t === "{" && top === undefined && !custom) return false
     if (/^url\(/i.test(t)) {
       // A quoted url() stays open after its string; an unquoted one is whole.
       if (t[t.length - 1] !== ")") closers.push(")")
-    } else if (closerOf[t]) closers.push(closerOf[t])
-    else if ((t === ")" || t === "]" || t === "}") && closers.pop() !== t) return false
+    } else if (t === "(" && /^(?:var|env)$/i.test(before)) closers.push("v")
+    else if (closerOf[t]) closers.push(closerOf[t])
+    else if ((t === ")" || t === "]" || t === "}") && (closers.pop() || "").replace("v", ")") !== t) return false
+    before = t
   }
   return closers.length === 0
 }

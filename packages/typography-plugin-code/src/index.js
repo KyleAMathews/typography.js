@@ -1,12 +1,16 @@
 // @flow
 import gray from "gray-percentage"
 
-// blockMarginBottom as the core reads it: rhythm units when rhythm() takes
-// the value (a number or a numeric string; null or undefined is one), and any
-// other string as written. rhythm() throws a RangeError for anything else.
+// blockMarginBottom as the core reads it: one rhythm unit for null or
+// undefined, rhythm units when rhythm() takes the value (a number or a
+// numeric string), and any other string as written. typography 0.17's
+// rhythm() throws for such a string; 0.16's returned NaN text, and read null
+// as 0.
 const blockMargin = (rhythm: Function, value: mixed) => {
+  if (value == null) return rhythm(1)
   try {
-    return rhythm(value)
+    const margin = rhythm(value)
+    return /NaN/.test(String(margin)) ? value : margin
   } catch (error) {
     return value
   }

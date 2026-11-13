@@ -35,10 +35,12 @@ not checked. The other limits are those of `font-family.oracle.ts`.
 */
 import { chromium } from 'playwright-core'
 import { afterAll } from 'vitest'
-import { oracleProperty } from '@tanstack/oracles'
+import { differs, oracleProperty, pass } from '@tanstack/oracles'
+import type { Observation } from '@tanstack/oracles'
 import typography from '../packages/typography/src/index.js'
 import {
   FIXED_HISTORIES,
+  L1,
   LAW,
   calibrations,
   check,
@@ -92,6 +94,13 @@ function readInChrome(css: string): Read {
   }
 }
 
+// In the page: html's computed font size and line height under `css`.
+function computedRoot(css: string) {
+  ;(document.getElementById('under-test') as HTMLStyleElement).textContent = css
+  const style = getComputedStyle(document.documentElement)
+  return { fontSize: style.fontSize, lineHeight: style.lineHeight }
+}
+
 async function driver(plan: Plan, observe: (checkpoint: string, value: unknown) => void) {
   // The reference: the same call with a plain stack (see the Node driver).
   try {
@@ -121,6 +130,11 @@ async function driver(plan: Plan, observe: (checkpoint: string, value: unknown) 
   observe('stylesheet', { lessThan: css.includes('<') })
   const read = await page.evaluate(readInChrome, css)
   observe('html', read.html)
+  // L1 at computed-value time (review R4): at an 18px base, html computes to
+  // 18px with line height 1.45 whatever the stack, with every var() in it
+  // undefined, as a page that has not set its variable yet.
+  const at18 = typography({ bodyFontFamily: plan.given.body, headerFontFamily: plan.given.header, baseFontSize: '18px' }).toString()
+  observe('html computed at 18px', await page.evaluate(computedRoot, at18))
   observe('body.fontFamily', read.body)
   read.headers.forEach((family, k) => observe(`h${k + 1}.fontFamily`, family))
 }
@@ -145,7 +159,11 @@ oracleProperty<History, Expected, Plan>({
   resolve,
   model,
   driver,
-  check,
+  check: (plan: Plan, trace: ReadonlyArray<Observation>, expected: Expected) => {
+    const judged = check(plan, trace, expected)
+    if (judged !== pass || 'throws' in expected) return judged
+    return differs('html computed at 18px', L1, trace.find((o) => o.checkpoint === 'html computed at 18px')?.value, { fontSize: '18px', lineHeight: '26.1px' }, 'the stack changed the computed base size or line height') ?? pass
+  },
   reached,
   calibrations,
 })

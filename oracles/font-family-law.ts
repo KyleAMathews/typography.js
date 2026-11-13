@@ -148,6 +148,8 @@ const validEntry: fc.Arbitrary<string> = fc.oneof(
 )
 // Entries outside "an array of strings" (README, Configuration).
 const nonString = fc.constantFrom<Entry>(42, true, null, undefined)
+// A sparse stack: its hole is not a string (review R5).
+const SPARSE: Array<Entry> = [, 'serif']
 
 // Mostly valid stacks; some empty or holding a non-string entry (L5). A
 // non-array stack is outside the domain and never generated (the exclusion
@@ -158,6 +160,7 @@ export function historyArbitrary(): fc.Arbitrary<History> {
     { weight: 8, arbitrary: fc.array(validEntry, { minLength: 1, maxLength: MAX_STACK }) },
     { weight: 1, arbitrary: fc.array(fc.oneof(validEntry, nonString), { maxLength: MAX_STACK }) },
     { weight: 1, arbitrary: fc.constant(undefined) },
+    { weight: 1, arbitrary: fc.constant(SPARSE) },
   )
   return fc.record({ body: stack, header: stack })
 }
@@ -179,8 +182,9 @@ export type Expected =
   | { throws: Array<'bodyFontFamily' | 'headerFontFamily'> }
   | { body: Array<Slot>; header: Array<Slot>; options: { body: Array<Entry>; header: Array<Entry> } }
 
+// Array.from reads a hole as undefined, which every() would skip (review R5).
 const isValidStack = (s: Array<Entry>): s is Array<string> =>
-  s.length > 0 && s.every((e) => typeof e === 'string')
+  s.length > 0 && Array.from(s).every((e) => typeof e === 'string')
 
 // CSS Syntax 3 §3.3 and §4.3.7: no CSS text can carry NUL or a lone
 // surrogate, raw or escaped; a browser reads U+FFFD instead.
@@ -431,7 +435,7 @@ export function reached(plan: Plan): Array<string> {
   const headerOk = isValidStack(plan.header)
   for (const s of [plan.body, plan.header]) {
     if (s.length === 0) states.add(STATES.emptyStack)
-    if (s.some((e) => typeof e !== 'string')) states.add(STATES.nonString)
+    if (Array.from(s).some((e) => typeof e !== 'string')) states.add(STATES.nonString)
   }
   if (!bodyOk && !headerOk) states.add(STATES.bothInvalid)
   if (!bodyOk || !headerOk) return [...states]

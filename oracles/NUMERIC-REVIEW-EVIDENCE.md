@@ -299,3 +299,22 @@ A ninth `/code-review high` (head ff36b27) gave Z1–Z10 (ledger
   mutants, 554 killed; after the driver guard and two dead branches in the
   plugin (`value == null`, the rethrow), the open ones are the plugin's
   design values and the `appendChild` branch.
+
+## Review round 10 (2026-11-12)
+
+A tenth `/code-review high` (head d22610c) gave R1–R10 (ledger
+`/tmp/typography-review10-eval/ledger.md`).
+
+- **RED on d22610c:** a sparse stack `[, 'serif']` passed (red-font.txt);
+  with a var() entry, html's computed size at an 18px base was 16px, because
+  an undefined variable dropped the whole `font` shorthand
+  (red-chrome-font.txt); `'Open+Sans'` asked Google for "Open+Sans"; `f(a;b)`
+  threw (red-r6.txt); `src/client.js` did not exist (red-ss-react.txt).
+- **Fixes:** html gets longhands for a stack with a var() entry; sparse
+  stacks throw; a "+" in a Google font name is a space; ";" and "!" are
+  rejected only at the top level or at a var() fallback's top level;
+  `src/client.js` is back; the code plugin also works with typography
+  0.16's helpers (a stub of compass-vertical-rhythm's rhythm() drives it).
+- **Gap check** (`css.js`, `fontFamily.js`, `client.js`, `GoogleFont.js`,
+  the plugin): 459 mutants, 435 killed. Open: the plugin's design values,
+  the `propTypes`, and one dead escape in `baseFont`, now removed.
