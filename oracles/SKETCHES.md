@@ -866,3 +866,33 @@ A sixth `/code-review high` (head 66f851e) gave 10 findings (W1–W10, ledger
 - **U1:** the published bundle keeps v0.16's ES5 baseline: no sticky
   regular expressions and no ES2015 built-ins. `__test__/es5.test.js` loads
   the built bundle in a realm without them.
+
+### Law decisions on changes made without approval (2026-11-13)
+
+Rounds 6–14 changed or added laws that were adopted without the engineer's
+review. The engineer ruled on each:
+
+- **S4 property names (X1): kept.** Old: a property is written as given (kebab
+  case). New: a property name that is not one CSS identifier (camelCase,
+  kebab-case, or `--custom`) makes `toString()` throw a RangeError; this
+  includes IE hacks such as `*zoom`.
+- **S9 code plugin (Z1, R1): kept.** New: the plugin's `pre` padding is the
+  same when it is called directly as `CodePlugin()(vr, options)`, and with
+  typography 0.16's helpers.
+- **S10 client entry (R7): dropped.** `src/client.js` (a 2018 client entry,
+  shipped since v0.16.24 only as an unbuilt, undocumented source file) is
+  removed, with the `configure.js` split that kept it small. The release
+  notes list it.
+- **N5 math (Z4): kept.** New, narrowing W6: a function that CSS types as
+  something other than a number or a length (colors, images, `url()`,
+  counters) is invalid; a function the grammar does not know is still the
+  browser's.
+- **S4 blank values (T5): kept.** New, extending Q2: a value of white space
+  alone is no declaration outside a custom property.
+- **S1 L1 computed size (round 11): kept as a limit.** A stack that is
+  `monospace` alone is sized against the browser's monospace default, as in
+  v0.16; the computed-size check leaves it out.
+- **U1 ES5 bundle: kept.** New: the published bundle runs on ES5 engines, as
+  v0.16's did (`__test__/es5.test.js`).
+- **S8b `options.googleFonts` (round 6): kept.** `typography().options.googleFonts`
+  is the option as given, or `[]`.

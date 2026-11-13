@@ -139,7 +139,7 @@ const withMarkup = (trace: ReadonlyArray<Observation>, f: (markup: string) => st
 
 oracleProperty<History, Expected>({
   id: 'react-typography',
-  owns: ['packages/react-typography/src/GoogleFont.js', 'packages/react-typography/src/TypographyStyle.js', 'packages/typography/src/index.js', 'packages/typography/src/utils/configure.js'],
+  owns: ['packages/react-typography/src/GoogleFont.js', 'packages/react-typography/src/TypographyStyle.js', 'packages/typography/src/index.js'],
   law: {
     statement: `${S8a}: <style id="typography.js"> holding toString() as is. ${S8b}: options.googleFonts as given, or [] when not given; nothing without fonts; otherwise one stylesheet link whose href is //fonts.googleapis.com/css?family= and each name (spaces as +) with ":" and its styles joined by ",", fonts joined by "|", as v0.16 wrote it; a font without styles is its name alone.`,
     authority: 'README (React.js helper components); URL Standard (URL parsing); Google Fonts CSS API v1 (family=Name:styles|Name); v0.16 GoogleFont; engineer decisions 2026-11-12 (S8 sketch; coverage in this PR; review P1: v0.16 passthrough).',
