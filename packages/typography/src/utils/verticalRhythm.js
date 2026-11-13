@@ -21,7 +21,7 @@ export const toNumber = (name: string, value: any, positive: boolean = false) =>
     typeof value === "string" && cssNumber.test(value) ? Number(value) : value
   if (
     typeof number !== "number" ||
-    !Number.isFinite(number) ||
+    !isFinite(number) ||
     (positive && number <= 0)
   ) {
     throw invalid(name)
@@ -128,7 +128,7 @@ export default function verticalRhythm(options: Object) {
   const inUnit = (name: string, px: number, fontSize: number, floor: boolean) => {
     const factor = pxPerUnit(unit, fontSize)
     const value = px / factor
-    if (unit === "px" || (unit === "em" && !Number.isFinite(value))) {
+    if (unit === "px" || (unit === "em" && !isFinite(value))) {
       return `${floor ? Math.floor(px) : parseFloat(px.toFixed(5))}px`
     }
     const rounded = parseFloat(value.toFixed(5))

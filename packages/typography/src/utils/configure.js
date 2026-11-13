@@ -71,7 +71,12 @@ export default (opts: OptionsType) => {
   })
   const options = objectAssign({}, defaults, given)
   const { base, helpers: vr } = verticalRhythm(options)
-  const scaleRatio = toNumber("scaleRatio", ratioOf(options.scaleRatio), true)
+  // null is the default ratio, as undefined is (engineer decision 2026-11-13).
+  const scaleRatio = toNumber(
+    "scaleRatio",
+    ratioOf(options.scaleRatio === null ? defaults.scaleRatio : options.scaleRatio),
+    true
+  )
 
   // Add this function to the vertical rhythm object so it'll be passed around
   // as well and be available. A null position is position 0, as in v0.16.

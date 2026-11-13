@@ -381,3 +381,22 @@ value check:
 - **Gap check** (`css.js`): 449 mutants, 444 killed after witnesses for the
   url scan and the `!important` scan; the rest make a scan loop forever (a
   CLI limit). Two branches with no legal effect were folded into one.
+
+## Review round 14 (2026-11-13)
+
+A fourteenth `/code-review high` (head c8d7b41) gave U1–U9 (ledger
+`/tmp/typography-review14-eval/ledger.md`).
+
+- **RED on c8d7b41:** the built bundle threw "ES5 has no y flag" in a realm
+  without ES2015 built-ins (red-es5.txt); `blockMarginBottom: false` threw
+  (red.txt); `scaleRatio: null` threw (red-ratio.txt).
+- **Fixes:** "g" expressions instead of sticky ones (a catch-all alternative
+  keeps each match at lastIndex), `isFinite`, a loop instead of `Array.from`,
+  and `String.fromCharCode`; falsy block margins are one rhythm; a null
+  scale ratio is the default (engineer decision); escaped `var(` and `env(`
+  are substitutions; the `!important` scan is one pass with no array.
+- **Gap check** (eight production files): 1036 mutants, 963 killed. A driver
+  that parsed an undefined `toJSON()` was guarded, and an unterminated
+  `url(` history added. The open ones are design values (Q4b), the
+  `appendChild` branch, and scans that a mutant makes loop forever (a CLI
+  limit).

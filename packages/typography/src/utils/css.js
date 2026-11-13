@@ -9,6 +9,17 @@ export const asciiLower = (s: string) =>
 // CSS Values 4 2.1: valid only as a whole property value.
 export const cssWideKeywords = ["inherit", "initial", "unset", "revert", "revert-layer"]
 
+// The package runs on ES5 engines, as v0.16 did: no sticky regular
+// expressions and no ES2015 built-ins (Number.isFinite, Array.from,
+// String.fromCodePoint). A "g" expression with a last alternative that takes
+// any character matches at lastIndex, as a sticky one would.
+
+// Every entry of a list passes `test`, holes included (every() skips them).
+export const everyEntry = (list: Array<mixed>, test: (entry: mixed) => boolean) => {
+  for (let i = 0; i < list.length; i++) if (!test(list[i])) return false
+  return true
+}
+
 // CSS white space (4.2). Only these spaces count: JavaScript's trim() also
 // strips NBSP and others that CSS reads as text.
 export const ws = "[ \\t\\n\\r\\f]"
@@ -41,21 +52,23 @@ export const nameChar = `(?:[-\\w\\u0000\\u0080-\\uFFFF]|${escape})`
 // name characters (CSS Variables 1 2).
 const identifier = new RegExp(`^(?:--${nameChar}+|-?(?:[a-zA-Z_\\u0080-\\uFFFF]|${escape})${nameChar}*)$`)
 export const isPropertyName = (name: string) => identifier.test(name)
-// `var(--name` then "," or ")" (CSS Variables 1 3), and `env(name` likewise.
+// `var(--name` then "," or ")" (CSS Variables 1 3), and `env(name` likewise;
+// the arguments alone, after the "(".
+const varArgs = new RegExp(`^${blank}*--${nameChar}+${blank}*[,)]`)
+const envArgs = new RegExp(`^${blank}*[a-z-]${nameChar}*${blank}*[,)]`, "i")
 export const varHead = new RegExp(`^var\\(${blank}*--${nameChar}+${blank}*[,)]`, "i")
-const envHead = new RegExp(`^env\\(${blank}*[a-z-]${nameChar}*${blank}*[,)]`, "i")
 
 // A token as CSS reads it. In order: a comment; an unterminated comment; a
 // string; a run of name characters and escapes (a name, so "xurl(" is not a
 // url); any other character. A lone quote is a string that a line break or
 // the end cut off, and a lone backslash is not an escape.
-const token = new RegExp(`${comment}|\\/\\*|${string}|${nameChar}+|[^]`, "y")
+const token = new RegExp(`${comment}|\\/\\*|${string}|${nameChar}+|[^]`, "g")
 // A name with its escapes decoded (4.3.7): "\\75 rl" is "url". Only ASCII
 // names are compared ("url", "var", "env", "important"), so a code point
-// beyond Unicode, which CSS reads as U+FFFD, only needs to stay non-ASCII.
+// beyond U+FFFF only needs to stay non-ASCII.
 const decodeName = (name: string) =>
   name.replace(/\\(?:([0-9a-fA-F]{1,6})[ \t\n\r\f]?|([^]))/g, (_, hex, c) =>
-    hex ? String.fromCodePoint(Math.min(parseInt(hex, 16), 0x10ffff)) : c
+    hex ? String.fromCharCode(Math.min(parseInt(hex, 16), 0xffff)) : c
   )
 const isName = (t: string) => /^(?:[-\w\u0000\u0080-\uFFFF]|\\[^\n\r\f])/.test(t)
 const isWs = (c: string) => c === " " || c === "\t" || c === "\n" || c === "\r" || c === "\f"
@@ -83,33 +96,27 @@ const urlEnd = (text: string, at: number) => {
     }
   }
 }
-// The tokens of `text`, or undefined at a comment that does not close.
-const tokens = (text: string) => {
-  const out = []
-  token.lastIndex = 0
-  for (let match = token.exec(text); match; match = token.exec(text)) {
-    if (match[0] === "/*") return undefined
-    out.push(match)
-  }
-  return out
-}
 // The text before a trailing !important (CSS Cascade 5 6.1), read token by
 // token as CSS reads it (a comment ends at its first "*/"), with the white
-// space and comments around "!" and "important"; else the text. Linear in
-// the text.
+// space and comments around "!" and "important"; else the text. One pass,
+// which keeps the last three tokens that are not white space or comments.
 export const withoutImportant = (text: string) => {
-  const all = tokens(text)
-  if (!all) return text
-  const blankAt = k => k > 0 && (isWs(all[k - 1][0]) || all[k - 1][0].slice(0, 2) === "/*")
-  let k = all.length
-  while (blankAt(k)) k--
-  if (!k || asciiLower(decodeName(all[k - 1][0])) !== "important") return text
-  k--
-  while (blankAt(k)) k--
-  if (!k || all[k - 1][0] !== "!") return text
-  k--
-  while (blankAt(k)) k--
-  return k ? text.slice(0, all[k - 1].index + all[k - 1][0].length) : ""
+  let before
+  let bang
+  let flag
+  token.lastIndex = 0
+  for (let match = token.exec(text); match; match = token.exec(text)) {
+    const t = match[0]
+    // An open comment: the caller rejects the text.
+    if (t === "/*") return text
+    if (!isWs(t) && t.slice(0, 2) !== "/*") {
+      before = bang
+      bang = flag
+      flag = match
+    }
+  }
+  if (!flag || asciiLower(decodeName(flag[0])) !== "important" || !bang || bang[0] !== "!") return text
+  return before ? text.slice(0, before.index + before[0].length) : ""
 }
 const closerOf = { "(": ")", "[": "]", "{": "}" }
 // A lone backslash (before a line break or the end) is not an escape: at the
@@ -162,9 +169,11 @@ export const hasSubstitution = (text: string) => {
   let before = undefined
   let found = false
   for (let match = token.exec(text); match; match = token.exec(text)) {
-    if (match[0] === "(" && before && /^(?:var|env)$/i.test(before[0])) {
-      const rest = text.slice(before.index)
-      if (!(/^var/i.test(rest) ? varHead : envHead).test(rest)) return false
+    // The name before "(" with its escapes decoded: v\61r( is var( (review
+    // U4). Its arguments follow the "(".
+    const head = before && asciiLower(decodeName(before[0]))
+    if (match[0] === "(" && (head === "var" || head === "env")) {
+      if (!(head === "var" ? varArgs : envArgs).test(text.slice(match.index + 1))) return false
       found = true
     }
     before = match
@@ -190,7 +199,7 @@ const timeUnit = /^m?s$/i
 // A word may start with "-" (-infinity), so words come before operators.
 const mathToken = new RegExp(
   `(${comment})|(${ws}+)|(${number})([a-z]+|%)?|(-?[a-z][-a-z0-9]*)(\\()?|([-+*/,()])|(${string}|${escape}|[^])`,
-  "iy"
+  "gi"
 )
 type MathType = ?({ [base: string]: number } | "any")
 const NUMBER = {}

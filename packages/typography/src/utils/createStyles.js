@@ -69,10 +69,11 @@ export default (vr: any, options: OptionsType) => {
   // All block elements get one rhythm of bottom margin by default
   // or whatever is passed in as option.
   let blockMarginBottom = ""
-  // Rhythm units, as a number or a numeric string; any other string is CSS.
+  // Rhythm units, as a number or a numeric string; any other string is CSS,
+  // and anything else (null, false, a blank string) one rhythm unit.
   if (isNumeric(options.blockMarginBottom)) {
     blockMarginBottom = vr.rhythm(options.blockMarginBottom)
-  } else if (isString(options.blockMarginBottom)) {
+  } else if (isString(options.blockMarginBottom) && /[^ \t\n\r\f]/.test(options.blockMarginBottom)) {
     blockMarginBottom = options.blockMarginBottom
   } else {
     blockMarginBottom = vr.rhythm(1)

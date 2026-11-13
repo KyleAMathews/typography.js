@@ -175,10 +175,11 @@ const arbitrary: fc.Arbitrary<History> = fc.record({
     headerWeight: weight,
     bodyWeight: weight,
     boldWeight: weight,
-    // null is one rhythm, as v0.16 read it. A string is a CSS length, which
+    // null, false, '', and white space are one rhythm, as v0.16 read them
+    // (review U2: the falsy rule). A string is a CSS length, which
     // calc() takes (review X6); any other string throws.
     blockMarginBottom: fc.oneof(
-      { weight: 6, arbitrary: fc.constantFrom<Value>(undefined, null, 0.5, 1, 2, -1, '1', '1.5rem', '20px', '5%', '-0.5rem', ' -1rem', 'calc(1rem + 2px)', 'var(--m)', 'auto', 'inherit', 'INITIAL', '-webkit-calc(2rem)') },
+      { weight: 6, arbitrary: fc.constantFrom<Value>(undefined, null, false, '', ' ', 0.5, 1, 2, -1, '1', '1.5rem', '20px', '5%', '-0.5rem', ' -1rem', 'calc(1rem + 2px)', 'var(--m)', 'auto', 'inherit', 'INITIAL', '-webkit-calc(2rem)') },
       // '1e400px' overflows to an infinite length (review T6).
       { weight: 1, arbitrary: fc.constantFrom<Value>('1rem !important', 'red', 'calc(1)', '1rem;', 'x', NaN, Infinity, 'rgb(1,2,3)', 'url(x)', '1e400px') },
     ),
@@ -375,7 +376,7 @@ function model(plan: History): Expected {
   // A number must be finite (review Z3); rgb() and url() are not lengths (Z4).
   if (
     (typeof o.blockMarginBottom === 'number' && !Number.isFinite(o.blockMarginBottom)) ||
-    (typeof o.blockMarginBottom === 'string' && !isNumeric(o.blockMarginBottom) && !MARGIN_LENGTHS.includes(o.blockMarginBottom) && !MARGIN_KEYWORDS.includes(o.blockMarginBottom))
+    (typeof o.blockMarginBottom === 'string' && o.blockMarginBottom.trim() !== '' && !isNumeric(o.blockMarginBottom) && !MARGIN_LENGTHS.includes(o.blockMarginBottom) && !MARGIN_KEYWORDS.includes(o.blockMarginBottom))
   )
     return { rejects: 'RangeError', option: 'blockMarginBottom' }
   const keyword = typeof o.blockMarginBottom === 'string' && MARGIN_KEYWORDS.includes(o.blockMarginBottom)
@@ -464,7 +465,7 @@ function driver(plan: History, observe: (checkpoint: string, value: unknown) => 
       one: t.rhythm(1),
       twoThirds: t.rhythm(2 / 3),
       half: t.rhythm(1 / 2),
-      block: isNumeric(block) ? t.rhythm(block as number) : typeof block === 'string' ? block : t.rhythm(1),
+      block: isNumeric(block) ? t.rhythm(block as number) : typeof block === 'string' && block.trim() !== '' ? block : t.rhythm(1),
     })
   } catch (error) {
     observe('toJSON() error', error)
@@ -475,6 +476,11 @@ function driver(plan: History, observe: (checkpoint: string, value: unknown) => 
     json = t.toJSON()
   } catch (error) {
     observe('toJSON() error', error)
+    return
+  }
+  // toJSON() is a stylesheet object.
+  if (json === null || typeof json !== 'object') {
+    observe('toJSON() error', new TypeError(`toJSON() returned ${String(json)}`))
     return
   }
   // A function value is recorded as a marker: an observation is data.
@@ -646,7 +652,7 @@ oracleProperty<History, ReturnType<typeof model>>({
     arbitrary,
     runs: 100,
     fixedSeeds: [20261112],
-    states: ['an unsafe value', 'an unsafe selector', 'a null value', 'a custom property', 'a vendor prefix', 'a media rule', 'an override over an option', 'the code plugin', 'normalize off', 'a numeric-string block margin', 'an unsafe property', 'an empty value', 'a malformed plugin option', 'an invalid block margin', 'a "</" in the text', 'null plugins or overrides', 'a keyword block margin', 'a null block margin', 'a falsy value'],
+    states: ['an unsafe value', 'an unsafe selector', 'a null value', 'a custom property', 'a vendor prefix', 'a media rule', 'an override over an option', 'the code plugin', 'normalize off', 'a numeric-string block margin', 'an unsafe property', 'an empty value', 'a malformed plugin option', 'an invalid block margin', 'a "</" in the text', 'null plugins or overrides', 'a keyword block margin', 'a null block margin', 'a falsy value', 'a falsy block margin'],
     constructed: [
       { name: 'an unsafe value', enters: ['an unsafe value'], build: (h) => ({ ...h, overrideStyles: [{ media: false, selector: 'body', property: 'color', value: 'red}' }], overrideThemeStyles: undefined }) },
       { name: 'a "</" in a string (Y2)', enters: ['a "</" in the text'], build: () => ({ ...CLEAN, overrideStyles: [{ media: false, selector: 'p', property: 'color', value: '"</p>"' }], overrideThemeStyles: undefined }) },
@@ -669,6 +675,7 @@ oracleProperty<History, ReturnType<typeof model>>({
       // Gap check (round 7): NaN alone, on a property and on a custom property.
       { name: 'NaN alone', enters: ['an unsafe value'], build: () => ({ ...CLEAN, overrideStyles: [{ media: false, selector: 'p', property: 'color', value: NaN }], overrideThemeStyles: undefined }) },
       { name: 'a "*/" that closes no trailing comment (T1)', enters: ['an unsafe value'], build: () => ({ ...CLEAN, options: { ...CLEAN.options, bodyColor: 'red /* a */ } h1{color:blue} */ !important' } }) },
+      { name: 'a url( that never closes', enters: ['an unsafe value'], build: () => ({ ...CLEAN, overrideStyles: [{ media: false, selector: 'p', property: 'color', value: 'url(a' }] }) },
       { name: 'an escaped bad url (T2)', enters: ['an unsafe value'], build: () => ({ ...CLEAN, options: { ...CLEAN.options, bodyColor: '\\75 rl(a b "x)" )' } }) },
       { name: 'a "!" in a trailing comment (T4)', enters: [], build: () => ({ ...CLEAN, options: { ...CLEAN.options, bodyColor: 'red !important /* ! */' } }) },
       { name: 'white space alone (T5)', enters: ['a falsy value'], build: () => ({ ...CLEAN, overrideStyles: [{ media: false, selector: 'h1', property: 'color', value: ' ' }] }) },
@@ -678,6 +685,7 @@ oracleProperty<History, ReturnType<typeof model>>({
       { name: 'NaN on a custom property', enters: ['an unsafe value', 'a custom property'], build: () => ({ ...CLEAN, overrideStyles: [{ media: false, selector: ':root', property: '--x-y', value: NaN }], overrideThemeStyles: undefined }) },
       { name: 'a selector with a top-level {} block', enters: ['an unsafe selector'], build: () => ({ ...CLEAN, overrideStyles: [{ media: false, selector: 'p {x}', property: 'color', value: 'red' }], overrideThemeStyles: undefined }) },
       { name: 'plugins as a string (X5)', enters: ['a malformed plugin option'], build: () => ({ ...CLEAN, malformed: { option: 'plugins', as: 'a string' } }) },
+      { name: 'a false block margin is one rhythm (U2)', enters: ['a falsy block margin'], build: () => ({ ...CLEAN, codePlugin: true, options: { ...CLEAN.options, blockMarginBottom: false } }) },
       { name: 'a null block margin is one rhythm', enters: ['a null block margin'], build: () => ({ ...CLEAN, options: { ...CLEAN.options, blockMarginBottom: null } }) },
       { name: 'blockMarginBottom x (X6)', enters: ['an invalid block margin'], build: () => ({ ...CLEAN, options: { ...CLEAN.options, blockMarginBottom: 'x' } }) },
     ],
@@ -705,7 +713,8 @@ oracleProperty<History, ReturnType<typeof model>>({
     if ([...all.map((e) => e.value), plan.options.headerColor, plan.options.bodyColor].some((v) => v === false || (typeof v === 'string' && /^[ \t\n\r\f]*$/.test(v)))) states.add('a falsy value')
     if (typeof plan.options.blockMarginBottom === 'string' && MARGIN_KEYWORDS.includes(plan.options.blockMarginBottom)) states.add('a keyword block margin')
     if ([...all.map((e) => e.selector), ...all.map((e) => String(e.value)), String(plan.options.headerColor), String(plan.options.bodyColor)].some((t) => t.includes('</'))) states.add('a "</" in the text')
-    if (typeof plan.options.blockMarginBottom === 'string' && !isNumeric(plan.options.blockMarginBottom) && !MARGIN_LENGTHS.includes(plan.options.blockMarginBottom) && !MARGIN_KEYWORDS.includes(plan.options.blockMarginBottom)) states.add('an invalid block margin')
+    if (typeof plan.options.blockMarginBottom === 'string' && plan.options.blockMarginBottom.trim() !== '' && !isNumeric(plan.options.blockMarginBottom) && !MARGIN_LENGTHS.includes(plan.options.blockMarginBottom) && !MARGIN_KEYWORDS.includes(plan.options.blockMarginBottom)) states.add('an invalid block margin')
+    if (plan.options.blockMarginBottom === false || (typeof plan.options.blockMarginBottom === 'string' && plan.options.blockMarginBottom.trim() === '')) states.add('a falsy block margin')
     if (plan.options.includeNormalize === false) states.add('normalize off')
     if (typeof plan.options.blockMarginBottom === 'string' && isNumeric(plan.options.blockMarginBottom)) states.add('a numeric-string block margin')
     return [...states]

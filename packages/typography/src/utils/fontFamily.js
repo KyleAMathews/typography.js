@@ -1,5 +1,5 @@
 // @flow
-import { asciiLower, cssWideKeywords, escapeLessThan, isDeclarationValue, varHead } from "./css"
+import { asciiLower, cssWideKeywords, escapeLessThan, everyEntry, isDeclarationValue, varHead } from "./css"
 
 // Font stacks to CSS. Each entry of `bodyFontFamily` and `headerFontFamily`
 // becomes one item of a `font-family` list, following CSS Fonts 4 §2.1.
@@ -69,12 +69,11 @@ export const baseFont = (
     ? { fontSize, lineHeight, fontFamily: fontFamilyList(stack) }
     : { font: `${fontSize}/${lineHeight} ${fontFamilyList(stack)}` }
 
-// Array.from reads a hole in a sparse stack as undefined; every() would
-// skip it.
+// A hole in a sparse stack is not a string.
 const isFontStack = (stack: mixed) =>
   Array.isArray(stack) &&
   stack.length > 0 &&
-  Array.from(stack).every(entry => typeof entry === "string")
+  everyEntry(stack, entry => typeof entry === "string")
 
 // Throws for every invalid stack at once, naming each.
 export const checkFontStacks = (options: Object) => {

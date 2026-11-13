@@ -855,3 +855,14 @@ A sixth `/code-review high` (head 66f851e) gave 10 findings (W1–W10, ledger
   style such as `'700&display=swap'` keeps passing its query parameter. This
   replaces round 6's encoding (S8b). The fixes for a font without styles,
   numeric styles, and `googleFonts: null` stay.
+
+### Decisions (round 14, 2026-11-13)
+
+- **U3: "null = default 2".** `scaleRatio: null` is the default ratio, as
+  `undefined` is (this revises A3 for null). A misspelled ratio name still
+  throws.
+- **U2 (the falsy rule):** `blockMarginBottom: false`, `''`, or white space
+  is one rhythm unit, as `null` is.
+- **U1:** the published bundle keeps v0.16's ES5 baseline: no sticky
+  regular expressions and no ES2015 built-ins. `__test__/es5.test.js` loads
+  the built bundle in a realm without them.

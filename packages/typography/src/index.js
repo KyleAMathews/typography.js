@@ -6,6 +6,7 @@ import { checkFontStacks } from "./utils/fontFamily"
 import {
   asciiLower,
   cssWideKeywords,
+  everyEntry,
   hasSubstitution,
   isDeclarationValue,
   isMarginKeyword,
@@ -26,7 +27,7 @@ import type { OptionsType } from "Types"
 const isLengthText = (text: string, lengthOnly: boolean) => {
   const length = dimension.exec(text)
   return (
-    (!!length && lengthUnit.test(length[2]) && Number.isFinite(Number(length[1]))) ||
+    (!!length && lengthUnit.test(length[2]) && isFinite(Number(length[1]))) ||
     ((isMathFunction(text, lengthOnly) || hasSubstitution(text)) &&
       text.indexOf("<") === -1 &&
       isDeclarationValue(text))
@@ -46,12 +47,15 @@ const isLineHeight = (value: any) => {
     ((!length || Number(length[1]) >= 0) && isLengthText(text, false))
   )
 }
-// blockMarginBottom: rhythm units (a number or numeric string, or null for
-// one, as v0.16 read it), a CSS length that the margins put in calc(), or a
-// margin keyword (createStyles leaves the calc() margins out for it).
+// blockMarginBottom: rhythm units (a number or numeric string; null, false,
+// or a blank string for one, as v0.16 read them), a CSS length that the
+// margins put in calc(), or a margin keyword (createStyles leaves the calc()
+// margins out for it).
 const isBlockMargin = (value: any) =>
   value === null ||
-  (isNumeric(value) && Number.isFinite(Number(value))) ||
+  value === false ||
+  (typeof value === "string" && !trimSpace(value)) ||
+  (isNumeric(value) && isFinite(Number(value))) ||
   isMarginKeyword(value) ||
   (typeof value === "string" && isLengthText(trimSpace(value), true))
 
@@ -66,7 +70,7 @@ const typography = function (opts: OptionsType) {
   // 0) is none, as in v0.16, so `cond && plugin` works.
   if (
     options.plugins &&
-    !(Array.isArray(options.plugins) && Array.from(options.plugins).every(p => typeof p === "function"))
+    !(Array.isArray(options.plugins) && everyEntry(options.plugins, p => typeof p === "function"))
   ) {
     throw new TypeError("Invalid plugins: a list of functions")
   }

@@ -26,7 +26,7 @@ const html = (text: string) => escapeLessThan(text, true)
 // A declaration's value; a trailing !important is CSS. An empty value is a
 // custom property's only (CSS Variables 1 2).
 const cssValue = (selector: string, property: string, value: mixed) => {
-  if (typeof value === "number" && Number.isFinite(value)) return String(value)
+  if (typeof value === "number" && isFinite(value)) return String(value)
   const custom = property.slice(0, 2) === "--"
   const body = typeof value === "string" ? trimSpace(withoutImportant(value)) : ""
   if (typeof value !== "string" || (!body && !custom) || !isDeclarationValue(body, custom)) {

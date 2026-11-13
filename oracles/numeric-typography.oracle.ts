@@ -98,7 +98,8 @@ const NAMED_RATIOS: Record<string, number> = {
 
 type History = {
   base: number | undefined
-  ratio: number | string | undefined
+  // null is the default ratio, as undefined is (engineer decision 2026-11-13).
+  ratio: number | string | null | undefined
   // A unitless multiplier, or a pixel length such as "24px" (review A4).
   lineHeight: number | string | undefined
   headerLineHeight: number | undefined
@@ -147,7 +148,8 @@ const optionalNumber = (min: number, max: number) =>
 // Heading line heights written as given (review V3). Math functions have
 // their own grammar in numerical-heading-line-height-math.
 // Comments may sit around a trailing !important (review P5's scan).
-const HEADER_VALUES = ["calc(1.2 * 1)", "env(safe-area-inset-top, 1.2)", "1.2ex", "1.2 /* c */ !important", "1.2/**/!important", "1.2 /**/!/**/important", "1.2 !important /* ! */"] as const
+// "v\\61r(--lh)" is var() spelled with an escape (review U4).
+const HEADER_VALUES = ["calc(1.2 * 1)", "env(safe-area-inset-top, 1.2)", "1.2ex", "v\\61r(--lh)", "\\65nv(safe-area-inset-top, 1.2)", "1.2 /* c */ !important", "1.2/**/!important", "1.2 /**/!/**/important", "1.2 !important /* ! */"] as const
 
 // These are measurement bounds, not a narrower adoption of the laws. Each
 // coordinate contributes separately: base reveals truncation, ratio/position
@@ -157,7 +159,8 @@ const arbitrary = fc.record({
   base: optionalNumber(1e-10, 256),
   ratio: fc.oneof(
     optionalNumber(0.5, 4),
-    fc.constantFrom(...Object.keys(NAMED_RATIOS))
+    fc.constantFrom(...Object.keys(NAMED_RATIOS)),
+    fc.constant(null)
   ),
   lineHeight: fc.oneof(
     optionalNumber(0.5, 3),
@@ -546,7 +549,7 @@ oracleProperty<History, ReturnType<typeof expectedMeasurements>, Plan>({
   ],
   law: {
     statement:
-      "N1 root/h1 preserve the base and ratio (a modularscale ratio name means its number); N2 scale uses base × ratio^position; N3 html carries the base line height (a unitless lineHeight as that multiplier, or a px lineHeight), and rhythm uses it × count; N4 valid calls return finite usable measurements; N5 headings retain headerLineHeight as given (a number as that multiplier, an em length as that length); N6 the line height of scale() and of every rule outside h1–h6 covers its font size.",
+      "N1 root/h1 preserve the base and ratio (a modularscale ratio name means its number; null is the default ratio 2); N2 scale uses base × ratio^position; N3 html carries the base line height (a unitless lineHeight as that multiplier, or a px lineHeight), and rhythm uses it × count; N4 valid calls return finite usable measurements; N5 headings retain headerLineHeight as given (a number as that multiplier, an em length as that length); N6 the line height of scale() and of every rule outside h1–h6 covers its font size.",
     authority:
       "README API baseFontSize/scaleRatio; docs/what.md scale and rhythm sections; commit 22d8ec8; S3 engineer decisions 2026-11-11; named ratios: modularscale 1.0.2 (the v0.16 behavior), engineer decision 2026-11-11 (review A3); pixel base line heights: the v0.16 behavior, engineer decision 2026-11-11 (review A4).",
     limits:
@@ -1722,6 +1725,9 @@ const INVALID_HEADER_VALUES: unknown[] = [-1, NaN, Infinity, null, true, "x", "-
 // A base font size: a positive length that converts to px, or a number (px).
 const INVALID_BASES: unknown[] = ["0px", "-1px", "", "oops", "16pxoops", "1.2.3px", "16vw", null, true, NaN, 0, -16, "1ex"]
 const invalidConfiguration = fc.constantFrom(...INVALID_CONFIGURATION)
+// scaleRatio: null is the default ratio (engineer decision 2026-11-13).
+const INVALID_RATIOS = INVALID_CONFIGURATION.filter((v) => v !== null)
+const invalidRatio = fc.constantFrom(...INVALID_RATIOS)
 // Values that are not a named ratio: case and spacing matter, an inherited
 // object key is not a name, and neither is a non-string that stringifies to one.
 const INVALID_RATIO_NAMES: unknown[] = [
@@ -1771,7 +1777,7 @@ const invalidArbitrary = fc.oneof(
   }),
   fc.record({
     kind: fc.constant("scaleRatio"),
-    value: fc.oneof(invalidConfiguration, invalidRatioName),
+    value: fc.oneof(invalidRatio, invalidRatioName),
   }),
   fc.record({
     kind: fc.constant("baseLineHeight"),
@@ -1858,8 +1864,8 @@ oracleProperty<InvalidHistory, string>({
         enters: ["invalid configuration"],
         build: () => ({ kind: "headerLineHeight", value }),
       })),
-      ...["scaleRatio", "baseLineHeight"].flatMap((kind) =>
-        INVALID_CONFIGURATION.map((value) => ({
+      ...(["scaleRatio", "baseLineHeight"] as const).flatMap((kind) =>
+        (kind === "scaleRatio" ? INVALID_RATIOS : INVALID_CONFIGURATION).map((value) => ({
           name: `invalid ${kind}: ${String(value)}`,
           enters: ["invalid configuration"],
           build: () => ({ kind, value }),
