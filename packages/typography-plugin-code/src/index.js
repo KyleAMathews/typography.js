@@ -1,13 +1,27 @@
 // @flow
 import gray from "gray-percentage"
 
+// blockMarginBottom as the core reads it: rhythm units when rhythm() takes
+// the value (a number or a numeric string; null or undefined is one), and any
+// other string as written. rhythm() throws a RangeError for anything else.
+const blockMargin = (rhythm: Function, value: mixed) => {
+  try {
+    return rhythm(value)
+  } catch (error) {
+    return value
+  }
+}
+
+// A negative padding, or auto, is not CSS, and a CSS-wide word means another
+// thing on padding (inherit takes the parent's padding): these pad with the
+// reset's 0. The words are the core's margin keywords (utils/css.js).
+const zeroPadding = /^[ \t\n\r\f]*(?:-|(?:auto|inherit|initial|unset|revert|revert-layer)[ \t\n\r\f]*$)/i
+
 const CodePlugin =
   (): Function =>
-  (vr: Object, options: Object, styles: Object) => {
-    // The block margin as the core wrote it for pre. A negative one, or auto,
-    // is not a padding; the reset's 0 is what browsers keep.
-    const blockMarginBottom = styles.pre.marginBottom
-    const padding = /^[ \t\n\r\f]*(?:-|auto[ \t\n\r\f]*$)/i.test(String(blockMarginBottom)) ? 0 : blockMarginBottom
+  ({ rhythm }: Object, options: Object) => {
+    const margin = blockMargin(rhythm, options.blockMarginBottom)
+    const padding = zeroPadding.test(String(margin)) ? 0 : margin
     return {
       "tt,code": {
         backgroundColor: gray(96),

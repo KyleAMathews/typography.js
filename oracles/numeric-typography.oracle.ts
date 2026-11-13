@@ -1705,7 +1705,9 @@ const INVALID_HEADER_VALUES: unknown[] = [-1, NaN, Infinity, null, true, "x", "-
   // group, and a group where a comma belongs.
   "round(up x 1)", "calc((1 2))", "min(1 (2))", "min(1+ 2)", "calc((1 2)",
   // Gap check (review round 6): an unknown function that does not close.
-  "sibling-index(1", "calc(sibling-index(1)"]
+  "sibling-index(1", "calc(sibling-index(1)",
+  // Review Z4: functions that are not numbers or lengths.
+  "url(x)", "rgb(1,2,3)", "calc(rgb(1, 2, 3) * 1)", "linear-gradient(red, blue)", "URL(x)"]
 // A base font size: a positive length that converts to px, or a number (px).
 const INVALID_BASES: unknown[] = ["0px", "-1px", "", "oops", "16pxoops", "1.2.3px", "16vw", null, true, NaN, 0, -16, "1ex"]
 const invalidConfiguration = fc.constantFrom(...INVALID_CONFIGURATION)
@@ -2945,11 +2947,13 @@ oracleProperty<MathHistory, { written: string } | { throws: true }>({
       "two operands side by side",
       "padded parentheses",
       "a comment",
+      "a function that is not numeric",
     ],
     constructed: [
       { name: "a length plus an angle", enters: ["invalid", "types that do not combine"], build: () => ({ call: { kind: "fn", name: "calc", strategy: undefined, pad: false, args: [{ kind: "op", op: "+", space: "both", left: { kind: "num", n: 1, unit: "px" }, right: { kind: "num", n: 3, unit: "deg" } }] } }) },
       { name: "1+1 without white space", enters: ["invalid", "+ or - without white space"], build: () => ({ call: { kind: "fn", name: "calc", strategy: undefined, pad: false, args: [{ kind: "op", op: "+", space: "none", left: { kind: "num", n: 1, unit: "" }, right: { kind: "num", n: 1, unit: "" } }] } }) },
       { name: "an unknown function", enters: ["valid", "an unknown function"], build: () => ({ call: { kind: "fn", name: "sibling-index", strategy: undefined, pad: false, args: [{ kind: "num", n: 1, unit: "" }] } }) },
+      { name: "rgb() as a line height (Z4)", enters: ["invalid", "a function that is not numeric"], build: () => ({ call: { kind: "fn", name: "rgb", strategy: undefined, pad: false, args: [{ kind: "num", n: 1, unit: "" }, { kind: "num", n: 2, unit: "" }, { kind: "num", n: 3, unit: "" }] } }) },
       { name: "a comment beside an operator", enters: ["valid", "a comment"], build: () => ({ call: { kind: "fn", name: "calc", strategy: undefined, pad: false, args: [{ kind: "op", op: "*", space: "comment-tight", left: { kind: "num", n: 1.2, unit: "" }, right: { kind: "num", n: 1, unit: "" } }] } }) },
       { name: "a length over a length", enters: ["valid"], build: () => ({ call: { kind: "fn", name: "calc", strategy: undefined, pad: false, args: [{ kind: "op", op: "/", space: "both", left: { kind: "num", n: 2.4, unit: "px" }, right: { kind: "num", n: 1, unit: "px" } }] } }) },
       { name: "round(up, …) with a var()", enters: ["valid", "a rounding strategy", "a var() inside"], build: () => ({ call: { kind: "fn", name: "round", strategy: "up", pad: false, args: [{ kind: "var" }, { kind: "num", n: 0.25, unit: "" }] } }) },
@@ -3007,6 +3011,8 @@ oracleProperty<MathHistory, { written: string } | { throws: true }>({
       { name: "two operands in a group", history: { call: { kind: "fn", name: "calc", strategy: undefined, pad: false, args: [{ kind: "group", pad: false, inner: { kind: "op", op: "", space: "both", left: { kind: "num", n: 1, unit: "" }, right: { kind: "num", n: 2, unit: "" } } }] } } },
       { name: "1 +(2)", history: { call: { kind: "fn", name: "calc", strategy: undefined, pad: false, args: [{ kind: "op", op: "+", space: "left", left: { kind: "num", n: 1, unit: "" }, right: { kind: "group", pad: false, inner: { kind: "num", n: 2, unit: "" } } }] } } },
       { name: "1 +pi", history: { call: { kind: "fn", name: "calc", strategy: undefined, pad: false, args: [{ kind: "op", op: "+", space: "left", left: { kind: "num", n: 1, unit: "" }, right: { kind: "const", name: "pi" } }] } } },
+      { name: "rgb() is a color, not a number (Z4)", history: { call: { kind: "fn", name: "rgb", strategy: undefined, pad: false, args: [{ kind: "num", n: 1, unit: "" }, { kind: "num", n: 2, unit: "" }, { kind: "num", n: 3, unit: "" }] } } },
+      { name: "a color times a number (Z4)", history: { call: { kind: "fn", name: "calc", strategy: undefined, pad: false, args: [{ kind: "op", op: "*", space: "both", left: { kind: "fn", name: "rgb", strategy: undefined, pad: false, args: [{ kind: "num", n: 1, unit: "" }] }, right: { kind: "num", n: 1, unit: "" } }] } } },
       { name: "V3: round(1.25, 0.25)", history: { call: { kind: "fn", name: "round", strategy: undefined, pad: false, args: [{ kind: "num", n: 1.25, unit: "" }, { kind: "num", n: 0.25, unit: "" }] } } },
     ],
   },

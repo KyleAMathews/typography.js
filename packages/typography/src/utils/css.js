@@ -29,15 +29,16 @@ export const escapeLessThan = (text: string, beforeSlash: boolean) =>
   text.replace(beforeSlash ? /(\\*)<(?=\/)/g : /(\\*)</g, (_, slashes) =>
     slashes.length % 2 === 1 ? `${slashes.slice(1)}\\3c ` : `${slashes}\\3c `
   )
-// A trailing !important (CSS Cascade 5 6.1), and the white space before it.
-const important = new RegExp(`${ws}*!${ws}*important${ws}*$`, "i")
-export const withoutImportant = (text: string) => text.replace(important, "")
 // A comment ends at its first "*/" (4.3.2).
 const comment = "\\/\\*(?:[^*]|\\*+[^*/])*\\*+\\/"
 const escape = "\\\\(?:[0-9a-fA-F]{1,6}[ \\t\\n\\r\\f]?|[^\\n\\r\\f0-9a-fA-F])"
 const string = `"(?:\\\\[^]|[^"\\\\\\n\\r\\f])*"|'(?:\\\\[^]|[^'\\\\\\n\\r\\f])*'`
 // White space and comments.
 export const blank = `(?:${ws}|${comment})`
+// A trailing !important (CSS Cascade 5 6.1), with the white space and
+// comments around its "!" and "important".
+const important = new RegExp(`${blank}*!${blank}*important${blank}*$`, "i")
+export const withoutImportant = (text: string) => text.replace(important, "")
 // A character of a name (4.3.9). NUL reads as U+FFFD, a name character (3.3).
 export const nameChar = `(?:[-\\w\\u0000\\u0080-\\uFFFF]|${escape})`
 // A property name: one identifier (4.3.11), or a custom property's "--" and
@@ -174,6 +175,9 @@ const mathFunctions = {
   log: [1, 2, types => (types.every(numeric) ? NUMBER : undefined)],
 }
 const constants = /^(?:e|pi|infinity|-infinity|nan)$/i
+// Functions whose type is not a number or a dimension: colors, images, urls,
+// and counters (CSS Color 4 and 5, Images 3 and 4, Values 4 4.5, Lists 3).
+const notNumeric = /^(?:rgba?|hsla?|hwb|lab|lch|oklab|oklch|color|color-mix|light-dark|url|src|image|image-set|cross-fade|element|(?:repeating-)?(?:linear|radial|conic)-gradient|counters?|format|local)$/i
 const roundingStrategy = /^(?:nearest|up|down|to-zero)$/i
 const unitType = (unit: ?string): MathType =>
   unit === undefined
@@ -204,7 +208,7 @@ const mathType = (text: string): MathType => {
   const call = (name: string): MathType => {
     const fn = mathFunctions[asciiLower(name)]
     // A var() or env() reference: the caller accepts a well-formed one first.
-    if (/^(?:var|env)$/i.test(name)) return undefined
+    if (/^(?:var|env)$/i.test(name) || notNumeric.test(name)) return undefined
     if (!fn) {
       // The browser types it: skip to its ")".
       for (let depth = 1; depth; k++) {

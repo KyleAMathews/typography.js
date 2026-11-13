@@ -278,3 +278,24 @@ An eighth `/code-review high` (head 6cec13d) gave Y1–Y10 (ledger
 - **Oracle repairs:** the constructed stylesheet histories now start from a
   clean history, because a generated base could throw first and hide the
   change. The stylesheet oracle owns `css.js` (the margin keyword).
+
+## Review round 9 (2026-11-12)
+
+A ninth `/code-review high` (head ff36b27) gave Z1–Z10 (ledger
+`/tmp/typography-review9-eval/ledger.md`).
+
+- **RED on ff36b27** (red.txt): `codePlugin()(vr, options)` threw (it needed
+  the styles argument added in round 8); `rgb(1, 2, 3)` and
+  `calc(rgb(1) * 1)` were written as heading line heights.
+- **Fixes:** the code plugin reads the margin through `rhythm()` again,
+  with no second number reader and no styles argument, and pads with 0 for
+  every margin keyword; `rgb()`, `url()`, gradients, and other functions CSS
+  types as non-numeric are invalid math; a non-finite `blockMarginBottom`
+  throws at `typography()`; a function value throws; `!important` may have
+  comments around it; the plugin's unused lodash dependency is gone.
+- **Repo hygiene:** round 8's commit took 17 gap-check temp files; they are
+  removed, and `.gitignore` covers them.
+- **Gap checks:** `css.js`, `index.js`, `compileStyles.js`, the plugin: 580
+  mutants, 554 killed; after the driver guard and two dead branches in the
+  plugin (`value == null`, the rethrow), the open ones are the plugin's
+  design values and the `appendChild` branch.

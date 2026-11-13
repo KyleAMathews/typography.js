@@ -52,8 +52,9 @@ export const mathTree = fc.letrec<{ node: MathNode; call: MathCall }>((tie) => (
   ),
   call: fc.record({
     kind: fc.constant("fn" as const),
-    // "sibling-index" stands for a function this grammar does not know.
-    name: fc.constantFrom<string>(...MATH_NAMES, "sibling-index"),
+    // "sibling-index" stands for a function this grammar does not know, and
+    // "rgb" for one CSS types as something other than a number.
+    name: fc.constantFrom<string>(...MATH_NAMES, "sibling-index", "rgb"),
     // Mostly one to three arguments, where each signature's limits fall.
     args: fc.oneof({ weight: 6, arbitrary: fc.array(tie("node"), { minLength: 1, maxLength: 3 }) }, { weight: 1, arbitrary: fc.array(tie("node"), { minLength: 0, maxLength: 4 }) }),
     strategy: fc.oneof({ weight: 5, arbitrary: fc.constant(undefined) }, { weight: 1, arbitrary: fc.constantFrom("up" as const, "up-no-comma" as const) }),
@@ -145,6 +146,11 @@ export const MATH_SIGNATURES: Record<string, [number, number, (types: Array<Math
   exp: [1, 1, ([a]) => (isNumberLike(a) ? NUMBER : undefined)],
   log: [1, 2, (ts) => (ts.every(isNumberLike) ? NUMBER : undefined)],
 }
+// Functions CSS types as something other than a number or a dimension: a
+// color, an image, a url, a counter (CSS Color 4 and 5, Images 3 and 4,
+// Values 4 §4.5, Lists 3). They are not the browser's to type for a number
+// or a length (review Z4).
+export const NOT_NUMERIC = new Set(['rgb', 'rgba', 'hsl', 'hsla', 'hwb', 'lab', 'lch', 'oklab', 'oklch', 'color', 'color-mix', 'light-dark', 'url', 'src', 'image', 'image-set', 'cross-fade', 'element', 'linear-gradient', 'radial-gradient', 'conic-gradient', 'repeating-linear-gradient', 'repeating-radial-gradient', 'repeating-conic-gradient', 'counter', 'counters', 'format', 'local'])
 export function mathTypeOf(node: MathNode): MathType {
   switch (node.kind) {
     case "num":
@@ -176,7 +182,7 @@ export function mathTypeOf(node: MathNode): MathType {
       // A function the grammar does not know is the browser's to type, once it
       // is safe CSS, as every generated one is (engineer decision 2026-11-12,
       // review W6).
-      if (!signature) return "any"
+      if (!signature) return NOT_NUMERIC.has(node.name) ? undefined : "any"
       if ((node.strategy && node.name !== "round") || node.strategy === "up-no-comma") return undefined
       const [fewest, most, result] = signature
       // A rounding strategy needs a value after it: round(up) has none.
@@ -240,7 +246,7 @@ export const mathFeatures = (node: MathNode, out: Set<string> = new Set()): Set<
     out.add("a group")
     mathFeatures(node.inner, out)
   } else if (node.kind === "fn") {
-    out.add(MATH_SIGNATURES[node.name] ? "a math function" : "an unknown function")
+    out.add(MATH_SIGNATURES[node.name] ? "a math function" : NOT_NUMERIC.has(node.name) ? "a function that is not numeric" : "an unknown function")
     if (node.pad === "comment") out.add("a comment")
     if (node.strategy) out.add("a rounding strategy")
     if (node.pad) out.add("padded parentheses")

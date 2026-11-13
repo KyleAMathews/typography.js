@@ -76,7 +76,7 @@ const isLineHeight = (value: any) => {
 // margin keyword (createStyles leaves the calc() margins out for it).
 const isBlockMargin = (value: any) =>
   value === null ||
-  isNumeric(value) ||
+  (isNumeric(value) && Number.isFinite(Number(value))) ||
   isMarginKeyword(value) ||
   (typeof value === "string" && isLengthText(trimSpace(value), true))
 

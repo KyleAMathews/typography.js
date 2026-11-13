@@ -47,8 +47,10 @@ rhythm units, a CSS length is used as is), blockquote side margins and list
 indents are one rhythm, list items and their nested lists half the block
 margin, and table cells two thirds (sides) and one half (top) of a rhythm
 (engineer decision 2026-11-12, Q4b). The code plugin's `pre` padding is the
-block margin too, or 0 when the block margin is negative or `auto` (such a
-padding is not CSS; the browser keeps the reset's 0). A `blockMarginBottom` string that is not a CSS length,
+block margin too, or 0 when the block margin is negative or a keyword (a
+negative or `auto` padding is not CSS, and the browser keeps the reset's 0;
+`inherit` would take the parent's padding). Called directly with
+`(vr, options)`, as v0.16 allowed, the plugin pads the same (review Z1). A `blockMarginBottom` string that is not a CSS length,
 which the margins put in calc(), makes typography() throw a RangeError
 naming it (review X6). `auto` and the CSS-wide words go on the block
 elements as given, and the margins derived from them with calc() are left
@@ -92,7 +94,7 @@ const S6 = 'S6 plugins and overrides merge in order'
 // Grammar: options, and style layers built from entries.
 // ---------------------------------------------------------------------------
 
-type Value = string | number | boolean | null | undefined | Array<string>
+type Value = string | number | boolean | null | undefined | Array<string> | (() => number)
 type Entry = { media: boolean; selector: string; property: string; value: Value }
 type History = {
   options: {
@@ -119,11 +121,12 @@ const MEDIA = '@media (max-width:480px)'
 // !important. Unsafe ones break the rule, the stylesheet, or the <style>.
 // 'a {b}' and '' are safe for a custom property only (reviews W5, X8); '\\(a' holds an
 // escaped "(" that opens no block.
-const SAFE_VALUES: Array<Value> = ['red', '#123456', '1.5rem', 0, 12, 'calc(1em + 2px)', 'var(--x)', "'a;b}'", 'url(a.png)', 'red !important', 'inherit', 'var(--x, {a})', 'a {b}', '\\(a', '', 'red</style>', '"</p>"', '"<"', 'a\\</b']
+const SAFE_VALUES: Array<Value> = ['red', '#123456', '1.5rem', 0, 12, 'calc(1em + 2px)', 'var(--x)', "'a;b}'", 'url(a.png)', 'red !important', 'inherit', 'var(--x, {a})', 'a {b}', '\\(a', '', 'red</style>', '"</p>"', '"<"', 'a\\</b', 'red !important /* x */', 'red ! /**/ important']
 // 'a\\': a lone backslash at the end escapes the ";" after it (review W1).
-// An array is not a CSS value (review Y5).
+// An array or a function is not a CSS value (reviews Y5, Z5).
 const ARRAY_VALUE = ['a', 'b']
-const UNSAFE_VALUES: Array<Value> = [ARRAY_VALUE, 'red}', 'a;b', 'red !importan', "'open", NaN, true, '!important', 'a\\', 'a /* b']
+const FUNCTION_VALUE = () => 1
+const UNSAFE_VALUES: Array<Value> = [ARRAY_VALUE, FUNCTION_VALUE, 'red}', 'a;b', 'red !importan', "'open", NaN, true, '!important', 'a\\', 'a /* b']
 // Names that are not one CSS identifier break the rule or the <style>
 // (review X1).
 const UNSAFE_PROPERTIES = ['</style>', 'color;}body{background', '--x}', 'a b']
@@ -162,7 +165,7 @@ const arbitrary: fc.Arbitrary<History> = fc.record({
     // calc() takes (review X6); any other string throws.
     blockMarginBottom: fc.oneof(
       { weight: 6, arbitrary: fc.constantFrom<Value>(undefined, null, 0.5, 1, 2, -1, '1', '1.5rem', '20px', '5%', '-0.5rem', ' -1rem', 'calc(1rem + 2px)', 'var(--m)', 'auto', 'inherit', 'INITIAL') },
-      { weight: 1, arbitrary: fc.constantFrom<Value>('auto', '1rem !important', 'red', 'calc(1)', '1rem;', 'x') },
+      { weight: 1, arbitrary: fc.constantFrom<Value>('auto', '1rem !important', 'red', 'calc(1)', '1rem;', 'x', NaN, Infinity, 'rgb(1,2,3)', 'url(x)') },
     ),
     includeNormalize: fc.constantFrom(undefined, true, false),
   }),
@@ -199,7 +202,8 @@ const toObject = (entries: Array<Entry>) => {
 // non-custom declaration with one and any other value is dropped.
 const isSafeText = (v: string, custom: boolean) => {
   // A trailing !important is CSS, but only after a value.
-  const body = v.replace(/\s*!\s*important\s*$/i, '')
+  // White space and comments may sit around "!" and "important".
+  const body = v.replace(/(?:\s|\/\*(?:[^*]|\*+[^*/])*\*+\/)*!(?:\s|\/\*(?:[^*]|\*+[^*/])*\*+\/)*important(?:\s|\/\*(?:[^*]|\*+[^*/])*\*+\/)*$/i, '')
   if (body.trim() === '') return custom
   let quote: string | undefined
   let depth = 0
@@ -283,7 +287,11 @@ function model(plan: History): Expected {
   // is not a CSS length or a margin keyword (X6, Y6).
   if (plan.malformed && plan.malformed.as !== 'null') return { rejects: 'TypeError', option: plan.malformed.option }
   if (plan.malformed) return model({ ...plan, malformed: undefined, ...(plan.malformed.option === 'plugins' ? { plugins: [], codePlugin: false } : { [plan.malformed.option]: undefined }) })
-  if (typeof o.blockMarginBottom === 'string' && !isNumeric(o.blockMarginBottom) && !MARGIN_LENGTHS.includes(o.blockMarginBottom) && !MARGIN_KEYWORDS.includes(o.blockMarginBottom))
+  // A number must be finite (review Z3); rgb() and url() are not lengths (Z4).
+  if (
+    (typeof o.blockMarginBottom === 'number' && !Number.isFinite(o.blockMarginBottom)) ||
+    (typeof o.blockMarginBottom === 'string' && !isNumeric(o.blockMarginBottom) && !MARGIN_LENGTHS.includes(o.blockMarginBottom) && !MARGIN_KEYWORDS.includes(o.blockMarginBottom))
+  )
     return { rejects: 'RangeError', option: 'blockMarginBottom' }
   const keyword = typeof o.blockMarginBottom === 'string' && MARGIN_KEYWORDS.includes(o.blockMarginBottom)
   // undefined is the default (decision L1); null removes the declaration (Q4a).
@@ -314,6 +322,8 @@ function model(plan: History): Expected {
   // S9: the code plugin runs first among the plugins.
   // A negative padding, or auto, is not CSS, and the browser keeps the
   // reset's 0: such a block margin pads with 0 (Q4b; the Chrome witness).
+  // A CSS-wide word means another thing on padding (inherit takes the
+  // parent's padding): it pads with 0 too (review Z8).
   if (plan.codePlugin) set(['pre'], 'padding', { block: 'padding' })
   // S6: then each layer, in order, over what is there.
   for (const layer of [...plan.plugins, ...(plan.overrideStyles ? [plan.overrideStyles] : []), ...(plan.overrideThemeStyles ? [plan.overrideThemeStyles] : [])])
@@ -359,12 +369,17 @@ function driver(plan: History, observe: (checkpoint: string, value: unknown) => 
   }
   observe('options', Object.fromEntries(Object.keys(DEFAULTS).map((k) => [k, (t.options as Record<string, unknown>)[k]])))
   const block = plan.options.blockMarginBottom
-  observe('rhythm', {
-    one: t.rhythm(1),
-    twoThirds: t.rhythm(2 / 3),
-    half: t.rhythm(1 / 2),
-    block: isNumeric(block) ? t.rhythm(block as number) : typeof block === 'string' ? block : t.rhythm(1),
-  })
+  try {
+    observe('rhythm', {
+      one: t.rhythm(1),
+      twoThirds: t.rhythm(2 / 3),
+      half: t.rhythm(1 / 2),
+      block: isNumeric(block) ? t.rhythm(block as number) : typeof block === 'string' ? block : t.rhythm(1),
+    })
+  } catch (error) {
+    observe('toJSON() error', error)
+    return
+  }
   let json: unknown
   try {
     json = t.toJSON()
@@ -372,12 +387,19 @@ function driver(plan: History, observe: (checkpoint: string, value: unknown) => 
     observe('toJSON() error', error)
     return
   }
-  observe('toJSON()', json)
+  // A function value is recorded as a marker: an observation is data.
+  observe('toJSON()', JSON.parse(JSON.stringify(json, (_, v) => (typeof v === 'function' ? '[a function]' : v))))
   try {
     const text = t.toString()
     observe('toString()', text)
     // createStyles() is kept for v0.16 callers: the same text.
     observe('createStyles() is toString()', t.createStyles() === text)
+    // The code plugin called directly, as v0.16 allowed: (vr, options).
+    try {
+      observe('codePlugin()(vr, options).pre.padding', (codePlugin()(t, t.options) as { pre: { padding: unknown } }).pre.padding)
+    } catch (error) {
+      observe('codePlugin()(vr, options).pre.padding', { threw: String(error) })
+    }
   } catch (error) {
     observe('toString() error', error)
   }
@@ -446,6 +468,12 @@ function check(plan: History, trace: ReadonlyArray<Observation>, expected: Expec
   collect(rules, '')
   const r = valueAt(trace, 'rhythm') as { one: string; twoThirds: string; half: string; block: string }
   const rhythmOf = (count: number) => (count === 1 ? r.one : count === 2 / 3 ? r.twoThirds : r.half)
+  // S9: the plugin's pre padding, called directly, is the block margin, or 0
+  // for a negative one or a keyword (review Z1).
+  const padding = /^\s*-/.test(r.block) || MARGIN_KEYWORDS.includes(r.block) ? '0' : r.block
+  const direct = valueAt(trace, 'codePlugin()(vr, options).pre.padding')
+  const directDiff = differs('codePlugin()(vr, options).pre.padding', S5, String(direct).trim(), padding.trim(), 'the code plugin called directly pads otherwise')
+  if (directDiff) return directDiff
   for (const [k, owed] of expected.owed) {
     const [scope, selector, property] = JSON.parse(k) as [string, string, string]
     const want =
@@ -456,7 +484,7 @@ function check(plan: History, trace: ReadonlyArray<Observation>, expected: Expec
         : 'cellBottom' in owed
         ? `calc(${r.half} - 1px)`
         : owed.block === 'padding'
-        ? (/^\s*-/.test(r.block) || r.block === 'auto' ? '0' : r.block)
+        ? padding
         : owed.block === 'whole'
         ? r.block
         : owed.block === 'half'

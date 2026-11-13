@@ -189,9 +189,6 @@ importers:
       gray-percentage:
         specifier: ^2.0.0
         version: 2.0.0
-      lodash:
-        specifier: ^4.13.1
-        version: 4.17.21
 
   packages/typography-theme-alton:
     dependencies:
@@ -1252,14 +1249,14 @@ packages:
     resolution: {integrity: sha512-l2aFy5jALhniG5HgqrD6jXLi/rUWrKvqN/qJx6yoJsgKhblVd+iqqU4RCXavm/jPityDo5TCvKMnpjKnOriy0w==}
 
   '@tanstack/eslint-plugin-oracles@https://pkg.pr.new/TanStack/oracles/@tanstack/eslint-plugin-oracles@cf64491':
-    resolution: {tarball: https://pkg.pr.new/TanStack/oracles/@tanstack/eslint-plugin-oracles@cf64491}
+    resolution: {integrity: sha512-FVr6RGXX3uPgN8mpJW18xiXbnVZ/NCDM6Lr4gpOlROyqBUkf3c+VlokTKFh2e7LAM+LzMMwxHODkh0H+0+RjJw==, tarball: https://pkg.pr.new/TanStack/oracles/@tanstack/eslint-plugin-oracles@cf64491}
     version: 0.0.0
     engines: {node: '>=20'}
     peerDependencies:
       eslint: ^9.0.0 || ^10.0.0
 
   '@tanstack/oracles@https://pkg.pr.new/TanStack/oracles/@tanstack/oracles@cf64491':
-    resolution: {tarball: https://pkg.pr.new/TanStack/oracles/@tanstack/oracles@cf64491}
+    resolution: {integrity: sha512-sux60wmaJp3eQQ+xHBSuOpPACDASEpz0O+h/UeJJvKpj26V6jDXfZqNSt1i+cVoliQHyTavObXg+jDb+y2D7oA==, tarball: https://pkg.pr.new/TanStack/oracles/@tanstack/oracles@cf64491}
     version: 0.0.0
     engines: {node: '>=20'}
     hasBin: true

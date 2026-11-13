@@ -3,7 +3,7 @@ import normalize from "typography-normalize"
 import decamelize from "decamelize"
 import each from "lodash/forEach"
 import reduce from "lodash/reduce"
-import isObject from "lodash/isObject"
+import isPlainObject from "lodash/isPlainObject"
 
 import { escapeLessThan, isDeclarationValue, isPropertyName, trimSpace, withoutImportant } from "./css"
 import type { OptionsType } from "Types"
@@ -46,8 +46,9 @@ const compileStyles = styles =>
       each(ruleSet, (value, property) => {
         // null removes a declaration (engineer decision 2026-11-12).
         if (value === null || value === undefined) return
-        // An object is a nested rule (an array is not a CSS value).
-        if (isObject(value) && !Array.isArray(value)) {
+        // A plain object is a nested rule (an array or a function is not a
+        // CSS value).
+        if (isPlainObject(value)) {
           stylesStr += compileStyles({ [property]: value })
         } else {
           const name = cssName(property)
