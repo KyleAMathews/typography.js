@@ -236,7 +236,8 @@ injectFonts(typography)
 ### Configuration
 When creating a new instance of Typography, you can pass in a
 _configuration_ object. All configuration keys are optional, and a key set to
-`undefined` takes its default.
+`undefined` takes its default. Typography reads the configuration once:
+changing `typography.options` afterwards does not change the styles.
 
 * **title**: The theme title.
 * **baseFontSize**: A positive font size, such as `16px` or `16.5px`. A number
@@ -261,7 +262,8 @@ _configuration_ object. All configuration keys are optional, and a key set to
   `major second`, `minor third`, `major third`, `diminished fourth`,
   `perfect fifth`, `minor sixth`, `golden`, `phi`, `major sixth`,
   `minor seventh`, `major seventh`, `octave`, `major tenth`,
-  `major eleventh`, `major twelfth`, `double octave`. Any other value throws.
+  `major eleventh`, `major twelfth`, `double octave`. `null` is the default
+  ratio. Any other value throws.
 ```javascript
 {
   scaleRatio: 2,

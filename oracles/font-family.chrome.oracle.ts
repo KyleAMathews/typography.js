@@ -95,10 +95,17 @@ function readInChrome(css: string): Read {
 }
 
 // In the page: html's computed font size and line height under `css`.
+// An earlier html rule sets the font longhands that the `font` shorthand
+// resets (engineer decision 2026-11-13, review P6).
+const EARLIER = 'html{font-style:italic;font-weight:300;font-stretch:condensed;font-variant:small-caps}'
 function computedRoot(css: string) {
   ;(document.getElementById('under-test') as HTMLStyleElement).textContent = css
   const style = getComputedStyle(document.documentElement)
-  return { fontSize: style.fontSize, lineHeight: style.lineHeight }
+  return {
+    fontSize: style.fontSize,
+    lineHeight: style.lineHeight,
+    resets: { fontStyle: style.fontStyle, fontWeight: style.fontWeight, fontStretch: style.fontStretch, fontVariant: style.fontVariant },
+  }
 }
 
 async function driver(plan: Plan, observe: (checkpoint: string, value: unknown) => void) {
@@ -134,7 +141,7 @@ async function driver(plan: Plan, observe: (checkpoint: string, value: unknown) 
   // 18px with line height 1.45 whatever the stack, with every var() in it
   // undefined, as a page that has not set its variable yet.
   const at18 = typography({ bodyFontFamily: plan.given.body, headerFontFamily: plan.given.header, baseFontSize: '18px' }).toString()
-  observe('html computed at 18px', await page.evaluate(computedRoot, at18))
+  observe('html computed at 18px', await page.evaluate(computedRoot, EARLIER + at18))
   observe('body.fontFamily', read.body)
   read.headers.forEach((family, k) => observe(`h${k + 1}.fontFamily`, family))
 }
@@ -165,9 +172,14 @@ oracleProperty<History, Expected, Plan>({
     // A stack that is the generic monospace alone sizes against the
     // browser's monospace default (13px in Chrome), not 16px: a browser
     // behavior, the same in v0.16, and outside this law.
+    // Every stack resets the font longhands that an earlier html rule set
+    // (P6), and keeps the base size and line height.
+    const computed = trace.find((o) => o.checkpoint === 'html computed at 18px')?.value as { fontSize: string; lineHeight: string; resets: object }
+    const resets = differs('html computed at 18px', L1, computed?.resets, { fontStyle: 'normal', fontWeight: '400', fontStretch: '100%', fontVariant: 'normal' }, 'an earlier html rule shows through')
+    if (resets) return resets
     const body = expected.body
     if (body.length === 1 && 'generic' in body[0] && body[0].generic === 'monospace') return pass
-    return differs('html computed at 18px', L1, trace.find((o) => o.checkpoint === 'html computed at 18px')?.value, { fontSize: '18px', lineHeight: '26.1px' }, 'the stack changed the computed base size or line height') ?? pass
+    return differs('html computed at 18px', L1, { fontSize: computed?.fontSize, lineHeight: computed?.lineHeight }, { fontSize: '18px', lineHeight: '26.1px' }, 'the stack changed the computed base size or line height') ?? pass
   },
   reached,
   calibrations,

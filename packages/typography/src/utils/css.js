@@ -25,8 +25,18 @@ export const everyEntry = (list: Array<mixed>, test: (entry: mixed) => boolean) 
 export const ws = "[ \\t\\n\\r\\f]"
 // A CSS number (4.3.12).
 export const number = "[+-]?(?:\\d*\\.\\d+|\\d+)(?:e[+-]?\\d+)?"
-const edgeSpace = new RegExp(`^${ws}+|${ws}+$`, "g")
-export const trimSpace = (text: string) => text.replace(edgeSpace, "")
+// One pass from each end: a pattern such as /\s+$/ backtracks on a long run
+// of white space before a non-space.
+const isSpace = (c: string) => c === " " || c === "\t" || c === "\n" || c === "\r" || c === "\f"
+// Past either end, charAt() is "", which is not white space; for white space
+// alone, end falls below start and the slice is "".
+export const trimSpace = (text: string) => {
+  let start = 0
+  let end = text.length
+  while (isSpace(text.charAt(start))) start++
+  while (isSpace(text.charAt(end - 1))) end--
+  return text.slice(start, end)
+}
 // auto or a CSS-wide keyword: a margin, but not a length calc() takes.
 export const isMarginKeyword = (value: mixed) =>
   typeof value === "string" && ["auto", ...cssWideKeywords].indexOf(asciiLower(trimSpace(value))) !== -1
@@ -36,13 +46,28 @@ export const dimension = new RegExp(`^${ws}*(${number})([a-z%]*)${ws}*$`, "i")
 // string, a url, or a name (4.3.7); a "<" already escaped ("\<") loses its
 // backslash. With beforeSlash, only a "<" before "/": HTML ends a <style> at
 // "</style", and a "<" elsewhere, as in @media (width < 600px), must stay.
-export const escapeLessThan = (text: string, beforeSlash: boolean) =>
-  text.replace(beforeSlash ? /(\\*)<(?=\/)/g : /(\\*)</g, (_, slashes) =>
-    slashes.length % 2 === 1 ? `${slashes.slice(1)}\\3c ` : `${slashes}\\3c `
-  )
+// One pass, counting the backslashes before each "<".
+export const escapeLessThan = (text: string, beforeSlash: boolean) => {
+  let out = ""
+  let slashes = 0
+  for (let k = 0; k < text.length; k++) {
+    const c = text[k]
+    if (c === "<" && (!beforeSlash || text[k + 1] === "/")) {
+      // An odd count: the last backslash escapes this "<"; it goes.
+      out = (slashes % 2 === 1 ? out.slice(0, -1) : out) + "\\3c "
+      slashes = 0
+    } else {
+      out += c
+      slashes = c === "\\" ? slashes + 1 : 0
+    }
+  }
+  return out
+}
 // A comment ends at its first "*/" (4.3.2).
 const comment = "\\/\\*(?:[^*]|\\*+[^*/])*\\*+\\/"
-const escape = "\\\\(?:[0-9a-fA-F]{1,6}[ \\t\\n\\r\\f]?|[^\\n\\r\\f0-9a-fA-F])"
+// Its hex digits are all the digits there are, up to six, so an escape and
+// the name characters after it cannot divide them two ways.
+const escape = "\\\\(?:(?:[0-9a-fA-F]{6}|[0-9a-fA-F]{1,5}(?![0-9a-fA-F]))[ \\t\\n\\r\\f]?|[^\\n\\r\\f0-9a-fA-F])"
 const string = `"(?:\\\\[^]|[^"\\\\\\n\\r\\f])*"|'(?:\\\\[^]|[^'\\\\\\n\\r\\f])*'`
 // White space and comments.
 export const blank = `(?:${ws}|${comment})`

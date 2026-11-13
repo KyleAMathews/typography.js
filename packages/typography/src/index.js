@@ -163,6 +163,13 @@ const typography = function (opts: OptionsType) {
   }
 
 
+  // The options are read once: the stylesheet comes from this copy, its
+  // arrays included, so a later change to t.options changes nothing.
+  const settings = {}
+  Object.keys(options).forEach(key => {
+    settings[key] = Array.isArray(options[key]) ? options[key].slice() : options[key]
+  })
+
   return {
     options,
     ...vr,
@@ -170,10 +177,10 @@ const typography = function (opts: OptionsType) {
       return this.toString()
     }, // TODO remove in next breaking release.
     toJSON() {
-      return createStyles(vr, options)
+      return createStyles(vr, settings)
     },
     toString() {
-      return compileStyles(vr, options, this.toJSON())
+      return compileStyles(vr, settings, this.toJSON())
     },
     // Replaces the text of an existing style#typography.js, or inserts one
     // first in <head>. An empty head appends, as v0.16's tests pin.

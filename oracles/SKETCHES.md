@@ -896,3 +896,18 @@ review. The engineer ruled on each:
   v0.16's did (`__test__/es5.test.js`).
 - **S8b `options.googleFonts` (round 6): kept.** `typography().options.googleFonts`
   is the option as given, or `[]`.
+
+### Law decisions on the open review items (2026-11-13)
+
+- **Q4/P3: "Read once".** New (S5): `typography()` reads its options once.
+  Changing `t.options` afterwards, its arrays included, changes neither
+  `toJSON()`, `toString()`, nor `scale()`. The README says so.
+- **P6: "Add the resets".** New (S1 L1): when `html` gets longhands (a lone
+  CSS-wide stack, or a stack with a `var()` entry), it also sets
+  `font-style`, `font-variant`, `font-weight`, and `font-stretch` to
+  `normal`, as the `font` shorthand resets them. An earlier `html` rule's
+  weight or italic does not show through in either form.
+- **P5/U7: "Counts + ReDoS check".** New (S4 work): the value check reads a
+  bounded number of tokens per character of the value (counted, not timed),
+  and every regular expression in the built bundle is free of super-linear
+  backtracking (checked with `recheck`, a dev dependency).

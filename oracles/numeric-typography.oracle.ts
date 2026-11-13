@@ -149,7 +149,8 @@ const optionalNumber = (min: number, max: number) =>
 // their own grammar in numerical-heading-line-height-math.
 // Comments may sit around a trailing !important (review P5's scan).
 // "v\\61r(--lh)" is var() spelled with an escape (review U4).
-const HEADER_VALUES = ["calc(1.2 * 1)", "env(safe-area-inset-top, 1.2)", "1.2ex", "v\\61r(--lh)", "\\65nv(safe-area-inset-top, 1.2)", "1.2 /* c */ !important", "1.2/**/!important", "1.2 /**/!/**/important", "1.2 !important /* ! */"] as const
+// CSS white space around a keyword is ignored (decision U1).
+const HEADER_VALUES = [" normal ", "\tinherit\n", "calc(1.2 * 1)", "env(safe-area-inset-top, 1.2)", "1.2ex", "v\\61r(--lh)", "\\65nv(safe-area-inset-top, 1.2)", "1.2 /* c */ !important", "1.2/**/!important", "1.2 /**/!/**/important", "1.2 !important /* ! */"] as const
 
 // These are measurement bounds, not a narrower adoption of the laws. Each
 // coordinate contributes separately: base reveals truncation, ratio/position

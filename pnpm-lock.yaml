@@ -105,6 +105,9 @@ importers:
       react-test-renderer:
         specifier: ^17.0.2
         version: 17.0.2(react@17.0.2)
+      recheck:
+        specifier: ^4.6.2
+        version: 4.6.2
       vitest:
         specifier: ^4.1.12
         version: 4.1.12(@types/node@26.6.6)(jsdom@9.12.0)(vite@8.3.6(@types/node@26.6.6)(terser@5.51.2))
@@ -1026,6 +1029,9 @@ packages:
     resolution: {integrity: sha512-WCsemW40Cpc6gouC1SrY6PBaZ+oLRlEVY9XBvZBI7il/HyUrb2nJ505wE1MHEFyDZNnrWDEuy4jL50WVHfTTSQ==}
     engines: {node: '>=6.9.0'}
 
+  '@dual-bundle/import-meta-resolve@4.2.1':
+    resolution: {integrity: sha512-id+7YRUgoUX6CgV0DtuhirQWodeeA7Lf4i2x71JS/vtA5pRb/hIGWlw+G6MeXvsM+MXrz0VAydTGElX1rAfgPg==}
+
   '@eslint-community/eslint-utils@4.10.1':
     resolution: {integrity: sha512-cuadcxVFE8sDK6iWJbs8Sn0av2Nrh2QSGQhVlBW9AaAHqHwjWsZHT8LJ4hFGPh7ASBV2deFdM7H/DPjulmh8rg==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
@@ -1105,6 +1111,10 @@ packages:
 
   '@oxc-project/types@0.156.0':
     resolution: {integrity: sha512-1Duyg48TdJNdyhEB8Xn1L36bT9Pv6GUtlKjHxOys8xkaF/rQq3XJE+bAurSK/AgIz5mGFsb77cn9Pb20+WCScw==}
+
+  '@pkgr/core@0.3.6':
+    resolution: {integrity: sha512-SEeaJLb3qBNF/OaXnaR1NmmBbFYk1zC0ZH/52fATcRPLFg/p791YrcyFFy44Bo9sLaGuSuLp5Q6axbb/O+v/RA==}
+    engines: {node: ^14.18.0 || >=16.0.0}
 
   '@rolldown/binding-android-arm-eabi@1.2.16':
     resolution: {integrity: sha512-ia3DwAs0OsMGS7+IConptSiyk9pEXkOx/AbJ2n/lAGxH3QkWQus1t8d7gnAT38FCU2sQu8lUbeR6AiZFv4JxaA==}
@@ -1249,14 +1259,14 @@ packages:
     resolution: {integrity: sha512-l2aFy5jALhniG5HgqrD6jXLi/rUWrKvqN/qJx6yoJsgKhblVd+iqqU4RCXavm/jPityDo5TCvKMnpjKnOriy0w==}
 
   '@tanstack/eslint-plugin-oracles@https://pkg.pr.new/TanStack/oracles/@tanstack/eslint-plugin-oracles@cf64491':
-    resolution: {integrity: sha512-FVr6RGXX3uPgN8mpJW18xiXbnVZ/NCDM6Lr4gpOlROyqBUkf3c+VlokTKFh2e7LAM+LzMMwxHODkh0H+0+RjJw==, tarball: https://pkg.pr.new/TanStack/oracles/@tanstack/eslint-plugin-oracles@cf64491}
+    resolution: {tarball: https://pkg.pr.new/TanStack/oracles/@tanstack/eslint-plugin-oracles@cf64491}
     version: 0.0.0
     engines: {node: '>=20'}
     peerDependencies:
       eslint: ^9.0.0 || ^10.0.0
 
   '@tanstack/oracles@https://pkg.pr.new/TanStack/oracles/@tanstack/oracles@cf64491':
-    resolution: {integrity: sha512-sux60wmaJp3eQQ+xHBSuOpPACDASEpz0O+h/UeJJvKpj26V6jDXfZqNSt1i+cVoliQHyTavObXg+jDb+y2D7oA==, tarball: https://pkg.pr.new/TanStack/oracles/@tanstack/oracles@cf64491}
+    resolution: {tarball: https://pkg.pr.new/TanStack/oracles/@tanstack/oracles@cf64491}
     version: 0.0.0
     engines: {node: '>=20'}
     hasBin: true
@@ -4598,6 +4608,38 @@ packages:
   readline2@1.0.1:
     resolution: {integrity: sha512-8/td4MmwUB6PkZUbV25uKz7dfrmjYWxsW8DVfibWdlHRk/l/DfHKn4pU+dfcoGLFgWOdyGCzINRQD7jn+Bv+/g==}
 
+  recheck-jar@4.6.2:
+    resolution: {integrity: sha512-mm0x9Vew58cUtW1zBbR3/qLFLrpwnn0agmQPjgLMFPWN5gykaw3UqmdoVCRSpmuT5T00eo5SaFfRwrE5uXYobA==}
+
+  recheck-linux-arm64@4.6.2:
+    resolution: {integrity: sha512-+RCQV4sCCQHNvOmyrWjYdDEExRZS0lzOvDWl0GLhkbXTWb2OBg2EhKtqkIwQPlc0ku1v0rqPmek9KZHtp6wvWQ==}
+    cpu: [arm64]
+    os: [linux]
+
+  recheck-linux-x64@4.6.2:
+    resolution: {integrity: sha512-jOUS5qrMh6aZilbaiPdzQf97/DdiI/ZBZcD1mLrtfaLhJKuLeTOXSqDsyKdhHc2ElZW3KVBhLKzTr7zipoBABQ==}
+    cpu: [x64]
+    os: [linux]
+
+  recheck-macos-arm64@4.6.2:
+    resolution: {integrity: sha512-ngvCW6Uz581hKACiofmxzs5NynU5ntkp3yz4TpdXhUynEz0Ek8DfveYx8HvaCI1UEZ+eFD9M+cePsK5erTmc+w==}
+    cpu: [arm64]
+    os: [darwin]
+
+  recheck-macos-x64@4.6.2:
+    resolution: {integrity: sha512-iEN67CpluJLbd2XkEcdjelDSi2+vgp55TVvjjlKybUhuIWza0DMNo2zwdEG4ZsvLpvYR5vV6Y06x69ywBsrXkw==}
+    cpu: [x64]
+    os: [darwin]
+
+  recheck-windows-x64@4.6.2:
+    resolution: {integrity: sha512-HeREed9Ua++XDjqYavQO2/tWq7PO4wkRm70reVab//WNwzNu0ct0x3x3cj5sS+6sohd8N2XTWvcMKAHTZ5nAng==}
+    cpu: [x64]
+    os: [win32]
+
+  recheck@4.6.2:
+    resolution: {integrity: sha512-u4aJX9skFz5VLMwEGtNv4BavU4qo6dSds/NZiJhoJ0QP1OJ0/VLbztD4nC4mlRuVM+Tj9kssGky4ysrIzRTA2Q==}
+    engines: {node: '>=22'}
+
   rechoir@0.6.2:
     resolution: {integrity: sha512-HFM8rkZ+i3zrV+4LQjwQ0W+ez98pApMGM3HUrN04j3CqzPOzl9nmP15Y8YXNm8QHGv/eacOVEjqhmWpkRV0NAw==}
     engines: {node: '>= 0.10'}
@@ -5059,6 +5101,10 @@ packages:
 
   symbol-tree@3.2.2:
     resolution: {integrity: sha512-/2fldTR680SOM4zTfL9mNzf96VYFy2CyVWinf+baRrXAJ4D586mMSorV9Rk5KkK60cUrXASJMojcQsES8PaJMw==}
+
+  synckit@0.12.3:
+    resolution: {integrity: sha512-U+/AXT6LWsxnj2vz9HeUuPWBNgdWxjyIEjEPdbJARC9txmgPzo2VEdqnFo4hHaNyMPtycyVJrSaQYeQv/PoyyA==}
+    engines: {node: ^14.18.0 || >=16.0.0}
 
   table@3.8.3:
     resolution: {integrity: sha512-RZuzIOtzFbprLCE0AXhkI0Xi42ZJLZhCC+qkwuMLf/Vjz3maWpA8gz1qMdbmNoI9cOROT2Am/DxeRyXenrL11g==}
@@ -6252,6 +6298,8 @@ snapshots:
       '@babel/helper-string-parser': 7.29.13
       '@babel/helper-validator-identifier': 7.29.7
 
+  '@dual-bundle/import-meta-resolve@4.2.1': {}
+
   '@eslint-community/eslint-utils@4.10.1(eslint@9.39.5)':
     dependencies:
       eslint: 9.39.5
@@ -6339,6 +6387,8 @@ snapshots:
       '@jridgewell/sourcemap-codec': 1.6.0
 
   '@oxc-project/types@0.156.0': {}
+
+  '@pkgr/core@0.3.6': {}
 
   '@rolldown/binding-android-arm-eabi@1.2.16':
     optional: true
@@ -10507,6 +10557,35 @@ snapshots:
       is-fullwidth-code-point: 1.0.0
       mute-stream: 0.0.5
 
+  recheck-jar@4.6.2:
+    optional: true
+
+  recheck-linux-arm64@4.6.2:
+    optional: true
+
+  recheck-linux-x64@4.6.2:
+    optional: true
+
+  recheck-macos-arm64@4.6.2:
+    optional: true
+
+  recheck-macos-x64@4.6.2:
+    optional: true
+
+  recheck-windows-x64@4.6.2:
+    optional: true
+
+  recheck@4.6.2:
+    dependencies:
+      synckit: 0.12.3
+    optionalDependencies:
+      recheck-jar: 4.6.2
+      recheck-linux-arm64: 4.6.2
+      recheck-linux-x64: 4.6.2
+      recheck-macos-arm64: 4.6.2
+      recheck-macos-x64: 4.6.2
+      recheck-windows-x64: 4.6.2
+
   rechoir@0.6.2:
     dependencies:
       resolve: 1.5.0
@@ -11001,6 +11080,11 @@ snapshots:
   symbol-observable@1.2.0: {}
 
   symbol-tree@3.2.2: {}
+
+  synckit@0.12.3:
+    dependencies:
+      '@dual-bundle/import-meta-resolve': 4.2.1
+      '@pkgr/core': 0.3.6
 
   table@3.8.3:
     dependencies:

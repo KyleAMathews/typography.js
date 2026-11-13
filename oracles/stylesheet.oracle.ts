@@ -41,7 +41,9 @@ but a string or number, an array included), or a property name that is not one C
 makes `toString()` throw a RangeError naming the selector and the property
 (engineer decisions 2026-11-12, Q4a; reviews X1, X2). An empty value is a
 custom property's only (CSS Variables 1 §2, review X8).
-S5. `headerColor` and `headerWeight` reach h1–h6, `bodyColor` and
+S5. `typography()` reads its options once: a later change to `t.options`,
+its arrays included, changes neither `toString()` nor `scale()` (engineer
+decision 2026-11-13, reviews Q4 and P3). `headerColor` and `headerWeight` reach h1–h6, `bodyColor` and
 `bodyWeight` reach body, and `boldWeight` reaches b, strong, dt, and th, as
 given (README, Configuration). Spacing is in rhythm units: every block
 element's bottom margin is `blockMarginBottom` (a number or numeric string is
@@ -174,7 +176,7 @@ const arbitrary: fc.Arbitrary<History> = fc.record({
     // (review U2: the falsy rule). A string is a CSS length, which
     // calc() takes (review X6); any other string throws.
     blockMarginBottom: fc.oneof(
-      { weight: 6, arbitrary: fc.constantFrom<Value>(undefined, null, false, '', ' ', 0.5, 1, 2, -1, '1', '1.5rem', '20px', '5%', '-0.5rem', ' -1rem', 'calc(1rem + 2px)', 'var(--m)', 'auto', 'inherit', 'INITIAL', '-webkit-calc(2rem)') },
+      { weight: 6, arbitrary: fc.constantFrom<Value>(undefined, null, false, '', ' ', 0.5, 1, 2, -1, '1', '1.5rem', '20px', '5%', '-0.5rem', ' -1rem', 'calc(1rem + 2px)', 'var(--m)', 'auto', 'inherit', 'INITIAL', ' auto ', '-webkit-calc(2rem)') },
       // '1e400px' overflows to an infinite length (review T6).
       { weight: 1, arbitrary: fc.constantFrom<Value>('1rem !important', 'red', 'calc(1)', '1rem;', 'x', NaN, Infinity, 'rgb(1,2,3)', 'url(x)', '1e400px') },
     ),
@@ -249,7 +251,7 @@ const MARGIN_LENGTHS = ['1.5rem', '20px', '5%', '-0.5rem', ' -1rem', 'calc(1rem 
 // auto and the CSS-wide words go on the block elements as given; the margins
 // derived from them with calc() are left out, as browsers dropped v0.16's
 // calc(auto - 1px) (engineer decision 2026-11-12, review Y6).
-const MARGIN_KEYWORDS = ['auto', 'inherit', 'INITIAL']
+const MARGIN_KEYWORDS = ['auto', 'inherit', 'INITIAL', ' auto ']
 
 /** What each named declaration must be: a literal, a rhythm count, or a block-margin form. */
 type Owed = { literal: Value } | { rhythm: number } | { block: 'whole' | 'half' | 'less1px' | 'padding' } | { cellBottom: true }
@@ -397,6 +399,17 @@ function driver(plan: History, observe: (checkpoint: string, value: unknown) => 
         observe(name, { threw: String(error) })
       }
     }
+    // S5 (read once, engineer decision 2026-11-13): changing t.options after
+    // typography(), its arrays included, changes neither the stylesheet nor
+    // scale().
+    const scale = JSON.stringify(t.scale(1))
+    const options = t.options as Record<string, unknown>
+    options.headerColor = 'purple'
+    options.blockMarginBottom = 3
+    options.scaleRatio = 3
+    options.includeNormalize = !options.includeNormalize
+    ;(options.bodyFontFamily as Array<string>).push('fantasy')
+    observe('after changing t.options', { stylesheet: t.toString() === text, scale: JSON.stringify(t.scale(1)) === scale })
   } catch (error) {
     observe('toString() error', error)
   }
@@ -438,6 +451,8 @@ function check(plan: History, trace: ReadonlyArray<Observation>, expected: Expec
   if (error) return violation('toString() error', 'toString() threw on safe styles', S4, { actual: error })
   const options = differs('options', S5, valueAt(trace, 'options'), Object.fromEntries(Object.entries(DEFAULTS).map(([k, d]) => [k, plan.options[k as keyof History['options']] === undefined ? d : plan.options[k as keyof History['options']]])), 'options are not the given values over the README defaults')
   if (options) return options
+  const readOnce = differs('after changing t.options', S5, valueAt(trace, 'after changing t.options'), { stylesheet: true, scale: true }, 'a change to t.options after typography() changed the output')
+  if (readOnce) return readOnce
   if (valueAt(trace, 'createStyles() is toString()') !== true) return violation('createStyles() is toString()', 'createStyles() is not the stylesheet', S4)
   const text = String(valueAt(trace, 'toString()'))
   if (text.includes('</')) return violation('toString()', 'the stylesheet holds "</", which can end the <style> element', S4)
@@ -523,7 +538,7 @@ oracleProperty<History, ReturnType<typeof model>>({
     'packages/typography-plugin-code/src/index.js',
   ],
   law: {
-    statement: `${S4}: rule by rule, kebab-case names, vendor prefixes, custom properties as written, values as given with each "<" before "/" written \\3c (no "</" in the text), null, false, and '' (outside a custom property) dropped, normalize first unless includeNormalize is false, createStyles() the same text (v0.16); an unsafe value, selector, or property name throws a RangeError (an empty value is a custom property's only). ${S5}: typography().options holds each given option or its README default; headerColor/headerWeight on h1–h6, bodyColor/bodyWeight on body, boldWeight on b/strong/dt/th; block margins, list indents, blockquote margins, and cell padding in rhythm units; the code plugin's pre padding is the block margin; a blockMarginBottom string that is not a CSS length or a margin keyword throws a RangeError naming it; a keyword leaves out the calc() margins. ${S6}: plugins, then overrideStyles, then overrideThemeStyles, each deep-merged, null removing; plugins that are not a list of functions, or an override that is not a function, throw a TypeError naming the option; null, false, '', and 0 are none.`,
+    statement: `${S4}: rule by rule, kebab-case names, vendor prefixes, custom properties as written, values as given with each "<" before "/" written \\3c (no "</" in the text), null, false, and '' (outside a custom property) dropped, normalize first unless includeNormalize is false, createStyles() the same text (v0.16); an unsafe value, selector, or property name throws a RangeError (an empty value is a custom property's only). ${S5}: typography().options holds each given option or its README default, read once (a later change to t.options changes no output); headerColor/headerWeight on h1–h6, bodyColor/bodyWeight on body, boldWeight on b/strong/dt/th; block margins, list indents, blockquote margins, and cell padding in rhythm units; the code plugin's pre padding is the block margin; a blockMarginBottom string that is not a CSS length or a margin keyword throws a RangeError naming it; a keyword leaves out the calc() margins. ${S6}: plugins, then overrideStyles, then overrideThemeStyles, each deep-merged, null removing; plugins that are not a list of functions, or an override that is not a function, throw a TypeError naming the option; null, false, '', and 0 are none.`,
     authority: 'README (Configuration; Themes & Plugins; overrideStyles; overrideThemeStyles); CSS Variables 1 §2 (custom property names are case-sensitive); CSS Syntax 3 §4.3.7 (escapes), §5 and §8.2; HTML (a style element ends at "</style"); engineer decisions 2026-11-12 (Q4a, Q4b; coverage in this PR; Y2 escape "<"; Y6 margin keywords).',
     limits: 'Design values of the default rules are pinned by snapshots. Up to 2 plugins, 5 entries per layer, selectors and properties from fixed lists, one @media scope. Property names with two capitals in a row are not generated. Browser acceptance of each declaration is the Chrome witness.',
   },
@@ -566,6 +581,7 @@ oracleProperty<History, ReturnType<typeof model>>({
       { name: 'plugins as a string (X5)', enters: ['a malformed plugin option'], build: () => ({ ...CLEAN, malformed: { option: 'plugins', as: 'a string' } }) },
       { name: 'a false block margin is one rhythm (U2)', enters: ['a falsy block margin'], build: () => ({ ...CLEAN, codePlugin: true, options: { ...CLEAN.options, blockMarginBottom: false } }) },
       { name: 'a null block margin is one rhythm', enters: ['a null block margin'], build: () => ({ ...CLEAN, options: { ...CLEAN.options, blockMarginBottom: null } }) },
+      { name: 'a number, not a length, in calc() (X6)', enters: ['an invalid block margin'], build: () => ({ ...CLEAN, options: { ...CLEAN.options, blockMarginBottom: 'calc(1)' } }) },
       { name: 'blockMarginBottom x (X6)', enters: ['an invalid block margin'], build: () => ({ ...CLEAN, options: { ...CLEAN.options, blockMarginBottom: 'x' } }) },
     ],
     fixed: [
@@ -616,6 +632,85 @@ oracleProperty<History, ReturnType<typeof model>>({
           o.checkpoint === 'toJSON()' ? { ...o, value: { ...json, body: { ...json.body, color: 'black' } } } : o.checkpoint === 'toString()' ? { ...o, value: text } : o,
         )
       },
+    },
+  ],
+})
+
+// ---------------------------------------------------------------------------
+// S4 work: the value check reads a bounded number of tokens per character.
+// ---------------------------------------------------------------------------
+
+const S4_WORK = 'S4 the value check is linear in the value'
+// A value is one piece repeated: the runs that a scan from each position, or
+// a scan that restarts at each "!", would read again and again (review P5).
+const WORK_PIECES = [' ', 'a', '/**/', '!', '\\ ', '(', ')', '"a"', 'url(a)', ' !important', ';'] as const
+type WorkHistory = { piece: (typeof WORK_PIECES)[number]; count: number; custom: boolean }
+// At most this many regular-expression matches per character of the value,
+// over the same stylesheet with a one-character value: a bound on a linear
+// scan, which reads each token once in each of a few passes.
+const MATCHES_PER_CHARACTER = 6
+
+const countMatches = (run: () => void) => {
+  const exec = RegExp.prototype.exec
+  let matches = 0
+  RegExp.prototype.exec = function (this: RegExp, text: string) {
+    matches++
+    return exec.call(this, text)
+  }
+  try {
+    run()
+  } catch {
+    // An unsafe value throws; the work it did still counts.
+  } finally {
+    RegExp.prototype.exec = exec
+  }
+  return matches
+}
+
+function workDriver(plan: WorkHistory, observe: (checkpoint: string, value: unknown) => void) {
+  const property = plan.custom ? '--x' : 'color'
+  const sheet = (value: string) => () => {
+    typography({ includeNormalize: false, overrideStyles: () => ({ '.oracle-work': { [property]: value } }) }).toString()
+  }
+  const value = plan.piece.repeat(plan.count)
+  observe('work', { length: value.length, matches: countMatches(sheet(value)) - countMatches(sheet('a')) })
+}
+
+oracleProperty<WorkHistory, { bound: number }>({
+  id: 'typography-value-work',
+  owns: ['packages/typography/src/utils/compileStyles.js', 'packages/typography/src/utils/css.js'],
+  law: {
+    statement: `${S4_WORK}: for a style value of n characters, toString() makes at most ${MATCHES_PER_CHARACTER}·n more regular-expression matches than for a one-character value, whether the value is written or rejected.`,
+    authority: 'Engineer decision 2026-11-13 (review P5: a quadratic scan took 7 s at 80,000 spaces): counted, not timed. Backtracking inside one match is the ReDoS check (__test__/redos.test.js).',
+    limits: 'Counts calls to RegExp.prototype.exec (which test(), replace(), and match() make); it does not see backtracking inside one call. One piece repeated up to 2000 times, in a color or a custom property.',
+  },
+  histories: {
+    arbitrary: fc.record({ piece: fc.constantFrom(...WORK_PIECES), count: fc.integer({ min: 1, max: 2000 }), custom: fc.boolean() }),
+    runs: 30,
+    fixedSeeds: [20261113],
+    states: ['a long value', 'a written value', 'a rejected value'],
+    constructed: [
+      { name: 'a long run of white space (P5)', enters: ['a long value', 'a written value'], build: () => ({ piece: ' ', count: 2000, custom: true }) },
+      { name: 'many "!" (a scan that restarts at each one)', enters: ['a long value', 'a rejected value'], build: () => ({ piece: '!', count: 2000, custom: false }) },
+    ],
+  },
+  model: (plan) => ({ bound: MATCHES_PER_CHARACTER * plan.piece.length * plan.count }),
+  reached: (plan) => [
+    ...(plan.piece.length * plan.count >= 1000 ? ['a long value'] : []),
+    ...(isSafeText(plan.piece.repeat(plan.count), plan.custom) ? ['a written value'] : ['a rejected value']),
+  ],
+  driver: workDriver,
+  check: (_plan, trace, expected) => {
+    const work = valueAt(trace, 'work') as { length: number; matches: number }
+    return work.matches <= expected.bound
+      ? pass
+      : violation('work', `${work.matches} matches for ${work.length} characters, more than ${MATCHES_PER_CHARACTER} per character`, S4_WORK, { actual: work.matches, expected: expected.bound })
+  },
+  calibrations: [
+    {
+      name: 'a scan from each position (quadratic)',
+      law: S4_WORK,
+      corrupt: (trace) => trace.map((o) => (o.checkpoint === 'work' ? { ...o, value: { ...(o.value as object), matches: ((o.value as { length: number }).length ** 2) / 2 } } : o)),
     },
   ],
 })

@@ -60,14 +60,23 @@ export const fontFamilyList = (stack: Array<string>) =>
 // shorthand, so it gets longhands. So does a stack with a var() entry: an
 // undefined variable drops the declaration it is in, and in the shorthand
 // the base size and line height would go with it.
+// The longhands, with what the shorthand resets, so both forms reset the
+// same ones (engineer decision 2026-11-13).
+const longhands = (fontSize: string, lineHeight: string | number, stack: Array<string>) => ({
+  fontStyle: "normal",
+  fontVariant: "normal",
+  fontWeight: "normal",
+  fontStretch: "normal",
+  fontSize,
+  lineHeight,
+  fontFamily: fontFamilyList(stack),
+})
 export const baseFont = (
   fontSize: string,
   lineHeight: string | number,
   stack: Array<string>
 ) =>
-  isLoneCssWide(stack) || stack.some(isVarEntry)
-    ? { fontSize, lineHeight, fontFamily: fontFamilyList(stack) }
-    : { font: `${fontSize}/${lineHeight} ${fontFamilyList(stack)}` }
+  isLoneCssWide(stack) || stack.some(isVarEntry) ? longhands(fontSize, lineHeight, stack) : { font: `${fontSize}/${lineHeight} ${fontFamilyList(stack)}` }
 
 // A hole in a sparse stack is not a string.
 const isFontStack = (stack: mixed) =>

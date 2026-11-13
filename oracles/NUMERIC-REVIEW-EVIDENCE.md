@@ -427,3 +427,27 @@ where the text ends).
 - **Gap check** (`css.js`, `compileStyles.js`): 513 mutants, 508 killed; the
   five left make the url scan loop forever (a CLI limit).
 - **U4 RED by oracle:** `css.js` from c8d7b41 throws on `v\61r(--lh)`.
+
+## The open review items, decided (2026-11-13)
+
+- **Read once (Q4/P3, new S5 clause).** RED: changing `t.options` after
+  `typography()` changed `toString()` (red-readonce.txt). Fix: the
+  stylesheet comes from a copy of the options, arrays included. GREEN.
+- **Resets (P6, new S1 L1 clause).** RED: with a `var()` stack, an earlier
+  `html{font-style:italic;font-weight:300;…}` showed through in Chrome
+  (red-resets.txt). Fix: both longhand forms set `font-style`,
+  `font-variant`, `font-weight`, and `font-stretch` to `normal`. GREEN; the
+  44 snapshots are unchanged.
+- **Work (P5/U7, new S4 work law).** `typography-value-work` counts
+  regular-expression matches (calls to `RegExp.prototype.exec`) during
+  `toString()`: at most 6 per character of a value more than a
+  one-character value. Current code peaks at 5 (for "("); a mutant that
+  checks every suffix of the value fails at 4 characters
+  (work-mutant.txt). Backtracking inside one match is not counted, so
+  `tools/check-regex.cjs` (`pnpm lint:regex`, in `test` and `test-ci`)
+  runs `recheck` over every expression the built bundle calls. RED on the
+  previous `css.js`: 7 of 22 not safe (the escape pattern's hex digits,
+  read two ways, in four expressions; the trim; the two `<` escapes).
+  Fix: an escape takes all its hex digits; the trim and the `<` escape are
+  single loops. GREEN: 19 expressions, all safe. decamelize's expression
+  is a dependency's and outside the law.

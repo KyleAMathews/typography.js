@@ -29,6 +29,7 @@
     "react-addons-test-utils": "^15.4.2",
     "react-dom": "^17.0.2",
     "react-test-renderer": "^17.0.2",
+    "recheck": "^4.6.2",
     "vitest": "^4.1.12"
   },
   "jest": {
@@ -45,13 +46,14 @@
     "lint": "eslint --ext .js,.jsx --ignore-path .gitignore .",
     "format": "prettier --write packages/**/src/*.js",
     "publish": "pnpm run build && lerna publish",
-    "test": "pnpm run build && pnpm run lint && pnpm run test-api && pnpm run test:oracles",
+    "test": "pnpm run build && pnpm run lint && pnpm run lint:regex && pnpm run test-api && pnpm run test:oracles",
     "test-api": "jest",
-    "test-ci": "pnpm run build && pnpm run lint && pnpm run test-coverage && pnpm run lint:oracles && pnpm run test:oracles",
+    "test-ci": "pnpm run build && pnpm run lint && pnpm run lint:regex && pnpm run test-coverage && pnpm run lint:oracles && pnpm run test:oracles",
     "test-coverage": "npm run test-api -- --coverage",
     "watch": "pnpm -r --parallel run watch",
     "test:oracles": "vitest run",
-    "lint:oracles": "tools/oracle-lint/node_modules/.bin/eslint -c tools/oracle-lint/eslint.config.mjs oracles packages/*/src"
+    "lint:oracles": "tools/oracle-lint/node_modules/.bin/eslint -c tools/oracle-lint/eslint.config.mjs oracles packages/*/src",
+    "lint:regex": "node tools/check-regex.cjs"
   },
   "dependencies": {
     "babel-preset-env": "^1.6.0",
